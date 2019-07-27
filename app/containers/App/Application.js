@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import Dashboard from '../Templates/Dashboard';
 import {
+  AdvancedTable,
   DashboardPage,
   BlankPage,
   Error,
@@ -18,8 +19,9 @@ class Application extends React.Component {
     return (
       <Dashboard history={history} changeMode={changeMode}>
         <Switch>
-          { /* Home */ }
+          {/* Home */}
           <Route exact path="/app" component={BlankPage} />
+          <Route path="/app/gestion-utilisateur" component={AdvancedTable} />
           <Route path="/app/dashboard" component={DashboardPage} />
           <Route path="/app/form" component={Form} />
           <Route path="/app/table" component={Table} />
@@ -35,7 +37,7 @@ class Application extends React.Component {
 
 Application.propTypes = {
   changeMode: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 export default Application;
