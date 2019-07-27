@@ -16,7 +16,7 @@ import {
 
 export const AuthState = new Record({
   loading: false,
-  loggedIn: null,
+  loggedIn: window.localStorage.getItem("token") ? true : false,
   user: null,
   uid: null,
   message: null

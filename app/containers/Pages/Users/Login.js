@@ -25,12 +25,11 @@ class Login extends React.Component {
     const { valueForm } = this.state;
     setTimeout(() => {
       this.setState({ valueForm: values });
-      console.log(`You submitted:\n\n${valueForm}`);
       this.props.handleLogin({
         username: this.state.valueForm.get("username"),
         password: this.state.valueForm.get("password")
       }); // eslint-disable-line
-    }, 500); // simulate server latency
+    }, 50); // simulate server latency
   }
 
   render() {

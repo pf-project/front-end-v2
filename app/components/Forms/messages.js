@@ -14,7 +14,7 @@ export default defineMessages({
   },
   login: {
     id: `${scope}.Login.signin`,
-    defaultMessage: "Sign in"
+    defaultMessage: "Se Connecter "
   },
   loginOr: {
     id: `${scope}.Login.or`,
@@ -26,7 +26,7 @@ export default defineMessages({
   },
   loginFieldName: {
     id: `${scope}.Register.field.name`,
-    defaultMessage: "Username"
+    defaultMessage: "Nom D'utilisateur"
   },
   loginFieldEmail: {
     id: `${scope}.Login.field.email`,
@@ -34,15 +34,15 @@ export default defineMessages({
   },
   loginFieldUsername: {
     id: `${scope}.Login.field.username`,
-    defaultMessage: "Your Username "
+    defaultMessage: "Nom d'utilisateur "
   },
   loginFieldPassword: {
     id: `${scope}.Login.field.password`,
-    defaultMessage: "Your Password"
+    defaultMessage: "Mot de Pass"
   },
   loginFieldRetypePassword: {
     id: `${scope}.Register.field.retypePassword`,
-    defaultMessage: "Re-type Password"
+    defaultMessage: "Rentrer le mot de pass"
   },
   loginForgotPassword: {
     id: `${scope}.Login.field.forgot`,
@@ -54,7 +54,7 @@ export default defineMessages({
   },
   loginButtonContinue: {
     id: `${scope}.Login.button.continue`,
-    defaultMessage: "Continue"
+    defaultMessage: "Continuer"
   },
   toAccount: {
     id: `${scope}.Register.create`,
@@ -94,10 +94,10 @@ export default defineMessages({
   },
   lockHint: {
     id: `${scope}.Lock.hint`,
-    defaultMessage: "Hint: Type anything to unlock!"
+    defaultMessage: "Hint: Entrer votre mot de pass!"
   },
   requiredForm: {
     id: `${scope}.Required.text`,
-    defaultMessage: "Required"
+    defaultMessage: "Champ Obligatoir ! "
   }
 });

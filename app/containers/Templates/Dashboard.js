@@ -1,18 +1,22 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
-import classNames from 'classnames';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
-import { GuideSlider } from 'enl-components';
-import { toggleAction, openAction, playTransitionAction } from 'enl-redux/actions/uiActions';
-import { logout } from 'enl-redux/actions/authActions';
-import dummy from 'enl-api/dummy/dummyContents';
-import LeftSidebarLayout from './layouts/LeftSidebar';
-import LeftSidebarBigLayout from './layouts/LeftSidebarBig';
-import MegaMenuLayout from './layouts/MegaMenu';
-import DropMenuLayout from './layouts/DropMenu';
-import styles from './appStyles-jss';
+import React from "react";
+import { PropTypes } from "prop-types";
+import classNames from "classnames";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { withStyles } from "@material-ui/core/styles";
+import { GuideSlider } from "enl-components";
+import {
+  toggleAction,
+  openAction,
+  playTransitionAction
+} from "enl-redux/actions/uiActions";
+import { logout } from "enl-redux/actions/authActions";
+import dummy from "enl-api/dummy/dummyContents";
+import LeftSidebarLayout from "./layouts/LeftSidebar";
+import LeftSidebarBigLayout from "./layouts/LeftSidebarBig";
+import MegaMenuLayout from "./layouts/MegaMenu";
+import DropMenuLayout from "./layouts/DropMenu";
+import styles from "./appStyles-jss";
 
 class Dashboard extends React.Component {
   state = {
@@ -33,9 +37,9 @@ class Dashboard extends React.Component {
       window.scrollTo(0, 0);
       setTimeout(() => {
         loadTransition(true);
-      }, 500);
+      }, 50);
     });
-  }
+  };
 
   handleOpenGuide = () => {
     this.setState({ openGuide: true });
@@ -62,9 +66,13 @@ class Dashboard extends React.Component {
       isAuthenticated
     } = this.props;
     const { openGuide } = this.state;
-    const titleException = ['/app', '/app/crm-dashboard', '/app/crypto-dashboard'];
-    const parts = history.location.pathname.split('/');
-    const place = parts[parts.length - 1].replace('-', ' ');
+    const titleException = [
+      "/app",
+      "/app/crm-dashboard",
+      "/app/crypto-dashboard"
+    ];
+    const parts = history.location.pathname.split("/");
+    const place = parts[parts.length - 1].replace("-", " ");
     const profile = userProfile => {
       if (userProfile) {
         return {
@@ -79,99 +87,95 @@ class Dashboard extends React.Component {
     };
     return (
       <div
-        className={
-          classNames(
-            classes.appFrameInner,
-            layout === 'top-navigation' || layout === 'mega-menu' ? classes.topNav : classes.sideNav,
-            mode === 'dark' ? 'dark-mode' : 'light-mode'
-          )
-        }
+        className={classNames(
+          classes.appFrameInner,
+          layout === "top-navigation" || layout === "mega-menu"
+            ? classes.topNav
+            : classes.sideNav,
+          mode === "dark" ? "dark-mode" : "light-mode"
+        )}
       >
         <GuideSlider openGuide={openGuide} closeGuide={this.handleCloseGuide} />
-        { /* Left Sidebar Layout */
-          layout === 'sidebar' && (
-            <LeftSidebarLayout
-              history={history}
-              toggleDrawer={toggleDrawer}
-              loadTransition={loadTransition}
-              changeMode={changeMode}
-              sidebarOpen={sidebarOpen}
-              pageLoaded={pageLoaded}
-              mode={mode}
-              place={place}
-              titleException={titleException}
-              handleOpenGuide={this.handleOpenGuide}
-              signOut={signOut}
-              isLogin={isAuthenticated}
-              userAttr={profile(user)}
-            >
-              { children }
-            </LeftSidebarLayout>
-          )
-        }
-        { /* Left Big-Sidebar Layout */
-          layout === 'big-sidebar' && (
-            <LeftSidebarBigLayout
-              history={history}
-              toggleDrawer={toggleDrawer}
-              loadTransition={loadTransition}
-              changeMode={changeMode}
-              sidebarOpen={sidebarOpen}
-              pageLoaded={pageLoaded}
-              mode={mode}
-              place={place}
-              titleException={titleException}
-              handleOpenGuide={this.handleOpenGuide}
-              signOut={signOut}
-              isLogin={isAuthenticated}
-              userAttr={profile(user)}
-            >
-              { children }
-            </LeftSidebarBigLayout>
-          )
-        }
-        { /* Top Bar with Dropdown Menu */
-          layout === 'top-navigation' && (
-            <DropMenuLayout
-              history={history}
-              toggleDrawer={toggleDrawer}
-              loadTransition={loadTransition}
-              changeMode={changeMode}
-              sidebarOpen={sidebarOpen}
-              pageLoaded={pageLoaded}
-              mode={mode}
-              place={place}
-              titleException={titleException}
-              handleOpenGuide={this.handleOpenGuide}
-              signOut={signOut}
-              isLogin={isAuthenticated}
-              userAttr={profile(user)}
-            >
-              { children }
-            </DropMenuLayout>
-          )
-        }
-        { /* Top Bar with Mega Menu */
-          layout === 'mega-menu' && (
-            <MegaMenuLayout
-              history={history}
-              toggleDrawer={toggleDrawer}
-              loadTransition={loadTransition}
-              changeMode={changeMode}
-              sidebarOpen={sidebarOpen}
-              pageLoaded={pageLoaded}
-              mode={mode}
-              place={place}
-              titleException={titleException}
-              handleOpenGuide={this.handleOpenGuide}
-              signOut={signOut}
-              isLogin={isAuthenticated}
-              userAttr={profile(user)}
-            >
-              { children }
-            </MegaMenuLayout>
-          )
-        }
+        {/* Left Sidebar Layout */
+        layout === "sidebar" && (
+          <LeftSidebarLayout
+            history={history}
+            toggleDrawer={toggleDrawer}
+            loadTransition={loadTransition}
+            changeMode={changeMode}
+            sidebarOpen={sidebarOpen}
+            pageLoaded={pageLoaded}
+            mode={mode}
+            place={place}
+            titleException={titleException}
+            handleOpenGuide={this.handleOpenGuide}
+            signOut={signOut}
+            isLogin={isAuthenticated}
+            userAttr={profile(user)}
+          >
+            {children}
+          </LeftSidebarLayout>
+        )}
+        {/* Left Big-Sidebar Layout */
+        layout === "big-sidebar" && (
+          <LeftSidebarBigLayout
+            history={history}
+            toggleDrawer={toggleDrawer}
+            loadTransition={loadTransition}
+            changeMode={changeMode}
+            sidebarOpen={sidebarOpen}
+            pageLoaded={pageLoaded}
+            mode={mode}
+            place={place}
+            titleException={titleException}
+            handleOpenGuide={this.handleOpenGuide}
+            signOut={signOut}
+            isLogin={isAuthenticated}
+            userAttr={profile(user)}
+          >
+            {children}
+          </LeftSidebarBigLayout>
+        )}
+        {/* Top Bar with Dropdown Menu */
+        layout === "top-navigation" && (
+          <DropMenuLayout
+            history={history}
+            toggleDrawer={toggleDrawer}
+            loadTransition={loadTransition}
+            changeMode={changeMode}
+            sidebarOpen={sidebarOpen}
+            pageLoaded={pageLoaded}
+            mode={mode}
+            place={place}
+            titleException={titleException}
+            handleOpenGuide={this.handleOpenGuide}
+            signOut={signOut}
+            isLogin={isAuthenticated}
+            userAttr={profile(user)}
+          >
+            {children}
+          </DropMenuLayout>
+        )}
+        {/* Top Bar with Mega Menu */
+        layout === "mega-menu" && (
+          <MegaMenuLayout
+            history={history}
+            toggleDrawer={toggleDrawer}
+            loadTransition={loadTransition}
+            changeMode={changeMode}
+            sidebarOpen={sidebarOpen}
+            pageLoaded={pageLoaded}
+            mode={mode}
+            place={place}
+            titleException={titleException}
+            handleOpenGuide={this.handleOpenGuide}
+            signOut={signOut}
+            isLogin={isAuthenticated}
+            userAttr={profile(user)}
+          >
+            {children}
+          </MegaMenuLayout>
+        )}
       </div>
     );
   }
@@ -191,7 +195,7 @@ Dashboard.propTypes = {
   isAuthenticated: PropTypes.bool,
   user: PropTypes.object,
   signOut: PropTypes.func.isRequired,
-  layout: PropTypes.string.isRequired,
+  layout: PropTypes.string.isRequired
 };
 
 Dashboard.defaultProps = {
@@ -199,16 +203,16 @@ Dashboard.defaultProps = {
   isAuthenticated: null
 };
 
-const reducerUi = 'ui';
-const reducerAuth = 'authReducer';
+const reducerUi = "ui";
+const reducerAuth = "authReducer";
 const mapStateToProps = state => ({
-  sidebarOpen: state.getIn([reducerUi, 'sidebarOpen']),
-  pageLoaded: state.getIn([reducerUi, 'pageLoaded']),
-  mode: state.getIn([reducerUi, 'type']),
-  layout: state.getIn([reducerUi, 'layout']),
+  sidebarOpen: state.getIn([reducerUi, "sidebarOpen"]),
+  pageLoaded: state.getIn([reducerUi, "pageLoaded"]),
+  mode: state.getIn([reducerUi, "type"]),
+  layout: state.getIn([reducerUi, "layout"]),
   isAuthenticated: state.get(reducerAuth).loggedIn,
   user: state.get(reducerAuth).user,
-  ...state,
+  ...state
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -223,4 +227,4 @@ const DashboardMaped = connect(
   mapDispatchToProps
 )(Dashboard);
 
-export default (withStyles(styles)(DashboardMaped));
+export default withStyles(styles)(DashboardMaped);

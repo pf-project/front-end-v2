@@ -33,6 +33,7 @@ function* loginSaga({ payload }) {
     });
     if (data.token) {
       yield put(loginSuccess(data));
+      yield window.localStorage.setItem("token", data.token);
       if (getUrlVars().next) {
         // Redirect to next route
         yield history.push(getUrlVars().next);
@@ -46,16 +47,17 @@ function* loginSaga({ payload }) {
   }
 }
 
-// function* logoutSaga() {
-//   try {
-//     const data = yield call(firebaseAuth.signOut);
-//     yield put(logoutSuccess(data));
-//     // Redirect to home
-//     yield history.replace("/");
-//   } catch (error) {
-//     yield put(logoutFailure(error));
-//   }
-// }
+function* logoutSaga() {
+  try {
+    yield window.localStorage.clear();
+    yield put(logoutSuccess());
+    // Redirect to home
+    yield history.replace("/");
+    // console.log("lougout saga ");
+  } catch (error) {
+    yield put(logoutFailure(error));
+  }
+}
 
 // function* syncUserSaga() {
 //   const channel = yield call(firebaseAuth.channel);
@@ -98,9 +100,9 @@ function* createUserSaga({ credential }) {
 function* loginRootSaga() {
   // yield fork(syncUserSaga);
   yield all([
-    takeEvery(LOGIN_REQUEST, loginSaga)
+    takeEvery(LOGIN_REQUEST, loginSaga),
     // takeEvery(REGISTER_WITH_EMAIL_SUCCESS, createUserSaga),
-    // takeEvery(LOGOUT_REQUEST, logoutSaga)
+    takeEvery(LOGOUT_REQUEST, logoutSaga)
     // takeEvery(PASSWORD_FORGET_REQUEST, passwordForgetSaga)
   ]);
 }

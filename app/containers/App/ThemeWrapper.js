@@ -75,7 +75,7 @@ class ThemeWrapper extends React.Component {
     this.onProgressShow();
     setTimeout(() => {
       this.onProgressHide();
-    }, 500);
+    }, 50);
   };
 
   handleChangeTheme = event => {

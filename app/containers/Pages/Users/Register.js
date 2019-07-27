@@ -1,36 +1,40 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
-import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
-import { NavLink } from 'react-router-dom';
-import Hidden from '@material-ui/core/Hidden';
-import { withStyles } from '@material-ui/core/styles';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { RegisterForm, SelectLanguage } from 'enl-components';
-import styles from 'enl-components/Forms/user-jss';
-import brand from 'enl-api/dummy/brand';
-import logo from 'enl-images/logo.svg';
-import ArrowBack from '@material-ui/icons/ArrowBack';
-import { FormattedMessage } from 'react-intl';
-import { registerWithEmail } from 'enl-redux/actions/authActions';
-import messages from './messages';
+import React from "react";
+import { Helmet } from "react-helmet";
+import PropTypes from "prop-types";
+import Typography from "@material-ui/core/Typography";
+import { NavLink } from "react-router-dom";
+import Hidden from "@material-ui/core/Hidden";
+import { withStyles } from "@material-ui/core/styles";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { RegisterForm, SelectLanguage } from "enl-components";
+import styles from "enl-components/Forms/user-jss";
+import brand from "enl-api/dummy/brand";
+import logo from "enl-images/logo.svg";
+import ArrowBack from "@material-ui/icons/ArrowBack";
+import { FormattedMessage } from "react-intl";
+import { registerWithEmail } from "enl-redux/actions/authActions";
+import messages from "./messages";
 
 class Register extends React.Component {
   state = {
     valueForm: []
-  }
+  };
 
   submitForm(values) {
     setTimeout(() => {
       this.setState({ valueForm: values });
-      console.log(`You submitted:\n\n${this.state.valueForm.get('email')}`); // eslint-disable-line
-      this.props.handleRegisterWithEmail(this.state.valueForm.get('name'), this.state.valueForm.get('email'), this.state.valueForm.get('password')); // eslint-disable-line
-    }, 500); // simulate server latency
+      console.log(`You submitted:\n\n${this.state.valueForm.get("email")}`); // eslint-disable-line
+      this.props.handleRegisterWithEmail(
+        this.state.valueForm.get("name"),
+        this.state.valueForm.get("email"),
+        this.state.valueForm.get("password")
+      ); // eslint-disable-line
+    }, 50); // simulate server latency
   }
 
   render() {
-    const title = brand.name + ' - Register';
+    const title = brand.name + " - Register";
     const description = brand.desc;
     const { classes } = this.props;
     return (
@@ -53,10 +57,19 @@ class Register extends React.Component {
                     {brand.name}
                   </NavLink>
                 </div>
-                <Typography variant="h3" component="h1" className={classes.opening} gutterBottom>
+                <Typography
+                  variant="h3"
+                  component="h1"
+                  className={classes.opening}
+                  gutterBottom
+                >
                   <FormattedMessage {...messages.greetingTitle} />
                 </Typography>
-                <Typography variant="h6" component="p" className={classes.subpening}>
+                <Typography
+                  variant="h6"
+                  component="p"
+                  className={classes.subpening}
+                >
                   <FormattedMessage {...messages.greetingSubtitle} />
                 </Typography>
               </div>
@@ -72,7 +85,7 @@ class Register extends React.Component {
             </div>
           </Hidden>
           <div className={classes.sideFormWrap}>
-            <RegisterForm onSubmit={(values) => this.submitForm(values)} />
+            <RegisterForm onSubmit={values => this.submitForm(values)} />
           </div>
         </div>
       </div>
@@ -82,10 +95,10 @@ class Register extends React.Component {
 
 Register.propTypes = {
   classes: PropTypes.object.isRequired,
-  handleRegisterWithEmail: PropTypes.func.isRequired,
+  handleRegisterWithEmail: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => state.get('authReducer');
+const mapStateToProps = state => state.get("authReducer");
 
 const mapDispatchToProps = dispatch => ({
   handleRegisterWithEmail: bindActionCreators(registerWithEmail, dispatch)

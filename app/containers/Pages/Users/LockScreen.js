@@ -1,27 +1,27 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
-import brand from 'enl-api/dummy/brand';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { LockForm } from 'enl-components';
-import styles from '../../../components/Forms/user-jss';
+import React from "react";
+import { Helmet } from "react-helmet";
+import brand from "enl-api/dummy/brand";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import { LockForm } from "enl-components";
+import styles from "../../../components/Forms/user-jss";
 
 class LockScreen extends React.Component {
   state = {
     valueForm: []
-  }
+  };
 
   submitForm(values) {
     const { valueForm } = this.state;
     setTimeout(() => {
       this.setState({ valueForm: values });
       console.log(`You submitted:\n\n${valueForm}`);
-      window.location.href = '/app';
-    }, 500); // simulate server latency
+      window.location.href = "/app";
+    }, 50); // simulate server latency
   }
 
   render() {
-    const title = brand.name + ' - Lock Screen';
+    const title = brand.name + " - Lock Screen";
     const description = brand.desc;
     const { classes } = this.props;
     return (
@@ -36,7 +36,7 @@ class LockScreen extends React.Component {
         </Helmet>
         <div className={classes.container}>
           <div className={classes.userFormWrap}>
-            <LockForm onSubmit={(values) => this.submitForm(values)} />
+            <LockForm onSubmit={values => this.submitForm(values)} />
           </div>
         </div>
       </div>
@@ -45,7 +45,7 @@ class LockScreen extends React.Component {
 }
 
 LockScreen.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(LockScreen);
