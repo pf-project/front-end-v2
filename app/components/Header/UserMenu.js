@@ -19,10 +19,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import dummy from "enl-api/dummy/dummyContents";
 import { injectIntl, FormattedMessage } from "react-intl";
-import messageStyles from "enl-styles/Messages.scss";
-import avatarApi from "enl-api/images/avatars";
 import link from "enl-api/ui/link";
-import NotificationsActiveOutlined from "@material-ui/icons/NotificationsActiveOutlined";
 import messages from "./messages";
 import styles from "./header-jss";
 
@@ -72,21 +69,6 @@ class UserMenu extends React.Component {
             to={link.profile}
           >
             <FormattedMessage {...messages.profile} />
-          </MenuItem>
-          <MenuItem onClick={this.handleClose} component={Link} to={link.task}>
-            <FormattedMessage {...messages.task} />
-          </MenuItem>
-          <MenuItem onClick={this.handleClose} component={Link} to={link.email}>
-            <FormattedMessage {...messages.email} />
-            <ListItemIcon>
-              <Badge
-                className={classNames(classes.badge, classes.badgeMenu)}
-                badgeContent={2}
-                color="secondary"
-              >
-                &nbsp;
-              </Badge>
-            </ListItemIcon>
           </MenuItem>
           <Divider />
           <MenuItem onClick={signOut}>

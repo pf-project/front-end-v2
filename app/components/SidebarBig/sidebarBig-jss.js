@@ -140,7 +140,7 @@ const styles = theme => ({
       fontSize: 32
     },
     "& $text": {
-      width: 80,
+      width: "auto",
       overflow: "hidden",
       textOverflow: "ellipsis",
       whiteSpace: "nowrap",
