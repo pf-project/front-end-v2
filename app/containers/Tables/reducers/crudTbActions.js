@@ -1,16 +1,13 @@
-import * as notification from 'enl-redux/constants/notifConstants';
-import * as types from './crudTbConstants';
+import * as notification from "enl-redux/constants/notifConstants";
+import * as types from "./crudTbConstants";
 
-export const fetch = (payload, branch) => ({
-  branch,
-  type: `${branch}/${types.FETCH_DATA_REQUEST}`,
-  payload
+export const fetch = () => ({
+  type: types.FETCH_DATA_REQUEST
 });
 
-export const fetchAction = (items, branch) => ({
-  branch,
-  type: `${branch}/${types.FETCH_DATA}`,
-  items
+export const fetchAction = (users, branch) => ({
+  type: types.FETCH_DATA_SUCCESS,
+  users
 });
 export const addAction = (anchor, branch) => ({
   branch,

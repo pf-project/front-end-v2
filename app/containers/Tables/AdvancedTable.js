@@ -1,18 +1,17 @@
-import React, { Component } from 'react';
-import { Helmet } from 'react-helmet';
-import brand from 'enl-api/dummy/brand';
-import { SourceReader, PapperBlock } from 'enl-components';
-import { injectIntl, intlShape } from 'react-intl';
-import messages from './messages';
-import { Utilisateurs } from './types';
+import React, { Component } from "react";
+import { Helmet } from "react-helmet";
+import brand from "enl-api/dummy/brand";
+import { SourceReader, PapperBlock } from "enl-components";
+import { injectIntl, intlShape } from "react-intl";
+import messages from "./messages";
+import Utilisateurs from "./types/Utilisateurs";
 
 class AdvancedTable extends Component {
   render() {
-    const title = brand.name + ' - Table';
+    const title = brand.name + " - Table";
     const description = brand.desc;
-    const docSrc = 'containers/Tables/demos/';
+    const docSrc = "containers/Tables/demos/";
     const { intl } = this.props;
-    console.log('got here');
     return (
       <div>
         <Helmet>
