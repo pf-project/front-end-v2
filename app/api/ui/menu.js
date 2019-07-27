@@ -1,5 +1,23 @@
 module.exports = [
   {
+    key: 'administration',
+    name: 'Administration',
+    icon: 'home',
+    child: [
+      {
+        key: 'gestion_utilisateur',
+        name: 'Gestion des utilisateurs',
+        title: true
+      },
+      {
+        key: 'gerer',
+        name: 'Gérer',
+        icon: 'border_color',
+        link: '/app/gestion-utilisateur'
+      }
+    ]
+  },
+  {
     key: 'account_page',
     name: 'Auth Page',
     icon: 'account_box',
@@ -7,7 +25,7 @@ module.exports = [
       {
         key: 'account_page',
         name: 'Auth Page',
-        title: true,
+        title: true
       },
       {
         key: 'login',
@@ -26,7 +44,7 @@ module.exports = [
         name: 'Reset Password',
         icon: 'undo',
         link: '/reset-password'
-      },
+      }
     ]
   },
   {
@@ -37,7 +55,7 @@ module.exports = [
       {
         key: 'other_page',
         name: 'Welcome Page',
-        title: true,
+        title: true
       },
       {
         key: 'blank',
@@ -48,7 +66,7 @@ module.exports = [
       {
         key: 'generic_page',
         name: 'Generic',
-        title: true,
+        title: true
       },
       {
         key: 'dashboard',
@@ -60,7 +78,7 @@ module.exports = [
         key: 'forms',
         name: 'Form',
         link: '/app/form',
-        icon: 'ballot',
+        icon: 'ballot'
       },
       {
         key: 'tables',
@@ -79,7 +97,7 @@ module.exports = [
         name: 'Coming Soon',
         icon: 'polymer',
         link: '/coming-soon'
-      },
+      }
     ]
   },
   {
@@ -90,7 +108,7 @@ module.exports = [
       {
         key: 'errors',
         name: 'Errors',
-        title: true,
+        title: true
       },
       {
         key: 'not_found_page',
@@ -103,7 +121,7 @@ module.exports = [
         name: 'Error Page',
         icon: 'flash_on',
         link: '/app/pages/error'
-      },
+      }
     ]
   },
   {
@@ -131,9 +149,9 @@ module.exports = [
             key: 'sub_menu_2',
             name: 'Sub Menu 2',
             link: '/#'
-          },
+          }
         ]
-      },
+      }
     ]
   }
 ];
