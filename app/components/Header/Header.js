@@ -112,10 +112,8 @@ class Header extends React.Component {
       mode,
       title,
       openGuide,
-      history,
       signOut,
       dense,
-      isLogin,
       avatar,
       intl
     } = this.props;
