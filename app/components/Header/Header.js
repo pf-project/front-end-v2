@@ -221,33 +221,12 @@ class Header extends React.Component {
               </Typography>
             </div>
           </Hidden>
-          {/* <div className={classes.searchWrapper}>
-            <div className={classes.wrapper}>
-              <div className={classes.search}>
-                <SearchIcon />
-              </div>
-              <SearchUi history={history} />
-            </div>
-          </div> */}
           <Hidden xsDown>
             <span className={classes.separatorV} />
           </Hidden>
           <div className={classes.userToolbar}>
             <SelectLanguage />
-            {isLogin ? (
-              <UserMenu signOut={signOut} avatar={avatar} />
-            ) : (
-              <Button
-                color="primary"
-                className={classes.buttonTop}
-                component={Link}
-                to={link.login}
-                variant="contained"
-              >
-                <AccountCircle />
-                <FormattedMessage {...messages.login} />
-              </Button>
-            )}
+            <UserMenu signOut={signOut} avatar={avatar} />
           </div>
         </Toolbar>
       </AppBar>
