@@ -1,5 +1,5 @@
-import * as notification from "enl-redux/constants/notifConstants";
-import * as types from "./crudTbConstants";
+import * as notification from 'enl-redux/constants/notifConstants';
+import * as types from './crudTbConstants';
 
 export const fetch = () => ({
   type: types.FETCH_DATA_REQUEST

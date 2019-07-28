@@ -1,6 +1,6 @@
-import { fromJS, List, Map } from "immutable";
-import notif from "enl-api/ui/notifMessage";
-import { CLOSE_NOTIF } from "enl-redux/constants/notifConstants";
+import { fromJS, List, Map } from 'immutable';
+import notif from 'enl-api/ui/notifMessage';
+import { CLOSE_NOTIF } from 'enl-redux/constants/notifConstants';
 import {
   FETCH_DATA_SUCCESS,
   BOLCK_USER_SUCCESS,
@@ -9,12 +9,12 @@ import {
   REMOVE_ROW,
   EDIT_ROW,
   SAVE_ROW
-} from "./crudTbConstants";
+} from './crudTbConstants';
 
 const initialState = {
   dataTable: List([]),
   user: List([]),
-  notifMsg: ""
+  notifMsg: ''
 };
 
 const initialItem = (keyTemplate, anchor) => {
@@ -23,7 +23,7 @@ const initialItem = (keyTemplate, anchor) => {
     id: (+new Date() + Math.floor(Math.random() * 999999)).toString(36)
   };
   for (let i = 0; i < rawKey.length; i += 1) {
-    if (rawKey[i] !== "id" && rawKey[i] !== "edited") {
+    if (rawKey[i] !== 'id' && rawKey[i] !== 'edited') {
       staticKey[rawKey[i]] = anchor[i].initialValue;
     }
   }
@@ -44,7 +44,7 @@ export default function crudTbReducer(
     case FETCH_DATA_SUCCESS:
       return state.withMutations(mutableState => {
         const users = fromJS(action.users);
-        mutableState.set("users", users);
+        mutableState.set('users', users);
       });
     case `${branch}/${ADD_EMPTY_ROW}`:
     // return state.withMutations(mutableState => {
@@ -56,12 +56,12 @@ export default function crudTbReducer(
     // });
     case BOLCK_USER_SUCCESS:
       return state.withMutations(mutableState => {
-        let user = state.get("users").find(user => {
-          user.get("id") === action.payload.payload;
+        let user = state.get('users').find(user => {
+          user.get('id') === action.payload.payload;
         });
-        console.log(user.get("enabled"));
-        user = user.set("enabled", !user.get("enabled"));
-        console.log(state.get("users"));
+        console.log(user.get('enabled'));
+        user = user.set('enabled', !user.get('enabled'));
+        console.log(state.get('users'));
         // mutableState
         //   .update("dataTable", dataTable => dataTable.splice(index, 1))
         //   .set("notifMsg", notif.removed);

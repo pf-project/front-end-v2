@@ -1,24 +1,24 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import PropTypes from "prop-types";
-import LinearProgress from "@material-ui/core/LinearProgress";
-import Chip from "@material-ui/core/Chip";
-import MUIDataTable from "mui-datatables";
-import { bindActionCreators, subscribe } from "redux";
-import { connect } from "react-redux";
-import Columns from "./utilisateur/Columns";
-import Options from "./utilisateur/Options";
-import { fetch, fetchAction } from "../reducers/crudTbActions";
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Chip from '@material-ui/core/Chip';
+import MUIDataTable from 'mui-datatables';
+import { bindActionCreators, subscribe } from 'redux';
+import { connect } from 'react-redux';
+import Columns from './utilisateur/Columns';
+import Options from './utilisateur/Options';
+import { fetch, fetchAction } from '../reducers/crudTbActions';
 
 const styles = theme => ({
   table: {
-    "& > div": {
-      overflow: "auto"
+    '& > div': {
+      overflow: 'auto'
     },
-    "& table": {
+    '& table': {
       minWidth: 500,
-      [theme.breakpoints.down("md")]: {
-        "& td": {
+      [theme.breakpoints.down('md')]: {
+        '& td': {
           height: 40
         }
       }
@@ -38,25 +38,27 @@ class Utilisateurs extends React.Component {
   componentWillMount() {
     this.props.fetchdata();
   }
+
   componentWillReceiveProps() {
-    let data = this.props.data;
+    const { data } = this.props;
     // this.props.data.subscribe(() => console.log("gzrgrzeg"));
-    let table = [];
-    let users = this.props.data.get("users").toArray();
+    const table = [];
+    const users = this.props.data.get('users').toArray();
 
     users.map(u => {
-      let user = u.toObject();
+      const user = u.toObject();
       table.push([
         user.id,
         user.username,
         user.authority,
-        user.enabled ? "Débloqué" : "Bloqué"
+        user.enabled ? 'Débloqué' : 'Bloqué'
       ]);
     });
     this.setState({
       users: table
     });
   }
+
   render() {
     const { classes } = this.props;
 
@@ -79,7 +81,7 @@ Utilisateurs.propTypes = {
   fetchdata: PropTypes.func.isRequired
 };
 
-const reducer = "crudTbReducer";
+const reducer = 'crudTbReducer';
 const mapStateToProps = state => ({
   data: state.get(reducer)
 });

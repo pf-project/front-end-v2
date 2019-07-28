@@ -1,14 +1,16 @@
-import { call, fork, put, take, takeEvery, all } from "redux-saga/effects";
-import { fetchAPI } from "../../../serverActions";
+import {
+  call, fork, put, take, takeEvery, all
+} from 'redux-saga/effects';
+import { fetchAPI } from '../../../serverActions';
 
-import { fetchAction, userblocked } from "./crudTbActions";
-import { FETCH_DATA_REQUEST, BOLCK_USER_REQUEST } from "./crudTbConstants";
+import { fetchAction, userblocked } from './crudTbActions';
+import { FETCH_DATA_REQUEST, BOLCK_USER_REQUEST } from './crudTbConstants';
 function* fetchDataSaga() {
   try {
     const data = yield fetchAPI({
-      method: "GET",
-      url: "/api/user/find",
-      token: window.localStorage.getItem("token")
+      method: 'GET',
+      url: '/api/user/find',
+      token: window.localStorage.getItem('token')
     });
     yield put(fetchAction(data));
   } catch (error) {
@@ -20,9 +22,9 @@ function* fetchDataSaga() {
 function* blockuser(payload) {
   try {
     const data = yield fetchAPI({
-      method: "DELETE",
-      url: "/api/user/disable/" + payload.payload,
-      token: window.localStorage.getItem("token")
+      method: 'DELETE',
+      url: '/api/user/disable/' + payload.payload,
+      token: window.localStorage.getItem('token')
     });
     yield put(userblocked(payload));
   } catch (error) {
