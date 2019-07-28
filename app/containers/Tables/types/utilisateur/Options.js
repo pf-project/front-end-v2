@@ -1,6 +1,6 @@
 import React from "react";
 import CustomToolbarSelect from "./CustomToolbarSelect";
-// import CustomToolbar from "./CustomToolbar";
+import CustomToolbar from "./CustomToolbar";
 export default {
   textLabels: {
     body: {
@@ -45,8 +45,8 @@ export default {
       displayData={displayData}
       setSelectedRows={setSelectedRows}
     />
-  )
-  //   customToolbar: () => {
-  //     return <CustomToolbar />;
-  //   }
+  ),
+  customToolbar: () => {
+    return <CustomToolbar />;
+  }
 };

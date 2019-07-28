@@ -21,3 +21,5 @@ export EmptyData from "./Tables/EmptyData";
 export ErrorWrap from "./Error/ErrorWrap";
 // Theme an Layout Settings
 export TemplateSettings from "./TemplateSettings";
+
+export FloatingPanel from "./Panel/FloatingPanel";

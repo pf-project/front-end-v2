@@ -4,11 +4,16 @@ import PropTypes from "prop-types";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Chip from "@material-ui/core/Chip";
 import MUIDataTable from "mui-datatables";
-import { bindActionCreators, subscribe } from "redux";
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Columns from "./utilisateur/Columns";
 import Options from "./utilisateur/Options";
-import { fetch, fetchAction } from "../reducers/crudTbActions";
+import {
+  fetch,
+  fetchAction,
+  closeNotifAction
+} from "../reducers/crudTbActions";
+import { Notification } from "enl-components";
 
 const styles = theme => ({
   table: {
@@ -38,13 +43,13 @@ class Utilisateurs extends React.Component {
   componentWillMount() {
     this.props.fetchdata();
   }
-
   render() {
-    const { classes, dataTable } = this.props;
+    const { classes, dataTable, closeNotif, messageNotif } = this.props;
     let users = [];
     if (dataTable)
       dataTable.toArray().map(element => {
         let user = element.toObject();
+        console.log(user.username, user.enabled);
         users.push([
           user.id,
           user.username,
@@ -55,6 +60,7 @@ class Utilisateurs extends React.Component {
 
     return (
       <div className={classes.table}>
+        <Notification close={() => closeNotif()} message={messageNotif} />
         <MUIDataTable
           key={Math.random()}
           title="Liste des utilisateurs"
@@ -69,16 +75,20 @@ class Utilisateurs extends React.Component {
 
 Utilisateurs.propTypes = {
   classes: PropTypes.object.isRequired,
-  fetchdata: PropTypes.func.isRequired
+  fetchdata: PropTypes.func.isRequired,
+  closeNotif: PropTypes.func.isRequired,
+  messageNotif: PropTypes.string.isRequired
 };
 
 const reducer = "crudTbReducer";
 const mapStateToProps = state => ({
-  dataTable: state.get(reducer).get("dataTable")
+  dataTable: state.get(reducer).get("dataTable"),
+  messageNotif: state.get(reducer).get("notifMsg")
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchdata: bindActionCreators(fetch, dispatch)
+  fetchdata: bindActionCreators(fetch, dispatch),
+  closeNotif: bindActionCreators(closeNotifAction, dispatch)
 });
 
 const UtilisateursMapped = connect(

@@ -5,10 +5,11 @@ import CompareArrowsIcon from "@material-ui/icons/CompareArrows";
 import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
 import BlockIcon from "@material-ui/icons/Block";
 import { withStyles } from "@material-ui/core/styles";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { blockuser } from "../../reducers/crudTbActions";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 
 const defaultToolbarSelectStyles = {
   iconButton: {},
@@ -40,19 +41,15 @@ class CustomToolbarSelect extends React.Component {
     this.props.setSelectedRows(nextSelectedRows);
   };
 
-  handleClickDeselectAll = () => {
-    this.props.setSelectedRows([]);
-  };
-
   handleClickBlockSelected = () => {
     this.props.selectedRows.data.map(row => {
-      let id = this.props.displayData[row.index].data[0];
+      const id = this.props.displayData[row.index].data[0];
       this.changeStatus(id);
     });
   };
 
   delete = () => {
-    //console.log(this.props.displayData)
+    // console.log(this.props.displayData)
     // let data = this.props.selectedRows.data;
     // data.map(el => {
     //   let index = el.index;
@@ -75,23 +72,28 @@ class CustomToolbarSelect extends React.Component {
 
   render() {
     const { classes } = this.props;
+    let edit;
+    if (this.props.selectedRows.data.length == 1)
+      edit = (
+        <Tooltip title={"Modifier"}>
+          <IconButton
+            className={classes.iconButton}
+            //onClick={this.delete}
+          >
+            <EditIcon />
+          </IconButton>
+        </Tooltip>
+      );
 
     return (
       <div className={classes.iconContainer}>
-        <Tooltip title={"supprimer"}>
+        <Tooltip title="Supprimer">
           <IconButton className={classes.iconButton} onClick={this.delete}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip title={"Supprimer"}>
-          <IconButton
-            className={classes.iconButton}
-            onClick={this.handleClickDeselectAll}
-          >
-            <IndeterminateCheckBoxIcon className={classes.icon} />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title={"Bloquer/Débloquer"}>
+
+        <Tooltip title="Bloquer/Débloquer">
           <IconButton
             className={classes.iconButton}
             onClick={this.handleClickBlockSelected}
@@ -99,6 +101,7 @@ class CustomToolbarSelect extends React.Component {
             <BlockIcon className={classes.icon} />
           </IconButton>
         </Tooltip>
+        {edit}
       </div>
     );
   }
