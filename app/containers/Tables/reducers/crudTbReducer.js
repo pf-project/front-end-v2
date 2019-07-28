@@ -40,7 +40,10 @@ export default function crudTbReducer(
   const { branch } = action;
   switch (action.type) {
     case FETCH_DATA_SUCCESS:
-      return action.users;
+      return {
+        ...state,
+        dataTable: action.users
+      };
     // return state.withMutations(mutableState => {
     //   const users = fromJS(action.users);
     //   mutableState.set("users", users);

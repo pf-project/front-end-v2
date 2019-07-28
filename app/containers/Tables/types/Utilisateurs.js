@@ -38,31 +38,26 @@ class Utilisateurs extends React.Component {
   componentWillMount() {
     this.props.fetchdata();
   }
-  componentWillReceiveProps() {
-    let data = this.props.users;
-    let users = [];
 
-    data.map(user => {
-      users.push([
-        user.id,
-        user.username,
-        user.authority,
-        user.enabled ? "Débloqué" : "Bloqué"
-      ]);
-    });
-    this.setState({
-      users
-    });
-  }
   render() {
-    const { classes } = this.props;
+    const { classes, dataTable } = this.props;
+    let users = [];
+    if (dataTable)
+      dataTable.map(user => {
+        users.push([
+          user.id,
+          user.username,
+          user.authority,
+          user.enabled ? "Débloqué" : "Bloqué"
+        ]);
+      });
 
     return (
       <div className={classes.table}>
         <MUIDataTable
           key={Math.random()}
           title="Liste des utilisateurs"
-          data={this.state.users}
+          data={users}
           columns={Columns}
           options={Options}
         />
@@ -78,7 +73,7 @@ Utilisateurs.propTypes = {
 
 const reducer = "crudTbReducer";
 const mapStateToProps = state => ({
-  users: state.get(reducer)
+  dataTable: state.get(reducer).dataTable
 });
 
 const mapDispatchToProps = dispatch => ({

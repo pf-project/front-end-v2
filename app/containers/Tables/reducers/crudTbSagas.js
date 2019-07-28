@@ -13,7 +13,7 @@ function* fetchDataSaga() {
     yield put(fetchAction(data));
   } catch (error) {
     console.log(error);
-    // yield put(loginFailure(error.message));
+    // yield put(logingit Failure(error.message));
   }
 }
 
