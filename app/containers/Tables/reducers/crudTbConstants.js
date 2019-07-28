@@ -1,9 +1,17 @@
-export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
-export const FETCH_DATA_REQUEST = 'FETCH_DATA_REQUEST';
-export const BOLCK_USER_REQUEST = 'BOLCK_USER_REQUEST';
-export const BOLCK_USER_SUCCESS = 'BOLCK_USER_SUCCESS';
-export const ADD_EMPTY_ROW = 'ADD_EMPTY_ROW';
-export const UPDATE_ROW = 'UPDATE_ROW';
-export const REMOVE_ROW = 'REMOVE_ROW';
-export const EDIT_ROW = 'EDIT_ROW';
-export const SAVE_ROW = 'SAVE_ROW';
+export const FETCH_DATA_SUCCESS = "FETCH_DATA_SUCCESS";
+export const FETCH_DATA_REQUEST = "FETCH_DATA_REQUEST";
+export const BOLCK_USER_REQUEST = "BOLCK_USER_REQUEST";
+export const BOLCK_USER_SUCCESS = "BOLCK_USER_SUCCESS";
+export const ADD_EMPTY_ROW = "ADD_EMPTY_ROW";
+export const UPDATE_ROW = "UPDATE_ROW";
+export const REMOVE_ROW = "REMOVE_ROW";
+export const EDIT_ROW = "EDIT_ROW";
+export const SAVE_ROW = "SAVE_ROW";
+
+export const ADD_USER_REQUEST = "ADD_USER_REQUEST";
+export const ADD_USER_SUCCESS = "ADD_USER_SUCCESS";
+
+export const ADD_USER = "ADD_USER";
+export const CLOSE_USER_FORM = "CLOSE_USER_FORM";
+export const CLOSE_USER_FORM_SUCCESS = "CLOSE_USER_FORM_SUCCESS";
+export const OPEN_USER_FORM = "OPEN_USER_FORM";

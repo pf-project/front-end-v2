@@ -1,22 +1,23 @@
-import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
-import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
-import BlockIcon from '@material-ui/icons/Block';
-import { withStyles } from '@material-ui/core/styles';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { blockuser } from '../../reducers/crudTbActions';
+import React from "react";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import CompareArrowsIcon from "@material-ui/icons/CompareArrows";
+import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
+import BlockIcon from "@material-ui/icons/Block";
+import { withStyles } from "@material-ui/core/styles";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { blockuser } from "../../reducers/crudTbActions";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 
 const defaultToolbarSelectStyles = {
   iconButton: {},
   iconContainer: {
-    marginRight: '24px'
+    marginRight: "24px"
   },
   inverseIcon: {
-    transform: 'rotate(90deg)'
+    transform: "rotate(90deg)"
   }
 };
 
@@ -38,10 +39,6 @@ class CustomToolbarSelect extends React.Component {
     );
 
     this.props.setSelectedRows(nextSelectedRows);
-  };
-
-  handleClickDeselectAll = () => {
-    this.props.setSelectedRows([]);
   };
 
   handleClickBlockSelected = () => {
@@ -69,28 +66,33 @@ class CustomToolbarSelect extends React.Component {
   };
 
   changeStatus = id => {
-    const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem("token");
     this.props.blockuser(id);
   };
 
   render() {
     const { classes } = this.props;
+    let edit;
+    if (this.props.selectedRows.data.length == 1)
+      edit = (
+        <Tooltip title={"Modifier"}>
+          <IconButton
+            className={classes.iconButton}
+            //onClick={this.delete}
+          >
+            <EditIcon />
+          </IconButton>
+        </Tooltip>
+      );
 
     return (
       <div className={classes.iconContainer}>
-        <Tooltip title="supprimer">
+        <Tooltip title="Supprimer">
           <IconButton className={classes.iconButton} onClick={this.delete}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip title="Supprimer">
-          <IconButton
-            className={classes.iconButton}
-            onClick={this.handleClickDeselectAll}
-          >
-            <IndeterminateCheckBoxIcon className={classes.icon} />
-          </IconButton>
-        </Tooltip>
+
         <Tooltip title="Bloquer/Débloquer">
           <IconButton
             className={classes.iconButton}
@@ -99,12 +101,13 @@ class CustomToolbarSelect extends React.Component {
             <BlockIcon className={classes.icon} />
           </IconButton>
         </Tooltip>
+        {edit}
       </div>
     );
   }
 }
 
-const reducer = 'crudTbReducer';
+const reducer = "crudTbReducer";
 const mapStateToProps = state => ({
   data: state.get(reducer)
 });
@@ -119,5 +122,5 @@ const CustomToolbarSelectMapped = connect(
 )(CustomToolbarSelect);
 
 export default withStyles(defaultToolbarSelectStyles, {
-  name: 'CustomToolbarSelect'
+  name: "CustomToolbarSelect"
 })(CustomToolbarSelectMapped);

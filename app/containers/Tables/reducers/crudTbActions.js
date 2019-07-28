@@ -1,5 +1,5 @@
-import * as notification from 'enl-redux/constants/notifConstants';
-import * as types from './crudTbConstants';
+import * as notification from "enl-redux/constants/notifConstants";
+import * as types from "./crudTbConstants";
 
 export const fetch = () => ({
   type: types.FETCH_DATA_REQUEST
@@ -18,6 +18,17 @@ export const userblocked = payload => ({
   type: types.BOLCK_USER_SUCCESS,
   payload
 });
+
+export const addUser = payload => ({
+  type: types.ADD_USER_REQUEST,
+  payload
+});
+
+export const userAdded = payload => ({
+  type: types.ADD_USER_SUCCESS,
+  payload
+});
+
 export const addAction = (anchor, branch) => ({
   branch,
   type: `${branch}/${types.ADD_EMPTY_ROW}`,
@@ -46,5 +57,20 @@ export const saveAction = (item, branch) => ({
 });
 export const closeNotifAction = branch => ({
   branch,
-  type: `${branch}/${notification.CLOSE_NOTIF}`
+  type: notification.CLOSE_NOTIF
 });
+
+// export const addUserAction = {
+//   type: types.ADD_USER
+// };
+
+export const closeAction = {
+  type: types.CLOSE_USER_FORM
+};
+
+export const closeActionSuccess = {
+  type: types.CLOSE_USER_FORM_SUCCESS
+};
+export const openAction = {
+  type: types.OPEN_USER_FORM
+};

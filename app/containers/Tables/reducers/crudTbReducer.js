@@ -1,6 +1,6 @@
-import { fromJS, List, Map } from 'immutable';
-import notif from 'enl-api/ui/notifMessage';
-import { CLOSE_NOTIF } from 'enl-redux/constants/notifConstants';
+import { fromJS, List, Map, Immutable } from "immutable";
+import notif from "enl-api/ui/notifMessage";
+import { CLOSE_NOTIF } from "enl-redux/constants/notifConstants";
 import {
   FETCH_DATA_SUCCESS,
   BOLCK_USER_SUCCESS,
@@ -8,13 +8,18 @@ import {
   UPDATE_ROW,
   REMOVE_ROW,
   EDIT_ROW,
-  SAVE_ROW
-} from './crudTbConstants';
+  SAVE_ROW,
+  ADD_USER,
+  CLOSE_USER_FORM,
+  OPEN_USER_FORM,
+  ADD_USER_SUCCESS,
+  CLOSE_USER_FORM_SUCCESS
+} from "./crudTbConstants";
 
 const initialState = {
   dataTable: List([]),
-  user: List([]),
-  notifMsg: ''
+  notifMsg: "",
+  openForm: false
 };
 
 const initialItem = (keyTemplate, anchor) => {
@@ -23,7 +28,7 @@ const initialItem = (keyTemplate, anchor) => {
     id: (+new Date() + Math.floor(Math.random() * 999999)).toString(36)
   };
   for (let i = 0; i < rawKey.length; i += 1) {
-    if (rawKey[i] !== 'id' && rawKey[i] !== 'edited') {
+    if (rawKey[i] !== "id" && rawKey[i] !== "edited") {
       staticKey[rawKey[i]] = anchor[i].initialValue;
     }
   }
@@ -43,28 +48,30 @@ export default function crudTbReducer(
   switch (action.type) {
     case FETCH_DATA_SUCCESS:
       return state.withMutations(mutableState => {
-        const users = fromJS(action.users);
-        mutableState.set('users', users);
+        const dataTable = fromJS(action.users);
+        mutableState.set("dataTable", dataTable);
       });
-    case `${branch}/${ADD_EMPTY_ROW}`:
-    // return state.withMutations(mutableState => {
-    //   const raw = state.get("dataTable").last();
-    //   const initial = initialItem(raw, action.anchor);
-    //   mutableState.update("dataTable", dataTable =>
-    //     dataTable.unshift(initial)
-    //   );
-    // });
+
     case BOLCK_USER_SUCCESS:
       return state.withMutations(mutableState => {
-        let user = state.get('users').find(user => {
-          user.get('id') === action.payload.payload;
-        });
-        console.log(user.get('enabled'));
-        user = user.set('enabled', !user.get('enabled'));
-        console.log(state.get('users'));
-        // mutableState
-        //   .update("dataTable", dataTable => dataTable.splice(index, 1))
-        //   .set("notifMsg", notif.removed);
+        let notifMsg;
+        mutableState
+          .update(
+            "dataTable",
+            dataTable =>
+              (dataTable = dataTable.update(
+                dataTable.findIndex(
+                  user => user.get("id") === action.payload.payload
+                ),
+                user => {
+                  notifMsg = user.get("enabled")
+                    ? "Utilisateur(s) Bolqué"
+                    : "Utilisateur(s) Débloqué";
+                  return user.set("enabled", !user.get("enabled"));
+                }
+              ))
+          )
+          .set("notifMsg", notifMsg);
       });
     case `${branch}/${UPDATE_ROW}`:
     // return state.withMutations(mutableState => {
@@ -87,19 +94,47 @@ export default function crudTbReducer(
     //     dataTable.setIn([index, "edited"], true)
     //   );
     // });
-    case `${branch}/${SAVE_ROW}`:
-    // return state.withMutations(mutableState => {
-    //   const index = state.get("dataTable").indexOf(action.item);
-    //   mutableState
-    //     .update("dataTable", dataTable =>
-    //       dataTable.setIn([index, "edited"], false)
-    //     )
-    //     .set("notifMsg", notif.saved);
-    // });
-    case `${branch}/${CLOSE_NOTIF}`:
-    // return state.withMutations(mutableState => {
-    //   mutableState.set("notifMsg", "");
-    // });
+    case ADD_USER_SUCCESS:
+      // console.log(action.payload);
+      const newUser = action.payload;
+      return state.withMutations(mutableState => {
+        mutableState
+          .update("dataTable", dataTable =>
+            dataTable.push(
+              Map({
+                id: newUser.id,
+                username: newUser.username,
+                authority: newUser.authority,
+                enabled: newUser.enabled
+              })
+            )
+          )
+          .set("notifMsg", "saved");
+      });
+    case ADD_USER:
+      return state.withMutations(mutableState => {
+        mutableState.set("openForm", true);
+      });
+    case CLOSE_NOTIF:
+      return state.withMutations(mutableState => {
+        mutableState.set("notifMsg", "");
+      });
+    case OPEN_USER_FORM:
+      return state.withMutations(mutableState => {
+        mutableState.set("openForm", true);
+      });
+    case CLOSE_USER_FORM:
+      return state.withMutations(mutableState => {
+        mutableState
+          .set("openForm", false)
+          .set("notifMsg", "L'action a été annulé");
+      });
+    case CLOSE_USER_FORM_SUCCESS:
+      return state.withMutations(mutableState => {
+        mutableState
+          .set("openForm", false)
+          .set("notifMsg", "L'action est terminé");
+      });
     default:
       return state;
   }

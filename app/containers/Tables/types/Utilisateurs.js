@@ -1,24 +1,29 @@
-import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Chip from '@material-ui/core/Chip';
-import MUIDataTable from 'mui-datatables';
-import { bindActionCreators, subscribe } from 'redux';
-import { connect } from 'react-redux';
-import Columns from './utilisateur/Columns';
-import Options from './utilisateur/Options';
-import { fetch, fetchAction } from '../reducers/crudTbActions';
+import React from "react";
+import { withStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import Chip from "@material-ui/core/Chip";
+import MUIDataTable from "mui-datatables";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import Columns from "./utilisateur/Columns";
+import Options from "./utilisateur/Options";
+import {
+  fetch,
+  fetchAction,
+  closeNotifAction
+} from "../reducers/crudTbActions";
+import { Notification } from "enl-components";
 
 const styles = theme => ({
   table: {
-    '& > div': {
-      overflow: 'auto'
+    "& > div": {
+      overflow: "auto"
     },
-    '& table': {
+    "& table": {
       minWidth: 500,
-      [theme.breakpoints.down('md')]: {
-        '& td': {
+      [theme.breakpoints.down("md")]: {
+        "& td": {
           height: 40
         }
       }
@@ -38,36 +43,28 @@ class Utilisateurs extends React.Component {
   componentWillMount() {
     this.props.fetchdata();
   }
-
-  componentWillReceiveProps() {
-    const { data } = this.props;
-    // this.props.data.subscribe(() => console.log("gzrgrzeg"));
-    const table = [];
-    const users = this.props.data.get('users').toArray();
-
-    users.map(u => {
-      const user = u.toObject();
-      table.push([
-        user.id,
-        user.username,
-        user.authority,
-        user.enabled ? 'Débloqué' : 'Bloqué'
-      ]);
-    });
-    this.setState({
-      users: table
-    });
-  }
-
   render() {
-    const { classes } = this.props;
+    const { classes, dataTable, closeNotif, messageNotif } = this.props;
+    let users = [];
+    if (dataTable)
+      dataTable.toArray().map(element => {
+        let user = element.toObject();
+        console.log(user.username, user.enabled);
+        users.push([
+          user.id,
+          user.username,
+          user.authority,
+          user.enabled ? "Débloqué" : "Bloqué"
+        ]);
+      });
 
     return (
       <div className={classes.table}>
+        <Notification close={() => closeNotif()} message={messageNotif} />
         <MUIDataTable
           key={Math.random()}
           title="Liste des utilisateurs"
-          data={this.state.users}
+          data={users}
           columns={Columns}
           options={Options}
         />
@@ -78,16 +75,20 @@ class Utilisateurs extends React.Component {
 
 Utilisateurs.propTypes = {
   classes: PropTypes.object.isRequired,
-  fetchdata: PropTypes.func.isRequired
+  fetchdata: PropTypes.func.isRequired,
+  closeNotif: PropTypes.func.isRequired,
+  messageNotif: PropTypes.string.isRequired
 };
 
-const reducer = 'crudTbReducer';
+const reducer = "crudTbReducer";
 const mapStateToProps = state => ({
-  data: state.get(reducer)
+  dataTable: state.get(reducer).get("dataTable"),
+  messageNotif: state.get(reducer).get("notifMsg")
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchdata: bindActionCreators(fetch, dispatch)
+  fetchdata: bindActionCreators(fetch, dispatch),
+  closeNotif: bindActionCreators(closeNotifAction, dispatch)
 });
 
 const UtilisateursMapped = connect(
