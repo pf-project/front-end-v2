@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Chip from "@material-ui/core/Chip";
 import MUIDataTable from "mui-datatables";
-import { bindActionCreators } from "redux";
+import { bindActionCreators, subscribe } from "redux";
 import { connect } from "react-redux";
 import Columns from "./utilisateur/Columns";
 import Options from "./utilisateur/Options";
@@ -39,11 +39,14 @@ class Utilisateurs extends React.Component {
     this.props.fetchdata();
   }
   componentWillReceiveProps() {
-    let data = this.props.users;
-    let users = [];
+    let data = this.props.data;
+    // this.props.data.subscribe(() => console.log("gzrgrzeg"));
+    let table = [];
+    let users = this.props.data.get("users").toArray();
 
-    data.map(user => {
-      users.push([
+    users.map(u => {
+      let user = u.toObject();
+      table.push([
         user.id,
         user.username,
         user.authority,
@@ -51,7 +54,7 @@ class Utilisateurs extends React.Component {
       ]);
     });
     this.setState({
-      users
+      users: table
     });
   }
   render() {
@@ -78,7 +81,7 @@ Utilisateurs.propTypes = {
 
 const reducer = "crudTbReducer";
 const mapStateToProps = state => ({
-  users: state.get(reducer)
+  data: state.get(reducer)
 });
 
 const mapDispatchToProps = dispatch => ({
