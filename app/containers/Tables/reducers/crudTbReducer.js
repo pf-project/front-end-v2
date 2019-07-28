@@ -3,6 +3,7 @@ import notif from "enl-api/ui/notifMessage";
 import { CLOSE_NOTIF } from "enl-redux/constants/notifConstants";
 import {
   FETCH_DATA_SUCCESS,
+  BOLCK_USER_SUCCESS,
   ADD_EMPTY_ROW,
   UPDATE_ROW,
   REMOVE_ROW,
@@ -40,14 +41,11 @@ export default function crudTbReducer(
   const { branch } = action;
   switch (action.type) {
     case FETCH_DATA_SUCCESS:
-      return {
-        ...state,
-        dataTable: action.users
-      };
-    // return state.withMutations(mutableState => {
-    //   const users = fromJS(action.users);
-    //   mutableState.set("users", users);
-    // });
+      return state.withMutations(mutableState => {
+        const dataTable = fromJS(action.users);
+        mutableState.set("dataTable", dataTable);
+      });
+
     case `${branch}/${ADD_EMPTY_ROW}`:
     // return state.withMutations(mutableState => {
     //   const raw = state.get("dataTable").last();
@@ -56,13 +54,18 @@ export default function crudTbReducer(
     //     dataTable.unshift(initial)
     //   );
     // });
-    case `${branch}/${REMOVE_ROW}`:
-    // return state.withMutations(mutableState => {
-    //   const index = state.get("dataTable").indexOf(action.item);
-    //   mutableState
-    //     .update("dataTable", dataTable => dataTable.splice(index, 1))
-    //     .set("notifMsg", notif.removed);
-    // });
+    case BOLCK_USER_SUCCESS:
+      return state.withMutations(mutableState => {
+        let user = state.get("users").find(user => {
+          user.get("id") === action.payload.payload;
+        });
+        console.log(user.get("enabled"));
+        user = user.set("enabled", !user.get("enabled"));
+        console.log(state.get("users"));
+        // mutableState
+        //   .update("dataTable", dataTable => dataTable.splice(index, 1))
+        //   .set("notifMsg", notif.removed);
+      });
     case `${branch}/${UPDATE_ROW}`:
     // return state.withMutations(mutableState => {
     //   const index = state.get("dataTable").indexOf(action.item);

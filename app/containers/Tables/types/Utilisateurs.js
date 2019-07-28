@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Chip from "@material-ui/core/Chip";
 import MUIDataTable from "mui-datatables";
-import { bindActionCreators } from "redux";
+import { bindActionCreators, subscribe } from "redux";
 import { connect } from "react-redux";
 import Columns from "./utilisateur/Columns";
 import Options from "./utilisateur/Options";
@@ -43,7 +43,8 @@ class Utilisateurs extends React.Component {
     const { classes, dataTable } = this.props;
     let users = [];
     if (dataTable)
-      dataTable.map(user => {
+      dataTable.toArray().map(element => {
+        let user = element.toObject();
         users.push([
           user.id,
           user.username,
@@ -73,7 +74,7 @@ Utilisateurs.propTypes = {
 
 const reducer = "crudTbReducer";
 const mapStateToProps = state => ({
-  dataTable: state.get(reducer).dataTable
+  dataTable: state.get(reducer).get("dataTable")
 });
 
 const mapDispatchToProps = dispatch => ({

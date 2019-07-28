@@ -5,8 +5,10 @@ import CompareArrowsIcon from "@material-ui/icons/CompareArrows";
 import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
 import BlockIcon from "@material-ui/icons/Block";
 import { withStyles } from "@material-ui/core/styles";
-// import { Store, Constants, Dispatcher } from "../../../flux";
-// import fetchApi from "../../../utils/fetchApi";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { blockuser } from "../../reducers/crudTbActions";
 
 const defaultToolbarSelectStyles = {
   iconButton: {},
@@ -49,25 +51,38 @@ class CustomToolbarSelect extends React.Component {
     });
   };
 
-  //   changeStatus(id) {
-  //     const token = window.localStorage.getItem("token");
-  //     fetchApi({
-  //       url: `/api/user/disable/` + id,
-  //       method: "DELETE",
-  //       token
-  //     }).then(res => {
-  //       Dispatcher.dispatch({
-  //         actionType: Constants.UPDATE_USER,
-  //         payload: id
-  //       });
-  //     });
-  //   }
+  delete = () => {
+    //console.log(this.props.displayData)
+    // let data = this.props.selectedRows.data;
+    // data.map(el => {
+    //   let index = el.index;
+    //   let id = this.props.displayData[index].data[0];
+    //   fetchApi({
+    //     method: "DELETE",
+    //     url: "/api/Cheques/delete/" + id,
+    //     token: window.localStorage.getItem("token")
+    //   }).then(data => {});
+    //   Dispatcher.dispatch({
+    //     actionType: Constants.TABLE_CHEQUE_UPDATED
+    //   });
+    // });
+  };
+
+  changeStatus = id => {
+    const token = window.localStorage.getItem("token");
+    this.props.blockuser(id);
+  };
 
   render() {
     const { classes } = this.props;
 
     return (
       <div className={classes.iconContainer}>
+        <Tooltip title={"supprimer"}>
+          <IconButton className={classes.iconButton} onClick={this.delete}>
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
         <Tooltip title={"Supprimer"}>
           <IconButton
             className={classes.iconButton}
@@ -89,6 +104,20 @@ class CustomToolbarSelect extends React.Component {
   }
 }
 
+const reducer = "crudTbReducer";
+const mapStateToProps = state => ({
+  data: state.get(reducer)
+});
+
+const mapDispatchToProps = dispatch => ({
+  blockuser: bindActionCreators(blockuser, dispatch)
+});
+
+const CustomToolbarSelectMapped = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CustomToolbarSelect);
+
 export default withStyles(defaultToolbarSelectStyles, {
   name: "CustomToolbarSelect"
-})(CustomToolbarSelect);
+})(CustomToolbarSelectMapped);
