@@ -30,7 +30,9 @@ import styles from "./user-jss";
 
 // validation functions
 const required = value => (value == null ? "Required" : undefined);
-
+const maxLength = max => value =>
+  value && value.length > max ? `Must be ${max} characters or less` : undefined;
+const maxLength5 = maxLength(5);
 class LoginForm extends React.Component {
   // eslint-disable-line
   state = {
@@ -112,7 +114,7 @@ class LoginForm extends React.Component {
                       </InputAdornment>
                     )
                   }}
-                  validate={required}
+                  validate={[required, maxLength5]}
                   className={classes.field}
                 />
               </FormControl>

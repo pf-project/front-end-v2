@@ -1,7 +1,7 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
-import Dashboard from '../Templates/Dashboard';
+import React from "react";
+import { PropTypes } from "prop-types";
+import { Switch, Route } from "react-router-dom";
+import Dashboard from "../Templates/Dashboard";
 import {
   AdvancedTable,
   DashboardPage,
@@ -9,9 +9,10 @@ import {
   Error,
   NotFound,
   Form,
-  Table,
-  Parent
-} from '../pageListAsync';
+  CreerArticle,
+  Parent,
+  CreerCategorie
+} from "../pageListAsync";
 
 class Application extends React.Component {
   render() {
@@ -22,9 +23,15 @@ class Application extends React.Component {
           {/* Home */}
           <Route exact path="/app" component={BlankPage} />
           <Route path="/app/gestion-utilisateur" component={AdvancedTable} />
-          <Route path="/app/dashboard" component={DashboardPage} />
-          <Route path="/app/form" component={Form} />
-          <Route path="/app/table" component={Table} />
+          <Route
+            path="/app/logistique/paramétrage/configuration-Article"
+            component={CreerCategorie}
+          />
+
+          <Route
+            path="/app/logistique/Données-de-base/Article"
+            component={CreerArticle}
+          />
           <Route path="/app/page-list" component={Parent} />
           <Route path="/app/pages/not-found" component={NotFound} />
           <Route path="/app/pages/error" component={Error} />
