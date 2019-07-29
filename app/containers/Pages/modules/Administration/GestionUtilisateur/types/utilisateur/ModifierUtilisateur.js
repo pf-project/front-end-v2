@@ -16,7 +16,7 @@ import {
 } from "react-material-ui-form-validator";
 
 import {
-  addUser,
+  editUser,
   closeEditAction,
   blockuser
 } from "../../reducers/crudTbActions";
@@ -50,7 +50,7 @@ const styles = theme => ({
 });
 
 class ModifierUtilisateur extends Component {
-  state = {};
+  state = { loadingBlock: false, loadingEdit: false };
 
   handleClick = () => {
     this.props.closeEditAction();
@@ -63,18 +63,28 @@ class ModifierUtilisateur extends Component {
   };
 
   handleSubmit = () => {
-    const { username, password, authority } = this.state;
-    // this.props.addUser({ username, password, authority });
+    this.setState({ loadingEdit: true });
+    const { password, authority } = this.state;
+    let username = this.props.data[1];
+    let id = this.props.data[0];
+    this.props.editUser({ id, username, password, authority });
   };
 
   block = () => {
+    this.setState({ loadingBlock: true });
     let id = this.props.data[0];
     this.props.blockuser(id);
   };
   render() {
     const trueBool = true;
-    let { username, password, authority } = this.state;
-    const { classes, data, loading } = this.props;
+    let {
+      username,
+      password,
+      authority,
+      loadingBlock,
+      loadingEdit
+    } = this.state;
+    const { classes, data } = this.props;
     username = data[1];
     let blockButton = data[3].props.label === "Bloqué" ? "Débloqué" : "Bloqué";
     return (
@@ -137,12 +147,12 @@ class ModifierUtilisateur extends Component {
           <div className={css.buttonArea}>
             <>
               <Button
-                disabled={loading}
+                disabled={loadingBlock}
                 variant="contained"
                 color="danger"
                 onClick={this.block}
               >
-                {loading && (
+                {loadingBlock && (
                   <CircularProgress
                     size={24}
                     className={classes.buttonProgress}
@@ -153,11 +163,18 @@ class ModifierUtilisateur extends Component {
             </>
             <div>
               <Button
+                disabled={loadingEdit}
                 variant="contained"
                 color="secondary"
                 type="submit"
                 onSubmit={this.handleSubmit}
               >
+                {loadingEdit && (
+                  <CircularProgress
+                    size={24}
+                    className={classes.buttonProgress}
+                  />
+                )}
                 Modifer
               </Button>
               <Button color="secondary" onClick={this.handleClick}>
@@ -177,13 +194,11 @@ ModifierUtilisateur.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   blockuser: bindActionCreators(blockuser, dispatch),
-  addUser: bindActionCreators(addUser, dispatch),
+  editUser: bindActionCreators(editUser, dispatch),
   closeEditAction: () => dispatch(closeEditAction)
 });
 
-const mapStateToProps = state => ({
-  loading: state.get("authReducer").loading
-});
+const mapStateToProps = state => ({});
 
 //const reducer = "initval";
 const FormInit = connect(

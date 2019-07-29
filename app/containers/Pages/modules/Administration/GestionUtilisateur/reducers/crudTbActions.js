@@ -29,6 +29,16 @@ export const userAdded = payload => ({
   payload
 });
 
+export const editUser = payload => ({
+  type: types.EDIT_USER_REQUEST,
+  payload
+});
+
+export const userEdited = payload => ({
+  type: types.EDIT_USER_SUCCESS,
+  payload
+});
+
 export const addAction = (anchor, branch) => ({
   branch,
   type: `${branch}/${types.ADD_EMPTY_ROW}`,
