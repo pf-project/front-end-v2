@@ -62,6 +62,11 @@ class CreerArticle extends React.Component {
     //   body: this.state.data
     // });
   };
+
+  // handleDateChange = date => {
+
+  //   this.setState({data  : {...this.state.data , findvalidite : date.format("DD/MM/YYYY")}})
+  // };
   handleChange = event => {
     const name = event.target.name;
     const value = event.target.value;
@@ -98,6 +103,7 @@ class CreerArticle extends React.Component {
             state={this.state}
             handleSubmitInitial={this.handleSubmitInitial}
             classes={classes}
+            handleDateChange={this.handleDateChange}
           />
         );
       case 1:

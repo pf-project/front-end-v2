@@ -10,7 +10,7 @@ import {
   TextValidator,
   SelectValidator
 } from "react-material-ui-form-validator";
-import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import TextField from "@material-ui/core/TextField";
 
 export default function Initiale({
   state,
@@ -77,15 +77,17 @@ export default function Initiale({
         />
       </FormGroup>
       <FormGroup>
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-          <DatePicker
-            label="Fin de validité "
-            clearable
-            name="findvalidite"
-            onChange={handleChange}
-            value={state.data.findvalidite}
-          />
-        </MuiPickersUtilsProvider>
+        <TextField
+          name="findvalidite"
+          handleChange={handleChange}
+          label="Fin de validité *"
+          type="date"
+          // defaultValue="2017-05-24"
+          // className={classes.textField}
+          InputLabelProps={{
+            shrink: true
+          }}
+        />
       </FormGroup>
       <div>
         <Button

@@ -23,15 +23,22 @@ class Application extends React.Component {
           {/* Home */}
           <Route exact path="/app" component={BlankPage} />
           <Route path="/app/gestion-utilisateur" component={AdvancedTable} />
+          {/********* Logistique *********** */}
+          {/* ****parametrage  */}
           <Route
             path="/app/logistique/paramétrage/configuration-Article"
             component={CreerCategorie}
           />
+          {/* ****  Donnee de base :  */}
 
           <Route
             path="/app/logistique/Données-de-base/Article"
             component={CreerArticle}
           />
+
+          {/* parent page : */}
+          <Route path="/app/logistique" component={Parent} />
+
           <Route path="/app/page-list" component={Parent} />
           <Route path="/app/pages/not-found" component={NotFound} />
           <Route path="/app/pages/error" component={Error} />
