@@ -62,6 +62,14 @@ export const closeNotifAction = branch => ({
   type: CLOSE_NOTIF
 });
 
+// Loading
+export const startLoading = () => ({
+  type: types.START_LOADING
+});
+
+export const stopLoading = () => ({
+  type: types.STOP_LOADING
+});
 // export const addUserAction = {
 //   type: types.ADD_USER
 // };

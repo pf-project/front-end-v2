@@ -17,10 +17,9 @@ export default function Initiale({
   handleChange,
   handleSubmitInitial,
   handleBack,
-  classes
+  classes,
+  designations
 }) {
-  const { designations } = state;
-
   return (
     <ValidatorForm onSubmit={handleSubmitInitial} autoComplete="off">
       <FormGroup>

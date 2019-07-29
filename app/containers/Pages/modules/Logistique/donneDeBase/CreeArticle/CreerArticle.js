@@ -11,6 +11,12 @@ import Initiale from "./Initiale";
 import Base from "./Base";
 import Stockage from "./Stockage";
 import Commerciale from "./Commerciale";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import {
+  fetchCategorieDesignation,
+  fetchCategorie
+} from "../../reducers/crudLogisticActions";
 // import fetchApi from "../../../utils/fetchApi";
 // import SnackBar from "../../../utils/SnackBar";
 
@@ -101,6 +107,7 @@ class CreerArticle extends React.Component {
           <Initiale
             handleChange={this.handleChange}
             state={this.state}
+            designations={this.props.designations}
             handleSubmitInitial={this.handleSubmitInitial}
             classes={classes}
             handleDateChange={this.handleDateChange}
@@ -111,6 +118,7 @@ class CreerArticle extends React.Component {
           <Base
             handleChange={this.handleChange}
             state={this.state}
+            categorie={this.props.categorie}
             handleSubmitBase={this.handleSubmitBase}
             handleBack={this.handleBack}
             classes={classes}
@@ -165,6 +173,7 @@ class CreerArticle extends React.Component {
   };
 
   fetchCategorie = async () => {
+    this.props.fetchCategorie(this.state.data.categorie);
     // const categorie = await fetchApi({
     //   method: "GET",
     //   url: "/api/logistic/categorie/find/" + this.state.data.categorie,
@@ -204,11 +213,7 @@ class CreerArticle extends React.Component {
   };
 
   async componentWillMount() {
-    // const designations = await fetchApi({
-    //   method: "GET",
-    //   url: "/api/logistic/categorie/find",
-    //   token: window.localStorage.getItem("token")
-    // });
+    this.props.fetchCategorieDesignation();
     // this.setState({
     //   designations
     // });
@@ -254,4 +259,26 @@ class CreerArticle extends React.Component {
   }
 }
 
-export default withStyles(styles)(CreerArticle);
+const mapDispatchToProps = dispatch => ({
+  fetchCategorieDesignation: bindActionCreators(
+    fetchCategorieDesignation,
+    dispatch
+  ),
+  fetchCategorie: bindActionCreators(fetchCategorie, dispatch),
+  closeNotif: () => dispatch(closeNotifAction())
+});
+
+const mapStateToProps = state => ({
+  notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
+  loading: state.get("crudLogisticReducer").get("loading"),
+  designations: state.get("crudLogisticReducer").get("designations"),
+  categorie: state.get("crudLogisticReducer").get("categorie")
+});
+
+// //const reducer = "initval";
+const CreerCategorieReduxed = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CreerArticle);
+
+export default withStyles(styles)(CreerCategorieReduxed);

@@ -9,7 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
 import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import AjoutAttribut from "./ajoutAttribut";
@@ -54,8 +54,14 @@ const styles = theme => ({
   }
 });
 
-const CreerCategorie = ({ closeNotif, notifMsg, classes, addCategorie }) => {
-  console.log(notifMsg);
+const CreerCategorie = ({
+  loading,
+  closeNotif,
+  notifMsg,
+  classes,
+  addCategorie
+}) => {
+  console.log(loading);
   // state :
   const [data, setData] = React.useState({ articlesMetaData: [] });
   const [nbrAttributes, setNbrAttributes] = React.useState(0);
@@ -274,8 +280,18 @@ const CreerCategorie = ({ closeNotif, notifMsg, classes, addCategorie }) => {
             >
               -
             </IconButton>
-            <Button color="primary" variant="contained" type="submit">
-              {" "}
+            <Button
+              disabled={loading}
+              color="primary"
+              variant="contained"
+              type="submit"
+            >
+              {loading && (
+                <CircularProgress
+                  size={24}
+                  className={classes.buttonProgress}
+                />
+              )}{" "}
               Sauvgarder{" "}
             </Button>
           </TableBody>
@@ -287,11 +303,12 @@ const CreerCategorie = ({ closeNotif, notifMsg, classes, addCategorie }) => {
 
 const mapDispatchToProps = dispatch => ({
   addCategorie: bindActionCreators(addCategorie, dispatch),
-  closeNotif: () => dispatch({ type: "CLOSE_NOTIF" })
+  closeNotif: () => dispatch(closeNotifAction())
 });
 
 const mapStateToProps = state => ({
-  notifMsg: state.get("crudLogisticReducer").get("notifMsg")
+  notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
+  loading: state.get("crudLogisticReducer").get("loading")
 });
 
 // //const reducer = "initval";

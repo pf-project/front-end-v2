@@ -36,12 +36,14 @@ export default class Base extends React.Component {
       state,
       handleBack,
       classes,
-      handleValeursChange
+      handleValeursChange,
+      categorie
     } = this.props;
     const { designations } = state;
-    const categorie = state.categorie;
+    console.log(categorie);
+    const articlesMetaData = [];
     // console.log(categorie);
-    if (categorie.articlesMetaData) {
+    if (articlesMetaData) {
       return (
         <div>
           <ValidatorForm onSubmit={handleSubmitBase} autoComplete="off">
@@ -87,9 +89,9 @@ export default class Base extends React.Component {
                 </Col>
               </Row>
             </FormGroup>
-            <Breadcrumb>
+            {/* <Breadcrumb>
               <BreadcrumbItem active>Information de base</BreadcrumbItem>
-            </Breadcrumb>
+            </Breadcrumb> */}
             <FormGroup>
               <Row>
                 <Col md="4">
@@ -169,8 +171,11 @@ export default class Base extends React.Component {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {categorie.articlesMetaData.map((data, idx) => {
-                        console.log(state);
+                      {articlesMetaData.map((data, idx) => {
+                        data = data.toObject();
+                        data.valeurs = data.valeurs
+                          ? data.valeurs.toArray()
+                          : [];
                         if (data) {
                           let validators = [];
                           let errorMessages = [];

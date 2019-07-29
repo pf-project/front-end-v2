@@ -6,7 +6,9 @@ import {
   fetchCategorieFailure,
   fetchCategorieSuccess,
   addCategorieSuccess,
-  addCategorieFailure
+  addCategorieFailure,
+  startLoading,
+  stopLoading
 } from "./crudLogisticActions";
 
 import {
@@ -16,11 +18,11 @@ import {
   ADD_CATEGORIE_REQUEST
 } from "./crudLogisticConstants";
 
-function* fetchCategorieSaga() {
+function* fetchCategorieSaga(payload) {
   try {
     const data = yield fetchAPI({
       method: "GET",
-      url: "/api/logistic/categorie/find",
+      url: `/api/logistic/categorie/find/${payload.payload}`,
       token: window.localStorage.getItem("token")
     });
     yield put(fetchCategorieSuccess(data));
@@ -30,11 +32,11 @@ function* fetchCategorieSaga() {
   }
 }
 
-function* fetchCategorieDesignationsSaga(payload) {
+function* fetchCategorieDesignationsSaga() {
   try {
     const data = yield fetchAPI({
       method: "GET",
-      url: `/api/logistic/categorie/find/${payload}`,
+      url: "/api/logistic/categorie/find",
       token: window.localStorage.getItem("token")
     });
     yield put(fetchCategorieDesignationSuccess(data));
@@ -60,6 +62,7 @@ function* addArticleSaga(payload) {
 
 function* addCategorieSaga(payload) {
   try {
+    yield put(startLoading());
     const data = yield fetchAPI({
       method: "POST",
       url: "/api/logistic/categorie/create",
@@ -67,6 +70,7 @@ function* addCategorieSaga(payload) {
       body: payload.payload
     });
     yield put(addCategorieSuccess());
+    yield put(stopLoading());
   } catch (error) {
     put(addCategorieFailure());
   }
