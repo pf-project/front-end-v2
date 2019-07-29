@@ -14,6 +14,7 @@ import {
   TextValidator,
   SelectValidator
 } from "react-material-ui-form-validator";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { addUser, closeAddAction } from "../../reducers/crudTbActions";
 
@@ -54,7 +55,7 @@ const initData = {
 };
 
 class AjouterUtilisateur extends Component {
-  state = {};
+  state = { loading: false };
 
   handleClick = () => {
     this.props.closeAddAction();
@@ -67,12 +68,13 @@ class AjouterUtilisateur extends Component {
   };
 
   handleSubmit = () => {
+    this.setState({ loading: true });
     const { username, password, authority } = this.state;
     this.props.addUser({ username, password, authority });
   };
   render() {
     const trueBool = true;
-    const { username, password, authority } = this.state;
+    const { username, password, authority, loading } = this.state;
     const { classes } = this.props;
     return (
       <div>
@@ -134,11 +136,18 @@ class AjouterUtilisateur extends Component {
             <p />
             <div>
               <Button
+                disabled={loading}
                 variant="contained"
                 color="secondary"
                 type="submit"
                 onSubmit={this.handleSubmit}
               >
+                {loading && (
+                  <CircularProgress
+                    size={24}
+                    className={classes.buttonProgress}
+                  />
+                )}
                 Ajouter
               </Button>
               <Button color="secondary" onClick={this.handleClick}>

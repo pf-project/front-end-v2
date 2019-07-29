@@ -15,6 +15,7 @@ import {
   OPEN_ADD_USER_FORM,
   OPEN_EDIT_USER_FORM,
   ADD_USER_SUCCESS,
+  EDIT_USER_SUCCESS,
   CLOSE_EDIT_USER_FORM,
   CLOSE_EDIT_USER_FORM_SUCCESS
 } from "./crudTbConstants";
@@ -23,8 +24,7 @@ const initialState = {
   dataTable: List([]),
   notifMsg: "",
   openAddForm: false,
-  openEdiForm: false,
-  loading: false
+  openEdiForm: false
 };
 
 const initialItem = (keyTemplate, anchor) => {
@@ -77,6 +77,23 @@ export default function crudTbReducer(
               ))
           )
           .set("notifMsg", notifMsg);
+      });
+    case EDIT_USER_SUCCESS:
+      return state.withMutations(mutableState => {
+        mutableState
+          .update(
+            "dataTable",
+            dataTable =>
+              (dataTable = dataTable.update(
+                dataTable.findIndex(
+                  user => user.get("id") === action.payload.id
+                ),
+                user => {
+                  return user.set("authority", action.payload.authority);
+                }
+              ))
+          )
+          .set("notifMsg", "l'utilisateur a été mis à jour");
       });
     case `${branch}/${UPDATE_ROW}`:
     // return state.withMutations(mutableState => {
@@ -142,7 +159,7 @@ export default function crudTbReducer(
       return state.withMutations(mutableState => {
         mutableState
           .set("openAddForm", false)
-          .set("notifMsg", "L'action est terminé");
+          .set("notifMsg", "L'utilisateur a été ajouté");
       });
     case CLOSE_EDIT_USER_FORM:
       return state.withMutations(mutableState => {
@@ -154,7 +171,7 @@ export default function crudTbReducer(
       return state.withMutations(mutableState => {
         mutableState
           .set("openEditForm", false)
-          .set("notifMsg", "L'action est terminé");
+          .set("notifMsg", "L'utilisateur a été mis à jour");
       });
     default:
       return state;

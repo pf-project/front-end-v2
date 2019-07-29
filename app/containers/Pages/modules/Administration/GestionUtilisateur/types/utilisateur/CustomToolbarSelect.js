@@ -156,7 +156,7 @@ CustomToolbarSelect.propTypes = {
   openEditForm: PropTypes.bool.isRequired,
   //add: PropTypes.func.isRequired,
   openEditAction: PropTypes.func.isRequired,
-  closeForm: PropTypes.func.isRequired,
+  closeEditAction: PropTypes.func.isRequired,
   closeNotif: PropTypes.func.isRequired,
   notifMsg: PropTypes.string.isRequired,
   intl: intlShape.isRequired
