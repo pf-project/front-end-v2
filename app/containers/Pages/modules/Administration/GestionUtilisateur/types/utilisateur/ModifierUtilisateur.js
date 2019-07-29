@@ -15,7 +15,13 @@ import {
   SelectValidator
 } from "react-material-ui-form-validator";
 
-import { addUser, closeAction } from "../../reducers/crudTbActions";
+import {
+  addUser,
+  closeEditAction,
+  blockuser
+} from "../../reducers/crudTbActions";
+
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 
@@ -43,21 +49,11 @@ const styles = theme => ({
   }
 });
 
-const initData = {
-  text: "Sample Text",
-  email: "sample@mail.com",
-  radio: "option1",
-  selection: "option2",
-  onof: true,
-  checkbox: true,
-  textarea: "This is default text"
-};
-
-class AjouterUtilisateur extends Component {
+class ModifierUtilisateur extends Component {
   state = {};
 
   handleClick = () => {
-    this.props.closeAction();
+    this.props.closeEditAction();
   };
 
   handleChange = event => {
@@ -68,12 +64,19 @@ class AjouterUtilisateur extends Component {
 
   handleSubmit = () => {
     const { username, password, authority } = this.state;
-    this.props.addUser({ username, password, authority });
+    // this.props.addUser({ username, password, authority });
+  };
+
+  block = () => {
+    let id = this.props.data[0];
+    this.props.blockuser(id);
   };
   render() {
     const trueBool = true;
-    const { username, password, authority } = this.state;
-    const { classes } = this.props;
+    let { username, password, authority } = this.state;
+    const { classes, data, loading } = this.props;
+    username = data[1];
+    let blockButton = data[3].props.label === "Bloqué" ? "Débloqué" : "Bloqué";
     return (
       <div>
         <Grid
@@ -86,7 +89,7 @@ class AjouterUtilisateur extends Component {
           <Grid item>
             <Paper className={classes.root}>
               <Typography variant="h5" component="h3">
-                Ajouter un utilisateur
+                Modifer utilisateur
               </Typography>
             </Paper>
           </Grid>
@@ -98,6 +101,7 @@ class AjouterUtilisateur extends Component {
         >
           <section className={css.bodyForm}>
             <TextValidator
+              inputProps={{ readOnly: true }}
               autoComplete="off"
               style={{ width: "100%" }}
               label="Nom d'utilisateur"
@@ -131,7 +135,22 @@ class AjouterUtilisateur extends Component {
             </SelectValidator>
           </section>
           <div className={css.buttonArea}>
-            <p />
+            <>
+              <Button
+                disabled={loading}
+                variant="contained"
+                color="danger"
+                onClick={this.block}
+              >
+                {loading && (
+                  <CircularProgress
+                    size={24}
+                    className={classes.buttonProgress}
+                  />
+                )}
+                {blockButton}
+              </Button>
+            </>
             <div>
               <Button
                 variant="contained"
@@ -139,7 +158,7 @@ class AjouterUtilisateur extends Component {
                 type="submit"
                 onSubmit={this.handleSubmit}
               >
-                Ajouter
+                Modifer
               </Button>
               <Button color="secondary" onClick={this.handleClick}>
                 Annuler
@@ -152,21 +171,24 @@ class AjouterUtilisateur extends Component {
   }
 }
 
-AjouterUtilisateur.propTypes = {
+ModifierUtilisateur.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
+  blockuser: bindActionCreators(blockuser, dispatch),
   addUser: bindActionCreators(addUser, dispatch),
-  closeAction: () => dispatch(closeAction)
+  closeEditAction: () => dispatch(closeEditAction)
 });
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  loading: state.get("authReducer").loading
+});
 
 //const reducer = "initval";
 const FormInit = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AjouterUtilisateur);
+)(ModifierUtilisateur);
 
 export default withStyles(styles)(FormInit);

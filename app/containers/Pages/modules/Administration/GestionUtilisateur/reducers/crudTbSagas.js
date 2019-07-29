@@ -1,13 +1,15 @@
 import { call, fork, put, take, takeEvery, all } from "redux-saga/effects";
-import { fetchAPI } from "../../../serverActions";
+import { fetchAPI } from "../../../../../../serverActions";
 
 import {
   fetchAction,
   userblocked,
   addUser,
   userAdded,
-  closeAction,
-  closeActionSuccess
+  closeAddAction,
+  closeAddActionSuccess,
+  closeEditAction,
+  closeEditActionSuccess
 } from "./crudTbActions";
 import {
   FETCH_DATA_REQUEST,
@@ -50,7 +52,7 @@ function* addUserSaga(payload) {
       body: payload.payload
     });
     yield put(userAdded(data));
-    yield put(closeActionSuccess);
+    yield put(closeAddActionSuccess);
   } catch (error) {
     console.log(error);
   }

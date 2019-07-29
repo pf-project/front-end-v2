@@ -49,7 +49,6 @@ class Utilisateurs extends React.Component {
     if (dataTable)
       dataTable.toArray().map(element => {
         let user = element.toObject();
-        console.log(user.username, user.enabled);
         users.push([
           user.id,
           user.username,

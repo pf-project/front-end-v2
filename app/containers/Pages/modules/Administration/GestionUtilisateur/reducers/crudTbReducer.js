@@ -10,16 +10,21 @@ import {
   EDIT_ROW,
   SAVE_ROW,
   ADD_USER,
-  CLOSE_USER_FORM,
-  OPEN_USER_FORM,
+  CLOSE_ADD_USER_FORM,
+  CLOSE_ADD_USER_FORM_SUCCESS,
+  OPEN_ADD_USER_FORM,
+  OPEN_EDIT_USER_FORM,
   ADD_USER_SUCCESS,
-  CLOSE_USER_FORM_SUCCESS
+  CLOSE_EDIT_USER_FORM,
+  CLOSE_EDIT_USER_FORM_SUCCESS
 } from "./crudTbConstants";
 
 const initialState = {
   dataTable: List([]),
   notifMsg: "",
-  openForm: false
+  openAddForm: false,
+  openEdiForm: false,
+  loading: false
 };
 
 const initialItem = (keyTemplate, anchor) => {
@@ -111,28 +116,44 @@ export default function crudTbReducer(
           )
           .set("notifMsg", "saved");
       });
-    case ADD_USER:
-      return state.withMutations(mutableState => {
-        mutableState.set("openForm", true);
-      });
+    // case ADD_USER:
+    //   return state.withMutations(mutableState => {
+    //     mutableState.set("openForm", true);
+    //   });
     case CLOSE_NOTIF:
       return state.withMutations(mutableState => {
         mutableState.set("notifMsg", "");
       });
-    case OPEN_USER_FORM:
+    case OPEN_ADD_USER_FORM:
       return state.withMutations(mutableState => {
-        mutableState.set("openForm", true);
+        mutableState.set("openAddForm", true);
       });
-    case CLOSE_USER_FORM:
+    case OPEN_EDIT_USER_FORM:
+      return state.withMutations(mutableState => {
+        mutableState.set("openEditForm", true);
+      });
+    case CLOSE_ADD_USER_FORM:
       return state.withMutations(mutableState => {
         mutableState
-          .set("openForm", false)
+          .set("openAddForm", false)
           .set("notifMsg", "L'action a été annulé");
       });
-    case CLOSE_USER_FORM_SUCCESS:
+    case CLOSE_ADD_USER_FORM_SUCCESS:
       return state.withMutations(mutableState => {
         mutableState
-          .set("openForm", false)
+          .set("openAddForm", false)
+          .set("notifMsg", "L'action est terminé");
+      });
+    case CLOSE_EDIT_USER_FORM:
+      return state.withMutations(mutableState => {
+        mutableState
+          .set("openEditForm", false)
+          .set("notifMsg", "L'action a été annulé");
+      });
+    case CLOSE_EDIT_USER_FORM_SUCCESS:
+      return state.withMutations(mutableState => {
+        mutableState
+          .set("openEditForm", false)
           .set("notifMsg", "L'action est terminé");
       });
     default:

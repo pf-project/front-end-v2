@@ -3,7 +3,7 @@ import { PropTypes } from "prop-types";
 import { Switch, Route } from "react-router-dom";
 import Dashboard from "../Templates/Dashboard";
 import {
-  AdvancedTable,
+  GestionUtilisateur,
   DashboardPage,
   BlankPage,
   Error,
@@ -22,9 +22,10 @@ class Application extends React.Component {
         <Switch>
           {/* Home */}
           <Route exact path="/app" component={BlankPage} />
-          <Route path="/app/gestion-utilisateur" component={AdvancedTable} />
-          {/********* Logistique *********** */}
-          {/* ****parametrage  */}
+          <Route
+            path="/app/gestion-utilisateur"
+            component={GestionUtilisateur}
+          />
           <Route
             path="/app/logistique/paramétrage/configuration-Article"
             component={CreerCategorie}

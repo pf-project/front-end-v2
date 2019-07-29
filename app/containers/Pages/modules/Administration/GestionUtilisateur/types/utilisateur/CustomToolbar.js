@@ -4,7 +4,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from "@material-ui/icons/Add";
 import { withStyles } from "@material-ui/core/styles";
 import { FloatingPanel, Notification } from "enl-components";
-// import { injectIntl, intlShape } from "react-intl";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -14,8 +13,8 @@ import { injectIntl, intlShape } from "react-intl";
 
 import {
   //addAction,
-  openAction,
-  closeAction,
+  openAddAction,
+  closeAddAction,
   closeNotifAction
 } from "../../reducers/crudTbActions";
 
@@ -25,20 +24,16 @@ const defaultToolbarStyles = {
 
 class CustomToolbar extends React.Component {
   handleClick = () => {
-    this.props.open();
-  };
-
-  addUser = values => {
-    console.log(values);
+    this.props.openAddAction();
   };
 
   render() {
     const {
       classes,
-      openForm,
+      openAddForm,
       // add,
       open,
-      closeForm,
+      closeAddForm,
       closeNotif,
       notifMsg,
       intl
@@ -55,8 +50,12 @@ class CustomToolbar extends React.Component {
           </IconButton>
         </Tooltip>
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
-        <FloatingPanel title={""} openForm={openForm} closeForm={closeForm}>
-          <AjouterUtilisateur onSubmit={this.addUser} />
+        <FloatingPanel
+          title={""}
+          openForm={openAddForm}
+          closeForm={closeAddForm}
+        >
+          <AjouterUtilisateur />
         </FloatingPanel>
       </React.Fragment>
     );
@@ -64,9 +63,9 @@ class CustomToolbar extends React.Component {
 }
 
 CustomToolbar.propTypes = {
-  openForm: PropTypes.bool.isRequired,
+  openAddForm: PropTypes.bool.isRequired,
   //add: PropTypes.func.isRequired,
-  open: PropTypes.func.isRequired,
+  openAddAction: PropTypes.func.isRequired,
   closeForm: PropTypes.func.isRequired,
   closeNotif: PropTypes.func.isRequired,
   notifMsg: PropTypes.string.isRequired,
@@ -76,15 +75,15 @@ CustomToolbar.propTypes = {
 const reducer = "crudTbReducer";
 const mapStateToProps = state => {
   return {
-    openForm: state.get(reducer).get("openForm"),
+    openAddForm: state.get(reducer).get("openAddForm"),
     notifMsg: state.get(reducer).get("notifMsg")
   };
 };
 
 const constDispatchToProps = dispatch => ({
   //   add: () => dispatch(addAction),
-  open: () => dispatch(openAction),
-  closeForm: () => dispatch(closeAction),
+  openAddAction: () => dispatch(openAddAction),
+  closeAddForm: () => dispatch(closeAddAction),
   closeNotif: () => dispatch(closeNotifAction)
 });
 
@@ -93,5 +92,4 @@ const CustomToolbarMapped = connect(
   constDispatchToProps
 )(CustomToolbar);
 
-// export default withStyles(styles)(CustomToolbar);
 export default withStyles({})(injectIntl(CustomToolbarMapped));

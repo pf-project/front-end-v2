@@ -11,8 +11,8 @@ import languageProviderReducer from "containers/LanguageProvider/reducer";
 import authReducer from "./modules/authReducer";
 import uiReducer from "./modules/uiReducer";
 import initval from "./modules/initFormReducer";
-import crudTbReducer from "../containers/Tables/reducers/crudTbReducer";
 import crudLogisticReducer from "../containers/Pages/modules/Logistique/reducers/crudLogisticReducer";
+import crudTbReducer from "../containers/Pages/modules/Administration/GestionUtilisateur/reducers/crudTbReducer";
 
 /**
  * Creates the main reducer with the dynamically injected ones
