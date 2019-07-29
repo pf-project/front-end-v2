@@ -39,10 +39,16 @@ module.exports = [
         title: true
       },
       {
-        key: " Article",
-        name: "Article",
+        key: "Ajouter-Article",
+        name: "Ajouter Article",
         icon: "border_color",
-        link: "/app/logistique/Données-de-base/Article"
+        link: "/app/logistique/Données-de-base/ajouter-Article"
+      },
+      {
+        key: "gerer-article",
+        name: "Gerer Article",
+        icon: "border_color",
+        link: "/app/logistique/Données-de-base/gerer-Article"
       }
     ]
   }

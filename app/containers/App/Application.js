@@ -33,7 +33,7 @@ class Application extends React.Component {
           {/* ****  Donnee de base :  */}
 
           <Route
-            path="/app/logistique/Données-de-base/Article"
+            path="/app/logistique/Données-de-base/ajouter-Article"
             component={CreerArticle}
           />
 

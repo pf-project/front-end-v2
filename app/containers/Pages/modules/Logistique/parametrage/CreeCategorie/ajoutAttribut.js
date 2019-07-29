@@ -99,8 +99,16 @@ export default function AjoutAttribut({
           validators={["required"]}
           errorMessages={[errors.required]}
         >
-          <MenuItem value={"CONS-Achat pour consomation"}>Groupe 1</MenuItem>
-          <MenuItem value={"MRCH-Achat pour vente"}>Groupe 2</MenuItem>
+          <MenuItem value="number">Numérique</MenuItem>
+          <MenuItem value="alphabetical">Alphabétique</MenuItem>
+          <MenuItem value="alphanumeric">Alphanumérique</MenuItem>
+          <MenuItem value="date">Date</MenuItem>
+          <MenuItem value="heure">Heure</MenuItem>
+          <MenuItem value="float">Décimale</MenuItem>
+          <MenuItem value="float-1">Décimale, 1 après virgule</MenuItem>
+          <MenuItem value="float-2">Décimale, 2 après virgules</MenuItem>
+          <MenuItem value="float-3">Décimale, 3 après virgules</MenuItem>
+          <MenuItem value="float-4">Décimale, 4 après virgules</MenuItem>
         </SelectValidator>
       </TableCell>
       <TableCell component="td" scope="row">

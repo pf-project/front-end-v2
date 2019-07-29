@@ -223,8 +223,96 @@ const CreerCategorie = ({
           validators={["required"]}
           errorMessages={[errors.required]}
         >
-          <MenuItem value={"CONS-Achat pour consomation"}>Groupe 1</MenuItem>
-          <MenuItem value={"MRCH-Achat pour vente"}>Groupe 2</MenuItem>
+          <MenuItem value="Marchandises ">Marchandises </MenuItem>
+          <MenuItem value="Matières premières">Matières premières</MenuItem>
+          <MenuItem value="Matières consommables">
+            Matières consommables
+          </MenuItem>
+          <MenuItem value="Combustibles">Combustibles</MenuItem>
+          <MenuItem value="Fournitures d'atelier et d'usine">
+            Fournitures d'atelier et d'usine
+          </MenuItem>
+          <MenuItem value="Fournitures de magasin ">
+            Fournitures de magasin{" "}
+          </MenuItem>
+          <MenuItem value="Fournitures de bureau ">
+            Fournitures de bureau{" "}
+          </MenuItem>
+          <MenuItem value="Emballages ">Emballages </MenuItem>
+          <MenuItem value="Emballages récupérables non identifiables ">
+            Emballages récupérables non identifiables{" "}
+          </MenuItem>
+          <MenuItem value="Emballages à usage mixte ">
+            Emballages à usage mixte{" "}
+          </MenuItem>
+          <MenuItem value="Matières et fournitures consommables en cours de route ">
+            Matières et fournitures consommables en cours de route{" "}
+          </MenuItem>
+          <MenuItem value="Autres matières et fournitures consommables">
+            Autres matières et fournitures consommables
+          </MenuItem>
+          <MenuItem value="Produits en cours">Produits en cours</MenuItem>
+          <MenuItem value="Biens en cours ">Biens en cours </MenuItem>
+          <MenuItem value=" Biens produits en cours">
+            {" "}
+            Biens produits en cours
+          </MenuItem>
+          <MenuItem value=" Biens intermédiaires en cours ">
+            {" "}
+            Biens intermédiaires en cours{" "}
+          </MenuItem>
+          <MenuItem value=" Biens résiduels en cours ">
+            {" "}
+            Biens résiduels en cours{" "}
+          </MenuItem>
+          <MenuItem value=" Services en cours "> Services en cours </MenuItem>
+          <MenuItem value=" Travaux en cours "> Travaux en cours </MenuItem>
+          <MenuItem value="Etudes en cours ">Etudes en cours </MenuItem>
+          <MenuItem value="Prestations en cours ">
+            Prestations en cours{" "}
+          </MenuItem>
+          <MenuItem value="Autres produits en cours">
+            Autres produits en cours
+          </MenuItem>
+          <MenuItem value="Produits intermédiaires et produits résiduels ">
+            Produits intermédiaires et produits résiduels{" "}
+          </MenuItem>
+          <MenuItem value=" Produits intermédiaires">
+            {" "}
+            Produits intermédiaires
+          </MenuItem>
+          <MenuItem value=" Produits intermédiaires (groupe A) ">
+            {" "}
+            Produits intermédiaires (groupe A){" "}
+          </MenuItem>
+          <MenuItem value="Produits intermédiaires (groupe B)">
+            Produits intermédiaires (groupe B)
+          </MenuItem>
+          <MenuItem value=" Produits résiduels (ou matières de récupération)">
+            {" "}
+            Produits résiduels (ou matières de récupération)
+          </MenuItem>
+          <MenuItem value=" Déchets"> Déchets</MenuItem>
+          <MenuItem value=" Rebuts "> Rebuts </MenuItem>
+          <MenuItem value="Matières de récupération ">
+            Matières de récupération{" "}
+          </MenuItem>
+          <MenuItem value="Autres produits intermédiaires et produits résiduels">
+            Autres produits intermédiaires et produits résiduels
+          </MenuItem>
+          <MenuItem value="Produits finis ">Produits finis </MenuItem>
+          <MenuItem value="Produits finis (groupe A) ">
+            Produits finis (groupe A){" "}
+          </MenuItem>
+          <MenuItem value="Produits finis (groupe B) ">
+            Produits finis (groupe B){" "}
+          </MenuItem>
+          <MenuItem value="Produits finis en cours de route ">
+            Produits finis en cours de route{" "}
+          </MenuItem>
+          <MenuItem value="Autres produits finis">
+            Autres produits finis
+          </MenuItem>
         </SelectValidator>
 
         {/* <Breadcrumb>
