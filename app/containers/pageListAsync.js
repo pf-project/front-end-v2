@@ -1,5 +1,14 @@
 import Loadable from "react-loadable";
 
+// Gestion Utilisateur
+export const GestionUtilisateur = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Administration/GestionUtilisateur/GestionUtilisateur"
+    ),
+  loading: Loading
+});
+
 // logistique :
 // // Parametrage :
 export const CreerCategorie = Loadable({
@@ -18,11 +27,6 @@ export const CreerArticle = Loadable({
 });
 
 import Loading from "enl-components/Loading";
-
-export const AdvancedTable = Loadable({
-  loader: () => import("./Tables/AdvancedTable"),
-  loading: Loading
-});
 
 // export const DashboardPage = Loadable({
 //   loader: () => import("./Pages/Dashboard"),

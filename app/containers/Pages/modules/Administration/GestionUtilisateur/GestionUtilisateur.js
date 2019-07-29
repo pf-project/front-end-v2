@@ -6,11 +6,10 @@ import { injectIntl, intlShape } from "react-intl";
 import messages from "./messages";
 import Utilisateurs from "./types/Utilisateurs";
 
-class AdvancedTable extends Component {
+class GestionUtilisateur extends Component {
   render() {
     const title = brand.name + " - Table";
     const description = brand.desc;
-    const docSrc = "containers/Tables/demos/";
     const { intl } = this.props;
     return (
       <div>
@@ -30,8 +29,8 @@ class AdvancedTable extends Component {
   }
 }
 
-AdvancedTable.propTypes = {
+GestionUtilisateur.propTypes = {
   intl: intlShape.isRequired
 };
 
-export default injectIntl(AdvancedTable);
+export default injectIntl(GestionUtilisateur);

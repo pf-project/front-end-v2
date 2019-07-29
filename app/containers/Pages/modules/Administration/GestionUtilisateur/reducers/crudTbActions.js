@@ -64,13 +64,25 @@ export const closeNotifAction = branch => ({
 //   type: types.ADD_USER
 // };
 
-export const closeAction = {
-  type: types.CLOSE_USER_FORM
+export const closeAddAction = {
+  type: types.CLOSE_ADD_USER_FORM
 };
 
-export const closeActionSuccess = {
-  type: types.CLOSE_USER_FORM_SUCCESS
+export const closeAddActionSuccess = {
+  type: types.CLOSE_ADD_USER_FORM_SUCCESS
 };
-export const openAction = {
-  type: types.OPEN_USER_FORM
+
+export const closeEditAction = {
+  type: types.CLOSE_EDIT_USER_FORM
+};
+
+export const closeEditActionSuccess = {
+  type: types.CLOSE_EDIT_USER_FORM_SUCCESS
+};
+export const openAddAction = {
+  type: types.OPEN_ADD_USER_FORM
+};
+
+export const openEditAction = {
+  type: types.OPEN_EDIT_USER_FORM
 };
