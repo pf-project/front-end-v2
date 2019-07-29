@@ -5,7 +5,8 @@ import {
   fetchCategorieDesignationSuccess,
   fetchCategorieFailure,
   fetchCategorieSuccess,
-  addCategorieSuccess
+  addCategorieSuccess,
+  addCategorieFailure
 } from "./crudLogisticActions";
 
 import {
@@ -45,12 +46,13 @@ function* fetchCategorieDesignationsSaga(payload) {
 
 function* addArticleSaga(payload) {
   try {
-    const data = yield fetchAPI({
-      method: "DELETE",
-      url: "/api/logistic/article/find" + payload.payload,
-      token: window.localStorage.getItem("token")
-    });
-    yield put(userblocked(payload));
+    // const data = yield fetchAPI({
+    //   method: "DELETE",
+    //   url: "/api/logistic/article/find" + payload.payload,
+    //   token: window.localStorage.getItem("token")
+    // });
+    // yield put(userblocked(payload));
+    yield console.log("add article saga : ", payload);
   } catch (error) {
     console.log(error);
   }
@@ -64,9 +66,9 @@ function* addCategorieSaga(payload) {
       token: window.localStorage.getItem("token"),
       body: payload.payload
     });
-    yield put(addCategorieSuccess(data));
+    yield put(addCategorieSuccess());
   } catch (error) {
-    console.log(error);
+    put(addCategorieFailure());
   }
 }
 

@@ -13,9 +13,8 @@ import {
 } from "./crudLogisticConstants";
 
 const initialState = {
-  dataTable: List([]),
   notifMsg: "",
-  openForm: false
+  loading: false
 };
 
 const initialImmutableState = fromJS(initialState);
@@ -25,6 +24,10 @@ export default function crudLogisticReducer(
   action = {}
 ) {
   switch (action.type) {
+    case CLOSE_NOTIF:
+      return state.withMutations(mutableState => {
+        mutableState.set("notifMsg", "");
+      });
     case FETCH_CATEGORIE_FAILURE:
       return 0;
     case FETCH_CATEGORIE_SUCCESS:
@@ -40,7 +43,9 @@ export default function crudLogisticReducer(
     case ADD_CATEGORIE_FAILURE:
       return 0;
     case ADD_CATEGORIE_SUCCESS:
-      return 0;
+      return state.withMutations(mutableState => {
+        mutableState.set("notifMsg", "Categorie bien Ajouter :");
+      });
     default:
       return state;
   }

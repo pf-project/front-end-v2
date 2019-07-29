@@ -42,6 +42,7 @@ class CustomToolbar extends React.Component {
       id: "boilerplate.containers.Administration.ajouter_utilisateur",
       defaultMessage: "Ajouter un utilisateur"
     };
+
     return (
       <React.Fragment>
         <Tooltip title={intl.formatMessage(add_user)}>

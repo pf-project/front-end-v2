@@ -15,6 +15,9 @@ import FormControl from "@material-ui/core/FormControl";
 import AjoutAttribut from "./ajoutAttribut";
 import IconButton from "@material-ui/core/IconButton";
 import Divider from "@material-ui/core/Divider";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { Notification } from "enl-components";
 // import fetchApi from "../../../utils/fetchApi";
 // import SnackBar from "../../../utils/SnackBar";
 
@@ -23,6 +26,11 @@ import {
   TextValidator,
   SelectValidator
 } from "react-material-ui-form-validator";
+
+import {
+  addCategorie,
+  closeNotifAction
+} from "../../reducers/crudLogisticActions";
 // import Initiale from "./Initiale";
 // import Base from "./Base";
 // import Stockage from "./Stockage";
@@ -46,7 +54,8 @@ const styles = theme => ({
   }
 });
 
-const CreerCategorie = ({ classes }) => {
+const CreerCategorie = ({ closeNotif, notifMsg, classes, addCategorie }) => {
+  console.log(notifMsg);
   // state :
   const [data, setData] = React.useState({ articlesMetaData: [] });
   const [nbrAttributes, setNbrAttributes] = React.useState(0);
@@ -146,20 +155,11 @@ const CreerCategorie = ({ classes }) => {
     }
   };
 
-  // const succes = SnackBar({
-  //   message: "La categorie a été créer avec succes",
-  //   variant: "success"
-  // });
-
-  // const failure = SnackBar({
-  //   message: "La categorie n'a pas ete ajouter",
-  //   variant: "danger"
-  // });
-
   // handle submit :
 
   const handleSubmit = () => {
-    alert(data);
+    addCategorie(data);
+    // alert(data);
     setData({ groupe: "", code: "", designation: "", articlesMetaData: [] });
     setNbrAttributes(0);
     // let token = window.localStorage.getItem("token");
@@ -187,6 +187,7 @@ const CreerCategorie = ({ classes }) => {
   return (
     <div className={classes.root}>
       <ValidatorForm onSubmit={handleSubmit} autoComplete="off">
+        <Notification close={() => closeNotif()} message={notifMsg} branch="" />
         <TextValidator
           onChange={handleChange}
           className={classes.field}
@@ -284,4 +285,19 @@ const CreerCategorie = ({ classes }) => {
   );
 };
 
-export default withStyles(styles)(CreerCategorie);
+const mapDispatchToProps = dispatch => ({
+  addCategorie: bindActionCreators(addCategorie, dispatch),
+  closeNotif: () => dispatch({ type: "CLOSE_NOTIF" })
+});
+
+const mapStateToProps = state => ({
+  notifMsg: state.get("crudLogisticReducer").get("notifMsg")
+});
+
+// //const reducer = "initval";
+const CreerCategorieReduxed = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CreerCategorie);
+
+export default withStyles(styles)(CreerCategorieReduxed);

@@ -1,4 +1,4 @@
-import * as notification from "enl-redux/constants/notifConstants";
+import { CLOSE_NOTIF } from "../../../../../redux/constants/notifConstants";
 import * as types from "./crudLogisticConstants";
 
 // Add  Article :
@@ -59,7 +59,7 @@ export const fetchCategorieDesignationFailure = () => ({
 // Notif :
 export const closeNotifAction = branch => ({
   branch,
-  type: notification.CLOSE_NOTIF
+  type: CLOSE_NOTIF
 });
 
 // export const addUserAction = {
