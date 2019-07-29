@@ -172,7 +172,8 @@ class CreerArticle extends React.Component {
     });
   };
 
-  fetchCategorie = async () => {
+  fetchCategorie = () => {
+    console.log(this.state.data.categorie);
     this.props.fetchCategorie(this.state.data.categorie);
     // const categorie = await fetchApi({
     //   method: "GET",
@@ -221,6 +222,7 @@ class CreerArticle extends React.Component {
 
   render() {
     const classes = this.props.classes;
+    console.log(this.props.categorie);
     return (
       <Container>
         <Card small className="mb-4">
@@ -268,12 +270,15 @@ const mapDispatchToProps = dispatch => ({
   closeNotif: () => dispatch(closeNotifAction())
 });
 
-const mapStateToProps = state => ({
-  notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
-  loading: state.get("crudLogisticReducer").get("loading"),
-  designations: state.get("crudLogisticReducer").get("designations"),
-  categorie: state.get("crudLogisticReducer").get("categorie")
-});
+const mapStateToProps = state => {
+  console.log(state.get("crudLogisticReducer").get("categorie"));
+  return {
+    notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
+    loading: state.get("crudLogisticReducer").get("loading"),
+    designations: state.get("crudLogisticReducer").get("designations"),
+    categorie: state.get("crudLogisticReducer").get("categorie")
+  };
+};
 
 // //const reducer = "initval";
 const CreerCategorieReduxed = connect(

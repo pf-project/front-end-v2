@@ -41,9 +41,9 @@ export default class Base extends React.Component {
     } = this.props;
     const { designations } = state;
     console.log(categorie);
-    const articlesMetaData = [];
+    console.log(categorie.get("articlesMetaData"));
     // console.log(categorie);
-    if (articlesMetaData) {
+    if (true /*articlesMetaData*/) {
       return (
         <div>
           <ValidatorForm onSubmit={handleSubmitBase} autoComplete="off">
