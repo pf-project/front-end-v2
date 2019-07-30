@@ -84,7 +84,7 @@ class LoginForm extends React.Component {
           ""
         )}
         <section className={classes.pageFormSideWrap}>
-          <form onSubmit={handleSubmit}>
+          <form autoComplete="off" onSubmit={handleSubmit}>
             <div>
               <FormControl className={classes.formControl}>
                 <Field

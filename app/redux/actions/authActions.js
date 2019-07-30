@@ -94,3 +94,7 @@ export const closeMsgAction = () => ({
 export const loadingAction = () => ({
   type: types.LOADING
 });
+
+export const stoploadingAction = () => ({
+  type: types.STOPLOADING
+});

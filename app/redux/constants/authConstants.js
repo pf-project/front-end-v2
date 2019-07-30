@@ -29,3 +29,4 @@ export const SET_UID = "SET_UID";
 export const SET_TOKEN = "SET_TOKEN";
 
 export const LOADING = "LOADING";
+export const STOPLOADING = "STOPLOADING";

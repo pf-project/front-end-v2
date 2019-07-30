@@ -18,7 +18,8 @@ import {
   createUserFailure,
   setToken,
   setUID,
-  loadingAction
+  loadingAction,
+  stoploadingAction
 } from "../actions/authActions";
 
 function getUrlVars() {
@@ -56,11 +57,12 @@ function* loginSaga({ payload }) {
       body: payload,
       method: "POST"
     });
-    console.log(data);
+    yield put(stoploadingAction());
     if (data.token) {
       if (data.firstLogin) {
         yield put(setUID(data.id));
         yield put(setToken(data.token));
+
         // yield window.localStorage.setItem("token", data.token);
         // yield window.localStorage.setItem("id", data.id);
 

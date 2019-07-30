@@ -16,7 +16,8 @@ import {
   CHANGE_PASSWORD_FAILURE,
   SET_TOKEN,
   SET_UID,
-  LOADING
+  LOADING,
+  STOPLOADING
 } from "../constants/authConstants";
 
 export const AuthState = new Record({
@@ -34,6 +35,12 @@ export default function authReducer(state = new AuthState(), action = {}) {
       return {
         ...state,
         loading: true
+      };
+
+    case STOPLOADING:
+      return {
+        ...state,
+        loading: false
       };
 
     case LOGIN_REQUEST:
