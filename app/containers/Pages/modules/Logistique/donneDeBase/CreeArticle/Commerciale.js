@@ -131,17 +131,10 @@ export default function Commerciale({
                   name="prix_moyen_pendere"
                   value={state.data.prix_moyen_pendere}
                   label="Prix moyen pondéré"
-                  validators={[
-                    "required",
-                    "isNumber",
-                    "isPositive",
-                    "maxNumber:999999"
-                  ]}
+                  validators={["required", "matchRegexp:^[0-9]*.[0-9]{2}$"]}
                   errorMessages={[
                     "champ obligatoire",
-                    "Ce champ doit étre un nombre",
-                    "Ce champ doit étre un nombre positive",
-                    "maximum 6 taille du nombre"
+                    "deux  nombre(s) apres la virgule !"
                   ]}
                 />
               </FormGroup>
@@ -159,107 +152,97 @@ export default function Commerciale({
                   name="prix_de_vente_de_base_HT"
                   value={state.data.prix_de_vente_de_base_HT}
                   label="Prix de vente de base HT"
-                  validators={[
-                    "required",
-                    "isNumber",
-                    "isPositive",
-                    "maxNumber:999999"
-                  ]}
+                  validators={["required", "matchRegexp:^[0-9]*.[0-9]{2}$"]}
                   errorMessages={[
                     "champ obligatoire",
-                    "Ce champ doit étre un nombre",
-                    "Ce champ doit étre un nombre positive",
-                    "maximum 6 taille du nombre"
+                    "deux  nombre(s) apres la virgule !"
                   ]}
                 />
               </FormGroup>
             </Grid>
           </Grid>
         </Grid>
-        <Toolbar className={classes.toolbar}>
-          <div className={classes.title}>
-            <Typography variant="h6">Informations de vente</Typography>
+        {state.data.utilite === "MRCH-Achat-pour-vente" && (
+          <div>
+            <Toolbar className={classes.toolbar}>
+              <div className={classes.title}>
+                <Typography variant="h6">Informations de vente</Typography>
+              </div>
+            </Toolbar>
+            <Grid item xs={12}>
+              <Grid container direction="row">
+                <Grid item xs={6}>
+                  <TextValidator
+                    onChange={handleChange}
+                    className={classes.field}
+                    name="prix_de_vente_de_base_TTC"
+                    value={state.data.prix_de_vente_de_base_TTC}
+                    label="Prix de vente de base TTC"
+                    validators={["required", "matchRegexp:^[0-9]*.[0-9]{2}$"]}
+                    errorMessages={[
+                      "champ obligatoire",
+                      "deux  nombre(s) apres la virgule !"
+                    ]}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container direction="row">
+                <Grid item xs={6}>
+                  <FormGroup>
+                    <SelectValidator
+                      value={state.data.taux_tva}
+                      className={classes.field}
+                      onChange={handleChange}
+                      name="taux_tva"
+                      label="Taux de TVA"
+                      style={{ minWidth: 300 }}
+                      validators={["required"]}
+                      errorMessages={["Ce Champ est Obligatoire : "]}
+                    >
+                      <MenuItem value={"5"}>5</MenuItem>
+                      <MenuItem value={"10"}>10</MenuItem>
+                      <MenuItem value={"25"}>25</MenuItem>
+                      <MenuItem value={"50"}>50</MenuItem>
+                      <MenuItem value={"100"}>100</MenuItem>
+                    </SelectValidator>
+                  </FormGroup>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormGroup>
+                    <SelectValidator
+                      value={state.data.unite_de_vente}
+                      onChange={handleChange}
+                      className={classes.field}
+                      name="unite_de_vente"
+                      label="Unité de vente"
+                      style={{ minWidth: 300 }}
+                      validators={[
+                        "required",
+                        "isNumber",
+                        "isPositive",
+                        "maxNumber:999999"
+                      ]}
+                      errorMessages={[
+                        "champ obligatoire",
+                        "Ce champ doit étre un nombre",
+                        "Ce champ doit étre un nombre positive",
+                        "maximum 6 taille du nombre"
+                      ]}
+                    >
+                      <MenuItem value={"5"}>5</MenuItem>
+                      <MenuItem value={"10"}>10</MenuItem>
+                      <MenuItem value={"25"}>25</MenuItem>
+                      <MenuItem value={"50"}>50</MenuItem>
+                      <MenuItem value={"100"}>100</MenuItem>
+                    </SelectValidator>
+                  </FormGroup>
+                </Grid>
+              </Grid>
+            </Grid>
           </div>
-        </Toolbar>
-        <Grid item xs={12}>
-          <Grid container direction="row">
-            <Grid item xs={6}>
-              <TextValidator
-                onChange={handleChange}
-                className={classes.field}
-                name="prix_de_vente_de_base_TTC"
-                value={state.data.prix_de_vente_de_base_TTC}
-                label="Prix de vente de base TTC"
-                validators={[
-                  "required",
-                  "isNumber",
-                  "isPositive",
-                  "maxNumber:999999"
-                ]}
-                errorMessages={[
-                  "champ obligatoire",
-                  "Ce champ doit étre un nombre",
-                  "Ce champ doit étre un nombre positive",
-                  "maximum 6 taille du nombre"
-                ]}
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container direction="row">
-            <Grid item xs={6}>
-              <FormGroup>
-                <SelectValidator
-                  value={state.data.taux_tva}
-                  className={classes.field}
-                  onChange={handleChange}
-                  name="taux_tva"
-                  label="Taux de TVA"
-                  style={{ minWidth: 300 }}
-                  validators={["required"]}
-                  errorMessages={["Ce Champ est Obligatoire : "]}
-                >
-                  <MenuItem value={"5"}>5</MenuItem>
-                  <MenuItem value={"10"}>10</MenuItem>
-                  <MenuItem value={"25"}>25</MenuItem>
-                  <MenuItem value={"50"}>50</MenuItem>
-                  <MenuItem value={"100"}>100</MenuItem>
-                </SelectValidator>
-              </FormGroup>
-            </Grid>
-            <Grid item xs={6}>
-              <FormGroup>
-                <SelectValidator
-                  value={state.data.unite_de_vente}
-                  onChange={handleChange}
-                  className={classes.field}
-                  name="unite_de_vente"
-                  label="Unité de vente"
-                  style={{ minWidth: 300 }}
-                  validators={[
-                    "required",
-                    "isNumber",
-                    "isPositive",
-                    "maxNumber:999999"
-                  ]}
-                  errorMessages={[
-                    "champ obligatoire",
-                    "Ce champ doit étre un nombre",
-                    "Ce champ doit étre un nombre positive",
-                    "maximum 6 taille du nombre"
-                  ]}
-                >
-                  <MenuItem value={"5"}>5</MenuItem>
-                  <MenuItem value={"10"}>10</MenuItem>
-                  <MenuItem value={"25"}>25</MenuItem>
-                  <MenuItem value={"50"}>50</MenuItem>
-                  <MenuItem value={"100"}>100</MenuItem>
-                </SelectValidator>
-              </FormGroup>
-            </Grid>
-          </Grid>
-        </Grid>
+        )}
         <div className={classes.buttons}>
           <Button
             disabled={state.activeStep === 0}

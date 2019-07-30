@@ -116,8 +116,8 @@ class Base extends React.Component {
                       className={classes.field}
                       onChange={handleChange}
                       name="ancienCode"
-                      validators={["required", "maxStringLength:25"]}
-                      errorMessages={["champ obligatoire", "maximum 25 char"]}
+                      // validators={["required", "maxStringLength:25"]}
+                      // errorMessages={["champ obligatoire", "maximum 25 char"]}
                       value={state.data.ancienCode}
                       label="Ancien Code "
                       id="#ancienCode"
@@ -128,8 +128,8 @@ class Base extends React.Component {
                       className={classes.field}
                       onChange={handleChange}
                       name="fabriquant"
-                      validators={["required", "maxStringLength:25"]}
-                      errorMessages={["champ obligatoire", "maximum 25 char"]}
+                      // validators={["required", "maxStringLength:25"]}
+                      // errorMessages={["champ obligatoire", "maximum 25 char"]}
                       value={state.data.fabriquant}
                       label="Fabriquant"
                       id="#fabriquant"
@@ -146,12 +146,12 @@ class Base extends React.Component {
                       className={classes.field}
                       onChange={handleChange}
                       name="note"
-                      validators={["required", "isNumber", "maxNumber:999999"]}
-                      errorMessages={[
-                        "champ obligatoire",
-                        "Ce champ doit étre un nombre",
-                        "maximum 6 taille du nombre"
-                      ]}
+                      // validators={["required", "isNumber", "maxNumber:999999"]}
+                      // errorMessages={[
+                      //   "champ obligatoire",
+                      //   "Ce champ doit étre un nombre",
+                      //   "maximum 6 taille du nombre"
+                      // ]}
                       value={state.data.note}
                       label="Note"
                       id="#note"
@@ -161,13 +161,13 @@ class Base extends React.Component {
                     <TextValidator
                       className={classes.field}
                       onChange={handleChange}
-                      name="num_piece_fabriquuant"
-                      validators={["required", "isNumber", "maxNumber:999999"]}
-                      errorMessages={[
-                        "champ obligatoire",
-                        "Ce champ doit étre un nombre",
-                        "maximum 6 taille du nombre"
-                      ]}
+                      name="num_piece_fabriquant"
+                      // validators={["required", "isNumber", "maxNumber:999999"]}
+                      // errorMessages={[
+                      //   "champ obligatoire",
+                      //   "Ce champ doit étre un nombre",
+                      //   "maximum 6 taille du nombre"
+                      // ]}
                       value={state.data.num_piece_fabriquuant}
                       label="N° pièce fabirquant"
                       id="#num_piece_fabriquuant"
@@ -196,10 +196,59 @@ class Base extends React.Component {
                   <TableBody>
                     {articlesMetaData.map((data, idx) => {
                       data = data.toObject();
+
                       data.valeurs = data.valeurs ? data.valeurs.toArray() : [];
                       if (data) {
                         let validators = [];
                         let errorMessages = [];
+                        if (data.type)
+                          switch (data.type) {
+                            case "number":
+                              validators.push("isNumber");
+                              errorMessages.push(
+                                "Ce champ doit étre un nombre"
+                              );
+                              break;
+                            case "alphabetical":
+                              break;
+                            case "alphanumeric":
+                              break;
+                            // case "date":
+                            //   break;
+                            // case "time":
+                            //   break;
+
+                            case "float":
+                              validators.push("isFloat");
+                              errorMessages.push(
+                                "Ce champ doit étre un Decimal"
+                              );
+                              break;
+                            case "float-1":
+                              validators.push("matchRegexp:^[0-9]*.[0-9]$");
+                              errorMessages.push(
+                                "un  nombre(s) apres la virgule !"
+                              );
+                              break;
+                            case "float-2":
+                              validators.push("matchRegexp:^[0-9]*.[0-9]{2}$");
+                              errorMessages.push(
+                                "deux  nombre(s) apres la virgule !"
+                              );
+                              break;
+                            case "float-3":
+                              validators.push("matchRegexp:^[0-9]*.[0-9]{3}$");
+                              errorMessages.push(
+                                "trois  nombre(s) apres la virgule !"
+                              );
+                              break;
+                            case "float-4":
+                              validators.push("matchRegexp:^[0-9]*.[0-9]{4}$");
+                              errorMessages.push(
+                                "quatre nombre(s) apres la virgule !"
+                              );
+                              break;
+                          }
                         if (data.obligatoire) {
                           validators.push("required");
                           errorMessages.push("champ obligatoire");
@@ -226,6 +275,7 @@ class Base extends React.Component {
                                       }}
                                       onChange={handleValeursChange}
                                       name={idx}
+                                      type={data.type}
                                       validators={validators}
                                       errorMessages={errorMessages}
                                       value={
@@ -233,21 +283,24 @@ class Base extends React.Component {
                                       }
                                     />
                                   </Grid>
-                                  <Grid item xs={6}>
-                                    <SelectValidator
-                                      className={classes.field}
-                                      onChange={handleValeursChange}
-                                      name={idx}
-                                      style={{ minWidth: 15 }}
-                                    >
-                                      {data.valeurs &&
-                                        data.valeurs.map(valeur => (
-                                          <MenuItem value={valeur}>
-                                            {valeur}{" "}
-                                          </MenuItem>
-                                        ))}
-                                    </SelectValidator>
-                                  </Grid>
+                                  {data.valeurs && data.valeurs.length > 0 && (
+                                    <Grid item xs={6}>
+                                      <SelectValidator
+                                        className={classes.field}
+                                        onChange={handleValeursChange}
+                                        name={idx}
+                                        autoWidth="true"
+                                        // style={{ minWidth: 15 }}
+                                      >
+                                        {data.valeurs &&
+                                          data.valeurs.map(valeur => (
+                                            <MenuItem value={valeur}>
+                                              {valeur}{" "}
+                                            </MenuItem>
+                                          ))}
+                                      </SelectValidator>
+                                    </Grid>
+                                  )}
                                 </Grid>
                               </FormControl>
                             </TableCell>
