@@ -57,11 +57,12 @@ function* loginSaga({ payload }) {
       body: payload,
       method: "POST"
     });
-    yield put(stoploadingAction());
+
     if (data.token) {
       if (data.firstLogin) {
         yield put(setUID(data.id));
         yield put(setToken(data.token));
+        yield put(stoploadingAction());
 
         // yield window.localStorage.setItem("token", data.token);
         // yield window.localStorage.setItem("id", data.id);
