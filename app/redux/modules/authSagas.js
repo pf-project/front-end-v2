@@ -62,15 +62,13 @@ function* loginSaga({ payload }) {
       if (data.firstLogin) {
         yield put(setUID(data.id));
         yield put(setToken(data.token));
-        yield put(stoploadingAction());
+        // yield put(stoploadingAction());
 
         // yield window.localStorage.setItem("token", data.token);
         // yield window.localStorage.setItem("id", data.id);
 
         yield history.replace("/first-login");
-        return 0;
-      }
-      yield window.localStorage.setItem("token", data.token);
+      } else yield window.localStorage.setItem("token", data.token);
       yield put(loginSuccess(data));
       if (getUrlVars().next) {
         // Redirect to next route
