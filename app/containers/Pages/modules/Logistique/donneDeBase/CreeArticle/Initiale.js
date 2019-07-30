@@ -22,7 +22,13 @@ export default function Initiale({
   designations
 }) {
   return (
-    <Grid container spacing={1} className={classes.grid} direction="column">
+    <Grid
+      container
+      spacing={1}
+      className={classes.grid}
+      direction="column"
+      justify="center"
+    >
       <ValidatorForm onSubmit={handleSubmitInitial} autoComplete="off">
         <FormGroup>
           <TextValidator
@@ -95,6 +101,7 @@ export default function Initiale({
             }}
           />
         </FormGroup>
+
         <div className={classes.buttons}>
           <Button
             disabled={state.activeStep === 0}
