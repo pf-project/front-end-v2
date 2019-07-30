@@ -53,8 +53,10 @@ class LoginForm extends React.Component {
       intl,
       messagesAuth,
       closeMsg,
-      loading
+      loading,
+      isError
     } = this.props;
+    console.log(this.props);
     const { showPassword } = this.state;
     return (
       <Paper className={classes.sideWrap}>
@@ -73,7 +75,7 @@ class LoginForm extends React.Component {
         </div>
         {messagesAuth !== null || "" ? (
           <MessagesForm
-            variant="error"
+            variant={isError ? "error" : "success"}
             className={classes.msgUser}
             message={messagesAuth}
             onClose={closeMsg}
@@ -184,6 +186,7 @@ const reducerAuth = "authReducer";
 const mapStateToProps = state => ({
   messagesAuth: state.get(reducerAuth).message,
   loading: state.get(reducerAuth).loading,
+  isError: state.get(reducerAuth).isError,
   ...state
 });
 

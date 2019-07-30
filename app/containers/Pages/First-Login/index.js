@@ -88,14 +88,6 @@ class ChangePassword extends React.Component {
                 align="center"
               >
                 <FormattedMessage {...messages.subtitle} />
-              </Typography>
-              {/* <section className={classes.pageFormWrap}> */}
-              <div
-                className={classNames(
-                  classes.notifyForm,
-                  classes.centerAdornment
-                )}
-              >
                 <ValidatorForm onSubmit={this.handleSubmit} autoComplete="off">
                   {messagesAuth !== null || "" ? (
                     <MessagesForm
@@ -107,38 +99,39 @@ class ChangePassword extends React.Component {
                   ) : (
                     ""
                   )}
-                  <FormControl>
-                    <TextValidator
-                      type="password"
-                      name="password"
-                      label={intl.formatMessage(messages.field1)}
-                      validators={["required"]}
-                      errorMessages={[intl.formatMessage(messages.required)]}
-                      className={classes.textField}
-                      value={password}
-                      onChange={this.handleChange}
-                    />
-                  </FormControl>
+                  {/* <FormControl> */}
+                  <TextValidator
+                    type="password"
+                    name="password"
+                    style={{ width: "100%" }}
+                    label={intl.formatMessage(messages.field1)}
+                    validators={["required"]}
+                    errorMessages={[intl.formatMessage(messages.required)]}
+                    // className={classes.textField}
+                    value={password}
+                    onChange={this.handleChange}
+                  />
+
+                  {/* </FormControl> */}
                   <p />
-                  <FormControl>
-                    <TextValidator
-                      style={{ width: "100" }}
-                      type="password"
-                      name="password2"
-                      label={intl.formatMessage(messages.field2)}
-                      className={classes.textField}
-                      value={password2}
-                      validators={["required", "isPasswordMatch"]}
-                      errorMessages={[
-                        intl.formatMessage(messages.required),
-                        intl.formatMessage(messages.notMatch)
-                      ]}
-                      onChange={this.handleChange}
-                    />
-                  </FormControl>
+                  <TextValidator
+                    type="password"
+                    name="password2"
+                    label={intl.formatMessage(messages.field2)}
+                    style={{ width: "100%" }}
+                    // className={classes.textField}
+                    value={password2}
+                    validators={["required", "isPasswordMatch"]}
+                    errorMessages={[
+                      intl.formatMessage(messages.required),
+                      intl.formatMessage(messages.notMatch)
+                    ]}
+                    onChange={this.handleChange}
+                  />
                   <p />
                   <aside>
                     <Button
+                      style={{ width: "100%" }}
                       variant="contained"
                       size="large"
                       color="secondary"
@@ -149,8 +142,17 @@ class ChangePassword extends React.Component {
                     </Button>
                   </aside>
                 </ValidatorForm>
-              </div>
-              {/* </section> */}
+              </Typography>
+              <section className={classes.pageFormWrap}>
+                {/* <div
+                className={classNames(
+                  classes.notifyForm,
+                  classes.centerAdornment
+                )}
+              > */}
+
+                {/* </div> */}
+              </section>
             </Paper>
           </div>
         </div>
@@ -173,7 +175,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   handleChangePassword: bindActionCreators(changePassword, dispatch),
-  closeMsg: closeMsgAction
+  closeMsg: bindActionCreators(closeMsgAction, dispatch)
 });
 
 const ChangePasswordMapped = connect(

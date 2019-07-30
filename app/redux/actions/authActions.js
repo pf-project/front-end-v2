@@ -14,9 +14,9 @@ export const changePasswordSuccess = credential => ({
   credential
 });
 
-export const changePasswordFailure = error => ({
+export const changePasswordFailure = payload => ({
   type: types.CHANGE_PASSWORD_FAILURE,
-  error
+  payload
 });
 
 export const login = payload => ({

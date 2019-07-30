@@ -54,6 +54,7 @@ function* loginSaga({ payload }) {
       body: payload,
       method: "POST"
     });
+    console.log(data);
     if (data.token) {
       if (data.firstLogin) {
         yield put(setUID(data.id));
