@@ -31,6 +31,7 @@ function* fetchCategorieSaga(payload) {
     yield put(fetchCategorieSuccess(data));
   } catch (error) {
     yield put(fetchCategorieFailure(erreur));
+    yield put(stopLoading());
     // yield put(logingit Failure(error.message));
   }
 }
@@ -45,6 +46,7 @@ function* fetchCategorieDesignationsSaga() {
     yield put(fetchCategorieDesignationSuccess(data));
   } catch (error) {
     yield put(fetchCategorieDesignationFailure(erreur));
+    yield put(stopLoading());
     // yield put(logingit Failure(error.message));
   }
 }
@@ -62,6 +64,7 @@ function* addArticleSaga(payload) {
     yield put(stopLoading());
   } catch (error) {
     yield put(addArticleFailure(erreur));
+    yield put(stopLoading());
   }
 }
 
@@ -77,7 +80,8 @@ function* addCategorieSaga(payload) {
     yield put(addCategorieSuccess());
     yield put(stopLoading());
   } catch (error) {
-    put(addCategorieFailure(erreur));
+    yield put(stopLoading());
+    yield put(addCategorieFailure(erreur));
   }
 }
 
