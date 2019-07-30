@@ -69,11 +69,11 @@ class Login extends React.Component {
                   <FormattedMessage {...messages.welcomeSubtitle} />
                 </Typography>
               </div>
-              <div className={classes.openingFooter}>
+              {/* <div className={classes.openingFooter}>
                 <div className={classes.lang}>
                   <SelectLanguage />
                 </div>
-              </div>
+              </div> */}
             </div>
           </Hidden>
           <div className={classes.sideFormWrap}>
