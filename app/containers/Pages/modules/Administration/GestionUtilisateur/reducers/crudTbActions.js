@@ -10,8 +10,17 @@ export const fetchAction = (users, branch) => ({
   users
 });
 
+export const fetchActionFailure = (payload, branch) => ({
+  type: types.FETCH_DATA_FAILURE,
+  payload
+});
+
 export const blockuser = payload => ({
   type: types.BOLCK_USER_REQUEST,
+  payload
+});
+export const blockuserFailure = payload => ({
+  type: types.BOLCK_USER_FAILURE,
   payload
 });
 export const userblocked = payload => ({
@@ -24,6 +33,11 @@ export const addUser = payload => ({
   payload
 });
 
+export const addUserFailure = payload => ({
+  type: types.ADD_USER_FAILURE,
+  payload
+});
+
 export const userAdded = payload => ({
   type: types.ADD_USER_SUCCESS,
   payload
@@ -33,46 +47,34 @@ export const editUser = payload => ({
   type: types.EDIT_USER_REQUEST,
   payload
 });
+export const editUserFailure = payload => ({
+  type: types.EDIT_USER_FAILURE,
+  payload
+});
 
 export const userEdited = payload => ({
   type: types.EDIT_USER_SUCCESS,
   payload
 });
 
-export const addAction = (anchor, branch) => ({
-  branch,
-  type: `${branch}/${types.ADD_EMPTY_ROW}`,
-  anchor
+export const deleteUser = payload => ({
+  type: types.DELETE_USER_REQUEST,
+  payload
 });
-export const removeAction = (item, branch) => ({
-  branch,
-  type: `${branch}/${types.REMOVE_ROW}`,
-  item
+export const deleteUserFailure = payload => ({
+  type: types.DELETE_USER_FAILURE,
+  payload
 });
-export const updateAction = (event, item, branch) => ({
-  branch,
-  type: `${branch}/${types.UPDATE_ROW}`,
-  event,
-  item
+
+export const userDeleted = payload => ({
+  type: types.DELETE_USER_SUCCESS,
+  payload
 });
-export const editAction = (item, branch) => ({
-  branch,
-  type: `${branch}/${types.EDIT_ROW}`,
-  item
-});
-export const saveAction = (item, branch) => ({
-  branch,
-  type: `${branch}/${types.SAVE_ROW}`,
-  item
-});
+
 export const closeNotifAction = branch => ({
   branch,
   type: notification.CLOSE_NOTIF
 });
-
-// export const addUserAction = {
-//   type: types.ADD_USER
-// };
 
 export const closeAddAction = {
   type: types.CLOSE_ADD_USER_FORM

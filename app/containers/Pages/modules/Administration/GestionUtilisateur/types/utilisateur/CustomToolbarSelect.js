@@ -7,7 +7,7 @@ import BlockIcon from "@material-ui/icons/Block";
 import { withStyles } from "@material-ui/core/styles";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { blockuser } from "../../reducers/crudTbActions";
+import { blockuser, deleteUser } from "../../reducers/crudTbActions";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import ModifierUtilisateur from "./ModifierUtilisateur";
@@ -58,37 +58,18 @@ class CustomToolbarSelect extends React.Component {
   handleClickBlockSelected = () => {
     this.props.selectedRows.data.map(row => {
       const id = this.props.displayData[row.index].data[0];
-      this.changeStatus(id);
+      this.props.blockuser(id);
     });
   };
 
   delete = () => {
-    // console.log(this.props.displayData)
-    // let data = this.props.selectedRows.data;
-    // data.map(el => {
-    //   let index = el.index;
-    //   let id = this.props.displayData[index].data[0];
-    //   fetchApi({
-    //     method: "DELETE",
-    //     url: "/api/Cheques/delete/" + id,
-    //     token: window.localStorage.getItem("token")
-    //   }).then(data => {});
-    //   Dispatcher.dispatch({
-    //     actionType: Constants.TABLE_CHEQUE_UPDATED
-    //   });
-    // });
+    this.props.selectedRows.data.map(row => {
+      const id = this.props.displayData[row.index].data[0];
+      this.props.deleteUser(id);
+    });
   };
   handleClick = () => {
     this.props.openEditAction();
-  };
-
-  editUser = values => {
-    console.log(values);
-  };
-
-  changeStatus = id => {
-    const token = window.localStorage.getItem("token");
-    this.props.blockuser(id);
   };
 
   render() {
@@ -171,6 +152,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   blockuser: bindActionCreators(blockuser, dispatch),
+  deleteUser: bindActionCreators(deleteUser, dispatch),
   openEditAction: () => dispatch(openEditAction),
   closeEditAction: () => dispatch(closeEditAction),
   closeNotif: () => dispatch(closeNotifAction)

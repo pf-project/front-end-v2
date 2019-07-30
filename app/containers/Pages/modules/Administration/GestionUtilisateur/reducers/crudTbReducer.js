@@ -3,19 +3,20 @@ import notif from "enl-api/ui/notifMessage";
 import { CLOSE_NOTIF } from "enl-redux/constants/notifConstants";
 import {
   FETCH_DATA_SUCCESS,
+  FETCH_DATA_FAILURE,
   BOLCK_USER_SUCCESS,
-  ADD_EMPTY_ROW,
-  UPDATE_ROW,
-  REMOVE_ROW,
-  EDIT_ROW,
-  SAVE_ROW,
-  ADD_USER,
+  BOLCK_USER_FAILURE,
   CLOSE_ADD_USER_FORM,
   CLOSE_ADD_USER_FORM_SUCCESS,
   OPEN_ADD_USER_FORM,
   OPEN_EDIT_USER_FORM,
   ADD_USER_SUCCESS,
+  ADD_USER_FAILURE,
   EDIT_USER_SUCCESS,
+  EDIT_USER_FAILURE,
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAILURE,
   CLOSE_EDIT_USER_FORM,
   CLOSE_EDIT_USER_FORM_SUCCESS
 } from "./crudTbConstants";
@@ -57,6 +58,12 @@ export default function crudTbReducer(
         mutableState.set("dataTable", dataTable);
       });
 
+    case FETCH_DATA_FAILURE:
+      return state.withMutations(mutableState => {
+        const dataTable = fromJS(action.users);
+        mutableState.set("notifMsg", action.payload);
+      });
+
     case BOLCK_USER_SUCCESS:
       return state.withMutations(mutableState => {
         let notifMsg;
@@ -78,6 +85,26 @@ export default function crudTbReducer(
           )
           .set("notifMsg", notifMsg);
       });
+    case BOLCK_USER_FAILURE:
+      return state.withMutations(mutableState => {
+        const dataTable = fromJS(action.users);
+        mutableState.set("notifMsg", action.payload);
+      });
+
+    case DELETE_USER_SUCCESS:
+      return state.withMutations(mutableState => {
+        let notifMsg;
+        mutableState
+          .update("dataTable", dataTable =>
+            dataTable.filter(user => user.get("id") !== action.payload.payload)
+          )
+          .set("notifMsg", "l'utilisateur a été supprimé");
+      });
+    case DELETE_USER_FAILURE:
+      return state.withMutations(mutableState => {
+        const dataTable = fromJS(action.users);
+        mutableState.set("notifMsg", action.payload);
+      });
     case EDIT_USER_SUCCESS:
       return state.withMutations(mutableState => {
         mutableState
@@ -95,27 +122,13 @@ export default function crudTbReducer(
           )
           .set("notifMsg", "l'utilisateur a été mis à jour");
       });
-    case `${branch}/${UPDATE_ROW}`:
-    // return state.withMutations(mutableState => {
-    //   const index = state.get("dataTable").indexOf(action.item);
-    //   const cellTarget = action.event.target.name;
-    //   const newVal = type => {
-    //     if (type === "checkbox") {
-    //       return action.event.target.checked;
-    //     }
-    //     return action.event.target.value;
-    //   };
-    //   mutableState.update("dataTable", dataTable =>
-    //     dataTable.setIn([index, cellTarget], newVal(action.event.target.type))
-    //   );
-    // });
-    case `${branch}/${EDIT_ROW}`:
-    // return state.withMutations(mutableState => {
-    //   const index = state.get("dataTable").indexOf(action.item);
-    //   mutableState.update("dataTable", dataTable =>
-    //     dataTable.setIn([index, "edited"], true)
-    //   );
-    // });
+
+    case EDIT_USER_FAILURE:
+      return state.withMutations(mutableState => {
+        const dataTable = fromJS(action.users);
+        mutableState.set("notifMsg", action.payload);
+      });
+
     case ADD_USER_SUCCESS:
       const newUser = action.payload;
       return state.withMutations(mutableState => {
@@ -132,10 +145,11 @@ export default function crudTbReducer(
           )
           .set("notifMsg", "saved");
       });
-    // case ADD_USER:
-    //   return state.withMutations(mutableState => {
-    //     mutableState.set("openForm", true);
-    //   });
+    case ADD_USER_FAILURE:
+      return state.withMutations(mutableState => {
+        const dataTable = fromJS(action.users);
+        mutableState.set("notifMsg", action.payload);
+      });
     case CLOSE_NOTIF:
       return state.withMutations(mutableState => {
         mutableState.set("notifMsg", "");

@@ -223,7 +223,7 @@ class Header extends React.Component {
             <span className={classes.separatorV} />
           </Hidden>
           <div className={classes.userToolbar}>
-            <SelectLanguage />
+            {/* <SelectLanguage /> */}
             <UserMenu signOut={signOut} avatar={avatar} />
           </div>
         </Toolbar>
