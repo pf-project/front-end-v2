@@ -1,15 +1,23 @@
 import { call, fork, put, take, takeEvery, all } from "redux-saga/effects";
 import { fetchAPI } from "../../serverActions";
 import history from "../../utils/history";
-import { LOGIN_REQUEST, LOGOUT_REQUEST } from "../constants/authConstants";
+import {
+  LOGIN_REQUEST,
+  LOGOUT_REQUEST,
+  CHANGE_PASSWORD_REQUEST
+} from "../constants/authConstants";
 import {
   loginSuccess,
   loginFailure,
   logoutSuccess,
   logoutFailure,
+  changePasswordFailure,
+  changePasswordSuccess,
   syncUser,
   createUserSuccess,
-  createUserFailure
+  createUserFailure,
+  setToken,
+  setUID
 } from "../actions/authActions";
 
 function getUrlVars() {
@@ -24,6 +32,21 @@ function getUrlVars() {
   return vars;
 }
 
+function* changePasswordSaga({ payload }) {
+  try {
+    yield fetchAPI({
+      url: `/api/user/passwordReset/${payload.id}`,
+      body: { password: payload.password },
+      method: "POST",
+      token: payload.token
+    });
+    yield history.replace("/");
+    yield put(changePasswordSuccess());
+  } catch (error) {
+    yield put(changePasswordFailure("Erreur lors de l'action  :"));
+  }
+}
+
 function* loginSaga({ payload }) {
   try {
     const data = yield fetchAPI({
@@ -32,8 +55,19 @@ function* loginSaga({ payload }) {
       method: "POST"
     });
     if (data.token) {
-      yield put(loginSuccess(data));
+      if (data.firstLogin) {
+        yield put(setUID(data.id));
+        yield put(setToken(data.token));
+        // yield window.localStorage.setItem("token", data.token);
+        // yield window.localStorage.setItem("id", data.id);
+
+        yield history.replace("/first-login");
+
+        console.log(data.firstLogin);
+        return 0;
+      }
       yield window.localStorage.setItem("token", data.token);
+      yield put(loginSuccess(data));
       if (getUrlVars().next) {
         // Redirect to next route
         yield history.push(getUrlVars().next);
@@ -43,7 +77,7 @@ function* loginSaga({ payload }) {
       }
     } else yield put(loginFailure(data.message));
   } catch (error) {
-    yield put(loginFailure(error.message));
+    yield put(loginFailure(error));
   }
 }
 
@@ -102,7 +136,9 @@ function* loginRootSaga() {
   yield all([
     takeEvery(LOGIN_REQUEST, loginSaga),
     // takeEvery(REGISTER_WITH_EMAIL_SUCCESS, createUserSaga),
-    takeEvery(LOGOUT_REQUEST, logoutSaga)
+    takeEvery(LOGOUT_REQUEST, logoutSaga),
+    takeEvery(CHANGE_PASSWORD_REQUEST, changePasswordSaga)
+
     // takeEvery(PASSWORD_FORGET_REQUEST, passwordForgetSaga)
   ]);
 }

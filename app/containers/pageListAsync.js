@@ -56,6 +56,11 @@ export const ComingSoon = Loadable({
   loader: () => import("./Pages/ComingSoon"),
   loading: Loading
 });
+
+export const FirstLogin = Loadable({
+  loader: () => import("./Pages/First-Login"),
+  loading: Loading
+});
 export const BlankPage = Loadable({
   loader: () => import("./Pages/BlankPage"),
   loading: Loading

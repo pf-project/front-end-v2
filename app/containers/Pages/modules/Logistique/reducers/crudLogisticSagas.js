@@ -41,7 +41,7 @@ function* fetchCategorieDesignationsSaga() {
     });
     yield put(fetchCategorieDesignationSuccess(data));
   } catch (error) {
-    yield put(fetchCategorieDesignationFailure());
+    yield put(fetchCategorieDesignationFailure(error));
     // yield put(logingit Failure(error.message));
   }
 }

@@ -45,6 +45,15 @@
   "boilerplate.containers.CommingSoon.field": "Email",
   "boilerplate.containers.CommingSoon.subtitle": "Arrive Bientôt ",
   "boilerplate.containers.CommingSoon.title": "Arrive Bientôt",
+
+  "boilerplate.containers.FirstLogin.button": "Valider  ",
+  "boilerplate.containers.FirstLogin.field1": "Entre Un nouveau mot de pas",
+  "boilerplate.containers.FirstLogin.field2": "Verifier Votre Mot de pass",
+  "boilerplate.containers.FirstLogin.subtitle": "Veuillez Changer Votre Mot de pass Avant de Continuer",
+  "boilerplate.containers.FirstLogin.title": "Bienvenu Sur Passiflora",
+  "boilerplate.containers.FirstLogin.required": "Champ Obligatoir !",
+  "boilerplate.containers.FirstLogin.notMatch": "Mots de pass differents !",
+
   "boilerplate.containers.LocaleToggle.ar": "󠁥󠁮󠁧󠁿العربيّة",
   "boilerplate.containers.LocaleToggle.de": "Deutsch",
   "boilerplate.containers.LocaleToggle.en": "󠁥󠁮󠁧󠁿English",

@@ -11,7 +11,11 @@ import {
   PASSWORD_FORGET_FAILURE,
   PASSWORD_FORGET_SUCCESS,
   SYNC_USER,
-  HIDE_MSG
+  HIDE_MSG,
+  CHANGE_PASSWORD_SUCCESS,
+  CHANGE_PASSWORD_FAILURE,
+  SET_TOKEN,
+  SET_UID
 } from "../constants/authConstants";
 
 export const AuthState = new Record({
@@ -32,6 +36,29 @@ export default function authReducer(state = new AuthState(), action = {}) {
         message: null
       };
 
+    case CHANGE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        uid: "",
+        message: "Mot de pass Modifier Avec Succes "
+      };
+    case CHANGE_PASSWORD_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        message: action.payload
+      };
+    case SET_TOKEN:
+      return {
+        ...state,
+        token: action.payload
+      };
+    case SET_UID:
+      return {
+        ...state,
+        uid: action.payload
+      };
     case LOGIN_SUCCESS:
       return {
         ...state,
@@ -46,6 +73,12 @@ export default function authReducer(state = new AuthState(), action = {}) {
       };
 
     case LOGIN_FAILURE:
+    case CHANGE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        message: action.message
+      };
     case CREATE_USER_FAILURE:
     case PASSWORD_FORGET_FAILURE:
     case LOGOUT_FAILURE:

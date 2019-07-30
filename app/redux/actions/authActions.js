@@ -4,6 +4,21 @@ import * as types from "../constants/authConstants";
 //  EMAIL AUTH
 //-------------------------------------
 
+export const changePassword = payload => ({
+  type: types.CHANGE_PASSWORD_REQUEST,
+  payload
+});
+
+export const changePasswordSuccess = credential => ({
+  type: types.CHANGE_PASSWORD_SUCCESS,
+  credential
+});
+
+export const changePasswordFailure = error => ({
+  type: types.CHANGE_PASSWORD_FAILURE,
+  error
+});
+
 export const login = payload => ({
   type: types.LOGIN_REQUEST,
   payload
@@ -42,6 +57,16 @@ export const createUserSuccess = key => ({
 export const createUserFailure = error => ({
   type: types.CREATE_USER_FAILURE,
   error
+});
+
+export const setUID = payload => ({
+  type: types.SET_UID,
+  payload
+});
+
+export const setToken = payload => ({
+  type: types.SET_TOKEN,
+  payload
 });
 
 export const logout = () => ({

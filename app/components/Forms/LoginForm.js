@@ -114,7 +114,7 @@ class LoginForm extends React.Component {
                       </InputAdornment>
                     )
                   }}
-                  validate={[required, maxLength5]}
+                  validate={[required]}
                   className={classes.field}
                 />
               </FormControl>
