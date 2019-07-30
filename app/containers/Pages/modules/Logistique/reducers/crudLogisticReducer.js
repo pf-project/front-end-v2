@@ -32,6 +32,11 @@ export default function crudLogisticReducer(
       return state.withMutations(mutableState => {
         mutableState.set("loading", true);
       });
+    case FETCH_CATEGORIE_SUCCESS:
+      return state.withMutations(mutableState => {
+        const categorie = fromJS(action.payload);
+        mutableState.set("categorie", categorie);
+      });
 
     case STOP_LOADING:
       return state.withMutations(mutableState => {
@@ -41,29 +46,41 @@ export default function crudLogisticReducer(
       return state.withMutations(mutableState => {
         mutableState.set("notifMsg", "");
       });
-    case FETCH_CATEGORIE_FAILURE:
-      return 0;
     case FETCH_CATEGORIE_SUCCESS:
       return state.withMutations(mutableState => {
         const categorie = fromJS(action.payload);
         mutableState.set("categorie", categorie);
       });
+    case FETCH_CATEGORIE_FAILURE:
+      return state.withMutations(mutableState => {
+        mutableState.set("notifMsg", action.payload);
+      });
+
     case FETCH_CATEGORIE_DESIGNATIONS_FAILURE:
-      return 0;
+      return state.withMutations(mutableState => {
+        console.log(action.payload);
+        mutableState.set("notifMsg", action.payload);
+      });
     case FETCH_CATEGORIE_DESIGNATIONS_SUCCESS:
       return state.withMutations(mutableState => {
         const designations = fromJS(action.payload);
         mutableState.set("designations", designations);
       });
     case ADD_ARTICLE_FAILURE:
-      return 0;
+      return state.withMutations(mutableState => {
+        mutableState.set("notifMsg", action.payload);
+      });
     case ADD_ARTICLE_SUCCESS:
-      return 0;
+      return state.withMutations(mutableState => {
+        mutableState.set("notifMsg", "Article bien Ajouter ");
+      });
     case ADD_CATEGORIE_FAILURE:
-      return 0;
+      return state.withMutations(mutableState => {
+        mutableState.set("notifMsg", action.payload);
+      });
     case ADD_CATEGORIE_SUCCESS:
       return state.withMutations(mutableState => {
-        mutableState.set("notifMsg", "Categorie bien Ajouter :");
+        mutableState.set("notifMsg", "Categorie bien Ajouter ");
       });
     default:
       return state;

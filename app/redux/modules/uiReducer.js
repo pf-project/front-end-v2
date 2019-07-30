@@ -14,7 +14,7 @@ import {
 
 const initialState = {
   /* Settings for Themes and layout */
-  theme: "purpleTheme",
+  theme: "blueTheme",
   type: "light", // light or dark
   direction: "ltr", // ltr or rtl
   layout: "big-sidebar",

@@ -41,6 +41,9 @@ const styles = theme => ({
   field: {
     width: "90%"
   },
+  initialeFields: {
+    width: "60%"
+  },
   grid: {
     flexGrow: 1
   },
@@ -100,7 +103,7 @@ class CreerArticle extends React.Component {
   handleSubmitStockage = () => {
     this.handleNext();
   };
-  handleSubmitCommerciale = async () => {
+  handleSubmitCommerciale = () => {
     this.props.addArticle(this.state.data);
     this.handleNext();
   };
@@ -282,6 +285,7 @@ class CreerArticle extends React.Component {
 
   render() {
     const { classes, loading, closeNotif, notifMsg } = this.props;
+
     return (
       <Container>
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
@@ -331,6 +335,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => {
+  console.log(state.get("crudLogisticReducer"));
   return {
     notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
     loading: state.get("crudLogisticReducer").get("loading"),

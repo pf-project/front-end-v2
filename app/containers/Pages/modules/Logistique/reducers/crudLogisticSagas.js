@@ -9,7 +9,8 @@ import {
   addCategorieFailure,
   startLoading,
   stopLoading,
-  addArticleSuccess
+  addArticleSuccess,
+  addArticleFailure
 } from "./crudLogisticActions";
 
 import {
@@ -19,6 +20,7 @@ import {
   ADD_CATEGORIE_REQUEST
 } from "./crudLogisticConstants";
 
+const erreur = "Erreur lors de l'action";
 function* fetchCategorieSaga(payload) {
   try {
     const data = yield fetchAPI({
@@ -28,7 +30,7 @@ function* fetchCategorieSaga(payload) {
     });
     yield put(fetchCategorieSuccess(data));
   } catch (error) {
-    yield put(fetchCategorieFailure());
+    yield put(fetchCategorieFailure(erreur));
     // yield put(logingit Failure(error.message));
   }
 }
@@ -42,7 +44,7 @@ function* fetchCategorieDesignationsSaga() {
     });
     yield put(fetchCategorieDesignationSuccess(data));
   } catch (error) {
-    yield put(fetchCategorieDesignationFailure());
+    yield put(fetchCategorieDesignationFailure(erreur));
     // yield put(logingit Failure(error.message));
   }
 }
@@ -59,7 +61,7 @@ function* addArticleSaga(payload) {
     yield put(addArticleSuccess());
     yield put(stopLoading());
   } catch (error) {
-    console.log(error);
+    yield put(addArticleFailure(erreur));
   }
 }
 
@@ -75,7 +77,7 @@ function* addCategorieSaga(payload) {
     yield put(addCategorieSuccess());
     yield put(stopLoading());
   } catch (error) {
-    put(addCategorieFailure());
+    put(addCategorieFailure(erreur));
   }
 }
 

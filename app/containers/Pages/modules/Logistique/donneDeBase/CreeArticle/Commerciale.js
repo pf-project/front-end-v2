@@ -30,17 +30,18 @@ export default function Commerciale({
   state,
   handleSubmitCommerciale,
   handleBack,
-  classes
+  classes,
+  loading
 }) {
   const { designations } = state;
-  const [loading, setLoading] = React.useState(false);
+  // const [loading, setLoading] = React.useState(false);
   // const handleClickVariant = SnackBar({
   //   message: "L'article a été créer avec succes",
   //   variant: "success"
   // });
 
   const handleSubmit = () => {
-    setLoading(true);
+    // setLoading(true);
     handleSubmitCommerciale();
     // handleClickVariant("success");
   };

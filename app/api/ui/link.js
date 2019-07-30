@@ -1,7 +1,7 @@
 module.exports = {
   dashboard: "/app",
   login: "/login",
-  gestionutilisateur: "/app/gestion-utilisateur",
+  gestionutilisateur: "/app/administration/gestion-utilisateur",
   register: "/register",
   market: "#",
   task: "/app/pages/task",

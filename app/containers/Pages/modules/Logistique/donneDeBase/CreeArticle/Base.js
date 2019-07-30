@@ -17,6 +17,7 @@ import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 
+import CircularProgress from "@material-ui/core/CircularProgress";
 import {
   ValidatorForm,
   TextValidator,
@@ -276,7 +277,11 @@ class Base extends React.Component {
         </Grid>
       );
     } else {
-      return <div>Loading ...</div>;
+      return (
+        <center>
+          <CircularProgress size={24} className={classes.buttonProgress} />
+        </center>
+      );
     }
   }
 }

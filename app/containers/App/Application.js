@@ -23,7 +23,7 @@ class Application extends React.Component {
           {/* Home */}
           <Route exact path="/app" component={BlankPage} />
           <Route
-            path="/app/gestion-utilisateur"
+            path="/app/administration/gestion-utilisateur"
             component={GestionUtilisateur}
           />
           <Route

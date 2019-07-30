@@ -12,14 +12,14 @@ module.exports = [
       {
         key: "gerer",
         name: "Gérer",
-        link: "/app/gestion-utilisateur"
+        link: "/app/administration/gestion-utilisateur"
       }
     ]
   },
   {
     key: "logistique",
     name: "Logistique",
-    icon: "home",
+    icon: "build",
     child: [
       {
         key: "paramétrage",

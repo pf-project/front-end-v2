@@ -117,7 +117,6 @@ export default function crudTbReducer(
     //   );
     // });
     case ADD_USER_SUCCESS:
-      // console.log(action.payload);
       const newUser = action.payload;
       return state.withMutations(mutableState => {
         mutableState
