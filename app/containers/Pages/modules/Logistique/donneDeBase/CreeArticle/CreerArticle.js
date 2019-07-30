@@ -6,7 +6,11 @@ import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Container, Card, Row } from "@material-ui/core/";
-// import PageTitle from "../../../components/common/PageTitle";
+import {
+  lighten,
+  darken,
+  fade
+} from "@material-ui/core/styles/colorManipulator";
 import Initiale from "./Initiale";
 import Base from "./Base";
 import Stockage from "./Stockage";
@@ -15,10 +19,12 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import {
   fetchCategorieDesignation,
-  fetchCategorie
+  fetchCategorie,
+  addArticle,
+  closeNotifAction
 } from "../../reducers/crudLogisticActions";
-// import fetchApi from "../../../utils/fetchApi";
-// import SnackBar from "../../../utils/SnackBar";
+
+import { Notification } from "enl-components";
 
 const styles = theme => ({
   root: {
@@ -31,6 +37,37 @@ const styles = theme => ({
   instructions: {
     marginTop: "1em",
     marginBottom: "1em"
+  },
+  field: {
+    width: "90%"
+  },
+  grid: {
+    flexGrow: 1
+  },
+  checkBoxMarginTop: {
+    marginTop: "20px"
+  },
+  toolbar: {
+    marginTop: "1em",
+    marginBottom: "1em",
+    backgroundColor:
+      theme.palette.type === "dark"
+        ? darken(theme.palette.primary.light, 0.6)
+        : theme.palette.primary.light,
+    minHeight: 48
+  },
+  title: {
+    flex: "0 0 auto",
+    "& h6": {
+      fontSize: 16,
+      color:
+        theme.palette.type === "dark"
+          ? darken(theme.palette.primary.light, 0.2)
+          : darken(theme.palette.primary.dark, 0.2)
+    }
+  },
+  buttons: {
+    marginTop: "10px"
   }
 });
 
@@ -45,7 +82,11 @@ class CreerArticle extends React.Component {
         "Données de stockage",
         "Données commerciales"
       ],
-      data: { controleexige: false, gestionparlot: false },
+      data: {
+        caracteristiques: [],
+        controleexige: false,
+        gestionparlot: false
+      },
       designations: [],
       categorie: []
     };
@@ -60,14 +101,35 @@ class CreerArticle extends React.Component {
     this.handleNext();
   };
   handleSubmitCommerciale = async () => {
+    this.props.addArticle(this.state.data);
     this.handleNext();
-    // const data = await fetchApi({
-    //   method: "POST",
-    //   url: "/api/logistic/article/create",
-    //   token: window.localStorage.getItem("token"),
-    //   body: this.state.data
-    // });
   };
+
+  componentWillReceiveProps(nextProps) {
+    let caracteristiques = [];
+    try {
+      const categorie = nextProps.categorie.toObject();
+
+      const articlesMetaData = categorie.articlesMetaData.toArray();
+      articlesMetaData.map((caracteristique, idx) => {
+        caracteristique = caracteristique.toObject();
+        caracteristiques.push({
+          nom: caracteristique.nom,
+          limite: caracteristique.limite,
+          obligatoire: caracteristique.obligatoire,
+          longueur: caracteristique.longueur
+        });
+      });
+      this.setState({
+        data: {
+          ...this.state.data,
+          caracteristiques: caracteristiques
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   // handleDateChange = date => {
 
@@ -77,19 +139,19 @@ class CreerArticle extends React.Component {
     const name = event.target.name;
     const value = event.target.value;
     switch (name) {
-      case "controleexige":
+      case "controle_qualite_exige":
         this.setState({
           data: {
             ...this.state.data,
-            controleexige: !this.state.data.controleexige
+            controle_qualite_exige: !this.state.data.controle_qualite_exige
           }
         });
         break;
-      case "gestionparlot":
+      case "gestion_par_lot":
         this.setState({
           data: {
             ...this.state.data,
-            gestionparlot: !this.state.data.gestionparlot
+            gestion_par_lot: !this.state.data.gestion_par_lot
           }
         });
         break;
@@ -118,7 +180,7 @@ class CreerArticle extends React.Component {
           <Base
             handleChange={this.handleChange}
             state={this.state}
-            categorie={this.props.categorie}
+            designations={this.props.designations}
             handleSubmitBase={this.handleSubmitBase}
             handleBack={this.handleBack}
             classes={classes}
@@ -139,6 +201,7 @@ class CreerArticle extends React.Component {
       default:
         return (
           <Commerciale
+            loading={this.props.loading}
             handleChange={this.handleChange}
             state={this.state}
             handleSubmitCommerciale={this.handleSubmitCommerciale}
@@ -162,6 +225,7 @@ class CreerArticle extends React.Component {
   handleReset = () => {
     this.setState({
       activeStep: 0,
+
       data: {
         caracteristiques: [],
         controleexige: false,
@@ -173,7 +237,6 @@ class CreerArticle extends React.Component {
   };
 
   fetchCategorie = () => {
-    console.log(this.state.data.categorie);
     this.props.fetchCategorie(this.state.data.categorie);
     // const categorie = await fetchApi({
     //   method: "GET",
@@ -213,18 +276,15 @@ class CreerArticle extends React.Component {
     });
   };
 
-  async componentWillMount() {
+  componentWillMount() {
     this.props.fetchCategorieDesignation();
-    // this.setState({
-    //   designations
-    // });
   }
 
   render() {
-    const classes = this.props.classes;
-    console.log(this.props.categorie);
+    const { classes, loading, closeNotif, notifMsg } = this.props;
     return (
       <Container>
+        <Notification close={() => closeNotif()} message={notifMsg} branch="" />
         <Card small className="mb-4">
           <div className={classes.root}>
             <Stepper activeStep={this.state.activeStep} alternativeLabel>
@@ -266,12 +326,11 @@ const mapDispatchToProps = dispatch => ({
     fetchCategorieDesignation,
     dispatch
   ),
-  fetchCategorie: bindActionCreators(fetchCategorie, dispatch),
-  closeNotif: () => dispatch(closeNotifAction())
+  closeNotif: () => dispatch(closeNotifAction()),
+  addArticle: bindActionCreators(addArticle, dispatch)
 });
 
 const mapStateToProps = state => {
-  console.log(state.get("crudLogisticReducer").get("categorie"));
   return {
     notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
     loading: state.get("crudLogisticReducer").get("loading"),

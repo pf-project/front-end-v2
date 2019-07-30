@@ -13,6 +13,9 @@ import FormControl from "@material-ui/core/FormControl";
 import InputSelect from "./InputSelect";
 import FormGroup from "@material-ui/core/FormGroup";
 import { Row, Col, Breadcrumb, BreadcrumbItem } from "@material-ui/core";
+import Breadcrumbs from "@material-ui/core/Breadcrumbs";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 
 import {
   ValidatorForm,
@@ -20,13 +23,18 @@ import {
   SelectValidator
 } from "react-material-ui-form-validator";
 
-export default class Base extends React.Component {
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { fetchCategorie } from "../../reducers/crudLogisticActions";
+import Grid from "@material-ui/core/Grid";
+
+class Base extends React.Component {
   constructor(props) {
     super(props);
   }
 
   componentWillMount() {
-    this.props.fetchCategorie();
+    this.props.fetchCategorie(this.props.state.data.categorie);
   }
 
   render() {
@@ -37,169 +45,183 @@ export default class Base extends React.Component {
       handleBack,
       classes,
       handleValeursChange,
-      categorie
+      designations
     } = this.props;
-    const { designations } = state;
-    console.log(categorie);
-    console.log(categorie.get("articlesMetaData"));
-    // console.log(categorie);
-    if (true /*articlesMetaData*/) {
+    const categorie = this.props.categorie.toObject();
+
+    if (categorie.articlesMetaData) {
+      const articlesMetaData = categorie.articlesMetaData.toArray();
       return (
-        <div>
+        <Grid container spacing={1} className={classes.grid} direction="column">
           <ValidatorForm onSubmit={handleSubmitBase} autoComplete="off">
-            <FormGroup>
-              <Row>
-                <Col md="3">
-                  <TextValidator
-                    disabled
-                    onChange={handleChange}
-                    name="code"
-                    value={state.data.code}
-                    label="Code Article *"
-                    id="#codearticle"
-                  />
-                </Col>
-                <Col md="3">
-                  <TextValidator
-                    onChange={handleChange}
-                    name="designation"
-                    validators={["required", "maxStringLength:25"]}
-                    errorMessages={["champ obligatoire", "maximum 25 char"]}
-                    value={state.data.designation}
-                    label="Désignation *"
-                    id="#designation"
-                  />
-                </Col>
-                <Col md="3">
-                  <FormControl style={{ minWidth: 300 }}>
-                    <SelectValidator
+            <Grid item xs={12}>
+              <FormGroup>
+                <Grid container>
+                  <Grid item xs={4}>
+                    <TextValidator
+                      className={classes.field}
+                      InputProps={{
+                        readOnly: true,
+                        fullWidth: true
+                      }}
+                      onChange={handleChange}
+                      name="code"
+                      value={state.data.code}
+                      label="Code Article *"
+                      id="#codearticle"
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <TextValidator
+                      // fullWidth={true}
+                      className={classes.field}
+                      onChange={handleChange}
+                      name="designation"
+                      validators={["required", "maxStringLength:25"]}
+                      errorMessages={["champ obligatoire", "maximum 25 char"]}
+                      value={state.data.designation}
+                      label="Désignation *"
+                      id="#designation"
+                    />
+                  </Grid>
+
+                  <Grid item xs={4}>
+                    <TextValidator
+                      className={classes.field}
                       value={state.data.categorie}
                       onChange={handleChange}
                       name="categorie"
                       label="Catégorie d'article"
-                      style={{ minWidth: 300 }}
                       validators={["required"]}
                       errorMessages={["Ce Champ est Obligatoire : "]}
-                    >
-                      {designations.map(designation => (
-                        <MenuItem value={designation}>{designation}</MenuItem>
-                      ))}
-                    </SelectValidator>
-                  </FormControl>
-                </Col>
-              </Row>
-            </FormGroup>
-            {/* <Breadcrumb>
-              <BreadcrumbItem active>Information de base</BreadcrumbItem>
-            </Breadcrumb> */}
+                      InputProps={{
+                        readOnly: true
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              </FormGroup>
+            </Grid>
+            <Toolbar className={classes.toolbar}>
+              <div className={classes.title}>
+                <Typography variant="h6">Information de base</Typography>
+              </div>
+            </Toolbar>
+            <Grid item>
+              <FormGroup>
+                <Grid container direction="row">
+                  <Grid item xs={6}>
+                    <TextValidator
+                      className={classes.field}
+                      onChange={handleChange}
+                      name="ancienCode"
+                      validators={["required", "maxStringLength:25"]}
+                      errorMessages={["champ obligatoire", "maximum 25 char"]}
+                      value={state.data.ancienCode}
+                      label="Ancien Code "
+                      id="#ancienCode"
+                    />
+                  </Grid>
+                  <Grid item xs={6} direction="column">
+                    <TextValidator
+                      className={classes.field}
+                      onChange={handleChange}
+                      name="fabriquant"
+                      validators={["required", "maxStringLength:25"]}
+                      errorMessages={["champ obligatoire", "maximum 25 char"]}
+                      value={state.data.fabriquant}
+                      label="Fabriquant"
+                      id="#fabriquant"
+                    />
+                  </Grid>
+                </Grid>
+              </FormGroup>
+            </Grid>
+            <Grid item>
+              <FormGroup>
+                <Grid container direction="row">
+                  <Grid item xs={6}>
+                    <TextValidator
+                      className={classes.field}
+                      onChange={handleChange}
+                      name="note"
+                      validators={["required", "isNumber", "maxNumber:999999"]}
+                      errorMessages={[
+                        "champ obligatoire",
+                        "Ce champ doit étre un nombre",
+                        "maximum 6 taille du nombre"
+                      ]}
+                      value={state.data.note}
+                      label="Note"
+                      id="#note"
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextValidator
+                      className={classes.field}
+                      onChange={handleChange}
+                      name="num_piece_fabriquuant"
+                      validators={["required", "isNumber", "maxNumber:999999"]}
+                      errorMessages={[
+                        "champ obligatoire",
+                        "Ce champ doit étre un nombre",
+                        "maximum 6 taille du nombre"
+                      ]}
+                      value={state.data.num_piece_fabriquuant}
+                      label="N° pièce fabirquant"
+                      id="#num_piece_fabriquuant"
+                    />
+                  </Grid>
+                </Grid>
+              </FormGroup>
+            </Grid>
             <FormGroup>
-              <Row>
-                <Col md="4">
-                  <TextValidator
-                    onChange={handleChange}
-                    name="ancienCode"
-                    validators={["required", "maxStringLength:25"]}
-                    errorMessages={["champ obligatoire", "maximum 25 char"]}
-                    value={state.data.ancienCode}
-                    label="Ancien Code "
-                    id="#ancienCode"
-                  />
-                </Col>
-                <Col md="4">
-                  <TextValidator
-                    onChange={handleChange}
-                    name="fabriquant"
-                    validators={["required", "maxStringLength:25"]}
-                    errorMessages={["champ obligatoire", "maximum 25 char"]}
-                    value={state.data.fabriquant}
-                    label="Fabriquant"
-                    id="#fabriquant"
-                  />
-                </Col>
-              </Row>
-            </FormGroup>
-            <FormGroup>
-              <Row>
-                <Col md="4">
-                  <TextValidator
-                    onChange={handleChange}
-                    name="note"
-                    validators={["required", "isNumber", "maxNumber:999999"]}
-                    errorMessages={[
-                      "champ obligatoire",
-                      "Ce champ doit étre un nombre",
-                      "maximum 6 taille du nombre"
-                    ]}
-                    value={state.data.note}
-                    label="Note"
-                    id="#note"
-                  />
-                </Col>
-                <Col md="4">
-                  <TextValidator
-                    onChange={handleChange}
-                    name="num_piece_fabriquuant"
-                    validators={["required", "isNumber", "maxNumber:999999"]}
-                    errorMessages={[
-                      "champ obligatoire",
-                      "Ce champ doit étre un nombre",
-                      "maximum 6 taille du nombre"
-                    ]}
-                    value={state.data.num_piece_fabriquuant}
-                    label="N° pièce fabirquant"
-                    id="#num_piece_fabriquuant"
-                  />
-                </Col>
-              </Row>
-            </FormGroup>
-            <FormGroup>
-              <Col md="8">
-                <Paper
-                  className={{
-                    width: "100%",
-                    marginTop: "3em",
-                    overflowX: "auto"
-                  }}
-                >
-                  <Table className={{ minWidth: 650 }}>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Caratéristique</TableCell>
-                        <TableCell>
-                          Valeur <span style={{ color: "red" }}>*</span>
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {articlesMetaData.map((data, idx) => {
-                        data = data.toObject();
-                        data.valeurs = data.valeurs
-                          ? data.valeurs.toArray()
-                          : [];
-                        if (data) {
-                          let validators = [];
-                          let errorMessages = [];
-                          // console.log(data.caracteristiques[idx]);
-                          if (data.obligatoire === "true") {
-                            validators.push("required");
-                            errorMessages.push("champ obligatoire");
-                          }
-                          if (data.longueur) {
-                            let l = data.longueur;
-                            validators.push("maxStringLength:" + l);
-                            errorMessages.push("max longeur " + l);
-                          }
-                          return (
-                            <TableRow key={idx}>
-                              <TableCell component="th" scope="row">
-                                {data.nom}
-                              </TableCell>
-                              <TableCell>
-                                <FormControl style={{ minWidth: 250 }}>
-                                  <Row>
+              <Paper
+                className={{
+                  width: "100%",
+                  marginTop: "3em",
+                  overflowX: "auto"
+                }}
+              >
+                <Table className={{ minWidth: 650 }}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Caratéristique</TableCell>
+                      <TableCell>
+                        Valeur <span style={{ color: "red" }}>*</span>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {articlesMetaData.map((data, idx) => {
+                      data = data.toObject();
+                      data.valeurs = data.valeurs ? data.valeurs.toArray() : [];
+                      if (data) {
+                        let validators = [];
+                        let errorMessages = [];
+                        if (data.obligatoire) {
+                          validators.push("required");
+                          errorMessages.push("champ obligatoire");
+                        }
+                        if (data.longueur) {
+                          let l = data.longueur;
+                          validators.push("maxStringLength:" + l);
+                          errorMessages.push("max longeur " + l);
+                        }
+
+                        return (
+                          <TableRow key={idx}>
+                            <TableCell component="th" scope="row">
+                              {data.nom}
+                            </TableCell>
+                            <TableCell>
+                              <FormControl style={{ minWidth: 250 }}>
+                                <Grid container direction="row">
+                                  <Grid item xs={6}>
                                     <TextValidator
+                                      className={classes.field}
                                       InputProps={{
-                                        readOnly: data.limite === "true"
+                                        readOnly: data.limite
                                       }}
                                       onChange={handleValeursChange}
                                       name={idx}
@@ -209,7 +231,10 @@ export default class Base extends React.Component {
                                         state.data.caracteristiques[idx].valeur
                                       }
                                     />
+                                  </Grid>
+                                  <Grid item xs={6}>
                                     <SelectValidator
+                                      className={classes.field}
                                       onChange={handleValeursChange}
                                       name={idx}
                                       style={{ minWidth: 15 }}
@@ -221,19 +246,19 @@ export default class Base extends React.Component {
                                           </MenuItem>
                                         ))}
                                     </SelectValidator>
-                                  </Row>
-                                </FormControl>
-                              </TableCell>
-                            </TableRow>
-                          );
-                        }
-                      })}
-                    </TableBody>
-                  </Table>
-                </Paper>
-              </Col>
+                                  </Grid>
+                                </Grid>
+                              </FormControl>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      }
+                    })}
+                  </TableBody>
+                </Table>
+              </Paper>
             </FormGroup>
-            <div>
+            <div className={classes.buttons}>
               <Button
                 disabled={state.activeStep === 0}
                 onClick={handleBack}
@@ -248,10 +273,28 @@ export default class Base extends React.Component {
               </Button>
             </div>
           </ValidatorForm>
-        </div>
+        </Grid>
       );
     } else {
       return <div>Loading ...</div>;
     }
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  fetchCategorie: bindActionCreators(fetchCategorie, dispatch),
+  closeNotif: () => dispatch(closeNotifAction())
+});
+
+const mapStateToProps = state => ({
+  // state: state.get("crudLogisticReducer"),
+  categorie: state.get("crudLogisticReducer").get("categorie")
+});
+
+// //const reducer = "initval";
+const BaseMapped = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Base);
+
+export default BaseMapped;

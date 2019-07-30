@@ -10,9 +10,8 @@ export const addArticleSuccess = payload => ({
   type: types.ADD_ARTICLE_SUCCESS,
   payload
 });
-export const addArticleFailure = payload => ({
-  type: types.ADD_ARTICLE_FAILURE,
-  payload
+export const addArticleFailure = () => ({
+  type: types.ADD_ARTICLE_FAILURE
 });
 
 // Add Categorie :
@@ -27,9 +26,8 @@ export const addCategorieSuccess = payload => ({
   payload
 });
 
-export const addCategorieFailure = payload => ({
-  type: types.ADD_CATEGORIE_FAILURE,
-  payload
+export const addCategorieFailure = () => ({
+  type: types.ADD_CATEGORIE_FAILURE
 });
 
 // Fetch categorie :
@@ -41,9 +39,8 @@ export const fetchCategorieSuccess = payload => ({
   type: types.FETCH_CATEGORIE_SUCCESS,
   payload
 });
-export const fetchCategorieFailure = payload => ({
-  type: types.FETCH_CATEGORIE_FAILURE,
-  payload
+export const fetchCategorieFailure = () => ({
+  type: types.FETCH_CATEGORIE_FAILURE
 });
 
 // fetch categories designations
@@ -55,9 +52,8 @@ export const fetchCategorieDesignationSuccess = payload => ({
   type: types.FETCH_CATEGORIE_DESIGNATIONS_SUCCESS,
   payload
 });
-export const fetchCategorieDesignationFailure = payload => ({
-  type: types.FETCH_CATEGORIE_DESIGNATIONS_FAILURE,
-  payload
+export const fetchCategorieDesignationFailure = () => ({
+  type: types.FETCH_CATEGORIE_DESIGNATIONS_FAILURE
 });
 
 // Notif :

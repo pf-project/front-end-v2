@@ -12,6 +12,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 import {
   FormGroup,
   Row,
@@ -36,150 +39,166 @@ export default function Stockage({
   const { designations } = state;
   return (
     <div>
-      <ValidatorForm onSubmit={handleSubmitStockage} autoComplete="off">
-        <FormGroup>
-          <Row>
-            <Col md="3">
-              <TextValidator
-                disabled
-                onChange={handleChange}
-                name="code"
-                value={state.data.codearticle}
-                label="Code Article *"
-                id="#code"
-              />
-            </Col>
-            <Col md="3">
-              <TextValidator
-                onChange={handleChange}
-                name="designation"
-                validators={["required", "maxStringLength:25"]}
-                errorMessages={["champ obligatoire", "maximum 25 char"]}
-                value={state.data.designation}
-                label="Désignation *"
-                id="#designation"
-              />
-            </Col>
-            <Col md="3">
-              <FormControl style={{ minWidth: 300 }}>
-                <SelectValidator
-                  value={state.data.categorie}
-                  onChange={handleChange}
-                  name="categorie"
-                  label="Catégorie d'article"
-                  style={{ minWidth: 300 }}
-                  validators={["required"]}
-                  errorMessages={["Ce Champ est Obligatoire : "]}
-                >
-                  {designations.map(designation => (
-                    <MenuItem value={designation}>{designation}</MenuItem>
-                  ))}
-                </SelectValidator>
-              </FormControl>
-            </Col>
-          </Row>
-        </FormGroup>
-        <Breadcrumb>
-          <BreadcrumbItem active>Information de Stockage</BreadcrumbItem>
-        </Breadcrumb>
-        <FormGroup>
-          <Row>
-            <Col md="4">
-              <FormControl style={{ minWidth: 300 }}>
-                <SelectValidator
-                  value={state.data.unite_de_quantite_de_base}
-                  onChange={handleChange}
-                  name="unite_de_quantite_de_base"
-                  label="Unité de quantité de base"
-                  style={{ minWidth: 300 }}
-                  validators={[
-                    "required",
-                    "isNumber",
-                    "isPositive",
-                    "maxNumber:999999"
-                  ]}
-                  errorMessages={[
-                    "champ obligatoire",
-                    "Ce champ doit étre un nombre",
-                    "Ce champ doit étre un nombre positive",
-                    "maximum 6 taille du nombre"
-                  ]}
-                >
-                  <MenuItem value={"5"}>5</MenuItem>
-                  <MenuItem value={"10"}>10</MenuItem>
-                  <MenuItem value={"25"}>25</MenuItem>
-                  <MenuItem value={"50"}>50</MenuItem>
-                  <MenuItem value={"100"}>100</MenuItem>
-                </SelectValidator>
-              </FormControl>
-            </Col>
+      <Grid container spacing={1} className={classes.grid} direction="column">
+        <ValidatorForm onSubmit={handleSubmitStockage} autoComplete="off">
+          <Grid item xs={12}>
+            <FormGroup>
+              <Grid container>
+                <Grid item xs={4}>
+                  <TextValidator
+                    className={classes.field}
+                    InputProps={{
+                      readOnly: true,
+                      fullWidth: true
+                    }}
+                    onChange={handleChange}
+                    name="code"
+                    value={state.data.code}
+                    label="Code Article *"
+                    id="#codearticle"
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextValidator
+                    // fullWidth={true}
+                    className={classes.field}
+                    onChange={handleChange}
+                    name="designation"
+                    validators={["required", "maxStringLength:25"]}
+                    errorMessages={["champ obligatoire", "maximum 25 char"]}
+                    value={state.data.designation}
+                    label="Désignation *"
+                    id="#designation"
+                  />
+                </Grid>
 
-            <Col md="4">
-              <TextValidator
-                onChange={handleChange}
-                name="emplacement"
-                validators={["required", "maxStringLength:10"]}
-                errorMessages={["champ obligatoire", "maximum 10 char"]}
-                value={state.data.emplacement}
-                label="Emplacement *"
-                id="#emplacement"
-              />
-            </Col>
-          </Row>
-        </FormGroup>
-        <FormGroup>
-          <Row>
-            <Col md="4">
-              <FormControl style={{ minWidth: 300 }}>
-                <SelectValidator
-                  value={state.data.poids}
-                  onChange={handleChange}
-                  name="poids"
-                  label="Poids"
-                  style={{ minWidth: 300 }}
-                  validators={["required", "maxNumber:100"]}
-                  errorMessages={[
-                    "Ce Champ est Obligatoire : ",
-                    "taille maximale est 100"
-                  ]}
-                >
-                  <MenuItem value={"5"}>5</MenuItem>
-                  <MenuItem value={"10"}>10</MenuItem>
-                  <MenuItem value={"25"}>25</MenuItem>
-                  <MenuItem value={"50"}>50</MenuItem>
-                  <MenuItem value={"100"}>100</MenuItem>
-                </SelectValidator>
-              </FormControl>
-            </Col>
-            <Col md="4">
-              <FormControl style={{ minWidth: 300 }}>
-                <SelectValidator
-                  value={state.data.unite1}
-                  onChange={handleChange}
-                  name="unite1"
-                  label="Unité"
-                  style={{ minWidth: 300 }}
-                  validators={["required", "maxNumber:100"]}
-                  errorMessages={[
-                    "Ce Champ est Obligatoire : ",
-                    "taille maximale est 100"
-                  ]}
-                >
-                  <MenuItem value={"5"}>5</MenuItem>
-                  <MenuItem value={"10"}>10</MenuItem>
-                  <MenuItem value={"25"}>25</MenuItem>
-                  <MenuItem value={"50"}>50</MenuItem>
-                  <MenuItem value={"100"}>100</MenuItem>
-                </SelectValidator>
-              </FormControl>
-            </Col>
-          </Row>
-        </FormGroup>
-        <FormGroup>
-          <Row>
-            <Col md="4">
-              <Row>
-                <Col md="3">
+                <Grid item xs={4}>
+                  <TextValidator
+                    className={classes.field}
+                    value={state.data.categorie}
+                    onChange={handleChange}
+                    name="categorie"
+                    label="Catégorie d'article"
+                    validators={["required"]}
+                    errorMessages={["Ce Champ est Obligatoire : "]}
+                    InputProps={{
+                      readOnly: true
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </FormGroup>
+          </Grid>
+          <Toolbar className={classes.toolbar}>
+            <div className={classes.title}>
+              <Typography variant="h6">Données de stockage</Typography>
+            </div>
+          </Toolbar>
+
+          <Grid item xs={12}>
+            <FormGroup>
+              <Grid container direction="row">
+                <Grid item xs={6}>
+                  <FormControl style={{ minWidth: 300 }}>
+                    <SelectValidator
+                      className={classes.field}
+                      value={state.data.unite_de_quantite_de_base}
+                      onChange={handleChange}
+                      name="unite_de_quantite_de_base"
+                      label="Unité de quantité de base"
+                      style={{ minWidth: 300 }}
+                      validators={[
+                        "required",
+                        "isNumber",
+                        "isPositive",
+                        "maxNumber:999999"
+                      ]}
+                      errorMessages={[
+                        "champ obligatoire",
+                        "Ce champ doit étre un nombre",
+                        "Ce champ doit étre un nombre positive",
+                        "maximum 6 taille du nombre"
+                      ]}
+                    >
+                      <MenuItem value={"5"}>5</MenuItem>
+                      <MenuItem value={"10"}>10</MenuItem>
+                      <MenuItem value={"25"}>25</MenuItem>
+                      <MenuItem value={"50"}>50</MenuItem>
+                      <MenuItem value={"100"}>100</MenuItem>
+                    </SelectValidator>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={6} direction="column">
+                  <TextValidator
+                    className={classes.field}
+                    onChange={handleChange}
+                    name="emplacement"
+                    validators={["required", "maxStringLength:10"]}
+                    errorMessages={["champ obligatoire", "maximum 10 char"]}
+                    value={state.data.emplacement}
+                    label="Emplacement *"
+                    id="#emplacement"
+                  />
+                </Grid>
+              </Grid>
+            </FormGroup>
+          </Grid>
+          <Grid item xs={12}>
+            <FormGroup>
+              <Grid container direction="row">
+                <Grid item xs={6}>
+                  <FormControl style={{ minWidth: 300 }}>
+                    <SelectValidator
+                      className={classes.field}
+                      value={state.data.poids}
+                      onChange={handleChange}
+                      name="poids"
+                      label="Poids"
+                      style={{ minWidth: 300 }}
+                      validators={["required", "maxNumber:100"]}
+                      errorMessages={[
+                        "Ce Champ est Obligatoire : ",
+                        "taille maximale est 100"
+                      ]}
+                    >
+                      <MenuItem value={"5"}>5</MenuItem>
+                      <MenuItem value={"10"}>10</MenuItem>
+                      <MenuItem value={"25"}>25</MenuItem>
+                      <MenuItem value={"50"}>50</MenuItem>
+                      <MenuItem value={"100"}>100</MenuItem>
+                    </SelectValidator>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={6} direction="column">
+                  <FormControl style={{ minWidth: 300 }}>
+                    <SelectValidator
+                      className={classes.field}
+                      value={state.data.unite1}
+                      onChange={handleChange}
+                      name="unite1"
+                      label="Unité"
+                      style={{ minWidth: 300 }}
+                      validators={["required", "maxNumber:100"]}
+                      errorMessages={[
+                        "Ce Champ est Obligatoire : ",
+                        "taille maximale est 100"
+                      ]}
+                    >
+                      <MenuItem value={"5"}>5</MenuItem>
+                      <MenuItem value={"10"}>10</MenuItem>
+                      <MenuItem value={"25"}>25</MenuItem>
+                      <MenuItem value={"50"}>50</MenuItem>
+                      <MenuItem value={"100"}>100</MenuItem>
+                    </SelectValidator>
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </FormGroup>
+          </Grid>
+          <Grid item xs={12}>
+            <FormGroup>
+              <Grid container direction="row">
+                <Grid item xs={2}>
                   <TextValidator
                     onChange={handleChange}
                     name="dimension_L"
@@ -199,8 +218,8 @@ export default function Stockage({
                     label="L"
                     id="#l"
                   />
-                </Col>
-                <Col md="3">
+                </Grid>
+                <Grid item xs={2} direction="column">
                   <TextValidator
                     onChange={handleChange}
                     name="dimension_I"
@@ -220,8 +239,8 @@ export default function Stockage({
                     label="I"
                     id="#i"
                   />
-                </Col>
-                <Col md="3">
+                </Grid>
+                <Grid item xs={2} direction="column">
                   <TextValidator
                     onChange={handleChange}
                     name="dimension_H"
@@ -241,78 +260,110 @@ export default function Stockage({
                     label="H"
                     id="#h"
                   />
-                </Col>
-              </Row>
-            </Col>
-            <Col md="4">
-              <FormControl style={{ minWidth: 300 }}>
-                <SelectValidator
-                  value={state.data.unite2}
-                  onChange={handleChange}
-                  name="unite2"
-                  label="Unité"
-                  style={{ minWidth: 300 }}
-                  validators={["required", "maxNumber:100"]}
-                  errorMessages={[
-                    "Ce Champ est Obligatoire : ",
-                    "taille maximale est 100"
-                  ]}
-                >
-                  <MenuItem value={"5"}>5</MenuItem>
-                  <MenuItem value={"10"}>10</MenuItem>
-                  <MenuItem value={"25"}>25</MenuItem>
-                  <MenuItem value={"50"}>50</MenuItem>
-                  <MenuItem value={"100"}>100</MenuItem>
-                </SelectValidator>
-              </FormControl>
-            </Col>
-          </Row>
-        </FormGroup>
-        <FormGroup>
-          <Row>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.data.gestion_par_lot}
-                  onChange={handleChange}
-                  color="primary"
-                  name="gestion_par_lot"
-                />
-              }
-              label="Gestion par lot"
-            />
-          </Row>
-        </FormGroup>
-        <FormGroup>
-          <Row>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.data.controle_qualite_exige}
-                  onChange={handleChange}
-                  color="primary"
-                  name="controle_qualite_exige"
-                />
-              }
-              label="Controle qualité exigé"
-            />
-          </Row>
-        </FormGroup>
-        <div>
-          <Button
-            disabled={state.activeStep === 0}
-            onClick={handleBack}
-            className={classes.backButton}
-          >
-            Précedent
-          </Button>
-          <Button variant="contained" color="primary" type="submit">
-            {state.activeStep === state.steps.length - 1
-              ? "Sauvegarder"
-              : "Suivant"}
-          </Button>
-        </div>
-      </ValidatorForm>
+                </Grid>
+                <Grid item xs={6} direction="column">
+                  <FormControl style={{ minWidth: 300 }}>
+                    <SelectValidator
+                      value={state.data.unite2}
+                      onChange={handleChange}
+                      name="unite2"
+                      label="Unité"
+                      style={{ minWidth: 300 }}
+                      validators={["required", "maxNumber:100"]}
+                      errorMessages={[
+                        "Ce Champ est Obligatoire : ",
+                        "taille maximale est 100"
+                      ]}
+                    >
+                      <MenuItem value={"5"}>5</MenuItem>
+                      <MenuItem value={"10"}>10</MenuItem>
+                      <MenuItem value={"25"}>25</MenuItem>
+                      <MenuItem value={"50"}>50</MenuItem>
+                      <MenuItem value={"100"}>100</MenuItem>
+                    </SelectValidator>
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </FormGroup>
+          </Grid>
+          <Grid item xs={12} className={classes.checkBoxMarginTop}>
+            <FormGroup>
+              <Grid container direction="row">
+                <Grid item xs={2}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={state.data.gestion_par_lot}
+                        onChange={handleChange}
+                        color="primary"
+                        name="gestion_par_lot"
+                      />
+                    }
+                    label="Gestion par lot"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  {state.data.gestion_par_lot && (
+                    <TextValidator
+                      onChange={handleChange}
+                      name="lot_standard"
+                      // className={classes.field}
+                      validators={[
+                        "required",
+                        "isNumber",
+                        "isPositive",
+                        "maxNumber:99"
+                      ]}
+                      errorMessages={[
+                        "champ obligatoire",
+                        "Ce champ doit étre un nombre",
+                        "Ce champ doit étre un nombre positive",
+                        "maximum 2 taille du nombre"
+                      ]}
+                      value={state.data.lot_standard}
+                      label="Lot standard"
+                      id="lot_standard"
+                    />
+                  )}
+                </Grid>
+              </Grid>
+            </FormGroup>
+          </Grid>
+          <Grid item xs={12} className={classes.checkBoxMarginTop}>
+            <FormGroup>
+              <Grid container direction="row">
+                <Grid item xs={6}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={state.data.controle_qualite_exige}
+                        onChange={handleChange}
+                        color="primary"
+                        name="controle_qualite_exige"
+                      />
+                    }
+                    label="Controle qualité exigé"
+                  />
+                </Grid>
+              </Grid>
+            </FormGroup>
+          </Grid>
+          <div className={classes.buttons}>
+            <Button
+              disabled={state.activeStep === 0}
+              onClick={handleBack}
+              className={classes.backButton}
+            >
+              Précedent
+            </Button>
+            <Button variant="contained" color="primary" type="submit">
+              {state.activeStep === state.steps.length - 1
+                ? "Sauvegarder"
+                : "Suivant"}
+            </Button>
+          </div>
+        </ValidatorForm>
+      </Grid>
     </div>
   );
 }

@@ -17,7 +17,6 @@ import {
 const initialState = {
   notifMsg: "",
   loading: false,
-  error: false,
   designations: List([]),
   categorie: Map({})
 };
@@ -43,57 +42,28 @@ export default function crudLogisticReducer(
         mutableState.set("notifMsg", "");
       });
     case FETCH_CATEGORIE_FAILURE:
-      return state.withMutations(mutableState => {
-        mutableState
-          .set("notifMsg", "Erreur lors chargement du categorie choisi:")
-          .set("error", true)
-          .set("loading", false);
-      });
+      return 0;
     case FETCH_CATEGORIE_SUCCESS:
       return state.withMutations(mutableState => {
         const categorie = fromJS(action.payload);
-        mutableState.set("categorie", categorie).set("error", false);
+        mutableState.set("categorie", categorie);
       });
     case FETCH_CATEGORIE_DESIGNATIONS_FAILURE:
-      return state.withMutations(mutableState => {
-        mutableState
-          .set(
-            "notifMsg",
-            "Erreur lors chargement des designations des  categorie:"
-          )
-          .set("error", true)
-          .set("loading", false);
-      });
+      return 0;
     case FETCH_CATEGORIE_DESIGNATIONS_SUCCESS:
       return state.withMutations(mutableState => {
         const designations = fromJS(action.payload);
-        mutableState.set("designations", designations).set("error", false);
+        mutableState.set("designations", designations);
       });
     case ADD_ARTICLE_FAILURE:
-      return state.withMutations(mutableState => {
-        mutableState
-          .set("notifMsg", "Erreur lors de l'ajout de l'aticle:")
-          .set("error", true)
-          .set("loading", false);
-      });
+      return 0;
     case ADD_ARTICLE_SUCCESS:
-      return state.withMutations(mutableState => {
-        mutableState
-          .set("notifMsg", "Article Bien Ajouter:")
-          .set("error", false);
-      });
+      return 0;
     case ADD_CATEGORIE_FAILURE:
-      return state.withMutations(mutableState => {
-        mutableState
-          .set("notifMsg", action.payload)
-          .set("error", true)
-          .set("loading", false);
-      });
+      return 0;
     case ADD_CATEGORIE_SUCCESS:
       return state.withMutations(mutableState => {
-        mutableState
-          .set("notifMsg", "Categorie bien Ajouter :")
-          .set("error", false);
+        mutableState.set("notifMsg", "Categorie bien Ajouter :");
       });
     default:
       return state;
