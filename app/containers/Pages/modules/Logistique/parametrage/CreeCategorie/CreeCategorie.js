@@ -59,9 +59,9 @@ const CreerCategorie = ({
   closeNotif,
   notifMsg,
   classes,
-  addCategorie
+  addCategorie,
+  error
 }) => {
-  console.log(loading);
   // state :
   const [data, setData] = React.useState({ articlesMetaData: [] });
   const [nbrAttributes, setNbrAttributes] = React.useState(0);
@@ -127,7 +127,6 @@ const CreerCategorie = ({
     let { name, value } = event.target;
     let articlesMetaData = [...data.articlesMetaData];
     let item = articlesMetaData[key];
-    // console.log(key);
     if (typeof item === "undefined") {
       item = { obligatoire: false, valeurs: [], limite: false };
     }
@@ -193,7 +192,12 @@ const CreerCategorie = ({
   return (
     <div className={classes.root}>
       <ValidatorForm onSubmit={handleSubmit} autoComplete="off">
-        <Notification close={() => closeNotif()} message={notifMsg} branch="" />
+        <Notification
+          variant={error ? "error " : "success"}
+          close={() => closeNotif()}
+          message={notifMsg}
+          branch=""
+        />
         <TextValidator
           onChange={handleChange}
           className={classes.field}
@@ -396,7 +400,8 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
-  loading: state.get("crudLogisticReducer").get("loading")
+  loading: state.get("crudLogisticReducer").get("loading"),
+  error: state.get("crudLogisticReducer").get("error")
 });
 
 // //const reducer = "initval";

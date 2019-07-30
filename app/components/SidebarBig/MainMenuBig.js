@@ -141,9 +141,9 @@ class MainMenuBig extends React.Component {
             to={item.link}
             onClick={() => this.handleLoadPage()}
           >
-            <ListItemIcon>
+            {/* <ListItemIcon>
               <Icon className={classes.icon}>{item.icon}</Icon>
-            </ListItemIcon>
+            </ListItemIcon> */}
             <ListItemText
               className={classes.text}
               primary={

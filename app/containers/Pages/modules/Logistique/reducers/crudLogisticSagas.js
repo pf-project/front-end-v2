@@ -27,7 +27,7 @@ function* fetchCategorieSaga(payload) {
     });
     yield put(fetchCategorieSuccess(data));
   } catch (error) {
-    yield put(fetchCategorieFailure());
+    yield put(fetchCategorieFailure(error));
     // yield put(logingit Failure(error.message));
   }
 }
@@ -72,7 +72,7 @@ function* addCategorieSaga(payload) {
     yield put(addCategorieSuccess());
     yield put(stopLoading());
   } catch (error) {
-    put(addCategorieFailure());
+    yield put(addCategorieFailure(error));
   }
 }
 

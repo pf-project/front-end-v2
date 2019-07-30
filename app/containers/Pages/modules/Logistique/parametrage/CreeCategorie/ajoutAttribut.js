@@ -103,7 +103,7 @@ export default function AjoutAttribut({
           <MenuItem value="alphabetical">Alphabétique</MenuItem>
           <MenuItem value="alphanumeric">Alphanumérique</MenuItem>
           <MenuItem value="date">Date</MenuItem>
-          <MenuItem value="heure">Heure</MenuItem>
+          <MenuItem value="time">Heure</MenuItem>
           <MenuItem value="float">Décimale</MenuItem>
           <MenuItem value="float-1">Décimale, 1 après virgule</MenuItem>
           <MenuItem value="float-2">Décimale, 2 après virgules</MenuItem>

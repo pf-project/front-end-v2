@@ -10,8 +10,11 @@ const fetchAPI = async requestInfo => {
     body: JSON.stringify(requestInfo.body)
   };
   let response = await fetch(apiConfig.apiURL + requestInfo.url, options);
-  let data = await response.json();
-  return data;
+  if (response.status < 300) {
+    let data = await response.json();
+    return data;
+  }
+  throw "Erreur lors de l'action";
 };
 
 export default fetchAPI;
