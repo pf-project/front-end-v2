@@ -53,7 +53,7 @@ class Utilisateurs extends React.Component {
           user.id,
           user.username,
           user.authority,
-          user.enabled ? "Débloqué" : "Bloqué"
+          user.enabled ? "Actif" : "Bloqué"
         ]);
       });
 

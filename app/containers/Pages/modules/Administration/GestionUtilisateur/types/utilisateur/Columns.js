@@ -42,7 +42,7 @@ export default [
       filter: true,
       sort: true,
       customBodyRender: value => {
-        if (value === "Débloqué") {
+        if (value === "Actif") {
           return <Chip label="Actif" color="secondary" />;
         }
         if (value === "Bloqué") {
