@@ -17,7 +17,8 @@ import {
   createUserSuccess,
   createUserFailure,
   setToken,
-  setUID
+  setUID,
+  loadingAction
 } from "../actions/authActions";
 
 function getUrlVars() {
@@ -34,6 +35,7 @@ function getUrlVars() {
 
 function* changePasswordSaga({ payload }) {
   try {
+    yield put(loadingAction());
     yield fetchAPI({
       url: `/api/user/passwordReset/${payload.id}`,
       body: { password: payload.password },
@@ -63,8 +65,6 @@ function* loginSaga({ payload }) {
         // yield window.localStorage.setItem("id", data.id);
 
         yield history.replace("/first-login");
-
-        console.log(data.firstLogin);
         return 0;
       }
       yield window.localStorage.setItem("token", data.token);

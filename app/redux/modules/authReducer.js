@@ -15,7 +15,8 @@ import {
   CHANGE_PASSWORD_SUCCESS,
   CHANGE_PASSWORD_FAILURE,
   SET_TOKEN,
-  SET_UID
+  SET_UID,
+  LOADING
 } from "../constants/authConstants";
 
 export const AuthState = new Record({
@@ -29,6 +30,12 @@ export const AuthState = new Record({
 
 export default function authReducer(state = new AuthState(), action = {}) {
   switch (action.type) {
+    case LOADING:
+      return {
+        ...state,
+        loading: true
+      };
+
     case LOGIN_REQUEST:
     case LOGOUT_REQUEST:
       return {

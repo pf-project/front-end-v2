@@ -18,11 +18,13 @@ import messages from "./messages";
 import { changePassword } from "../../../redux/actions/authActions";
 import MessagesForm from "../../../components/Forms/MessagesForm";
 import { closeMsgAction } from "enl-redux/actions/authActions";
+import ArrowForward from "@material-ui/icons/ArrowForward";
 import {
   ValidatorForm,
   TextValidator,
   SelectValidator
 } from "react-material-ui-form-validator";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 class ChangePassword extends React.Component {
   state = {
@@ -58,7 +60,7 @@ class ChangePassword extends React.Component {
   render() {
     const title = brand.name + " - Coming Soon";
     const description = brand.desc;
-    const { classes, intl, messagesAuth, closeMsg } = this.props;
+    const { classes, intl, messagesAuth, closeMsg, loading } = this.props;
     const { password, password2 } = this.state;
     return (
       <div className={classes.rootFull}>
@@ -89,7 +91,7 @@ class ChangePassword extends React.Component {
               >
                 <FormattedMessage {...messages.subtitle} />
                 <ValidatorForm onSubmit={this.handleSubmit} autoComplete="off">
-                  {messagesAuth !== null || "" ? (
+                  {!loading && (messagesAuth !== null || "") ? (
                     <MessagesForm
                       variant="error"
                       className={classes.msgUser}
@@ -131,14 +133,30 @@ class ChangePassword extends React.Component {
                   <p />
                   <aside>
                     <Button
-                      style={{ width: "100%" }}
                       variant="contained"
+                      disabled={loading}
+                      fullWidth
+                      color="primary"
                       size="large"
-                      color="secondary"
                       type="submit"
-                      margin="normal"
                     >
+                      {loading && (
+                        <CircularProgress
+                          size={24}
+                          className={classes.buttonProgress}
+                        />
+                      )}
                       <FormattedMessage {...messages.button} />
+                      {!loading && (
+                        <ArrowForward
+                          className={classNames(
+                            classes.rightIcon,
+                            classes.iconSmall,
+                            classes.signArrow
+                          )}
+                          disabled={loading}
+                        />
+                      )}
                     </Button>
                   </aside>
                 </ValidatorForm>
@@ -170,6 +188,7 @@ const reducerAuth = "authReducer";
 const mapStateToProps = state => ({
   token: state.get(reducerAuth).token,
   id: state.get(reducerAuth).uid,
+  loading: state.get(reducerAuth).loading,
   messagesAuth: state.get(reducerAuth).message
 });
 

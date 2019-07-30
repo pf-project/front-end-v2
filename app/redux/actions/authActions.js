@@ -90,3 +90,7 @@ export const syncUser = user => ({
 export const closeMsgAction = () => ({
   type: types.HIDE_MSG
 });
+
+export const loadingAction = () => ({
+  type: types.LOADING
+});
