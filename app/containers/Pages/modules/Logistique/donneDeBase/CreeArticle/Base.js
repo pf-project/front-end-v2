@@ -289,7 +289,7 @@ class Base extends React.Component {
                                         className={classes.field}
                                         onChange={handleValeursChange}
                                         name={idx}
-                                        autoWidth={true}
+                                        autoWidth="true"
                                         // style={{ minWidth: 15 }}
                                       >
                                         {data.valeurs &&
