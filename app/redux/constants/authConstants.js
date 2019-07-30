@@ -27,3 +27,5 @@ export const HIDE_MSG = "HIDE_MSG";
 
 export const SET_UID = "SET_UID";
 export const SET_TOKEN = "SET_TOKEN";
+
+export const LOADING = "LOADING";

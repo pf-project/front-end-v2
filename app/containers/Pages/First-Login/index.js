@@ -18,11 +18,13 @@ import messages from "./messages";
 import { changePassword } from "../../../redux/actions/authActions";
 import MessagesForm from "../../../components/Forms/MessagesForm";
 import { closeMsgAction } from "enl-redux/actions/authActions";
+import ArrowForward from "@material-ui/icons/ArrowForward";
 import {
   ValidatorForm,
   TextValidator,
   SelectValidator
 } from "react-material-ui-form-validator";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 class ChangePassword extends React.Component {
   state = {
@@ -58,7 +60,7 @@ class ChangePassword extends React.Component {
   render() {
     const title = brand.name + " - Coming Soon";
     const description = brand.desc;
-    const { classes, intl, messagesAuth, closeMsg } = this.props;
+    const { classes, intl, messagesAuth, closeMsg, loading } = this.props;
     const { password, password2 } = this.state;
     return (
       <div className={classes.rootFull}>
@@ -88,16 +90,8 @@ class ChangePassword extends React.Component {
                 align="center"
               >
                 <FormattedMessage {...messages.subtitle} />
-              </Typography>
-              {/* <section className={classes.pageFormWrap}> */}
-              <div
-                className={classNames(
-                  classes.notifyForm,
-                  classes.centerAdornment
-                )}
-              >
                 <ValidatorForm onSubmit={this.handleSubmit} autoComplete="off">
-                  {messagesAuth !== null || "" ? (
+                  {!loading && (messagesAuth !== null || "") ? (
                     <MessagesForm
                       variant="error"
                       className={classes.msgUser}
@@ -107,50 +101,76 @@ class ChangePassword extends React.Component {
                   ) : (
                     ""
                   )}
-                  <FormControl>
-                    <TextValidator
-                      type="password"
-                      name="password"
-                      label={intl.formatMessage(messages.field1)}
-                      validators={["required"]}
-                      errorMessages={[intl.formatMessage(messages.required)]}
-                      className={classes.textField}
-                      value={password}
-                      onChange={this.handleChange}
-                    />
-                  </FormControl>
+                  {/* <FormControl> */}
+                  <TextValidator
+                    type="password"
+                    name="password"
+                    style={{ width: "100%" }}
+                    label={intl.formatMessage(messages.field1)}
+                    validators={["required"]}
+                    errorMessages={[intl.formatMessage(messages.required)]}
+                    // className={classes.textField}
+                    value={password}
+                    onChange={this.handleChange}
+                  />
+
+                  {/* </FormControl> */}
                   <p />
-                  <FormControl>
-                    <TextValidator
-                      style={{ width: "100" }}
-                      type="password"
-                      name="password2"
-                      label={intl.formatMessage(messages.field2)}
-                      className={classes.textField}
-                      value={password2}
-                      validators={["required", "isPasswordMatch"]}
-                      errorMessages={[
-                        intl.formatMessage(messages.required),
-                        intl.formatMessage(messages.notMatch)
-                      ]}
-                      onChange={this.handleChange}
-                    />
-                  </FormControl>
+                  <TextValidator
+                    type="password"
+                    name="password2"
+                    label={intl.formatMessage(messages.field2)}
+                    style={{ width: "100%" }}
+                    // className={classes.textField}
+                    value={password2}
+                    validators={["required", "isPasswordMatch"]}
+                    errorMessages={[
+                      intl.formatMessage(messages.required),
+                      intl.formatMessage(messages.notMatch)
+                    ]}
+                    onChange={this.handleChange}
+                  />
                   <p />
                   <aside>
                     <Button
                       variant="contained"
+                      disabled={loading}
+                      fullWidth
+                      color="primary"
                       size="large"
-                      color="secondary"
                       type="submit"
-                      margin="normal"
                     >
+                      {loading && (
+                        <CircularProgress
+                          size={24}
+                          className={classes.buttonProgress}
+                        />
+                      )}
                       <FormattedMessage {...messages.button} />
+                      {!loading && (
+                        <ArrowForward
+                          className={classNames(
+                            classes.rightIcon,
+                            classes.iconSmall,
+                            classes.signArrow
+                          )}
+                          disabled={loading}
+                        />
+                      )}
                     </Button>
                   </aside>
                 </ValidatorForm>
-              </div>
-              {/* </section> */}
+              </Typography>
+              <section className={classes.pageFormWrap}>
+                {/* <div
+                className={classNames(
+                  classes.notifyForm,
+                  classes.centerAdornment
+                )}
+              > */}
+
+                {/* </div> */}
+              </section>
             </Paper>
           </div>
         </div>
@@ -168,12 +188,13 @@ const reducerAuth = "authReducer";
 const mapStateToProps = state => ({
   token: state.get(reducerAuth).token,
   id: state.get(reducerAuth).uid,
+  loading: state.get(reducerAuth).loading,
   messagesAuth: state.get(reducerAuth).message
 });
 
 const mapDispatchToProps = dispatch => ({
   handleChangePassword: bindActionCreators(changePassword, dispatch),
-  closeMsg: closeMsgAction
+  closeMsg: bindActionCreators(closeMsgAction, dispatch)
 });
 
 const ChangePasswordMapped = connect(

@@ -15,7 +15,8 @@ import {
   CHANGE_PASSWORD_SUCCESS,
   CHANGE_PASSWORD_FAILURE,
   SET_TOKEN,
-  SET_UID
+  SET_UID,
+  LOADING
 } from "../constants/authConstants";
 
 export const AuthState = new Record({
@@ -23,11 +24,18 @@ export const AuthState = new Record({
   loggedIn: window.localStorage.getItem("token") ? true : false,
   user: null,
   uid: null,
-  message: null
+  message: null,
+  isError: false
 });
 
 export default function authReducer(state = new AuthState(), action = {}) {
   switch (action.type) {
+    case LOADING:
+      return {
+        ...state,
+        loading: true
+      };
+
     case LOGIN_REQUEST:
     case LOGOUT_REQUEST:
       return {
@@ -41,13 +49,15 @@ export default function authReducer(state = new AuthState(), action = {}) {
         ...state,
         loading: false,
         uid: "",
-        message: "Mot de pass Modifier Avec Succes "
+        message: "Mot de pass Modifier Avec Succes ",
+        isError: false
       };
     case CHANGE_PASSWORD_FAILURE:
       return {
         ...state,
         loading: false,
-        message: action.payload
+        message: action.payload,
+        isError: true
       };
     case SET_TOKEN:
       return {
@@ -73,11 +83,18 @@ export default function authReducer(state = new AuthState(), action = {}) {
       };
 
     case LOGIN_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        message: action.error,
+        isError: true
+      };
     case CHANGE_PASSWORD_SUCCESS:
       return {
         ...state,
         loading: false,
-        message: action.message
+        message: action.message,
+        isError: false
       };
     case CREATE_USER_FAILURE:
     case PASSWORD_FORGET_FAILURE:
