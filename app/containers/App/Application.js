@@ -26,17 +26,20 @@ class Application extends React.Component {
             path="/app/administration/gestion-utilisateur"
             component={GestionUtilisateur}
           />
+          <Route path="/app/administration" component={Parent} />
           <Route
             path="/app/logistique/paramétrage/configuration-Article"
             component={CreerCategorie}
           />
+
+          <Route path="/app/paramétrage" component={Parent} />
           {/* ****  Donnee de base :  */}
 
           <Route
             path="/app/logistique/Données-de-base/ajouter-Article"
             component={CreerArticle}
           />
-
+          <Route path="/app/logistique/Données-de-base" component={Parent} />
           {/* parent page : */}
           <Route path="/app/logistique" component={Parent} />
 
