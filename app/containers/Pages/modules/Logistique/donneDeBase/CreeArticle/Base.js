@@ -54,279 +54,260 @@ class Base extends React.Component {
       const articlesMetaData = categorie.articlesMetaData.toArray();
       return (
         <Grid container spacing={1} className={classes.grid} direction="column">
-          <ValidatorForm onSubmit={handleSubmitBase} autoComplete="off">
-            <Grid item xs={12}>
-              <FormGroup>
-                <Grid container>
-                  <Grid item xs={4}>
-                    <TextValidator
-                      className={classes.field}
-                      InputProps={{
-                        readOnly: true,
-                        fullWidth: true
-                      }}
-                      onChange={handleChange}
-                      name="code"
-                      value={state.data.code}
-                      label="Code Article *"
-                      id="#codearticle"
-                    />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <TextValidator
-                      // fullWidth={true}
-                      className={classes.field}
-                      onChange={handleChange}
-                      name="designation"
-                      validators={["required", "maxStringLength:25"]}
-                      errorMessages={["champ obligatoire", "maximum 25 char"]}
-                      value={state.data.designation}
-                      label="Désignation *"
-                      id="#designation"
-                    />
-                  </Grid>
-
-                  <Grid item xs={4}>
-                    <TextValidator
-                      className={classes.field}
-                      value={state.data.categorie}
-                      onChange={handleChange}
-                      name="categorie"
-                      label="Catégorie d'article"
-                      validators={["required"]}
-                      errorMessages={["Ce Champ est Obligatoire : "]}
-                      InputProps={{
-                        readOnly: true
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </FormGroup>
-            </Grid>
-            <Toolbar className={classes.toolbar}>
-              <div className={classes.title}>
-                <Typography variant="h6">Information de base</Typography>
-              </div>
-            </Toolbar>
-            <Grid item>
-              <FormGroup>
-                <Grid container direction="row">
-                  <Grid item xs={6}>
-                    <TextValidator
-                      className={classes.field}
-                      onChange={handleChange}
-                      name="ancienCode"
-                      // validators={["required", "maxStringLength:25"]}
-                      // errorMessages={["champ obligatoire", "maximum 25 char"]}
-                      value={state.data.ancienCode}
-                      label="Ancien Code "
-                      id="#ancienCode"
-                    />
-                  </Grid>
-                  <Grid item xs={6} direction="column">
-                    <TextValidator
-                      className={classes.field}
-                      onChange={handleChange}
-                      name="fabriquant"
-                      // validators={["required", "maxStringLength:25"]}
-                      // errorMessages={["champ obligatoire", "maximum 25 char"]}
-                      value={state.data.fabriquant}
-                      label="Fabriquant"
-                      id="#fabriquant"
-                    />
-                  </Grid>
-                </Grid>
-              </FormGroup>
-            </Grid>
-            <Grid item>
-              <FormGroup>
-                <Grid container direction="row">
-                  <Grid item xs={6}>
-                    <TextValidator
-                      className={classes.field}
-                      onChange={handleChange}
-                      name="note"
-                      // validators={["required", "isNumber", "maxNumber:999999"]}
-                      // errorMessages={[
-                      //   "champ obligatoire",
-                      //   "Ce champ doit étre un nombre",
-                      //   "maximum 6 taille du nombre"
-                      // ]}
-                      value={state.data.note}
-                      label="Note"
-                      id="#note"
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextValidator
-                      className={classes.field}
-                      onChange={handleChange}
-                      name="num_piece_fabriquant"
-                      // validators={["required", "isNumber", "maxNumber:999999"]}
-                      // errorMessages={[
-                      //   "champ obligatoire",
-                      //   "Ce champ doit étre un nombre",
-                      //   "maximum 6 taille du nombre"
-                      // ]}
-                      value={state.data.num_piece_fabriquuant}
-                      label="N° pièce fabirquant"
-                      id="#num_piece_fabriquuant"
-                    />
-                  </Grid>
-                </Grid>
-              </FormGroup>
-            </Grid>
+          {/* <ValidatorForm onSubmit={handleSubmitBase} autoComplete="off"> */}
+          <Grid item xs={12}>
             <FormGroup>
-              <Paper
-                className={{
-                  width: "100%",
-                  marginTop: "3em",
-                  overflowX: "auto"
-                }}
-              >
-                <Table className={{ minWidth: 650 }}>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Caratéristique</TableCell>
-                      <TableCell>
-                        Valeur <span style={{ color: "red" }}>*</span>
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {articlesMetaData.map((data, idx) => {
-                      data = data.toObject();
+              <Grid container>
+                <Grid item xs={4}>
+                  <TextValidator
+                    className={classes.field}
+                    InputProps={{
+                      readOnly: true,
+                      fullWidth: true
+                    }}
+                    onChange={handleChange}
+                    name="code"
+                    value={state.data.code}
+                    label="Code Article *"
+                    id="#codearticle"
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextValidator
+                    // fullWidth={true}
+                    className={classes.field}
+                    onChange={handleChange}
+                    name="designation"
+                    validators={["required", "maxStringLength:25"]}
+                    errorMessages={["champ obligatoire", "maximum 25 char"]}
+                    value={state.data.designation}
+                    label="Désignation *"
+                    id="#designation"
+                  />
+                </Grid>
 
-                      data.valeurs = data.valeurs ? data.valeurs.toArray() : [];
-                      if (data) {
-                        let validators = [];
-                        let errorMessages = [];
-                        if (data.type)
-                          switch (data.type) {
-                            case "number":
-                              validators.push("isNumber");
-                              errorMessages.push(
-                                "Ce champ doit étre un nombre"
-                              );
-                              break;
-                            case "alphabetical":
-                              break;
-                            case "alphanumeric":
-                              break;
-                            // case "date":
-                            //   break;
-                            // case "time":
-                            //   break;
+                <Grid item xs={4}>
+                  <TextValidator
+                    className={classes.field}
+                    value={state.data.categorie}
+                    onChange={handleChange}
+                    name="categorie"
+                    label="Catégorie d'article"
+                    validators={["required"]}
+                    errorMessages={["Ce Champ est Obligatoire : "]}
+                    InputProps={{
+                      readOnly: true
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </FormGroup>
+          </Grid>
+          <Toolbar className={classes.toolbar}>
+            <div className={classes.title}>
+              <Typography variant="h6">Information de base</Typography>
+            </div>
+          </Toolbar>
+          <Grid item>
+            <FormGroup>
+              <Grid container direction="row">
+                <Grid item xs={6}>
+                  <TextValidator
+                    className={classes.field}
+                    onChange={handleChange}
+                    name="ancienCode"
+                    // validators={["required", "maxStringLength:25"]}
+                    // errorMessages={["champ obligatoire", "maximum 25 char"]}
+                    value={state.data.ancienCode}
+                    label="Ancien Code "
+                    id="#ancienCode"
+                  />
+                </Grid>
+                <Grid item xs={6} direction="column">
+                  <TextValidator
+                    className={classes.field}
+                    onChange={handleChange}
+                    name="fabriquant"
+                    // validators={["required", "maxStringLength:25"]}
+                    // errorMessages={["champ obligatoire", "maximum 25 char"]}
+                    value={state.data.fabriquant}
+                    label="Fabriquant"
+                    id="#fabriquant"
+                  />
+                </Grid>
+              </Grid>
+            </FormGroup>
+          </Grid>
+          <Grid item>
+            <FormGroup>
+              <Grid container direction="row">
+                <Grid item xs={6}>
+                  <TextValidator
+                    className={classes.field}
+                    onChange={handleChange}
+                    name="note"
+                    // validators={["required", "isNumber", "maxNumber:999999"]}
+                    // errorMessages={[
+                    //   "champ obligatoire",
+                    //   "Ce champ doit étre un nombre",
+                    //   "maximum 6 taille du nombre"
+                    // ]}
+                    value={state.data.note}
+                    label="Note"
+                    id="#note"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextValidator
+                    className={classes.field}
+                    onChange={handleChange}
+                    name="num_piece_fabriquant"
+                    // validators={["required", "isNumber", "maxNumber:999999"]}
+                    // errorMessages={[
+                    //   "champ obligatoire",
+                    //   "Ce champ doit étre un nombre",
+                    //   "maximum 6 taille du nombre"
+                    // ]}
+                    value={state.data.num_piece_fabriquuant}
+                    label="N° pièce fabirquant"
+                    id="#num_piece_fabriquuant"
+                  />
+                </Grid>
+              </Grid>
+            </FormGroup>
+          </Grid>
+          <FormGroup>
+            <Paper
+              className={{
+                width: "100%",
+                marginTop: "3em",
+                overflowX: "auto"
+              }}
+            >
+              <Table className={{ minWidth: 650 }}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Caratéristique</TableCell>
+                    <TableCell>
+                      Valeur <span style={{ color: "red" }}>*</span>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {articlesMetaData.map((data, idx) => {
+                    data = data.toObject();
 
-                            case "float":
-                              validators.push("isFloat");
-                              errorMessages.push(
-                                "Ce champ doit étre un Decimal"
-                              );
-                              break;
-                            case "float-1":
-                              validators.push("matchRegexp:^[0-9]*.[0-9]$");
-                              errorMessages.push(
-                                "un  nombre(s) apres la virgule !"
-                              );
-                              break;
-                            case "float-2":
-                              validators.push("matchRegexp:^[0-9]*.[0-9]{2}$");
-                              errorMessages.push(
-                                "deux  nombre(s) apres la virgule !"
-                              );
-                              break;
-                            case "float-3":
-                              validators.push("matchRegexp:^[0-9]*.[0-9]{3}$");
-                              errorMessages.push(
-                                "trois  nombre(s) apres la virgule !"
-                              );
-                              break;
-                            case "float-4":
-                              validators.push("matchRegexp:^[0-9]*.[0-9]{4}$");
-                              errorMessages.push(
-                                "quatre nombre(s) apres la virgule !"
-                              );
-                              break;
-                          }
-                        if (data.obligatoire) {
-                          validators.push("required");
-                          errorMessages.push("champ obligatoire");
+                    data.valeurs = data.valeurs ? data.valeurs.toArray() : [];
+                    if (data) {
+                      let validators = [];
+                      let errorMessages = [];
+                      if (data.type)
+                        switch (data.type) {
+                          case "number":
+                            validators.push("isNumber");
+                            errorMessages.push("Ce champ doit étre un nombre");
+                            break;
+                          case "alphabetical":
+                            break;
+                          case "alphanumeric":
+                            break;
+                          // case "date":
+                          //   break;
+                          // case "time":
+                          //   break;
+
+                          case "float":
+                            validators.push("isFloat");
+                            errorMessages.push("Ce champ doit étre un Decimal");
+                            break;
+                          case "float-1":
+                            validators.push("matchRegexp:^[0-9]*.[0-9]$");
+                            errorMessages.push(
+                              "un  nombre(s) apres la virgule !"
+                            );
+                            break;
+                          case "float-2":
+                            validators.push("matchRegexp:^[0-9]*.[0-9]{2}$");
+                            errorMessages.push(
+                              "deux  nombre(s) apres la virgule !"
+                            );
+                            break;
+                          case "float-3":
+                            validators.push("matchRegexp:^[0-9]*.[0-9]{3}$");
+                            errorMessages.push(
+                              "trois  nombre(s) apres la virgule !"
+                            );
+                            break;
+                          case "float-4":
+                            validators.push("matchRegexp:^[0-9]*.[0-9]{4}$");
+                            errorMessages.push(
+                              "quatre nombre(s) apres la virgule !"
+                            );
+                            break;
                         }
-                        if (data.longueur) {
-                          let l = data.longueur;
-                          validators.push("maxStringLength:" + l);
-                          errorMessages.push("max longeur " + l);
-                        }
+                      if (data.obligatoire) {
+                        validators.push("required");
+                        errorMessages.push("champ obligatoire");
+                      }
+                      if (data.longueur) {
+                        let l = data.longueur;
+                        validators.push("maxStringLength:" + l);
+                        errorMessages.push("max longeur " + l);
+                      }
 
-                        return (
-                          <TableRow key={idx}>
-                            <TableCell component="th" scope="row">
-                              {data.nom}
-                            </TableCell>
-                            <TableCell>
-                              <FormControl style={{ minWidth: 250 }}>
-                                <Grid container direction="row">
+                      return (
+                        <TableRow key={idx}>
+                          <TableCell component="th" scope="row">
+                            {data.nom}
+                          </TableCell>
+                          <TableCell>
+                            <FormControl style={{ minWidth: 250 }}>
+                              <Grid container direction="row">
+                                <Grid item xs={6}>
+                                  <TextValidator
+                                    className={classes.field}
+                                    InputProps={{
+                                      readOnly: data.limite
+                                    }}
+                                    onChange={handleValeursChange}
+                                    name={idx}
+                                    type={data.type}
+                                    validators={validators}
+                                    errorMessages={errorMessages}
+                                    value={
+                                      state.data.caracteristiques[idx].valeur
+                                    }
+                                  />
+                                </Grid>
+                                {data.valeurs && data.valeurs.length > 0 && (
                                   <Grid item xs={6}>
-                                    <TextValidator
+                                    <SelectValidator
                                       className={classes.field}
-                                      InputProps={{
-                                        readOnly: data.limite
-                                      }}
                                       onChange={handleValeursChange}
                                       name={idx}
-                                      type={data.type}
-                                      validators={validators}
-                                      errorMessages={errorMessages}
-                                      value={
-                                        state.data.caracteristiques[idx].valeur
-                                      }
-                                    />
+                                      autoWidth="true"
+                                      // style={{ minWidth: 15 }}
+                                    >
+                                      {data.valeurs &&
+                                        data.valeurs.map(valeur => (
+                                          <MenuItem value={valeur}>
+                                            {valeur}{" "}
+                                          </MenuItem>
+                                        ))}
+                                    </SelectValidator>
                                   </Grid>
-                                  {data.valeurs && data.valeurs.length > 0 && (
-                                    <Grid item xs={6}>
-                                      <SelectValidator
-                                        className={classes.field}
-                                        onChange={handleValeursChange}
-                                        name={idx}
-                                        autoWidth="true"
-                                        // style={{ minWidth: 15 }}
-                                      >
-                                        {data.valeurs &&
-                                          data.valeurs.map(valeur => (
-                                            <MenuItem value={valeur}>
-                                              {valeur}{" "}
-                                            </MenuItem>
-                                          ))}
-                                      </SelectValidator>
-                                    </Grid>
-                                  )}
-                                </Grid>
-                              </FormControl>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      }
-                    })}
-                  </TableBody>
-                </Table>
-              </Paper>
-            </FormGroup>
-            <div className={classes.buttons}>
-              <Button
-                disabled={state.activeStep === 0}
-                onClick={handleBack}
-                className={classes.backButton}
-              >
-                Précedent
-              </Button>
-              <Button variant="contained" color="primary" type="submit">
-                {state.activeStep === state.steps.length - 1
-                  ? "Sauvegarder"
-                  : "Suivant"}
-              </Button>
-            </div>
-          </ValidatorForm>
+                                )}
+                              </Grid>
+                            </FormControl>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    }
+                  })}
+                </TableBody>
+              </Table>
+            </Paper>
+          </FormGroup>
         </Grid>
       );
     } else {
