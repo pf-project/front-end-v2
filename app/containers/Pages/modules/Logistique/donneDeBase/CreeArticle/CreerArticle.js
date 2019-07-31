@@ -23,6 +23,10 @@ import {
   addArticle,
   closeNotifAction
 } from "../../reducers/crudLogisticActions";
+import { ValidatorForm } from "react-material-ui-form-validator";
+
+import Toolbar from "@material-ui/core/Toolbar";
+import Grid from "@material-ui/core/Grid";
 
 import { Notification } from "enl-components";
 
@@ -57,7 +61,7 @@ const styles = theme => ({
       theme.palette.type === "dark"
         ? darken(theme.palette.primary.light, 0.6)
         : theme.palette.primary.light,
-    minHeight: 48
+    minHeight: 60
   },
   title: {
     flex: "0 0 auto",
@@ -134,10 +138,6 @@ class CreerArticle extends React.Component {
     }
   }
 
-  // handleDateChange = date => {
-
-  //   this.setState({data  : {...this.state.data , findvalidite : date.format("DD/MM/YYYY")}})
-  // };
   handleChange = event => {
     const name = event.target.name;
     const value = event.target.value;
@@ -241,29 +241,6 @@ class CreerArticle extends React.Component {
 
   fetchCategorie = () => {
     this.props.fetchCategorie(this.state.data.categorie);
-    // const categorie = await fetchApi({
-    //   method: "GET",
-    //   url: "/api/logistic/categorie/find/" + this.state.data.categorie,
-    //   token: window.localStorage.getItem("token")
-    // });
-    // this.setState({
-    //   categorie
-    // });
-    // let caracteristiques = [];
-    // categorie.articlesMetaData.map((caracteristique, idx) => {
-    //   caracteristiques.push({
-    //     nom: caracteristique.nom,
-    //     limite: caracteristique.limite,
-    //     obligatoire: caracteristique.obligatoire,
-    //     longueur: caracteristique.longueur
-    //   });
-    // });
-    // this.setState({
-    //   data: {
-    //     ...this.state.data,
-    //     caracteristiques: caracteristiques
-    //   }
-    // });
   };
 
   handleValeursChange = event => {
@@ -283,43 +260,95 @@ class CreerArticle extends React.Component {
     this.props.fetchCategorieDesignation();
   }
 
+  getSubmitter = () => {
+    switch (this.state.activeStep) {
+      case 0:
+        return this.handleSubmitInitial;
+        break;
+      case 1:
+        return this.handleSubmitBase;
+        break;
+      case 2:
+        return this.handleSubmitStockage;
+        break;
+      case 3:
+        return this.handleSubmitCommerciale;
+        break;
+      default:
+        break;
+    }
+  };
+
   render() {
     const { classes, loading, closeNotif, notifMsg } = this.props;
+    const { activeStep } = this.state;
+    const submitter = this.getSubmitter();
 
     return (
       <Container>
-        <Notification close={() => closeNotif()} message={notifMsg} branch="" />
-        <Card small className="mb-4">
-          <div className={classes.root}>
-            <Stepper activeStep={this.state.activeStep} alternativeLabel>
-              {this.state.steps.map(label => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-            <div>
-              {this.state.activeStep === this.state.steps.length ? (
-                <div>
-                  {/* <Typography className={classes.instructions}>L'article </Typography> */}
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={this.handleReset}
-                  >
-                    Crééer un autre Article
-                  </Button>
-                </div>
-              ) : (
-                <div>
-                  <Typography className={classes.instructions}>
-                    {this.getStepContent(this.state.activeStep)}
-                  </Typography>
-                </div>
-              )}
+        <ValidatorForm onSubmit={submitter} autoComplete="off">
+          <Notification
+            close={() => closeNotif()}
+            message={notifMsg}
+            branch=""
+          />
+          <Toolbar className={classes.toolbar}>
+            <Grid justify="flex-end" container spacing={0}>
+              <Grid item sm={8} lg={8}>
+                {""}
+              </Grid>
+              <Grid item sm={2} lg={2}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  disabled={activeStep === 0}
+                  onClick={this.handleBack}
+                  className={classes.backButton}
+                >
+                  Précedent
+                </Button>
+              </Grid>
+              <Grid item sm={2} lg={2}>
+                <Button variant="contained" color="primary" type="submit">
+                  {this.state.activeStep === this.state.steps.length - 1
+                    ? "Sauvegarder"
+                    : "Suivant"}
+                </Button>
+              </Grid>
+            </Grid>
+          </Toolbar>
+          <Card small className="mb-4">
+            <div className={classes.root}>
+              <Stepper activeStep={this.state.activeStep} alternativeLabel>
+                {this.state.steps.map(label => (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+              <div>
+                {this.state.activeStep === this.state.steps.length ? (
+                  <div>
+                    {/* <Typography className={classes.instructions}>L'article </Typography> */}
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.handleReset}
+                    >
+                      Crééer un autre Article
+                    </Button>
+                  </div>
+                ) : (
+                  <div>
+                    <Typography className={classes.instructions}>
+                      {this.getStepContent(this.state.activeStep)}
+                    </Typography>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        </Card>
+          </Card>
+        </ValidatorForm>
       </Container>
     );
   }
