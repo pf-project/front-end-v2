@@ -82,7 +82,7 @@ class CreerArticle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeStep: 2,
+      activeStep: 3,
       steps: [
         "Données initiales",
         "Données de base",
@@ -108,7 +108,15 @@ class CreerArticle extends React.Component {
     this.handleNext();
   };
   handleSubmitCommerciale = () => {
-    this.props.addArticle(this.state.data);
+    let data = this.state.data;
+    let prix_de_vente_de_base_HT = parseFloat(
+      data.prix_de_vente_de_base_HT
+    ).toFixed(2);
+    let prix_moyen_pendere = parseFloat(data.prix_moyen_pendere).toFixed(2);
+    let prix_de_vente_de_base_TTC = parseFloat(
+      data.prix_de_vente_de_base_TTC
+    ).toFixed(2);
+    this.props.addArticle(data);
     this.handleNext();
   };
 
@@ -158,6 +166,7 @@ class CreerArticle extends React.Component {
           }
         });
         break;
+
       default:
         this.setState({ data: { ...this.state.data, [name]: value } });
         break;

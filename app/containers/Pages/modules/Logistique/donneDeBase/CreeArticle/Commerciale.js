@@ -131,10 +131,14 @@ export default function Commerciale({
                 name="prix_moyen_pendere"
                 value={state.data.prix_moyen_pendere}
                 label="Prix moyen pondéré"
-                validators={["required", "matchRegexp:^[0-9]*.[0-9]{2}$"]}
+                validators={[
+                  "required",
+                  "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/
+                ]}
                 errorMessages={[
                   "champ obligatoire",
-                  "deux  nombre(s) apres la virgule !"
+                  "Chmap doit étre un nombre : ex 4.57 "
+                  // "deux  nombre(s) apres la virgule !"
                 ]}
               />
             </FormGroup>
@@ -152,10 +156,14 @@ export default function Commerciale({
                 name="prix_de_vente_de_base_HT"
                 value={state.data.prix_de_vente_de_base_HT}
                 label="Prix de vente de base HT"
-                validators={["required", "matchRegexp:^[0-9]*.[0-9]{2}$"]}
+                validators={[
+                  "required",
+                  "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/
+                ]}
                 errorMessages={[
                   "champ obligatoire",
-                  "deux  nombre(s) apres la virgule !"
+                  "Chmap doit étre un nombre : ex 4.57 "
+                  // "deux  nombre(s) apres la virgule !"
                 ]}
               />
             </FormGroup>
@@ -178,10 +186,14 @@ export default function Commerciale({
                   name="prix_de_vente_de_base_TTC"
                   value={state.data.prix_de_vente_de_base_TTC}
                   label="Prix de vente de base TTC"
-                  validators={["required", "matchRegexp:^[0-9]*.[0-9]{2}$"]}
+                  validators={[
+                    "required",
+                    "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/
+                  ]}
                   errorMessages={[
                     "champ obligatoire",
-                    "deux  nombre(s) apres la virgule !"
+                    "Chmap doit étre un nombre : ex 4.57 "
+                    // "deux  nombre(s) apres la virgule !"
                   ]}
                 />
               </Grid>
