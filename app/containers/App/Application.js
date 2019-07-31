@@ -35,10 +35,10 @@ class Application extends React.Component {
 
           <Route path="/app/paramétrage" component={Parent} />
           {/* ****  Donnee de base :  */}
-          <Route
+          {/* <Route
             path="/app/logistique/Données-de-base/modifier-Article"
             component={ModifierArticle}
-          />
+          /> */}
           <Route
             path="/app/logistique/Données-de-base/ajouter-Article"
             component={CreerArticle}

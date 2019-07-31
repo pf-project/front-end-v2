@@ -338,7 +338,12 @@ class ModifierArticle extends React.Component {
                 </Button>
               </Grid>
               <Grid item sm={2} lg={2}>
-                <Button variant="contained" color="primary" type="submit">
+                <Button
+                  disabled
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                >
                   {this.state.activeStep === this.state.steps.length - 1
                     ? "Sauvegarder"
                     : "Suivant"}
