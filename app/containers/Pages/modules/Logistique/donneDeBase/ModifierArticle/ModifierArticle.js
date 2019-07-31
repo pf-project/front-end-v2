@@ -55,14 +55,9 @@ const styles = theme => ({
   checkBoxMarginTop: {
     marginTop: "20px"
   },
-  toolbar: {
-    marginTop: "1em",
-    marginBottom: "1em",
-    backgroundColor:
-      theme.palette.type === "dark"
-        ? darken(theme.palette.primary.light, 0.6)
-        : theme.palette.primary.light,
-    minHeight: 60
+  submiGrid: {
+    display: "flex",
+    alignItems: "flex-end"
   },
   title: {
     flex: "0 0 auto",
@@ -296,34 +291,10 @@ class ModifierArticle extends React.Component {
             message={notifMsg}
             branch=""
           />
-          <Toolbar className={classes.toolbar}>
-            <Grid justify="flex-end" container spacing={0}>
-              <Grid item sm={8} lg={8}>
-                {""}
-              </Grid>
-              <Grid item sm={2} lg={2}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  disabled={activeStep === 0}
-                  onClick={this.handleBack}
-                  className={classes.backButton}
-                >
-                  Précedent
-                </Button>
-              </Grid>
-              <Grid item sm={2} lg={2}>
-                <Button variant="contained" color="primary" type="submit">
-                  {this.state.activeStep === this.state.steps.length - 1
-                    ? "Sauvegarder"
-                    : "Suivant"}
-                </Button>
-              </Grid>
-            </Grid>
-          </Toolbar>
+
           <Card small className="mb-4">
             <div className={classes.root}>
-              <Stepper activeStep={4} alternativeLabel>
+              <Stepper activeStep={this.state.activeStep} nonLinear>
                 {this.state.steps.map((label, index) => (
                   <Step>
                     <StepButton key={label} onClick={this.handleStep(index)}>
@@ -354,6 +325,26 @@ class ModifierArticle extends React.Component {
                 )}
               </div>
             </div>
+            <Grid className={classes.submiGrid}>
+              <Grid>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  disabled={activeStep === 0}
+                  onClick={this.handleBack}
+                  className={classes.backButton}
+                >
+                  Précedent
+                </Button>
+              </Grid>
+              <Grid item sm={2} lg={2}>
+                <Button variant="contained" color="primary" type="submit">
+                  {this.state.activeStep === this.state.steps.length - 1
+                    ? "Sauvegarder"
+                    : "Suivant"}
+                </Button>
+              </Grid>
+            </Grid>
           </Card>
         </ValidatorForm>
       </Container>
