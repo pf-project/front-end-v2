@@ -1,4 +1,4 @@
-import * as types from '../constants/uiConstants';
+import * as types from "../constants/uiConstants";
 
 export const toggleAction = { type: types.TOGGLE_SIDEBAR };
 export const openMenuAction = { type: types.OPEN_MENU };
@@ -32,5 +32,10 @@ export const changeDirectionAction = direction => ({
 
 export const playTransitionAction = isLoaded => ({
   type: types.LOAD_PAGE,
+  isLoaded
+});
+
+export const playTransitionActionAfterSaga = isLoaded => ({
+  type: types.LOAD_PAGE_AFTER_TIME_OUT,
   isLoaded
 });

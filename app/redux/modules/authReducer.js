@@ -96,13 +96,13 @@ export default function authReducer(state = new AuthState(), action = {}) {
         message: action.error,
         isError: true
       };
-    case CHANGE_PASSWORD_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        message: action.message,
-        isError: false
-      };
+    // case CHANGE_PASSWORD_SUCCESS:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     message: action.message,
+    //     isError: false
+    //   };
     case CREATE_USER_FAILURE:
     case PASSWORD_FORGET_FAILURE:
     case LOGOUT_FAILURE:

@@ -205,7 +205,7 @@ class HeaderMenu extends React.Component {
             </div>
           </div> */}
           <Toolbar>
-            <SelectLanguage />
+            {/* <SelectLanguage /> */}
             {isLogin ? (
               <UserMenu signOut={signOut} avatar={userAttr.avatar} />
             ) : (

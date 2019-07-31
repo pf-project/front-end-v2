@@ -181,7 +181,7 @@ class MainMenuBig extends React.Component {
     return (
       <aside className={classes.bigSidebar}>
         <nav className={classes.category}>
-          <div className={classes.fixedWrap}>
+          <div className={classNames(classes.fixedWrap, classes.darker)}>
             {/* <MenuProfile userAttr={userAttr} /> */}
             {getMenus(dataMenu)}
           </div>

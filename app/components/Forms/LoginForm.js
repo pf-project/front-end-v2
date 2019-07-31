@@ -56,7 +56,6 @@ class LoginForm extends React.Component {
       loading,
       isError
     } = this.props;
-    console.log(this.props);
     const { showPassword } = this.state;
     return (
       <Paper className={classes.sideWrap}>

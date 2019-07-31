@@ -1,18 +1,14 @@
-import React, { Fragment } from 'react';
-import { PropTypes } from 'prop-types';
-import classNames from 'classnames';
-import Fade from '@material-ui/core/Fade';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import {
-  Header,
-  Sidebar,
-  BreadCrumb,
-} from 'enl-components';
-import dataMenu from 'enl-api/ui/menu';
-import { injectIntl, FormattedMessage } from 'react-intl';
-import messages from 'enl-api/ui/menuMessages';
-import styles from '../appStyles-jss';
+import React, { Fragment } from "react";
+import { PropTypes } from "prop-types";
+import classNames from "classnames";
+import Fade from "@material-ui/core/Fade";
+import Typography from "@material-ui/core/Typography";
+import { withStyles } from "@material-ui/core/styles";
+import { Header, Sidebar, BreadCrumb } from "enl-components";
+import dataMenu from "enl-api/ui/menu";
+import { injectIntl, FormattedMessage } from "react-intl";
+import messages from "enl-api/ui/menuMessages";
+import styles from "../appStyles-jss";
 
 class LeftSidebarLayout extends React.Component {
   render() {
@@ -55,26 +51,48 @@ class LeftSidebarLayout extends React.Component {
           userAttr={userAttr}
           leftSidebar
         />
-        <main className={classNames(classes.content, !sidebarOpen ? classes.contentPaddingLeft : '')} id="mainContent">
-          <section className={classNames(classes.mainWrap, classes.sidebarLayout)}>
+        <main
+          className={classNames(
+            classes.content,
+            !sidebarOpen ? classes.contentPaddingLeft : ""
+          )}
+          id="mainContent"
+        >
+          <section
+            className={classNames(classes.mainWrap, classes.sidebarLayout)}
+          >
             {titleException.indexOf(history.location.pathname) < 0 && (
               <div className={classes.pageTitle}>
                 <Typography component="h4" variant="h4">
-                  {messages[place] !== undefined ? <FormattedMessage {...messages[place]} /> : place}
+                  {messages[place] !== undefined ? (
+                    <FormattedMessage {...messages[place]} />
+                  ) : (
+                    place
+                  )}
                 </Typography>
-                <BreadCrumb separator=" / " theme="light" location={history.location} />
+                <BreadCrumb
+                  separator=" / "
+                  theme="light"
+                  location={history.location}
+                />
               </div>
             )}
-            { !pageLoaded && (<img src="/images/spinner.gif" alt="spinner" className={classes.circularProgress} />) }
+            {!pageLoaded && (
+              <img
+                src="/images/spinner.gif"
+                alt="spinner"
+                className={classes.circularProgress}
+              />
+            )}
             <Fade
               in={pageLoaded}
               mountOnEnter
               unmountOnExit
               {...(pageLoaded ? { timeout: 700 } : {})}
             >
-              <div className={!pageLoaded ? classes.hideApp : ''}>
+              <div className={!pageLoaded ? classes.hideApp : ""}>
                 {/* Application content will load here */}
-                { children }
+                {children}
               </div>
             </Fade>
           </section>
@@ -99,11 +117,11 @@ LeftSidebarLayout.propTypes = {
   handleOpenGuide: PropTypes.func.isRequired,
   signOut: PropTypes.func.isRequired,
   isLogin: PropTypes.bool,
-  userAttr: PropTypes.object.isRequired,
+  userAttr: PropTypes.object.isRequired
 };
 
 LeftSidebarLayout.defaultProps = {
   isLogin: false
 };
 
-export default (withStyles(styles)(injectIntl(LeftSidebarLayout)));
+export default withStyles(styles)(injectIntl(LeftSidebarLayout));

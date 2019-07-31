@@ -43,9 +43,10 @@ function* changePasswordSaga({ payload }) {
       method: "POST",
       token: payload.token
     });
-    yield history.replace("/");
     yield put(changePasswordSuccess());
+    yield history.replace("/login");
   } catch (error) {
+    yield put(stoploadingAction());
     yield put(changePasswordFailure("Erreur lors de l'action  :"));
   }
 }
@@ -62,20 +63,22 @@ function* loginSaga({ payload }) {
       if (data.firstLogin) {
         yield put(setUID(data.id));
         yield put(setToken(data.token));
-        // yield put(stoploadingAction());
 
         // yield window.localStorage.setItem("token", data.token);
         // yield window.localStorage.setItem("id", data.id);
 
         yield history.replace("/first-login");
-      } else yield window.localStorage.setItem("token", data.token);
-      yield put(loginSuccess(data));
-      if (getUrlVars().next) {
-        // Redirect to next route
-        yield history.push(getUrlVars().next);
+        yield put(stoploadingAction());
       } else {
-        // Redirect to dashboard if no next parameter
-        yield history.push("/app");
+        yield window.localStorage.setItem("token", data.token);
+        yield put(loginSuccess(data));
+        if (getUrlVars().next) {
+          // Redirect to next route
+          yield history.push(getUrlVars().next);
+        } else {
+          // Redirect to dashboard if no next parameter
+          yield history.push("/app");
+        }
       }
     } else yield put(loginFailure(data.message));
   } catch (error) {

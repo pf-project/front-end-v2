@@ -91,7 +91,7 @@ class ChangePassword extends React.Component {
               >
                 <FormattedMessage {...messages.subtitle} />
                 <ValidatorForm onSubmit={this.handleSubmit} autoComplete="off">
-                  {!loading && (messagesAuth !== null || "") ? (
+                  {messagesAuth !== null || "" ? (
                     <MessagesForm
                       variant="error"
                       className={classes.msgUser}
@@ -154,7 +154,7 @@ class ChangePassword extends React.Component {
                             classes.iconSmall,
                             classes.signArrow
                           )}
-                          disabled={loading}
+                          // disabled={loading}
                         />
                       )}
                     </Button>

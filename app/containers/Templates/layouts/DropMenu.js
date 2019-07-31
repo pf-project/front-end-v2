@@ -1,14 +1,14 @@
-import React, { Fragment } from 'react';
-import { PropTypes } from 'prop-types';
-import classNames from 'classnames';
-import Fade from '@material-ui/core/Fade';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import { HeaderMenu, BreadCrumb } from 'enl-components';
-import dataMenu from 'enl-api/ui/menu';
-import { injectIntl, FormattedMessage } from 'react-intl';
-import messages from 'enl-api/ui/menuMessages';
-import styles from '../appStyles-jss';
+import React, { Fragment } from "react";
+import { PropTypes } from "prop-types";
+import classNames from "classnames";
+import Fade from "@material-ui/core/Fade";
+import Typography from "@material-ui/core/Typography";
+import { withStyles } from "@material-ui/core/styles";
+import { HeaderMenu, BreadCrumb } from "enl-components";
+import dataMenu from "enl-api/ui/menu";
+import { injectIntl, FormattedMessage } from "react-intl";
+import messages from "enl-api/ui/menuMessages";
+import styles from "../appStyles-jss";
 
 class DropMenuLayout extends React.Component {
   render() {
@@ -47,33 +47,44 @@ class DropMenuLayout extends React.Component {
           userAttr={userAttr}
         />
         <main
-          className={
-            classNames(
-              classes.content,
-              classes.highMargin
-            )
-          }
+          className={classNames(classes.content, classes.highMargin)}
           id="mainContent"
         >
-          <section className={classNames(classes.mainWrap, classes.topbarLayout)}>
+          <section
+            className={classNames(classes.mainWrap, classes.topbarLayout)}
+          >
             {titleException.indexOf(history.location.pathname) < 0 && (
               <div className={classes.pageTitle}>
                 <Typography component="h4" variant="h4">
-                  {messages[place] !== undefined ? <FormattedMessage {...messages[place]} /> : place}
+                  {messages[place] !== undefined ? (
+                    <FormattedMessage {...messages[place]} />
+                  ) : (
+                    place
+                  )}
                 </Typography>
-                <BreadCrumb separator=" / " theme="light" location={history.location} />
+                <BreadCrumb
+                  separator=" / "
+                  theme="light"
+                  location={history.location}
+                />
               </div>
             )}
-            { !pageLoaded && (<img src="/images/spinner.gif" alt="spinner" className={classes.circularProgress} />) }
+            {!pageLoaded && (
+              <img
+                src="/images/spinner.gif"
+                alt="spinner"
+                className={classes.circularProgress}
+              />
+            )}
             <Fade
               in={pageLoaded}
               mountOnEnter
               unmountOnExit
-              {...(pageLoaded ? { timeout: 700 } : {})}
+              {...(pageLoaded ? { timeout: 70 } : {})}
             >
-              <div className={!pageLoaded ? classes.hideApp : ''}>
+              <div className={!pageLoaded ? classes.hideApp : ""}>
                 {/* Application content will load here */}
-                { children }
+                {children}
               </div>
             </Fade>
           </section>
@@ -98,11 +109,11 @@ DropMenuLayout.propTypes = {
   handleOpenGuide: PropTypes.func.isRequired,
   signOut: PropTypes.func.isRequired,
   isLogin: PropTypes.bool,
-  userAttr: PropTypes.object.isRequired,
+  userAttr: PropTypes.object.isRequired
 };
 
 DropMenuLayout.defaultProps = {
-  isLogin: false,
+  isLogin: false
 };
 
-export default (withStyles(styles)(injectIntl(DropMenuLayout)));
+export default withStyles(styles)(injectIntl(DropMenuLayout));

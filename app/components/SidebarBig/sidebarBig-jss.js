@@ -1,4 +1,4 @@
-import { fade } from "@material-ui/core/styles/colorManipulator";
+import { fade, lighten } from "@material-ui/core/styles/colorManipulator";
 import lightGreen from "@material-ui/core/colors/lightGreen";
 import red from "@material-ui/core/colors/red";
 import amber from "@material-ui/core/colors/amber";
@@ -10,11 +10,26 @@ const listWidth = 188;
 const styles = theme => ({
   bigSidebar: {
     color: theme.palette.text.primary,
-    padding: `${theme.spacing(1)}px 0`,
+    // padding: `${theme.spacing(1)}px 0`,
     display: "flex",
     marginTop: theme.spacing(1),
     [theme.breakpoints.up("lg")]: {
       marginTop: theme.spacing(8)
+    }
+  },
+
+  darker: {
+    backgroundAttachment: "fixed",
+    backgroundColor:
+      theme.palette.type === "dark"
+        ? lighten(theme.palette.common.black, 0.1)
+        : theme.palette.background.paper,
+    boxShadow:
+      theme.palette.type === "dark"
+        ? "0px 1px 6px 0px rgba(0, 0, 0, 1), 0px 1px 1px 0px rgba(42, 42, 42, 1), 0px 2px 1px -1px rgba(20, 20, 20, 1)"
+        : "0px 1px 6px 0px rgba(142, 142, 142, 0.2), 0px 1px 1px 0px rgba(243, 243, 243, 0.14), 0px 2px 1px -1px rgba(204, 204, 204, 0.12)",
+    "& $menuButton": {
+      color: theme.palette.common.white
     }
   },
   category: {

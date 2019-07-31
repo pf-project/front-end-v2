@@ -9,7 +9,8 @@ import {
   CHANGE_MODE,
   CHANGE_LAYOUT,
   CHANGE_DIRECTION,
-  LOAD_PAGE
+  LOAD_PAGE,
+  LOAD_PAGE_AFTER_TIME_OUT
 } from "../constants/uiConstants";
 
 const initialState = {
@@ -30,7 +31,7 @@ const initialState = {
     { name: "Blue Light", value: "lightBlueTheme" },
     { name: "Brown", value: "brownTheme" }
   ]),
-  sidebarOpen: true,
+  sidebarOpen: false,
   pageLoaded: false,
   subMenuOpen: []
 };
@@ -113,8 +114,9 @@ export default function reducer(state = initialImmutableState, action = {}) {
       return state.withMutations(mutableState => {
         mutableState.set("direction", action.direction);
       });
-    case LOAD_PAGE:
+    case LOAD_PAGE_AFTER_TIME_OUT:
       return state.withMutations(mutableState => {
+        // if (!action.isLoaded) mutableState.set("sidebarOpen", false);
         mutableState.set("pageLoaded", action.isLoaded);
       });
     default:
