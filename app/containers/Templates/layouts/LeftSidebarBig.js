@@ -9,6 +9,7 @@ import dataMenu from "enl-api/ui/menu";
 import { injectIntl, FormattedMessage } from "react-intl";
 import messages from "enl-api/ui/menuMessages";
 import styles from "../appStyles-jss";
+import { Card, AppBar } from "@material-ui/core";
 
 class LeftSidebarBigLayout extends React.Component {
   render() {
@@ -33,7 +34,7 @@ class LeftSidebarBigLayout extends React.Component {
       <Fragment>
         <Header
           toggleDrawerOpen={toggleDrawer}
-          margin={sidebarOpen}
+          // margin={sidebarOpen}
           changeMode={changeMode}
           mode={mode}
           title={place}
@@ -41,7 +42,7 @@ class LeftSidebarBigLayout extends React.Component {
           openGuide={handleOpenGuide}
           signOut={signOut}
           dense
-          isLogin={isLogin}
+          // isLogin={isLogin}
           avatar={userAttr.avatar}
         />
         <SidebarBig
@@ -62,7 +63,7 @@ class LeftSidebarBigLayout extends React.Component {
             className={classNames(classes.mainWrap, classes.sidebarLayout)}
           >
             {titleException.indexOf(history.location.pathname) < 0 && (
-              <div className={classes.pageTitle}>
+              <Card className={classes.pageTitle}>
                 <Typography component="h4" variant="h4">
                   {messages[place] !== undefined ? (
                     <FormattedMessage {...messages[place]} />
@@ -70,12 +71,13 @@ class LeftSidebarBigLayout extends React.Component {
                     place
                   )}
                 </Typography>
+                <p />
                 <BreadCrumb
                   separator=" / "
                   theme="light"
                   location={history.location}
                 />
-              </div>
+              </Card>
             )}
             {!pageLoaded && (
               <img
@@ -88,9 +90,12 @@ class LeftSidebarBigLayout extends React.Component {
               in={pageLoaded}
               mountOnEnter
               unmountOnExit
-              {...(pageLoaded ? { timeout: 70 } : {})}
+              {...(pageLoaded ? { timeout: 30 } : {})}
             >
-              <div className={!pageLoaded ? classes.hideApp : ""}>
+              <div
+                // style={{ marginTop: "80px" }}
+                className={!pageLoaded ? classes.hideApp : classes.children}
+              >
                 {/* Application content will load here */}
                 {children}
               </div>

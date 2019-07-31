@@ -31,7 +31,7 @@ const initialState = {
     { name: "Blue Light", value: "lightBlueTheme" },
     { name: "Brown", value: "brownTheme" }
   ]),
-  sidebarOpen: false,
+  sidebarOpen: true,
   pageLoaded: false,
   subMenuOpen: []
 };
