@@ -125,14 +125,14 @@ export default function Stockage({
           <FormGroup>
             <Grid container direction="row">
               <Grid item xs={6}>
-                <FormControl style={{ minWidth: 300 }}>
+                <FormControl>
                   <SelectValidator
                     className={classes.field}
                     value={state.data.unite_de_quantite_de_base}
                     onChange={handleChange}
                     name="unite_de_quantite_de_base"
                     label="Unité de quantité de base"
-                    style={{ minWidth: 300 }}
+                    style={{ width: 190 }}
                     validators={["isNumber", "isPositive", "maxNumber:999999"]}
                     errorMessages={[
                       "Ce champ doit étre un nombre",
@@ -248,11 +248,8 @@ export default function Stockage({
                     name="unite2"
                     label="Unité"
                     style={{ minWidth: 300 }}
-                    validators={["required", "maxNumber:100"]}
-                    errorMessages={[
-                      "Ce Champ est Obligatoire : ",
-                      "taille maximale est 100"
-                    ]}
+                    validators={["maxNumber:100"]}
+                    errorMessages={["taille maximale est 100"]}
                   >
                     <MenuItem value={"5"}>5</MenuItem>
                     <MenuItem value={"10"}>10</MenuItem>
@@ -267,64 +264,54 @@ export default function Stockage({
         </Grid>
         <Grid item xs={12} className={classes.checkBoxMarginTop}>
           <FormGroup>
-            <Grid container direction="row">
-              <Grid item xs={2}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={state.data.gestion_par_lot}
-                      onChange={handleChange}
-                      color="primary"
-                      name="gestion_par_lot"
-                    />
-                  }
-                  label="Gestion par lot"
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={state.data.gestion_par_lot}
+                  onChange={handleChange}
+                  color="primary"
+                  name="gestion_par_lot"
                 />
-              </Grid>
-              <Grid item xs={6}>
-                {state.data.gestion_par_lot && (
-                  <TextValidator
-                    onChange={handleChange}
-                    name="lot_standard"
-                    // className={classes.field}
-                    validators={[
-                      "required",
-                      "isNumber",
-                      "isPositive",
-                      "maxNumber:99"
-                    ]}
-                    errorMessages={[
-                      "champ obligatoire",
-                      "Ce champ doit étre un nombre",
-                      "Ce champ doit étre un nombre positive",
-                      "maximum 2 taille du nombre"
-                    ]}
-                    value={state.data.lot_standard}
-                    label="Lot standard"
-                    id="lot_standard"
-                  />
-                )}
-              </Grid>
-            </Grid>
+              }
+              label="Gestion par lot"
+            />
+
+            {state.data.gestion_par_lot && (
+              <TextValidator
+                onChange={handleChange}
+                name="lot_standard"
+                style={{ width: "40%" }}
+                // className={classes.field}
+                // validators={[
+                //   "isNumber",
+                //   "isPositive",
+                //   "maxNumber:99"
+                // ]}
+                // errorMessages={[
+                //   "Ce champ doit étre un nombre",
+                //   "Ce champ doit étre un nombre positive",
+                //   "maximum 2 taille du nombre"
+                // ]}
+                value={state.data.lot_standard}
+                label="Lot standard"
+                id="lot_standard"
+              />
+            )}
           </FormGroup>
         </Grid>
         <Grid item xs={12} className={classes.checkBoxMarginTop}>
           <FormGroup>
-            <Grid container direction="row">
-              <Grid item xs={6}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={state.data.controle_qualite_exige}
-                      onChange={handleChange}
-                      color="primary"
-                      name="controle_qualite_exige"
-                    />
-                  }
-                  label="Controle qualité exigé"
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={state.data.controle_qualite_exige}
+                  onChange={handleChange}
+                  color="primary"
+                  name="controle_qualite_exige"
                 />
-              </Grid>
-            </Grid>
+              }
+              label="Controle qualité exigé"
+            />
           </FormGroup>
         </Grid>
       </Grid>
