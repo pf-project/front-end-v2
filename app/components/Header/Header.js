@@ -34,37 +34,37 @@ class Header extends React.Component {
   state = {
     open: false,
     fullScreen: false,
-    turnDarker: false,
+    turnDarker: true,
     showTitle: false
   };
 
   // Initial header style
-  flagDarker = false;
+  flagDarker = true;
 
   flagTitle = false;
 
   componentDidMount = () => {
-    window.addEventListener("scroll", this.handleScroll);
+    // window.addEventListener("scroll", this.handleScroll);
   };
 
   componentWillUnmount() {
-    window.removeEventListener("scroll", this.handleScroll);
+    // window.removeEventListener("scroll", this.handleScroll);
   }
 
-  handleScroll = () => {
-    const doc = document.documentElement;
-    const scroll = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
-    const newFlagDarker = scroll > 30;
-    const newFlagTitle = scroll > 40;
-    if (this.flagDarker !== newFlagDarker) {
-      this.setState({ turnDarker: newFlagDarker });
-      this.flagDarker = newFlagDarker;
-    }
-    if (this.flagTitle !== newFlagTitle) {
-      this.setState({ showTitle: newFlagTitle });
-      this.flagTitle = newFlagTitle;
-    }
-  };
+  // handleScroll = () => {
+  //   const doc = document.documentElement;
+  //   const scroll = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+  //   const newFlagDarker = scroll > 30;
+  //   const newFlagTitle = scroll > 40;
+  //   if (this.flagDarker !== newFlagDarker) {
+  //     this.setState({ turnDarker: newFlagDarker });
+  //     this.flagDarker = newFlagDarker;
+  //   }
+  //   if (this.flagTitle !== newFlagTitle) {
+  //     this.setState({ showTitle: newFlagTitle });
+  //     this.flagTitle = newFlagTitle;
+  //   }
+  // };
 
   openFullScreen = () => {
     this.setState({ fullScreen: true });
