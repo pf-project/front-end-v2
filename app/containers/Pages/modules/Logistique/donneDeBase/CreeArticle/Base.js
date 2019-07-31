@@ -184,128 +184,139 @@ class Base extends React.Component {
                 overflowX: "auto"
               }}
             >
-              <Table className={{ minWidth: 650 }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Caratéristique</TableCell>
-                    <TableCell>
-                      Valeur <span style={{ color: "red" }}>*</span>
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {articlesMetaData.map((data, idx) => {
-                    data = data.toObject();
+              {articlesMetaData && articlesMetaData.length > 0 && (
+                <Table className={{ minWidth: 650 }}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Caratéristique</TableCell>
+                      <TableCell>
+                        Valeur <span style={{ color: "red" }}>*</span>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {articlesMetaData.map((data, idx) => {
+                      data = data.toObject();
 
-                    data.valeurs = data.valeurs ? data.valeurs.toArray() : [];
-                    if (data) {
-                      let validators = [];
-                      let errorMessages = [];
-                      if (data.type)
-                        switch (data.type) {
-                          case "number":
-                            validators.push("isNumber");
-                            errorMessages.push("Ce champ doit étre un nombre");
-                            break;
-                          case "alphabetical":
-                            break;
-                          case "alphanumeric":
-                            break;
-                          // case "date":
-                          //   break;
-                          // case "time":
-                          //   break;
+                      data.valeurs = data.valeurs ? data.valeurs.toArray() : [];
+                      if (data) {
+                        let validators = [];
+                        let errorMessages = [];
+                        if (data.type)
+                          switch (data.type) {
+                            case "number":
+                              validators.push("isNumber");
+                              errorMessages.push(
+                                "Ce champ doit étre un nombre"
+                              );
+                              break;
+                            case "alphabetical":
+                              break;
+                            case "alphanumeric":
+                              break;
+                            case "date":
+                              break;
+                            case "time":
+                              break;
+                            default:
+                              validators.push("isNumber");
+                              errorMessages.push(
+                                "Ce champ doit étre un nombre"
+                              );
 
-                          case "float":
-                            validators.push("isFloat");
-                            errorMessages.push("Ce champ doit étre un Decimal");
-                            break;
-                          case "float-1":
-                            validators.push("matchRegexp:^[0-9]*.[0-9]$");
-                            errorMessages.push(
-                              "un  nombre(s) apres la virgule !"
-                            );
-                            break;
-                          case "float-2":
-                            validators.push("matchRegexp:^[0-9]*.[0-9]{2}$");
-                            errorMessages.push(
-                              "deux  nombre(s) apres la virgule !"
-                            );
-                            break;
-                          case "float-3":
-                            validators.push("matchRegexp:^[0-9]*.[0-9]{3}$");
-                            errorMessages.push(
-                              "trois  nombre(s) apres la virgule !"
-                            );
-                            break;
-                          case "float-4":
-                            validators.push("matchRegexp:^[0-9]*.[0-9]{4}$");
-                            errorMessages.push(
-                              "quatre nombre(s) apres la virgule !"
-                            );
-                            break;
+                            // case "float":
+                            //   validators.push("isFloat");
+                            //   errorMessages.push(
+                            //     "Ce champ doit étre un Decimal"
+                            //   );
+                            //   break;
+                            // case "float-1":
+                            //   validators.push("matchRegexp:^[0-9]*.[0-9]$");
+                            //   errorMessages.push(
+                            //     "un  nombre(s) apres la virgule !"
+                            //   );
+                            //   break;
+                            // case "float-2":
+                            //   validators.push("matchRegexp:^[0-9]*.[0-9]{2}$");
+                            //   errorMessages.push(
+                            //     "deux  nombre(s) apres la virgule !"
+                            //   );
+                            //   break;
+                            // case "float-3":
+                            //   validators.push("matchRegexp:^[0-9]*.[0-9]{3}$");
+                            //   errorMessages.push(
+                            //     "trois  nombre(s) apres la virgule !"
+                            //   );
+                            //   break;
+                            // case "float-4":
+                            //   validators.push("matchRegexp:^[0-9]*.[0-9]{4}$");
+                            //   errorMessages.push(
+                            //     "quatre nombre(s) apres la virgule !"
+                            //   );
+                            //   break;
+                          }
+                        if (data.obligatoire) {
+                          validators.push("required");
+                          errorMessages.push("champ obligatoire");
                         }
-                      if (data.obligatoire) {
-                        validators.push("required");
-                        errorMessages.push("champ obligatoire");
-                      }
-                      if (data.longueur) {
-                        let l = data.longueur;
-                        validators.push("maxStringLength:" + l);
-                        errorMessages.push("max longeur " + l);
-                      }
+                        if (data.longueur) {
+                          let l = data.longueur;
+                          validators.push("maxStringLength:" + l);
+                          errorMessages.push("max longeur " + l);
+                        }
 
-                      return (
-                        <TableRow key={idx}>
-                          <TableCell component="th" scope="row">
-                            {data.nom}
-                          </TableCell>
-                          <TableCell>
-                            <FormControl style={{ minWidth: 250 }}>
-                              <Grid container direction="row">
-                                <Grid item xs={6}>
-                                  <TextValidator
-                                    className={classes.field}
-                                    InputProps={{
-                                      readOnly: data.limite
-                                    }}
-                                    onChange={handleValeursChange}
-                                    name={idx}
-                                    type={data.type}
-                                    validators={validators}
-                                    errorMessages={errorMessages}
-                                    value={
-                                      state.data.caracteristiques[idx].valeur
-                                    }
-                                  />
-                                </Grid>
-                                {data.valeurs && data.valeurs.length > 0 && (
+                        return (
+                          <TableRow key={idx}>
+                            <TableCell component="th" scope="row">
+                              {data.nom}
+                            </TableCell>
+                            <TableCell>
+                              <FormControl style={{ minWidth: 250 }}>
+                                <Grid container direction="row">
                                   <Grid item xs={6}>
-                                    <SelectValidator
+                                    <TextValidator
                                       className={classes.field}
+                                      InputProps={{
+                                        readOnly: data.limite
+                                      }}
                                       onChange={handleValeursChange}
                                       name={idx}
-                                      autoWidth="true"
-                                      // style={{ minWidth: 15 }}
-                                    >
-                                      {data.valeurs &&
-                                        data.valeurs.map(valeur => (
-                                          <MenuItem value={valeur}>
-                                            {valeur}{" "}
-                                          </MenuItem>
-                                        ))}
-                                    </SelectValidator>
+                                      type={data.type}
+                                      validators={validators}
+                                      errorMessages={errorMessages}
+                                      value={
+                                        state.data.caracteristiques[idx].valeur
+                                      }
+                                    />
                                   </Grid>
-                                )}
-                              </Grid>
-                            </FormControl>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    }
-                  })}
-                </TableBody>
-              </Table>
+                                  {data.valeurs && data.valeurs.length > 0 && (
+                                    <Grid item xs={6}>
+                                      <SelectValidator
+                                        className={classes.field}
+                                        onChange={handleValeursChange}
+                                        name={idx}
+                                        autoWidth="true"
+                                        // style={{ minWidth: 15 }}
+                                      >
+                                        {data.valeurs &&
+                                          data.valeurs.map(valeur => (
+                                            <MenuItem value={valeur}>
+                                              {valeur}{" "}
+                                            </MenuItem>
+                                          ))}
+                                      </SelectValidator>
+                                    </Grid>
+                                  )}
+                                </Grid>
+                              </FormControl>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      }
+                    })}
+                  </TableBody>
+                </Table>
+              )}{" "}
             </Paper>
           </FormGroup>
         </Grid>
