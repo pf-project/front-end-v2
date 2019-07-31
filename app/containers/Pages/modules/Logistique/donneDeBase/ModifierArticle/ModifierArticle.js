@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
+import StepButton from "@material-ui/core/StepButton";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
@@ -78,11 +79,11 @@ const styles = theme => ({
   }
 });
 
-class CreerArticle extends React.Component {
+class ModifierArticle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeStep: 2,
+      activeStep: 0,
       steps: [
         "Données initiales",
         "Données de base",
@@ -278,6 +279,9 @@ class CreerArticle extends React.Component {
         break;
     }
   };
+  handleStep = step => () => {
+    this.setState({ activeStep: step });
+  };
 
   render() {
     const { classes, loading, closeNotif, notifMsg } = this.props;
@@ -319,13 +323,16 @@ class CreerArticle extends React.Component {
           </Toolbar>
           <Card small className="mb-4">
             <div className={classes.root}>
-              <Stepper activeStep={this.state.activeStep} alternativeLabel>
-                {this.state.steps.map(label => (
-                  <Step key={label}>
-                    <StepLabel>{label}</StepLabel>
+              <Stepper activeStep={4} alternativeLabel>
+                {this.state.steps.map((label, index) => (
+                  <Step>
+                    <StepButton key={label} onClick={this.handleStep(index)}>
+                      <StepLabel>{label}</StepLabel>
+                    </StepButton>
                   </Step>
                 ))}
               </Stepper>
+
               <div>
                 {this.state.activeStep === this.state.steps.length ? (
                   <div>
@@ -364,7 +371,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => {
-  console.log(state.get("crudLogisticReducer"));
   return {
     notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
     loading: state.get("crudLogisticReducer").get("loading"),
@@ -374,9 +380,9 @@ const mapStateToProps = state => {
 };
 
 // //const reducer = "initval";
-const CreerCategorieReduxed = connect(
+const ModifierArticleReduxed = connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreerArticle);
+)(ModifierArticle);
 
-export default withStyles(styles)(CreerCategorieReduxed);
+export default withStyles(styles)(ModifierArticleReduxed);

@@ -37,14 +37,14 @@ module.exports = [
         title: true
       },
       {
-        key: "Ajouter-Article",
+        key: "Ajouter Article",
         name: "Ajouter Article",
         link: "/app/logistique/Données-de-base/ajouter-Article"
       },
       {
-        key: "gerer-article",
-        name: "Gerer Article",
-        link: "/app/logistique/Données-de-base/gerer-Article"
+        key: "modifier-Article",
+        name: "Modifier Article",
+        link: "/app/logistique/Données-de-base/modifier-Article"
       }
     ]
   }

@@ -37,32 +37,6 @@ export default function Stockage({
   classes
 }) {
   const { designations } = state;
-
-  let dimensionValidator = {
-    validators: [],
-    errors: []
-  };
-  if (
-    state.data.dimension_H ||
-    state.data.dimension_I ||
-    state.data.dimension_L
-  ) {
-    dimensionValidator.validators = [
-      "required",
-      "isNumber",
-      "isPositive",
-      "maxNumber:99"
-    ];
-    dimensionValidator.errors = [
-      "champ obligatoire",
-      "Ce champ doit étre un nombre",
-      "Ce champ doit étre un nombre positive",
-      "maximum 2 taille du nombre"
-    ];
-  } else {
-    dimensionValidator.validators = [];
-    dimensionValidator.errors = [];
-  }
   return (
     <div>
       <Grid container spacing={1} className={classes.grid} direction="column">
@@ -133,8 +107,14 @@ export default function Stockage({
                     name="unite_de_quantite_de_base"
                     label="Unité de quantité de base"
                     style={{ minWidth: 300 }}
-                    validators={["isNumber", "isPositive", "maxNumber:999999"]}
+                    validators={[
+                      "required",
+                      "isNumber",
+                      "isPositive",
+                      "maxNumber:999999"
+                    ]}
                     errorMessages={[
+                      "champ obligatoire",
                       "Ce champ doit étre un nombre",
                       "Ce champ doit étre un nombre positive",
                       "maximum 6 taille du nombre"
@@ -153,8 +133,8 @@ export default function Stockage({
                   className={classes.field}
                   onChange={handleChange}
                   name="emplacement"
-                  // validators={["maxStringLength:10"]}
-                  // errorMessages={["maximum 10 char"]}
+                  validators={["required", "maxStringLength:10"]}
+                  errorMessages={["champ obligatoire", "maximum 10 char"]}
                   value={state.data.emplacement}
                   label="Emplacement *"
                   id="#emplacement"
@@ -167,16 +147,27 @@ export default function Stockage({
           <FormGroup>
             <Grid container direction="row">
               <Grid item xs={6}>
-                <TextValidator
-                  style={{ width: "40%" }}
-                  onChange={handleChange}
-                  name="poids"
-                  value={state.data.poids}
-                  label="Poids"
-                  id="#emplacement"
-                  validators={["maxNumber:100"]}
-                  errorMessages={["taille maximale est 100"]}
-                />
+                <FormControl style={{ minWidth: 300 }}>
+                  <SelectValidator
+                    className={classes.field}
+                    value={state.data.poids}
+                    onChange={handleChange}
+                    name="poids"
+                    label="Poids"
+                    style={{ minWidth: 300 }}
+                    validators={["required", "maxNumber:100"]}
+                    errorMessages={[
+                      "Ce Champ est Obligatoire : ",
+                      "taille maximale est 100"
+                    ]}
+                  >
+                    <MenuItem value={"5"}>5</MenuItem>
+                    <MenuItem value={"10"}>10</MenuItem>
+                    <MenuItem value={"25"}>25</MenuItem>
+                    <MenuItem value={"50"}>50</MenuItem>
+                    <MenuItem value={"100"}>100</MenuItem>
+                  </SelectValidator>
+                </FormControl>
               </Grid>
               <Grid item xs={6} direction="column">
                 <FormControl style={{ minWidth: 300 }}>
@@ -187,8 +178,11 @@ export default function Stockage({
                     name="unite1"
                     label="Unité"
                     style={{ minWidth: 300 }}
-                    validators={["maxNumber:100"]}
-                    errorMessages={["taille maximale est 100"]}
+                    validators={["required", "maxNumber:100"]}
+                    errorMessages={[
+                      "Ce Champ est Obligatoire : ",
+                      "taille maximale est 100"
+                    ]}
                   >
                     <MenuItem value={"5"}>5</MenuItem>
                     <MenuItem value={"10"}>10</MenuItem>
@@ -207,23 +201,41 @@ export default function Stockage({
               <Grid item xs={2}>
                 <TextValidator
                   onChange={handleChange}
-                  style={{ width: "70%" }}
                   name="dimension_L"
+                  validators={[
+                    "required",
+                    "isNumber",
+                    "isPositive",
+                    "maxNumber:99"
+                  ]}
+                  errorMessages={[
+                    "champ obligatoire",
+                    "Ce champ doit étre un nombre",
+                    "Ce champ doit étre un nombre positive",
+                    "maximum 2 taille du nombre"
+                  ]}
                   value={state.data.dimension_L}
                   label="L"
                   id="#l"
-                  validators={dimensionValidator.validators}
-                  errorMessages={dimensionValidator.errors}
                 />
               </Grid>
               <Grid item xs={2} direction="column">
                 <TextValidator
                   onChange={handleChange}
                   name="dimension_I"
-                  style={{ width: "70%" }}
+                  validators={[
+                    "required",
+                    "isNumber",
+                    "isPositive",
+                    "maxNumber:99"
+                  ]}
+                  errorMessages={[
+                    "champ obligatoire",
+                    "Ce champ doit étre un nombre",
+                    "Ce champ doit étre un nombre positive",
+                    "maximum 2 taille du nombre"
+                  ]}
                   value={state.data.dimension_I}
-                  validators={dimensionValidator.validators}
-                  errorMessages={dimensionValidator.errors}
                   label="I"
                   id="#i"
                 />
@@ -232,10 +244,19 @@ export default function Stockage({
                 <TextValidator
                   onChange={handleChange}
                   name="dimension_H"
-                  style={{ width: "70%" }}
+                  validators={[
+                    "required",
+                    "isNumber",
+                    "isPositive",
+                    "maxNumber:99"
+                  ]}
+                  errorMessages={[
+                    "champ obligatoire",
+                    "Ce champ doit étre un nombre",
+                    "Ce champ doit étre un nombre positive",
+                    "maximum 2 taille du nombre"
+                  ]}
                   value={state.data.dimension_H}
-                  validators={dimensionValidator.validators}
-                  errorMessages={dimensionValidator.errors}
                   label="H"
                   id="#h"
                 />

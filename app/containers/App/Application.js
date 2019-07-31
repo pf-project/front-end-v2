@@ -10,6 +10,7 @@ import {
   NotFound,
   Form,
   CreerArticle,
+  ModifierArticle,
   Parent,
   CreerCategorie
 } from "../pageListAsync";
@@ -34,11 +35,15 @@ class Application extends React.Component {
 
           <Route path="/app/paramétrage" component={Parent} />
           {/* ****  Donnee de base :  */}
-
+          <Route
+            path="/app/logistique/Données-de-base/modifier-Article"
+            component={ModifierArticle}
+          />
           <Route
             path="/app/logistique/Données-de-base/ajouter-Article"
             component={CreerArticle}
           />
+
           <Route path="/app/logistique/Données-de-base" component={Parent} />
           {/* parent page : */}
           <Route path="/app/logistique" component={Parent} />
