@@ -61,7 +61,7 @@ export default function Commerciale({
                 onChange={handleChange}
                 name="code"
                 value={state.data.code}
-                label="Code Article *"
+                label="Code d'article *"
                 id="#codearticle"
               />
             </Grid>
@@ -72,7 +72,7 @@ export default function Commerciale({
                 onChange={handleChange}
                 name="designation"
                 validators={["required", "maxStringLength:25"]}
-                errorMessages={["champ obligatoire", "maximum 25 char"]}
+                errorMessages={["Ce champ est obligatoire", "maximum 25 char"]}
                 value={state.data.designation}
                 label="Désignation *"
                 id="#designation"
@@ -85,9 +85,9 @@ export default function Commerciale({
                 value={state.data.categorie}
                 onChange={handleChange}
                 name="categorie"
-                label="Catégorie d'article"
+                label="Catégorie d'article *"
                 validators={["required"]}
-                errorMessages={["Ce Champ est Obligatoire : "]}
+                errorMessages={["Ce champ est obligatoire"]}
                 InputProps={{
                   readOnly: true
                 }}
@@ -110,10 +110,10 @@ export default function Commerciale({
                 value={state.data.unite_de_quantite_achat}
                 onChange={handleChange}
                 name="unite_de_quantite_achat"
-                label="Unité de quantité d'achat"
+                label="Unité de quantité d'achat *"
                 style={{ minWidth: 300 }}
                 validators={["required"]}
-                errorMessages={["Ce Champ est Obligatoire : "]}
+                errorMessages={["Ce champ est obligatoire "]}
               >
                 <MenuItem value={"5"}>5</MenuItem>
                 <MenuItem value={"10"}>10</MenuItem>
@@ -130,13 +130,13 @@ export default function Commerciale({
                 onChange={handleChange}
                 name="prix_moyen_pendere"
                 value={state.data.prix_moyen_pendere}
-                label="Prix moyen pondéré"
+                label="Prix moyen pondéré *"
                 validators={[
                   "required",
                   "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/
                 ]}
                 errorMessages={[
-                  "champ obligatoire",
+                  "Ce champ est obligatoire",
                   "Chmap doit étre un nombre : ex 4.57 "
                   // "deux  nombre(s) apres la virgule !"
                 ]}
@@ -155,13 +155,13 @@ export default function Commerciale({
                 className={classes.field}
                 name="prix_de_vente_de_base_HT"
                 value={state.data.prix_de_vente_de_base_HT}
-                label="Prix de vente de base HT"
+                label="Prix de vente de base HT *"
                 validators={[
                   "required",
                   "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/
                 ]}
                 errorMessages={[
-                  "champ obligatoire",
+                  "Ce champ est obligatoire",
                   "Chmap doit étre un nombre : ex 4.57 "
                   // "deux  nombre(s) apres la virgule !"
                 ]}
@@ -185,13 +185,13 @@ export default function Commerciale({
                   className={classes.field}
                   name="prix_de_vente_de_base_TTC"
                   value={state.data.prix_de_vente_de_base_TTC}
-                  label="Prix de vente de base TTC"
+                  label="Prix de vente de base TTC *"
                   validators={[
                     "required",
                     "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/
                   ]}
                   errorMessages={[
-                    "champ obligatoire",
+                    "Ce champ est obligatoire",
                     "Chmap doit étre un nombre : ex 4.57 "
                     // "deux  nombre(s) apres la virgule !"
                   ]}
@@ -208,10 +208,10 @@ export default function Commerciale({
                     className={classes.field}
                     onChange={handleChange}
                     name="taux_tva"
-                    label="Taux de TVA"
+                    label="Taux de TVA *"
                     style={{ minWidth: 300 }}
                     validators={["required"]}
-                    errorMessages={["Ce Champ est Obligatoire : "]}
+                    errorMessages={["Ce champ est obligatoire"]}
                   >
                     <MenuItem value={"5"}>5</MenuItem>
                     <MenuItem value={"10"}>10</MenuItem>
@@ -228,7 +228,7 @@ export default function Commerciale({
                     onChange={handleChange}
                     className={classes.field}
                     name="unite_de_vente"
-                    label="Unité de vente"
+                    label="Unité de vente *"
                     style={{ minWidth: 300 }}
                     validators={[
                       "required",
@@ -237,7 +237,7 @@ export default function Commerciale({
                       "maxNumber:999999"
                     ]}
                     errorMessages={[
-                      "champ obligatoire",
+                      "Ce champ est obligatoire",
                       "Ce champ doit étre un nombre",
                       "Ce champ doit étre un nombre positive",
                       "maximum 6 taille du nombre"

@@ -156,7 +156,7 @@ export default function Stockage({
                   // validators={["maxStringLength:10"]}
                   // errorMessages={["maximum 10 char"]}
                   value={state.data.emplacement}
-                  label="Emplacement *"
+                  label="Emplacement "
                   id="#emplacement"
                 />
               </Grid>
@@ -310,7 +310,7 @@ export default function Stockage({
                   name="controle_qualite_exige"
                 />
               }
-              label="Controle qualité exigé"
+              label="Contrôle qualité exigé"
             />
           </FormGroup>
         </Grid>

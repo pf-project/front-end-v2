@@ -68,7 +68,7 @@ class Base extends React.Component {
                     onChange={handleChange}
                     name="code"
                     value={state.data.code}
-                    label="Code Article *"
+                    label="Code d'article *"
                     id="#codearticle"
                   />
                 </Grid>
@@ -92,7 +92,7 @@ class Base extends React.Component {
                     value={state.data.categorie}
                     onChange={handleChange}
                     name="categorie"
-                    label="Catégorie d'article"
+                    label="Catégorie d'article *"
                     validators={["required"]}
                     errorMessages={["Ce Champ est Obligatoire : "]}
                     InputProps={{
@@ -119,7 +119,7 @@ class Base extends React.Component {
                     // validators={["required", "maxStringLength:25"]}
                     // errorMessages={["champ obligatoire", "maximum 25 char"]}
                     value={state.data.ancienCode}
-                    label="Ancien Code "
+                    label="Ancien code "
                     id="#ancienCode"
                   />
                 </Grid>
@@ -257,12 +257,12 @@ class Base extends React.Component {
                           }
                         if (data.obligatoire) {
                           validators.push("required");
-                          errorMessages.push("champ obligatoire");
+                          errorMessages.push("Ce champ est obligatoire");
                         }
                         if (data.longueur) {
                           let l = data.longueur;
                           validators.push("maxStringLength:" + l);
-                          errorMessages.push("max longeur " + l);
+                          errorMessages.push("Max longeur " + l);
                         }
 
                         return (

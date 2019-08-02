@@ -27,9 +27,9 @@ module.exports = [
         title: true
       },
       {
-        key: " Configuration : Article",
-        name: " Configuration : Article",
-        link: "/app/logistique/paramétrage/configuration-Article"
+        key: " Configuration : article",
+        name: " Configuration : article",
+        link: "/app/logistique/paramétrage/Configuration-article"
       },
       {
         key: "Données de base",
@@ -37,14 +37,14 @@ module.exports = [
         title: true
       },
       {
-        key: "Ajouter Article",
-        name: "Ajouter Article",
-        link: "/app/logistique/Données-de-base/ajouter-Article"
+        key: "Ajouter article",
+        name: "Ajouter article",
+        link: "/app/logistique/Données-de-base/Ajouter-Article"
       },
       {
         key: "modifier-Article",
         name: "Modifier Article",
-        link: "/app/logistique/Données-de-base/modifier-Article"
+        link: "/app/logistique/Données-de-base/Modifier-article"
       }
     ]
   }

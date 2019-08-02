@@ -184,9 +184,9 @@ const CreerCategorie = ({
   // errors messages :
   const errors = {
     required: "Ce champ est obligatoire !",
-    size: "taille max de : ",
-    positive: "Veuiller entrer des  nombres protifs :",
-    number: "veuiller entrer des nombres :"
+    size: "Taille maximalle de ",
+    positive: "Veuiller entrer des nombres protifs",
+    number: "Veuiller entrer des nombres "
   };
 
   return (
@@ -210,7 +210,7 @@ const CreerCategorie = ({
                 `${errors.size} ${5} characters `
               ]}
               value={data.code}
-              label="Code de Categorie  *"
+              label="Code de categorie  *"
             />
 
             <TextValidator
@@ -231,7 +231,7 @@ const CreerCategorie = ({
               value={data.groupe}
               onChange={handleChange}
               name="groupe"
-              label="Groupe Comptable :  *"
+              label="Groupe comptable  *"
               validators={["required"]}
               errorMessages={[errors.required]}
             >
@@ -341,11 +341,11 @@ const CreerCategorie = ({
               {nbrAttributes > 0 && (
                 <TableHead>
                   <TableRow>
-                    <TableCell>Nom d'attribut : *</TableCell>
-                    <TableCell>Type d'attribut :</TableCell>
-                    <TableCell>Langueur max :</TableCell>
+                    <TableCell>Nom d'attribut *</TableCell>
+                    <TableCell>Type d'attribut *</TableCell>
+                    <TableCell>Langueur max </TableCell>
                     <TableCell>Obligatoire ?</TableCell>
-                    <TableCell>Valeurs :</TableCell>
+                    <TableCell>Valeurs </TableCell>
                   </TableRow>
                 </TableHead>
               )}

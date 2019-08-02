@@ -36,9 +36,9 @@ export default function Initiale({
           className={classes.initialeFields}
           name="code"
           validators={["required", "maxStringLength:25"]}
-          errorMessages={["champ obligatoire", "maximum 25 char"]}
+          errorMessages={["Ce champ est obligatoire", "maximum 25 char"]}
           value={state.data.code}
-          label="Code Article *"
+          label="Code d'article *"
         />
       </FormGroup>
       <FormGroup>
@@ -47,10 +47,10 @@ export default function Initiale({
           className={classes.initialeFields}
           onChange={handleChange}
           name="categorie"
-          label="Catégorie d'article"
+          label="Catégorie d'article *"
           style={{ minWidth: 300 }}
           validators={["required"]}
-          errorMessages={["Ce Champ est Obligatoire : "]}
+          errorMessages={["Ce champ est obligatoire "]}
         >
           {designations.map(designation => (
             <MenuItem value={designation}>{designation}</MenuItem>
@@ -63,10 +63,10 @@ export default function Initiale({
           className={classes.initialeFields}
           onChange={handleChange}
           name="utilite"
-          label="Utilité "
+          label="Utilité *"
           style={{ minWidth: 300 }}
           validators={["required"]}
-          errorMessages={["Ce Champ est Obligatoire : "]}
+          errorMessages={["Ce Champ est Obligatoire"]}
         >
           <MenuItem value={"CONS-Achat-pour-consomation<"}>
             CONS-Achat pour consomation
@@ -82,9 +82,9 @@ export default function Initiale({
           className={classes.initialeFields}
           name="designation"
           validators={["required", "maxStringLength:25"]}
-          errorMessages={["champ obligatoire", "maximum 25 char"]}
+          errorMessages={["Ce Champ est Obligatoire", "maximum 25 char"]}
           value={state.data.designation}
-          label="Désignation*"
+          label="Désignation *"
         />
       </FormGroup>
       <FormGroup>
@@ -92,10 +92,8 @@ export default function Initiale({
           name="findvalidite"
           handleChange={handleChange}
           className={classes.initialeFields}
-          label="Fin de validité *"
+          label="Fin de validité"
           type="date"
-          // defaultValue="2017-05-24"
-          // className={classes.textField}
           InputLabelProps={{
             shrink: true
           }}
