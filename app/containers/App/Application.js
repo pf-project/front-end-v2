@@ -11,6 +11,7 @@ import {
   Form,
   CreerArticle,
   ModifierArticle,
+  ListerArticles,
   Parent,
   CreerCategorie
 } from "../pageListAsync";
@@ -40,8 +41,13 @@ class Application extends React.Component {
             component={ModifierArticle}
           /> */}
           <Route
-            path="/app/logistique/Données-de-base/ajouter-Article"
+            path="/app/logistique/Données-de-base/ajouter-article"
             component={CreerArticle}
+          />
+
+          <Route
+            path="/app/logistique/Données-de-base/lister-articles"
+            component={ListerArticles}
           />
 
           <Route path="/app/logistique/Données-de-base" component={Parent} />

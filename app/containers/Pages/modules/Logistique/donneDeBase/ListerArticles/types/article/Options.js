@@ -38,16 +38,16 @@ export default {
   // showResponsive: true,
   responsive: "scroll",
   print: false,
-  download: false,
-  filterList: ["Prévilège"],
-  customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
-    <CustomToolbarSelect
-      selectedRows={selectedRows}
-      displayData={displayData}
-      setSelectedRows={setSelectedRows}
-    />
-  ),
-  customToolbar: () => {
-    return <CustomToolbar />;
-  }
+  download: false
+  // filterList: ["Prévilège"],
+  // customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
+  //   <CustomToolbarSelect
+  //     selectedRows={selectedRows}
+  //     displayData={displayData}
+  //     setSelectedRows={setSelectedRows}
+  //   />
+  // ),
+  // customToolbar: () => {
+  //   return <CustomToolbar />;
+  // }
 };

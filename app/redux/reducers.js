@@ -13,6 +13,7 @@ import uiReducer from "./modules/uiReducer";
 import initval from "./modules/initFormReducer";
 import crudLogisticReducer from "../containers/Pages/modules/Logistique/reducers/crudLogisticReducer";
 import crudTbReducer from "../containers/Pages/modules/Administration/GestionUtilisateur/reducers/crudTbReducer";
+import crudTbArticlesReducer from "../containers/Pages/modules/Logistique/donneDeBase/ListerArticles/reducers/crudTbReducer";
 
 /**
  * Creates the main reducer with the dynamically injected ones
@@ -24,6 +25,7 @@ export default function createReducer(injectedReducers = {}) {
     initval,
     authReducer,
     crudTbReducer,
+    crudTbArticlesReducer,
     crudLogisticReducer,
     language: languageProviderReducer,
     router: connectRouter(history),

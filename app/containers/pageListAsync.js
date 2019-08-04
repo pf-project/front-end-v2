@@ -26,6 +26,14 @@ export const CreerArticle = Loadable({
   loading: Loading
 });
 
+export const ListerArticles = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Logistique/donneDeBase/ListerArticles/ListerArticles"
+    ),
+  loading: Loading
+});
+
 export const ModifierArticle = Loadable({
   loader: () =>
     import(
