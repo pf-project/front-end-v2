@@ -32,6 +32,14 @@ export const GererArticle = Loadable({
   loading: Loading
 });
 
+export const ListerArticles = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Logistique/donneDeBase/ListerArticles/ListerArticles"
+    ),
+  loading: Loading
+});
+
 import Loading from "enl-components/Loading";
 
 // export const DashboardPage = Loadable({
