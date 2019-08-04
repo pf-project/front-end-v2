@@ -31,21 +31,15 @@ class CustomToolbar extends React.Component {
     const {
       classes,
       openAddForm,
-      // add,
-      open,
       closeAddForm,
       closeNotif,
       notifMsg,
       intl
     } = this.props;
-    let add_user = {
-      id: "boilerplate.containers.Administration.ajouter_utilisateur",
-      defaultMessage: "Ajouter un utilisateur"
-    };
 
     return (
       <React.Fragment>
-        <Tooltip title={intl.formatMessage(add_user)}>
+        <Tooltip title="Ajouter un utilisateur">
           <IconButton className={classes.iconButton} onClick={this.handleClick}>
             <AddIcon className={classes.deleteIcon} />
           </IconButton>
@@ -55,6 +49,7 @@ class CustomToolbar extends React.Component {
           title={""}
           openForm={openAddForm}
           closeForm={closeAddForm}
+          branch=""
         >
           <AjouterUtilisateur />
         </FloatingPanel>
@@ -64,10 +59,9 @@ class CustomToolbar extends React.Component {
 }
 
 CustomToolbar.propTypes = {
+  classes: PropTypes.object.isRequired,
   openAddForm: PropTypes.bool.isRequired,
-  //add: PropTypes.func.isRequired,
-  openAddAction: PropTypes.func.isRequired,
-  closeForm: PropTypes.func.isRequired,
+  closeAddForm: PropTypes.func.isRequired,
   closeNotif: PropTypes.func.isRequired,
   notifMsg: PropTypes.string.isRequired,
   intl: intlShape.isRequired
@@ -82,7 +76,6 @@ const mapStateToProps = state => {
 };
 
 const constDispatchToProps = dispatch => ({
-  //   add: () => dispatch(addAction),
   openAddAction: () => dispatch(openAddAction),
   closeAddForm: () => dispatch(closeAddAction),
   closeNotif: () => dispatch(closeNotifAction)

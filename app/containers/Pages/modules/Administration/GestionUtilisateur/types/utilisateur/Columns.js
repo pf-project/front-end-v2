@@ -23,6 +23,8 @@ export default [
     label: "Prévilège",
     options: {
       filter: true,
+      filterList: [],
+      customFilterListRender: v => `${v}`,
       sort: true,
       customBodyRender: value => {
         if (value === "ROLE_ADMIN") {
@@ -40,6 +42,8 @@ export default [
     label: "Statut de compte",
     options: {
       filter: true,
+      filterList: [],
+      customFilterListRender: v => `${v}`,
       sort: true,
       customBodyRender: value => {
         if (value === "Actif") {
