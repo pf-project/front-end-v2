@@ -18,8 +18,6 @@ import Divider from "@material-ui/core/Divider";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { Notification } from "enl-components";
-// import fetchApi from "../../../utils/fetchApi";
-// import SnackBar from "../../../utils/SnackBar";
 
 import {
   ValidatorForm,

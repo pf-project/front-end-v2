@@ -27,14 +27,7 @@ app.use('/api/icons', (req, res) => {
   });
 });
 
-// Load code preview
-app.use('/api/docs', (req, res) => {
-  res.json({
-    records: [
-      { source: rawdocs(req.query) }
-    ]
-  });
-});
+
 
 app.use('/', express.static('public', { etag: false }));
 app.use(favicon(path.join('public', 'favicons', 'favicon.ico')));

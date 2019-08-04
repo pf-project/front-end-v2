@@ -236,7 +236,6 @@ Header.propTypes = {
   classes: PropTypes.object.isRequired,
   toggleDrawerOpen: PropTypes.func.isRequired,
   avatar: PropTypes.string.isRequired,
-  margin: PropTypes.bool.isRequired,
   isLogin: PropTypes.bool,
   dense: PropTypes.bool,
   mode: PropTypes.string.isRequired,

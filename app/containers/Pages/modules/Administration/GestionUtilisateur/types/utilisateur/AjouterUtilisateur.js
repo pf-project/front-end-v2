@@ -55,7 +55,7 @@ const initData = {
 };
 
 class AjouterUtilisateur extends Component {
-  state = { loading: false };
+  state = { loading: false, authority: "" };
 
   handleClick = () => {
     this.props.closeAddAction();
@@ -78,13 +78,7 @@ class AjouterUtilisateur extends Component {
     const { classes } = this.props;
     return (
       <div>
-        <Grid
-          container
-          spacing={3}
-          alignItems="flex-start"
-          direction="row"
-          justify="left"
-        >
+        <Grid container spacing={3} alignItems="flex-start" direction="row">
           <Grid item>
             <Paper className={classes.root}>
               <Typography variant="h5" component="h3">
