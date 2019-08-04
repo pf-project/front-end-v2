@@ -62,7 +62,7 @@ class LeftSidebarBigLayout extends React.Component {
           <section
             className={classNames(classes.mainWrap, classes.sidebarLayout)}
           >
-            {titleException.indexOf(history.location.pathname) < 0 && (
+            {/* {titleException.indexOf(history.location.pathname) < 0 && (
               <Card className={classes.pageTitle}>
                 <Typography component="h4" variant="h4">
                   {messages[place] !== undefined ? (
@@ -78,7 +78,7 @@ class LeftSidebarBigLayout extends React.Component {
                   location={history.location}
                 />
               </Card>
-            )}
+            )} */}
             {!pageLoaded && (
               <img
                 src="/images/spinner.gif"
@@ -94,7 +94,7 @@ class LeftSidebarBigLayout extends React.Component {
             >
               <div
                 // style={{ marginTop: "80px" }}
-                className={!pageLoaded ? classes.hideApp : classes.children}
+                className={!pageLoaded ? classes.hideApp : ""}
               >
                 {/* Application content will load here */}
                 {children}
