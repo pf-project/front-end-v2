@@ -121,6 +121,7 @@ class Header extends React.Component {
 
     return (
       <AppBar
+        position="relative"
         className={classNames(
           classes.appBar,
           classes.floatingBar,

@@ -53,7 +53,7 @@ class DropMenuLayout extends React.Component {
           <section
             className={classNames(classes.mainWrap, classes.topbarLayout)}
           >
-            {titleException.indexOf(history.location.pathname) < 0 && (
+            {/* {titleException.indexOf(history.location.pathname) < 0 && (
               <div className={classes.pageTitle}>
                 <Typography component="h4" variant="h4">
                   {messages[place] !== undefined ? (
@@ -68,7 +68,7 @@ class DropMenuLayout extends React.Component {
                   location={history.location}
                 />
               </div>
-            )}
+            )} */}
             {!pageLoaded && (
               <img
                 src="/images/spinner.gif"

@@ -24,7 +24,7 @@ import {
   closeNotifAction
 } from "../../reducers/crudLogisticActions";
 import { ValidatorForm } from "react-material-ui-form-validator";
-
+import { BreadCrumb } from "enl-components";
 import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
 
@@ -75,6 +75,50 @@ const styles = theme => ({
   },
   buttons: {
     marginTop: "30px"
+  },
+  button: {
+    marginLeft: theme.spacing(1)
+  },
+  submitdiv: {
+    // marginLeft: "30%",
+    // position: "absolute",
+    // right: 50,
+    marginTop: theme.spacing(1),
+    marginLeft: theme.spacing(20)
+  },
+  pageTitle: {
+    padding: theme.spacing(1),
+    paddingBottom: theme.spacing(3),
+    marginBottom: theme.spacing(1),
+    // width: "80",
+    // display: "flex",
+    // alignItems: "flex-end",
+    // position: "fixed",
+    [theme.breakpoints.up("sm")]: {
+      display: "flex",
+      alignItems: "flex-end"
+    },
+    zIndex: theme.zIndex.drawer + 10,
+    // alignItems: "center",
+    // marginBottom: theme.spacing(10),
+    // [theme.breakpoints.up("sm")]: {
+    //   // display: "flex",
+    //   alignItems: "flex-end"
+    // },
+    "& h4": {
+      fontWeight: 700,
+      fontSize: 24,
+      paddingLeft: 10,
+      paddingRight: theme.spacing(1),
+      // textTransform: "capitalize",
+      color:
+        theme.palette.type === "dark"
+          ? theme.palette.secondary.light
+          : theme.palette.primary.dark,
+      [theme.breakpoints.down("md")]: {
+        marginBottom: theme.spacing(3)
+      }
+    }
   }
 });
 
@@ -295,6 +339,50 @@ class CreerArticle extends React.Component {
 
     return (
       <Container>
+        <Card small className={classes.pageTitle}>
+          <Typography component="h4" variant="h4">
+            {/* {messages[place] !== undefined ? (
+                  <FormattedMessage {...messages[place]} />
+                ) : (
+                  place
+                )} */}
+            Créer Article
+          </Typography>
+          <BreadCrumb
+            separator=" / "
+            theme="light"
+            location={{
+              pathname: "/Logistique/Données de base/Créer Article"
+            }}
+          />
+          <div className={classes.submitdiv}>
+            {/* <Grid item sm={2} lg={2}> */}
+            <Button
+              // onClick={submitter}
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              disabled={activeStep === 0}
+              onClick={this.handleBack}
+              className={classes.backButton}
+            >
+              Précedent
+            </Button>
+            {/* </Grid> */}
+            {/* <Grid item sm={2} lg={2}> */}
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              {this.state.activeStep === this.state.steps.length - 1
+                ? "Sauvegarder"
+                : "Suivant"}
+            </Button>
+            {/* </Grid> */}
+          </div>
+        </Card>
         <ValidatorForm onSubmit={submitter} autoComplete="off">
           <Notification
             close={() => closeNotif()}
@@ -332,30 +420,6 @@ class CreerArticle extends React.Component {
                 )}
               </div>
             </div>
-            <Grid justify="flex-end" container spacing={0}>
-              <Grid item sm={8} lg={8}>
-                {""}
-              </Grid>
-              <Grid item sm={2} lg={2}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  disabled={activeStep === 0}
-                  onClick={this.handleBack}
-                  className={classes.backButton}
-                >
-                  Précedent
-                </Button>
-              </Grid>
-              <Grid item sm={2} lg={2}>
-                <Button variant="contained" color="primary" type="submit">
-                  {this.state.activeStep === this.state.steps.length - 1
-                    ? "Sauvegarder"
-                    : "Suivant"}
-                </Button>
-              </Grid>
-            </Grid>
-            x
           </Card>
         </ValidatorForm>
       </Container>

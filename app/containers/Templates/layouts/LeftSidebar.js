@@ -61,7 +61,7 @@ class LeftSidebarLayout extends React.Component {
           <section
             className={classNames(classes.mainWrap, classes.sidebarLayout)}
           >
-            {titleException.indexOf(history.location.pathname) < 0 && (
+            {/* {titleException.indexOf(history.location.pathname) < 0 && (
               <div className={classes.pageTitle}>
                 <Typography component="h4" variant="h4">
                   {messages[place] !== undefined ? (
@@ -76,7 +76,7 @@ class LeftSidebarLayout extends React.Component {
                   location={history.location}
                 />
               </div>
-            )}
+            )} */}
             {!pageLoaded && (
               <img
                 src="/images/spinner.gif"
