@@ -17,7 +17,6 @@ class ResetPassword extends React.Component {
   submitForm(values) {
     setTimeout(() => {
       this.setState({ valueForm: values });
-      console.log(`You submitted:\n\n${this.state.valueForm}`); // eslint-disable-line
       this.props.handleForgotPwd(this.state.valueForm.get("email")); // eslint-disable-line
     }, 50); // simulate server latency
   }

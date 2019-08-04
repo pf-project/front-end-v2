@@ -10,11 +10,14 @@ import {
   startLoading,
   stopLoading,
   addArticleSuccess,
-  addArticleFailure
+  addArticleFailure,
+  fetchArticlesForSuggestionSuccess,
+  fetchArticlesForSuggestionFailure
 } from "./crudLogisticActions";
 
 import {
   FETCH_CATEGORIE_DESIGNATIONS_REQUEST,
+  FETCH_ARTICLES_FOR_SUGGESTION_REQUEST,
   FETCH_CATEGORIE_REQUEST,
   ADD_ARTICLE_REQUEST,
   ADD_CATEGORIE_REQUEST
@@ -68,6 +71,21 @@ function* addArticleSaga(payload) {
   }
 }
 
+function* fetchArticlesForSuggestionSaga({ payload }) {
+  try {
+    yield put(startLoading());
+    const data = yield fetchAPI({
+      method: "GET",
+      url: "/api/logistic/article/getCodesAndDesignations",
+      token: window.localStorage.getItem("token")
+    });
+    yield put(fetchArticlesForSuggestionSuccess(data));
+    yield put(stopLoading());
+  } catch (error) {
+    yield put(fetchArticlesForSuggestionFailure(erreur));
+  }
+}
+
 function* addCategorieSaga(payload) {
   try {
     yield put(startLoading());
@@ -97,7 +115,11 @@ function* crudLogisticRootSaga() {
     ),
     takeEvery(FETCH_CATEGORIE_REQUEST, fetchCategorieSaga),
     takeEvery(ADD_ARTICLE_REQUEST, addArticleSaga),
-    takeEvery(ADD_CATEGORIE_REQUEST, addCategorieSaga)
+    takeEvery(ADD_CATEGORIE_REQUEST, addCategorieSaga),
+    takeEvery(
+      FETCH_ARTICLES_FOR_SUGGESTION_REQUEST,
+      fetchArticlesForSuggestionSaga
+    )
   ]);
 }
 

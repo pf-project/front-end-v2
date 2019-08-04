@@ -25,7 +25,7 @@ import {
 } from "../../reducers/crudLogisticActions";
 import { ValidatorForm } from "react-material-ui-form-validator";
 import { BreadCrumb } from "enl-components";
-import Toolbar from "@material-ui/core/Toolbar";
+import { PageTitle } from "enl-components";
 import Grid from "@material-ui/core/Grid";
 
 import { Notification } from "enl-components";
@@ -81,7 +81,7 @@ const styles = theme => ({
   },
   submitdiv: {
     // marginLeft: "30%",
-    // position: "absolute",
+
     // right: 50,
     marginTop: theme.spacing(1),
     marginLeft: theme.spacing(20)
@@ -93,7 +93,7 @@ const styles = theme => ({
     // width: "80",
     // display: "flex",
     // alignItems: "flex-end",
-    // position: "fixed",
+    position: "sticky",
     [theme.breakpoints.up("sm")]: {
       display: "flex",
       alignItems: "flex-end"
@@ -186,7 +186,7 @@ class CreerArticle extends React.Component {
         }
       });
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   }
 
@@ -336,93 +336,88 @@ class CreerArticle extends React.Component {
     const { classes, loading, closeNotif, notifMsg } = this.props;
     const { activeStep } = this.state;
     const submitter = this.getSubmitter();
+    const elements = (
+      <div className={classes.submitdiv}>
+        {/* <Grid item sm={2} lg={2}> */}
+        <Button
+          // onClick={submitter}
+          className={classes.button}
+          variant="contained"
+          color="primary"
+          disabled={activeStep === 0}
+          onClick={this.handleBack}
+          className={classes.backButton}
+        >
+          Précedent
+        </Button>
+        {/* </Grid> */}
+        {/* <Grid item sm={2} lg={2}> */}
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="primary"
+          type="submit"
+          form="addArticle"
+        >
+          {this.state.activeStep === this.state.steps.length - 1
+            ? "Sauvegarder"
+            : "Suivant"}
+        </Button>
+        {/* </Grid> */}
+      </div>
+    );
 
     return (
-      <Container>
-        <Card small className={classes.pageTitle}>
-          <Typography component="h4" variant="h4">
-            {/* {messages[place] !== undefined ? (
-                  <FormattedMessage {...messages[place]} />
-                ) : (
-                  place
-                )} */}
-            Créer Article
-          </Typography>
-          <BreadCrumb
-            separator=" / "
-            theme="light"
-            location={{
-              pathname: "/Logistique/Données de base/Créer Article"
-            }}
-          />
-          <div className={classes.submitdiv}>
-            {/* <Grid item sm={2} lg={2}> */}
-            <Button
-              // onClick={submitter}
-              className={classes.button}
-              variant="contained"
-              color="primary"
-              disabled={activeStep === 0}
-              onClick={this.handleBack}
-              className={classes.backButton}
-            >
-              Précedent
-            </Button>
-            {/* </Grid> */}
-            {/* <Grid item sm={2} lg={2}> */}
-            <Button
-              className={classes.button}
-              variant="contained"
-              color="primary"
-              type="submit"
-            >
-              {this.state.activeStep === this.state.steps.length - 1
-                ? "Sauvegarder"
-                : "Suivant"}
-            </Button>
-            {/* </Grid> */}
+      <div>
+        <PageTitle
+          title="Créer Article"
+          pathname="/Logistique/Données de base/Créer Article"
+          elements={elements}
+        />
+
+        <Notification close={() => closeNotif()} message={notifMsg} branch="" />
+
+        <Card small className="mb-4">
+          <div className={classes.root}>
+            <Stepper activeStep={this.state.activeStep} alternativeLabel>
+              {this.state.steps.map(label => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+            <div>
+              {this.state.activeStep === this.state.steps.length ? (
+                <div>
+                  {/* <Typography className={classes.instructions}>L'article </Typography> */}
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={this.handleReset}
+                  >
+                    Crééer un autre Article
+                  </Button>
+                </div>
+              ) : (
+                <div>
+                  <Typography className={classes.instructions}>
+                    <ValidatorForm
+                      id="addArticle"
+                      // ref={r => (this.form = r)}
+                      onSubmit={submitter}
+                      autoComplete="off"
+                    >
+                      {this.getStepContent(this.state.activeStep)}
+                    </ValidatorForm>
+                  </Typography>
+                </div>
+              )}
+            </div>
           </div>
         </Card>
-        <ValidatorForm onSubmit={submitter} autoComplete="off">
-          <Notification
-            close={() => closeNotif()}
-            message={notifMsg}
-            branch=""
-          />
+      </div>
 
-          <Card small className="mb-4">
-            <div className={classes.root}>
-              <Stepper activeStep={this.state.activeStep} alternativeLabel>
-                {this.state.steps.map(label => (
-                  <Step key={label}>
-                    <StepLabel>{label}</StepLabel>
-                  </Step>
-                ))}
-              </Stepper>
-              <div>
-                {this.state.activeStep === this.state.steps.length ? (
-                  <div>
-                    {/* <Typography className={classes.instructions}>L'article </Typography> */}
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={this.handleReset}
-                    >
-                      Crééer un autre Article
-                    </Button>
-                  </div>
-                ) : (
-                  <div>
-                    <Typography className={classes.instructions}>
-                      {this.getStepContent(this.state.activeStep)}
-                    </Typography>
-                  </div>
-                )}
-              </div>
-            </div>
-          </Card>
-        </ValidatorForm>
-      </Container>
+      // </Container>
     );
   }
 }
@@ -437,7 +432,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => {
-  console.log(state.get("crudLogisticReducer"));
   return {
     notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
     loading: state.get("crudLogisticReducer").get("loading"),

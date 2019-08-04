@@ -60,6 +60,38 @@ export const fetchCategorieDesignationFailure = payload => ({
   payload
 });
 
+// fETCH ARTICLES FOR SUGGESTION ACTONS
+export const fetchArticlesForSuggestion = payload => ({
+  type: types.FETCH_ARTICLES_FOR_SUGGESTION_REQUEST,
+  payload
+});
+
+export const fetchArticlesForSuggestionSuccess = payload => ({
+  type: types.FETCH_ARTICLES_FOR_SUGGESTION_SUCCESS,
+  payload
+});
+
+export const fetchArticlesForSuggestionFailure = payload => ({
+  type: types.FETCH_ARTICLES_FOR_SUGGESTION_FAILURE,
+  payload
+});
+
+// Update article
+export const updateArticle = payload => ({
+  type: types.UPDATE_ARTICLE_REQUEST,
+  payload
+});
+
+export const updateArticleSuccess = payload => ({
+  type: types.UPDATE_ARTICLE_SUCCESS,
+  payload
+});
+
+export const updateArticleFailure = payload => ({
+  type: types.UPDATE_ARTICLE_FAILURE,
+  payload
+});
+
 // Notif :
 export const closeNotifAction = branch => ({
   branch,

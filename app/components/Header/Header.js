@@ -13,9 +13,9 @@ import InvertColors from "@material-ui/icons/InvertColorsOutlined";
 import HelpOutlineOutlined from "@material-ui/icons/HelpOutlineOutlined";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
-import AccountCircle from "@material-ui/icons/AccountCircle";
+import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import MenuIcon from "@material-ui/icons/Menu";
-import Button from "@material-ui/core/Button";
+import Slide from "@material-ui/core/Slide";
 import { NavLink, Link } from "react-router-dom";
 import brand from "enl-api/dummy/brand";
 import logo from "enl-images/logo.svg";
@@ -29,6 +29,29 @@ import messages from "./messages";
 import styles from "./header-jss";
 
 const elem = document.documentElement;
+
+function HideOnScroll(props) {
+  const { children, window } = props;
+  // Note that you normally won't need to set the window ref as useScrollTrigger
+  // will default to window.
+  // This is only being set here because the demo is in an iframe.
+  const trigger = useScrollTrigger({ target: window ? window() : undefined });
+
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children}
+    </Slide>
+  );
+}
+
+HideOnScroll.propTypes = {
+  children: PropTypes.element.isRequired,
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window: PropTypes.func
+};
 
 class Header extends React.Component {
   state = {
@@ -120,115 +143,117 @@ class Header extends React.Component {
     const { fullScreen, open, turnDarker, showTitle } = this.state;
 
     return (
-      <AppBar
-        position="relative"
-        className={classNames(
-          classes.appBar,
-          classes.floatingBar,
-          margin && classes.appBarShift,
-          turnDarker && classes.darker
-        )}
-      >
-        <Toolbar disableGutters={!open}>
-          <div
-            className={classNames(classes.brandWrap, dense && classes.dense)}
-          >
-            <span>
-              <IconButton
-                className={classes.menuButton}
-                aria-label="Menu"
-                onClick={toggleDrawerOpen}
-              >
-                <MenuIcon />
-              </IconButton>
-            </span>
-            <Hidden smDown>
-              <NavLink
-                to="/app"
-                className={classNames(classes.brand, classes.brandBar)}
-              >
-                <img src={logo} alt={brand.name} />
-                {brand.name}
-              </NavLink>
-            </Hidden>
-          </div>
-          <Hidden smDown>
-            <div className={classes.headerProperties}>
-              <div
-                className={classNames(
-                  classes.headerAction,
-                  showTitle && classes.fadeOut
-                )}
-              >
-                {fullScreen ? (
-                  <Tooltip
-                    title={intl.formatMessage(messages.fullScreen)}
-                    placement="bottom"
-                  >
-                    <IconButton
-                      className={classes.button}
-                      onClick={this.closeFullScreen}
-                    >
-                      <FullscreenExitOutlined />
-                    </IconButton>
-                  </Tooltip>
-                ) : (
-                  <Tooltip
-                    title={intl.formatMessage(messages.exitFullScreen)}
-                    placement="bottom"
-                  >
-                    <IconButton
-                      className={classes.button}
-                      onClick={this.openFullScreen}
-                    >
-                      <FullscreenOutlined />
-                    </IconButton>
-                  </Tooltip>
-                )}
-                <Tooltip
-                  title={intl.formatMessage(messages.lamp)}
-                  placement="bottom"
+      <HideOnScroll {...this.props}>
+        <AppBar
+          position="relative"
+          className={classNames(
+            classes.appBar,
+            classes.floatingBar,
+            margin && classes.appBarShift,
+            turnDarker && classes.darker
+          )}
+        >
+          <Toolbar disableGutters={!open}>
+            <div
+              className={classNames(classes.brandWrap, dense && classes.dense)}
+            >
+              <span>
+                <IconButton
+                  className={classes.menuButton}
+                  aria-label="Menu"
+                  onClick={toggleDrawerOpen}
                 >
-                  <IconButton
-                    className={classes.button}
-                    onClick={() => this.turnMode(mode)}
-                  >
-                    <InvertColors />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip
-                  title={intl.formatMessage(messages.guide)}
-                  placement="bottom"
+                  <MenuIcon />
+                </IconButton>
+              </span>
+              <Hidden smDown>
+                <NavLink
+                  to="/app"
+                  className={classNames(classes.brand, classes.brandBar)}
                 >
-                  <IconButton className={classes.button} onClick={openGuide}>
-                    <HelpOutlineOutlined />
-                  </IconButton>
-                </Tooltip>
-              </div>
-              <Typography
-                component="h2"
-                className={classNames(
-                  classes.headerTitle,
-                  showTitle && classes.show
-                )}
-              >
-                {menuMessages[title] !== undefined ? (
-                  <FormattedMessage {...menuMessages[title]} />
-                ) : (
-                  title
-                )}
-              </Typography>
+                  <img src={logo} alt={brand.name} />
+                  {brand.name}
+                </NavLink>
+              </Hidden>
             </div>
-          </Hidden>
-          <Hidden xsDown>
-            <span className={classes.separatorV} />
-          </Hidden>
-          <div className={classes.userToolbar}>
-            {/* <SelectLanguage /> */}
-            <UserMenu signOut={signOut} avatar={avatar} />
-          </div>
-        </Toolbar>
-      </AppBar>
+            <Hidden smDown>
+              <div className={classes.headerProperties}>
+                <div
+                  className={classNames(
+                    classes.headerAction,
+                    showTitle && classes.fadeOut
+                  )}
+                >
+                  {fullScreen ? (
+                    <Tooltip
+                      title={intl.formatMessage(messages.fullScreen)}
+                      placement="bottom"
+                    >
+                      <IconButton
+                        className={classes.button}
+                        onClick={this.closeFullScreen}
+                      >
+                        <FullscreenExitOutlined />
+                      </IconButton>
+                    </Tooltip>
+                  ) : (
+                    <Tooltip
+                      title={intl.formatMessage(messages.exitFullScreen)}
+                      placement="bottom"
+                    >
+                      <IconButton
+                        className={classes.button}
+                        onClick={this.openFullScreen}
+                      >
+                        <FullscreenOutlined />
+                      </IconButton>
+                    </Tooltip>
+                  )}
+                  <Tooltip
+                    title={intl.formatMessage(messages.lamp)}
+                    placement="bottom"
+                  >
+                    <IconButton
+                      className={classes.button}
+                      onClick={() => this.turnMode(mode)}
+                    >
+                      <InvertColors />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip
+                    title={intl.formatMessage(messages.guide)}
+                    placement="bottom"
+                  >
+                    <IconButton className={classes.button} onClick={openGuide}>
+                      <HelpOutlineOutlined />
+                    </IconButton>
+                  </Tooltip>
+                </div>
+                <Typography
+                  component="h2"
+                  className={classNames(
+                    classes.headerTitle,
+                    showTitle && classes.show
+                  )}
+                >
+                  {menuMessages[title] !== undefined ? (
+                    <FormattedMessage {...menuMessages[title]} />
+                  ) : (
+                    title
+                  )}
+                </Typography>
+              </div>
+            </Hidden>
+            <Hidden xsDown>
+              <span className={classes.separatorV} />
+            </Hidden>
+            <div className={classes.userToolbar}>
+              {/* <SelectLanguage /> */}
+              <UserMenu signOut={signOut} avatar={avatar} />
+            </div>
+          </Toolbar>
+        </AppBar>
+      </HideOnScroll>
     );
   }
 }

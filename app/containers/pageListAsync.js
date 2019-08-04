@@ -26,11 +26,9 @@ export const CreerArticle = Loadable({
   loading: Loading
 });
 
-export const ModifierArticle = Loadable({
+export const GererArticle = Loadable({
   loader: () =>
-    import(
-      "./Pages/modules/Logistique/donneDeBase/ModifierArticle/ModifierArticle"
-    ),
+    import("./Pages/modules/Logistique/donneDeBase/GererArticle/GererArticle"),
   loading: Loading
 });
 

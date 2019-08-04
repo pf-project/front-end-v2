@@ -42,9 +42,9 @@ module.exports = [
         link: "/app/logistique/Données-de-base/Ajouter-Article"
       },
       {
-        key: "modifier-Article",
-        name: "Modifier Article",
-        link: "/app/logistique/Données-de-base/Modifier-article"
+        key: "Gerer Article",
+        name: "Gerer Article",
+        link: "/app/logistique/Données-de-base/GererArticle"
       }
     ]
   }

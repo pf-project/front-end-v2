@@ -53,7 +53,7 @@ const styles = theme => ({
     width: "100%",
     padding: theme.spacing(2),
     minHeight: "100%",
-    overflow: "hidden",
+    // overflow: "hidden",
     [theme.breakpoints.down("md")]: {
       paddingLeft: theme.spacing(1),
       paddingRight: theme.spacing(1)

@@ -23,3 +23,4 @@ export ErrorWrap from "./Error/ErrorWrap";
 export TemplateSettings from "./TemplateSettings";
 
 export FloatingPanel from "./Panel/FloatingPanel";
+export PageTitle from "./PageTitle/PageTitle";

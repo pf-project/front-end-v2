@@ -24,7 +24,6 @@ class Register extends React.Component {
   submitForm(values) {
     setTimeout(() => {
       this.setState({ valueForm: values });
-      console.log(`You submitted:\n\n${this.state.valueForm.get("email")}`); // eslint-disable-line
       this.props.handleRegisterWithEmail(
         this.state.valueForm.get("name"),
         this.state.valueForm.get("email"),
