@@ -35,7 +35,7 @@ class Base extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchCategorie(this.props.state.data.categorie);
+    // this.props.fetchCategorie(this.props.state.data.categorie);
   }
 
   render() {

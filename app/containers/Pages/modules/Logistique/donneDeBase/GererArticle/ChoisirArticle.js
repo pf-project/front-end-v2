@@ -84,10 +84,10 @@ const styles = theme => ({
   }
 });
 
-const handleChange = event => console.log(event.target.value);
+// const handleChange = event => console.log(event.target.value);
 
 function ChoisirArticle(props) {
-  const { classes, codes, designations } = props;
+  const { classes, codes, designations, handleSelect } = props;
   const [filterByDesignation, setFilter] = useState(false);
   if (codes && designations) {
     const codesSuggestions = [];
@@ -118,11 +118,9 @@ function ChoisirArticle(props) {
     return (
       <div className={classes.root}>
         <RadioGroup
-          aria-label="gender"
-          name="gender1"
-          // className={classes.group}
-          // value={value}
-          // onChange={handleChange}
+        // className={classes.group}
+        // value={value}
+        // onChange={handleChange}
         >
           <FormControlLabel
             control={
@@ -162,8 +160,7 @@ function ChoisirArticle(props) {
                 classes,
                 InputProps: getInputProps({
                   placeholder: "Chercher l'Article à modifier",
-                  id: "integration-downshift-simple",
-                  onChange: handleChange
+                  id: "integration-downshift-simple"
                 })
               })}
               {isOpen ? (
@@ -172,7 +169,10 @@ function ChoisirArticle(props) {
                     renderSuggestion({
                       suggestion,
                       index,
-                      itemProps: getItemProps({ item: suggestion.label }),
+                      itemProps: getItemProps({
+                        onClick: handleSelect(suggestion.label),
+                        item: suggestion.label
+                      }),
                       highlightedIndex,
                       selectedItem
                     })

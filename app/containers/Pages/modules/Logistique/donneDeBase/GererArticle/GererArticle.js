@@ -162,6 +162,10 @@ class GererArticle extends React.Component {
     }
   };
 
+  handleSelect = value => () => {
+    console.log(value);
+  };
+
   handleValeursChange = event => {
     const index = event.target.name;
     const valeur = event.target.value;
@@ -194,7 +198,13 @@ class GererArticle extends React.Component {
     const { codes, designations } = this.props.articlesForSuggestion;
     switch (stepIndex) {
       case 0:
-        return <ChoisirArticle codes={codes} designations={designations} />;
+        return (
+          <ChoisirArticle
+            handleSelect={this.handleSelect}
+            codes={codes}
+            designations={designations}
+          />
+        );
       case 1:
         return (
           <Initiale
@@ -209,14 +219,14 @@ class GererArticle extends React.Component {
       case 2:
         return (
           <Base
-          // handleChange={this.handleChange}
-          // state={this.state}
-          // designations={this.props.designations}
-          // handleSubmitBase={this.handleSubmitBase}
-          // handleBack={this.handleBack}
-          // classes={classes}
-          // fetchCategorie={this.fetchCategorie}
-          // handleValeursChange={this.handleValeursChange}
+            handleChange={this.handleChange}
+            // state={this.state}
+            // designations={this.props.designations}
+            // handleSubmitBase={this.handleSubmitBase}
+            // handleBack={this.handleBack}
+            classes={classes}
+            // fetchCategorie={this.fetchCategorie}
+            handleValeursChange={this.handleValeursChange}
           />
         );
       case 3:
