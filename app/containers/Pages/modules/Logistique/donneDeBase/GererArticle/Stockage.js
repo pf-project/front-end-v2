@@ -31,22 +31,18 @@ import {
 
 export default function Stockage({
   handleChange,
-  state,
+  data,
   handleSubmitStockage,
   handleBack,
   classes
 }) {
-  const { designations } = state;
+  const { designations } = data;
 
   let dimensionValidator = {
     validators: [],
     errors: []
   };
-  if (
-    state.data.dimension_H ||
-    state.data.dimension_I ||
-    state.data.dimension_L
-  ) {
+  if (data.dimension_H || data.dimension_I || data.dimension_L) {
     dimensionValidator.validators = [
       "required",
       "isNumber",
@@ -79,7 +75,7 @@ export default function Stockage({
                   }}
                   onChange={handleChange}
                   name="code"
-                  value={state.data.code}
+                  value={data.code}
                   label="Code Article *"
                   id="#codearticle"
                 />
@@ -92,7 +88,7 @@ export default function Stockage({
                   name="designation"
                   validators={["required", "maxStringLength:25"]}
                   errorMessages={["champ obligatoire", "maximum 25 char"]}
-                  value={state.data.designation}
+                  value={data.designation}
                   label="Désignation *"
                   id="#designation"
                 />
@@ -101,7 +97,7 @@ export default function Stockage({
               <Grid item xs={4}>
                 <TextValidator
                   className={classes.field}
-                  value={state.data.categorie}
+                  value={data.categorie}
                   onChange={handleChange}
                   name="categorie"
                   label="Catégorie d'article"
@@ -128,7 +124,7 @@ export default function Stockage({
                 <FormControl>
                   <SelectValidator
                     className={classes.field}
-                    value={state.data.unite_de_quantite_de_base}
+                    value={data.unite_de_quantite_de_base}
                     onChange={handleChange}
                     name="unite_de_quantite_de_base"
                     label="Unité de quantité de base"
@@ -155,7 +151,7 @@ export default function Stockage({
                   name="emplacement"
                   // validators={["maxStringLength:10"]}
                   // errorMessages={["maximum 10 char"]}
-                  value={state.data.emplacement}
+                  value={data.emplacement}
                   label="Emplacement "
                   id="#emplacement"
                 />
@@ -171,7 +167,7 @@ export default function Stockage({
                   style={{ width: "40%" }}
                   onChange={handleChange}
                   name="poids"
-                  value={state.data.poids}
+                  value={data.poids}
                   label="Poids"
                   id="#emplacement"
                   validators={["isFloat"]}
@@ -182,7 +178,7 @@ export default function Stockage({
                 <FormControl style={{ minWidth: 300 }}>
                   <SelectValidator
                     className={classes.field}
-                    value={state.data.unite1}
+                    value={data.unite1}
                     onChange={handleChange}
                     name="unite1"
                     label="Unité"
@@ -209,7 +205,7 @@ export default function Stockage({
                   onChange={handleChange}
                   style={{ width: "70%" }}
                   name="dimension_L"
-                  value={state.data.dimension_L}
+                  value={data.dimension_L}
                   label="L"
                   id="#l"
                   validators={dimensionValidator.validators}
@@ -221,7 +217,7 @@ export default function Stockage({
                   onChange={handleChange}
                   name="dimension_I"
                   style={{ width: "70%" }}
-                  value={state.data.dimension_I}
+                  value={data.dimension_I}
                   validators={dimensionValidator.validators}
                   errorMessages={dimensionValidator.errors}
                   label="I"
@@ -233,7 +229,7 @@ export default function Stockage({
                   onChange={handleChange}
                   name="dimension_H"
                   style={{ width: "70%" }}
-                  value={state.data.dimension_H}
+                  value={data.dimension_H}
                   validators={dimensionValidator.validators}
                   errorMessages={dimensionValidator.errors}
                   label="H"
@@ -243,7 +239,7 @@ export default function Stockage({
               <Grid item xs={6} direction="column">
                 <FormControl style={{ minWidth: 300 }}>
                   <SelectValidator
-                    value={state.data.unite2}
+                    value={data.unite2}
                     onChange={handleChange}
                     name="unite2"
                     label="Unité"
@@ -267,7 +263,7 @@ export default function Stockage({
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={state.data.gestion_par_lot}
+                  checked={data.gestion_par_lot}
                   onChange={handleChange}
                   color="primary"
                   name="gestion_par_lot"
@@ -276,7 +272,7 @@ export default function Stockage({
               label="Gestion par lot"
             />
 
-            {state.data.gestion_par_lot && (
+            {data.gestion_par_lot && (
               <TextValidator
                 onChange={handleChange}
                 name="lot_standard"
@@ -292,7 +288,7 @@ export default function Stockage({
                 //   "Ce champ doit étre un nombre positive",
                 //   "maximum 2 taille du nombre"
                 // ]}
-                value={state.data.lot_standard}
+                value={data.lot_standard}
                 label="Lot standard"
                 id="lot_standard"
               />
@@ -304,7 +300,7 @@ export default function Stockage({
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={state.data.controle_qualite_exige}
+                  checked={data.controle_qualite_exige}
                   onChange={handleChange}
                   color="primary"
                   name="controle_qualite_exige"

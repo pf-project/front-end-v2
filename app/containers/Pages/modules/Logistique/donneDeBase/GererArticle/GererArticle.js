@@ -12,14 +12,16 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { BreadCrumb } from "enl-components";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { ValidatorForm } from "react-material-ui-form-validator";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { PageTitle } from "enl-components";
+import { Notification } from "enl-components";
 import {
   fetchArticlesForSuggestion,
-  closeNotifAction
+  closeNotifAction,
+  fetchArticle
 } from "../../reducers/crudLogisticActions";
 const styles = theme => ({
   root: {
@@ -110,6 +112,8 @@ class GererArticle extends React.Component {
     super(props);
     this.state = {
       activeStep: 0,
+      articleChoisi: false,
+      errorMsg: "",
       steps: [
         { label: "Choisir l'article", icon: "search" },
         { label: "Données initiales", icon: "perm_identity" },
@@ -132,7 +136,8 @@ class GererArticle extends React.Component {
   };
 
   changeStep = (event, activeStep) => {
-    this.setState({ activeStep });
+    if (this.state.articleChoisi) this.setState({ activeStep });
+    else this.setState({ errorMsg: "Veuillez Choisir un article d'abord !" });
   };
 
   handleChange = event => {
@@ -162,8 +167,14 @@ class GererArticle extends React.Component {
     }
   };
 
-  handleSelect = value => () => {
-    console.log(value);
+  handleSelect = filterByDesignations => value => () => {
+    let route = filterByDesignations ? "findByDesignation" : "findByCode";
+    let url = `${route}/${value}`;
+    this.props.fetchArticle(url);
+    this.setState({ activeStep: 1, articleChoisi: true });
+    // this.changeStep(null, 1);
+
+    //
   };
 
   handleValeursChange = event => {
@@ -196,6 +207,13 @@ class GererArticle extends React.Component {
   getStepContent = stepIndex => {
     const classes = this.props.classes;
     const { codes, designations } = this.props.articlesForSuggestion;
+    if (this.props.loading)
+      return (
+        <center>
+          <CircularProgress size={24} className={classes.buttonProgress} />
+        </center>
+      );
+
     switch (stepIndex) {
       case 0:
         return (
@@ -203,59 +221,97 @@ class GererArticle extends React.Component {
             handleSelect={this.handleSelect}
             codes={codes}
             designations={designations}
+            loading={this.props.loading}
           />
         );
       case 1:
         return (
           <Initiale
             handleChange={this.handleChange}
-            state={this.state}
+            data={this.state.data}
+            loading={this.props.loading}
             // designations={this.props.designations}
             // handleSubmitInitial={this.handleSubmitInitial}
             classes={classes}
-            handleDateChange={this.handleDateChange}
           />
         );
       case 2:
         return (
           <Base
             handleChange={this.handleChange}
-            // state={this.state}
+            data={this.state.data}
             // designations={this.props.designations}
             // handleSubmitBase={this.handleSubmitBase}
             // handleBack={this.handleBack}
             classes={classes}
             // fetchCategorie={this.fetchCategorie}
+            loading={this.props.loading}
             handleValeursChange={this.handleValeursChange}
           />
         );
       case 3:
         return (
           <Stockage
-          // handleChange={this.handleChange}
-          // state={this.state}
-          // handleSubmitStockage={this.handleSubmitStockage}
-          // handleBack={this.handleBack}
-          // classes={classes}
+            handleChange={this.handleChange}
+            data={this.state.data}
+            // handleSubmitStockage={this.handleSubmitStockage}
+            // handleBack={this.handleBack}
+            classes={classes}
           />
         );
       default:
         return (
           <Commerciale
-          // loading={this.props.loading}
-          // handleChange={this.handleChange}
-          // state={this.state}
-          // handleSubmitCommerciale={this.handleSubmitCommerciale}
-          // handleBack={this.handleBack}
-          // classes={classes}
+            loading={this.props.loading}
+            handleChange={this.handleChange}
+            data={this.state.data}
+            // handleSubmitCommerciale={this.handleSubmitCommerciale}
+            // handleBack={this.handleBack}
+            classes={classes}
           />
         );
     }
   };
 
+  componentWillReceiveProps(nextProps) {
+    const { loading, articleInfo } = nextProps;
+
+    // let caracteristiques = [];
+    // try {
+    //   const categorie = nextProps.categorie.toObject();
+
+    //   const articlesMetaData = categorie.articlesMetaData.toArray();
+    //   articlesMetaData.map((caracteristique, idx) => {
+    //     caracteristique = caracteristique.toObject();
+    //     caracteristiques.push({
+    //       nom: caracteristique.nom,
+    //       limite: caracteristique.limite,
+    //       obligatoire: caracteristique.obligatoire,
+    //       longueur: caracteristique.longueur
+    //     });
+    //   });
+    //   this.setState({
+    //     data: {
+    //       ...this.state.data,
+    //       caracteristiques: caracteristiques
+    //     }
+    //   });
+    // }
+
+    if (articleInfo) {
+      // console.log(articleInfo.article);
+      this.setState({
+        data: articleInfo.article,
+        categorie: articleInfo.categorie
+        // activeStep: 1,
+        // articleChoisi: true
+      });
+    }
+  }
+
   render() {
-    const { activeStep } = this.state;
-    const { classes, articlesForSuggestion } = this.props;
+    const { activeStep, errorMsg } = this.state;
+    const { classes, closeNotif, notifMsg } = this.props;
     const elements = (
       <div className={classes.submitdiv}>
         {/* <Grid item sm={2} lg={2}> */}
@@ -287,12 +343,26 @@ class GererArticle extends React.Component {
     return (
       <div>
         <PageTitle
-          title="Créer Article"
-          pathname="/Logistique/Données de base/Créer Article"
+          title="Gérer Article"
+          pathname="/Logistique/Données de base/Gérer Article"
           elements={elements}
         />
 
         <Card>
+          <Notification
+            close={() => closeNotif()}
+            message={notifMsg}
+            branch=""
+          />
+
+          <Notification
+            close={() => {
+              this.setState({ errorMsg: "" });
+              closeNotif();
+            }}
+            message={errorMsg}
+            branch=""
+          />
           <div className={classes.root}>
             <AppBar color="default" position="static">
               <Tabs
@@ -334,6 +404,7 @@ const mapDispatchToProps = dispatch => ({
     fetchArticlesForSuggestion,
     dispatch
   ),
+  fetchArticle: bindActionCreators(fetchArticle, dispatch),
   closeNotif: () => dispatch(closeNotifAction())
 });
 
@@ -341,6 +412,7 @@ const mapStateToProps = state => {
   return {
     notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
     loading: state.get("crudLogisticReducer").get("loading"),
+    articleInfo: state.get("crudLogisticReducer").get("article"),
     articlesForSuggestion: state
       .get("crudLogisticReducer")
       .get("articlesForSuggestion")

@@ -33,3 +33,7 @@ export const closeNotifAction = branch => ({
   branch,
   type: notification.CLOSE_NOTIF
 });
+
+export const startLoading = () => ({
+  type: types.START_LOADING
+});

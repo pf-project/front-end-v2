@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Helmet } from "react-helmet";
 import brand from "enl-api/dummy/brand";
-import { SourceReader, PapperBlock } from "enl-components";
+import { SourceReader, PapperBlock, PageTitle } from "enl-components";
 import { injectIntl, intlShape } from "react-intl";
 import messages from "./messages";
 import Articles from "./types/Articles";
@@ -13,14 +13,10 @@ class ListerArticles extends Component {
     const { intl } = this.props;
     return (
       <div>
-        <Helmet>
-          <title>{title}</title>
-          <meta name="description" content={description} />
-          <meta property="og:title" content={title} />
-          <meta property="og:description" content={description} />
-          <meta property="twitter:title" content={title} />
-          <meta property="twitter:description" content={description} />
-        </Helmet>
+        <PageTitle
+          title="Lister Article"
+          pathname="/Logistique/Données de base/Lister Article"
+        />
         <div>
           <Articles />
         </div>

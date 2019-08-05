@@ -87,15 +87,16 @@ const styles = theme => ({
 // const handleChange = event => console.log(event.target.value);
 
 function ChoisirArticle(props) {
-  const { classes, codes, designations, handleSelect } = props;
+  const { classes, codes, designations, handleSelect, loading } = props;
   const [filterByDesignation, setFilter] = useState(false);
-  if (codes && designations) {
+  if (!loading) {
     const codesSuggestions = [];
     const designationsSuggestions = [];
-    for (let index = 0; index < codes.length; index++) {
-      codesSuggestions.push({ label: codes[index] });
-      designationsSuggestions.push({ label: designations[index] });
-    }
+    if (codes && designations)
+      for (let index = 0; index < codes.length; index++) {
+        codesSuggestions.push({ label: codes[index] });
+        designationsSuggestions.push({ label: designations[index] });
+      }
     function getSuggestions(inputValue) {
       let count = 0;
       let suggestions = filterByDesignation
@@ -170,7 +171,9 @@ function ChoisirArticle(props) {
                       suggestion,
                       index,
                       itemProps: getItemProps({
-                        onClick: handleSelect(suggestion.label),
+                        onClick: handleSelect(filterByDesignation)(
+                          suggestion.label
+                        ),
                         item: suggestion.label
                       }),
                       highlightedIndex,

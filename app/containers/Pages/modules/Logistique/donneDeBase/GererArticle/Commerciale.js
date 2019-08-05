@@ -27,13 +27,13 @@ import FormControl from "@material-ui/core/FormControl";
 
 export default function Commerciale({
   handleChange,
-  state,
+  data,
   handleSubmitCommerciale,
   handleBack,
   classes,
   loading
 }) {
-  const { designations } = state;
+  const { designations } = data;
   // const [loading, setLoading] = React.useState(false);
   // const handleClickVariant = SnackBar({
   //   message: "L'article a été créer avec succes",
@@ -60,7 +60,7 @@ export default function Commerciale({
                 }}
                 onChange={handleChange}
                 name="code"
-                value={state.data.code}
+                value={data.code}
                 label="Code d'article *"
                 id="#codearticle"
               />
@@ -73,7 +73,7 @@ export default function Commerciale({
                 name="designation"
                 validators={["required", "maxStringLength:25"]}
                 errorMessages={["Ce champ est obligatoire", "maximum 25 char"]}
-                value={state.data.designation}
+                value={data.designation}
                 label="Désignation *"
                 id="#designation"
               />
@@ -82,7 +82,7 @@ export default function Commerciale({
             <Grid item xs={4}>
               <TextValidator
                 className={classes.field}
-                value={state.data.categorie}
+                value={data.categorie}
                 onChange={handleChange}
                 name="categorie"
                 label="Catégorie d'article *"
@@ -107,7 +107,7 @@ export default function Commerciale({
             <FormGroup>
               <SelectValidator
                 className={classes.field}
-                value={state.data.unite_de_quantite_achat}
+                value={data.unite_de_quantite_achat}
                 onChange={handleChange}
                 name="unite_de_quantite_achat"
                 label="Unité de quantité d'achat *"
@@ -129,7 +129,7 @@ export default function Commerciale({
                 className={classes.field}
                 onChange={handleChange}
                 name="prix_moyen_pendere"
-                value={state.data.prix_moyen_pendere}
+                value={data.prix_moyen_pendere}
                 label="Prix moyen pondéré *"
                 validators={[
                   "required",
@@ -154,7 +154,7 @@ export default function Commerciale({
                 onChange={handleChange}
                 className={classes.field}
                 name="prix_de_vente_de_base_HT"
-                value={state.data.prix_de_vente_de_base_HT}
+                value={data.prix_de_vente_de_base_HT}
                 label="Prix de vente de base HT *"
                 validators={[
                   "required",
@@ -170,7 +170,7 @@ export default function Commerciale({
           </Grid>
         </Grid>
       </Grid>
-      {state.data.utilite === "MRCH-Achat-pour-vente" && (
+      {data.utilite === "MRCH-Achat-pour-vente" && (
         <div>
           <Toolbar className={classes.toolbar}>
             <div className={classes.title}>
@@ -184,7 +184,7 @@ export default function Commerciale({
                   onChange={handleChange}
                   className={classes.field}
                   name="prix_de_vente_de_base_TTC"
-                  value={state.data.prix_de_vente_de_base_TTC}
+                  value={data.prix_de_vente_de_base_TTC}
                   label="Prix de vente de base TTC *"
                   validators={[
                     "required",
@@ -204,7 +204,7 @@ export default function Commerciale({
               <Grid item xs={6}>
                 <FormGroup>
                   <SelectValidator
-                    value={state.data.taux_tva}
+                    value={data.taux_tva}
                     className={classes.field}
                     onChange={handleChange}
                     name="taux_tva"
@@ -224,7 +224,7 @@ export default function Commerciale({
               <Grid item xs={6}>
                 <FormGroup>
                   <SelectValidator
-                    value={state.data.unite_de_vente}
+                    value={data.unite_de_vente}
                     onChange={handleChange}
                     className={classes.field}
                     name="unite_de_vente"

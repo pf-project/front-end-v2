@@ -42,16 +42,17 @@ class Base extends React.Component {
     const {
       handleChange,
       handleSubmitBase,
-      state,
+      data,
       handleBack,
       classes,
       handleValeursChange,
-      designations
+      designations,
+      loading
     } = this.props;
     const categorie = this.props.categorie.toObject();
 
-    if (categorie.articlesMetaData) {
-      const articlesMetaData = categorie.articlesMetaData.toArray();
+    if (!loading) {
+      // const articlesMetaData = categorie.articlesMetaData.toArray();
       return (
         <Grid container spacing={1} className={classes.grid} direction="column">
           {/* <ValidatorForm onSubmit={handleSubmitBase} autoComplete="off"> */}
@@ -67,7 +68,7 @@ class Base extends React.Component {
                     }}
                     onChange={handleChange}
                     name="code"
-                    value={state.data.code}
+                    value={data.code}
                     label="Code d'article *"
                     id="#codearticle"
                   />
@@ -80,7 +81,7 @@ class Base extends React.Component {
                     name="designation"
                     validators={["required", "maxStringLength:25"]}
                     errorMessages={["champ obligatoire", "maximum 25 char"]}
-                    value={state.data.designation}
+                    value={data.designation}
                     label="Désignation *"
                     id="#designation"
                   />
@@ -89,7 +90,7 @@ class Base extends React.Component {
                 <Grid item xs={4}>
                   <TextValidator
                     className={classes.field}
-                    value={state.data.categorie}
+                    value={data.categorie}
                     onChange={handleChange}
                     name="categorie"
                     label="Catégorie d'article *"
@@ -118,7 +119,7 @@ class Base extends React.Component {
                     name="ancienCode"
                     // validators={["required", "maxStringLength:25"]}
                     // errorMessages={["champ obligatoire", "maximum 25 char"]}
-                    value={state.data.ancienCode}
+                    value={data.ancienCode}
                     label="Ancien code "
                     id="#ancienCode"
                   />
@@ -130,7 +131,7 @@ class Base extends React.Component {
                     name="fabriquant"
                     // validators={["required", "maxStringLength:25"]}
                     // errorMessages={["champ obligatoire", "maximum 25 char"]}
-                    value={state.data.fabriquant}
+                    value={data.fabriquant}
                     label="Fabriquant"
                     id="#fabriquant"
                   />
@@ -152,7 +153,7 @@ class Base extends React.Component {
                     //   "Ce champ doit étre un nombre",
                     //   "maximum 6 taille du nombre"
                     // ]}
-                    value={state.data.note}
+                    value={data.note}
                     label="Note"
                     id="#note"
                   />
@@ -168,7 +169,7 @@ class Base extends React.Component {
                     //   "Ce champ doit étre un nombre",
                     //   "maximum 6 taille du nombre"
                     // ]}
-                    value={state.data.num_piece_fabriquuant}
+                    value={data.num_piece_fabriquuant}
                     label="N° pièce fabirquant"
                     id="#num_piece_fabriquuant"
                   />
@@ -176,7 +177,7 @@ class Base extends React.Component {
               </Grid>
             </FormGroup>
           </Grid>
-          <FormGroup>
+          {/* <FormGroup>
             <Paper
               className={{
                 width: "100%",
@@ -285,7 +286,7 @@ class Base extends React.Component {
                                       validators={validators}
                                       errorMessages={errorMessages}
                                       value={
-                                        state.data.caracteristiques[idx].valeur
+                                        data.caracteristiques[idx].valeur
                                       }
                                     />
                                   </Grid>
@@ -318,14 +319,8 @@ class Base extends React.Component {
                 </Table>
               )}{" "}
             </Paper>
-          </FormGroup>
+          </FormGroup>*/}
         </Grid>
-      );
-    } else {
-      return (
-        <center>
-          <CircularProgress size={24} className={classes.buttonProgress} />
-        </center>
       );
     }
   }

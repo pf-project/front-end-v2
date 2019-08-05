@@ -104,11 +104,7 @@ class ModifierUtilisateur extends Component {
             </Paper>
           </Grid>
         </Grid>
-        <ValidatorForm
-          ref="form"
-          onSubmit={this.handleSubmit}
-          onError={errors => console.log(errors)}
-        >
+        <ValidatorForm ref="form" onSubmit={this.handleSubmit}>
           <section className={css.bodyForm}>
             <TextValidator
               inputProps={{ readOnly: true }}

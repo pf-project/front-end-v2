@@ -24,7 +24,7 @@ import {
   closeNotifAction
 } from "../../reducers/crudLogisticActions";
 import { ValidatorForm } from "react-material-ui-form-validator";
-import { BreadCrumb } from "enl-components";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { PageTitle } from "enl-components";
 import Grid from "@material-ui/core/Grid";
 
@@ -218,7 +218,14 @@ class CreerArticle extends React.Component {
   };
 
   getStepContent = stepIndex => {
-    const classes = this.props.classes;
+    const { classes, loading } = this.props;
+    if (loading) {
+      return (
+        <center>
+          <CircularProgress size={24} className={classes.buttonProgress} />
+        </center>
+      );
+    }
     switch (stepIndex) {
       case 0:
         return (

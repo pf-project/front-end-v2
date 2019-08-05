@@ -2,7 +2,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import Chip from "@material-ui/core/Chip";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import MUIDataTable from "mui-datatables";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -40,7 +40,13 @@ class Articles extends React.Component {
     this.props.fetchdata();
   }
   render() {
-    const { classes, dataTable, closeNotif, messageNotif } = this.props;
+    const {
+      classes,
+      dataTable,
+      closeNotif,
+      messageNotif,
+      loading
+    } = this.props;
     let articles = [];
     if (dataTable)
       dataTable.toArray().map(element => {
@@ -57,19 +63,25 @@ class Articles extends React.Component {
           article
         ]);
       });
-
     return (
       <div className={classes.table}>
         <Notification close={() => closeNotif()} message={messageNotif} />
-        <MUIDataTable
-          key={Math.random()}
-          title="Liste des articles"
-          data={articles}
-          columns={Columns}
-          options={Options}
-          fixedHeader
-          resizableColumns
-        />
+
+        {loading ? (
+          <center>
+            <CircularProgress size={24} className={classes.buttonProgress} />
+          </center>
+        ) : (
+          <MUIDataTable
+            key={Math.random()}
+            title="Liste des articles"
+            data={articles}
+            columns={Columns}
+            options={Options}
+            fixedHeader
+            resizableColumns
+          />
+        )}
       </div>
     );
   }
@@ -85,6 +97,7 @@ Articles.propTypes = {
 const reducer = "crudTbArticlesReducer";
 const mapStateToProps = state => ({
   dataTable: state.get(reducer).get("dataTable"),
+  loading: state.get(reducer).get("loading"),
   messageNotif: state.get(reducer).get("notifMsg")
 });
 
