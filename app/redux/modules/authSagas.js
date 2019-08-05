@@ -92,7 +92,6 @@ function* logoutSaga() {
     yield put(logoutSuccess());
     // Redirect to home
     yield history.replace("/");
-    // console.log("lougout saga ");
   } catch (error) {
     yield put(logoutFailure(error));
   }

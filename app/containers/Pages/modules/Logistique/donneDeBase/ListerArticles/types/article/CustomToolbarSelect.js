@@ -7,7 +7,6 @@ import BlockIcon from "@material-ui/icons/Block";
 import { withStyles } from "@material-ui/core/styles";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { blockuser, deleteUser } from "../../reducers/crudTbActions";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import ModifierUtilisateur from "./ModifierUtilisateur";
@@ -18,12 +17,7 @@ import { FloatingPanel, Notification } from "enl-components";
 
 import { injectIntl, intlShape } from "react-intl";
 
-import {
-  //addAction,
-  openEditAction,
-  closeEditAction,
-  closeNotifAction
-} from "../../reducers/crudTbActions";
+import { closeNotifAction, deleteArticle } from "../../reducers/crudTbActions";
 
 const defaultToolbarSelectStyles = {
   iconButton: {},
@@ -55,61 +49,15 @@ class CustomToolbarSelect extends React.Component {
     this.props.setSelectedRows(nextSelectedRows);
   };
 
-  handleClickBlockSelected = () => {
-    this.props.selectedRows.data.map(row => {
-      const id = this.props.displayData[row.index].data[0];
-      this.props.blockuser(id);
-    });
-  };
-
   delete = () => {
     this.props.selectedRows.data.map(row => {
-      const id = this.props.displayData[row.index].data[0];
-      this.props.deleteUser(id);
+      const code = this.props.displayData[row.index].data[0];
+      this.props.deleteArticle(code);
     });
-  };
-  handleClick = () => {
-    this.props.openEditAction();
   };
 
   render() {
-    const {
-      classes,
-      openEditForm,
-      closeEditAction,
-      closeNotif,
-      notifMsg,
-      intl
-    } = this.props;
-    let edit;
-    if (this.props.selectedRows.data.length == 1) {
-      let index = this.props.selectedRows.data[0].index;
-      let data = this.props.displayData[index].data;
-      edit = (
-        <>
-          <Tooltip title={"Modifier"}>
-            <IconButton
-              className={classes.iconButton}
-              onClick={this.handleClick}
-            >
-              <EditIcon />
-            </IconButton>
-          </Tooltip>
-          <Notification
-            close={() => closeNotif()}
-            message={notifMsg}
-            branch=""
-          />
-          <FloatingPanel
-            title={""}
-            openForm={openEditForm}
-            closeForm={closeEditAction}
-          >
-            <ModifierUtilisateur data={data} />
-          </FloatingPanel>
-        </>
-      );
-    }
+    const { classes, closeNotif, notifMsg, intl } = this.props;
 
     return (
       <div className={classes.iconContainer}>
@@ -118,43 +66,24 @@ class CustomToolbarSelect extends React.Component {
             <DeleteIcon />
           </IconButton>
         </Tooltip>
-
-        <Tooltip title="Bloquer/Débloquer">
-          <IconButton
-            className={classes.iconButton}
-            onClick={this.handleClickBlockSelected}
-          >
-            <BlockIcon className={classes.icon} />
-          </IconButton>
-        </Tooltip>
-        {edit}
       </div>
     );
   }
 }
 
 CustomToolbarSelect.propTypes = {
-  openEditForm: PropTypes.bool.isRequired,
-  //add: PropTypes.func.isRequired,
-  openEditAction: PropTypes.func.isRequired,
-  closeEditAction: PropTypes.func.isRequired,
   closeNotif: PropTypes.func.isRequired,
   notifMsg: PropTypes.string.isRequired,
   intl: intlShape.isRequired
 };
 
-const reducer = "crudTbReducer";
+const reducer = "crudTbArticlesReducer";
 const mapStateToProps = state => ({
-  data: state.get(reducer),
-  openEditForm: state.get(reducer).get("openEditForm"),
   notifMsg: state.get(reducer).get("notifMsg")
 });
 
 const mapDispatchToProps = dispatch => ({
-  blockuser: bindActionCreators(blockuser, dispatch),
-  deleteUser: bindActionCreators(deleteUser, dispatch),
-  openEditAction: () => dispatch(openEditAction),
-  closeEditAction: () => dispatch(closeEditAction),
+  deleteArticle: bindActionCreators(deleteArticle, dispatch),
   closeNotif: () => dispatch(closeNotifAction)
 });
 

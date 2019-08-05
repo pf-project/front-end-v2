@@ -81,6 +81,7 @@ function* fetchCategorieDesignationsSaga() {
 }
 
 function* addArticleSaga(payload) {
+  console.log(payload.payload);
   try {
     yield put(startLoading());
     yield fetchAPI({

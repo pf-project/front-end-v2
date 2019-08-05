@@ -64,7 +64,13 @@ export default function BaseModal({ value }) {
           </Typography>
         </Grid>
       </Grid>
-      <Divider className={classes.dividerMargin} />
+      <Grid container className={classes.root} xs={12} spacing={2}>
+        <Grid item xs={6}>
+          <Typography color="primary" variant="subtitle1" gutterBottom>
+            {"Données de base :  "}
+          </Typography>
+        </Grid>
+      </Grid>
       <Grid container className={classes.root} xs={12} spacing={2}>
         {value.ancienCode && (
           <Grid item xs={4}>
@@ -102,28 +108,34 @@ export default function BaseModal({ value }) {
           </Grid>
         )}
       </Grid>
-      <Divider className={classes.dividerMargin} />
       {value.caracteristiques.size && (
-        <div className={classes.rootTable}>
-          <Table className={classes.stripped}>
-            <TableHead>
-              <TableRow>
-                <TableCell>Nom</TableCell>
-                <TableCell>Valeur</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {value.caracteristiques.toArray().map((row, i) => {
-                let myRow = row.toObject();
-                return [
-                  <TableRow key={i}>
-                    <TableCell>{myRow.nom}</TableCell>
-                    <TableCell>{myRow.valeur}</TableCell>
-                  </TableRow>
-                ];
-              })}
-            </TableBody>
-          </Table>
+        <div>
+          <div className={classes.rootTable}>
+            <Grid item xs={6}>
+              <Typography color="primary" variant="subtitle1" gutterBottom>
+                {"Valeurs :  "}
+              </Typography>
+            </Grid>
+            <Table className={classes.stripped}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Nom</TableCell>
+                  <TableCell>Valeur</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {value.caracteristiques.toArray().map((row, i) => {
+                  let myRow = row.toObject();
+                  return [
+                    <TableRow key={i}>
+                      <TableCell>{myRow.nom}</TableCell>
+                      <TableCell>{myRow.valeur}</TableCell>
+                    </TableRow>
+                  ];
+                })}
+              </TableBody>
+            </Table>
+          </div>
         </div>
       )}
     </div>

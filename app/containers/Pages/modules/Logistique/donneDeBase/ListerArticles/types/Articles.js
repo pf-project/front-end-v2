@@ -32,9 +32,7 @@ const styles = theme => ({
 });
 
 class Articles extends React.Component {
-  state = {
-    users: []
-  };
+  state = {};
 
   componentWillMount() {
     this.props.fetchdata();
@@ -52,7 +50,6 @@ class Articles extends React.Component {
       dataTable.toArray().map(element => {
         let article = element.toObject();
         articles.push([
-          article.id,
           article.code,
           article.designation,
           article.categorie,
@@ -74,11 +71,11 @@ class Articles extends React.Component {
         ) : (
           <MUIDataTable
             key={Math.random()}
-            title="Liste des articles"
+            title=""
             data={articles}
             columns={Columns}
             options={Options}
-            fixedHeader
+            fixedHeader={false}
             resizableColumns
           />
         )}

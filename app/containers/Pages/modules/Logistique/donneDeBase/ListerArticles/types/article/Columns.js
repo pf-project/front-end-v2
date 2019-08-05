@@ -26,7 +26,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 class More extends React.Component {
   state = {
-    open: false
+    open: false,
+    fullScreen: false
   };
 
   handleOpen = () => {
@@ -37,9 +38,14 @@ class More extends React.Component {
     this.setState({ open: false });
   };
 
+  handleFullscreen = () => {
+    let fullScreen = !this.state.fullScreen;
+    this.setState({ fullScreen });
+  };
+
   render() {
     const { classes, value } = this.props;
-    const { open } = this.state;
+    const { open, fullScreen } = this.state;
     let modal;
     switch (this.props.modal) {
       case "base":
@@ -60,8 +66,9 @@ class More extends React.Component {
         </IconButton>
 
         <Dialog
-          // maxWidth={"md"}
-          fullScreen={true}
+          maxWidth={"md"}
+          fullWidth={!fullScreen}
+          fullScreen={fullScreen}
           open={open}
           keepMounted
           onClose={this.handleClose}
@@ -69,19 +76,41 @@ class More extends React.Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <AppBar className={classes.appBar}>
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                onClick={this.handleClose}
-                aria-label="Fermer"
-              >
-                <CloseIcon />
-              </IconButton>
-            </Toolbar>
-          </AppBar>
+          {fullScreen && (
+            <AppBar className={classes.appBar}>
+              <Toolbar>
+                <IconButton
+                  color="inherit"
+                  onClick={this.handleClose}
+                  aria-label="Fermer"
+                >
+                  <CloseIcon />
+                </IconButton>
+                <IconButton
+                  color="inherit"
+                  onClick={this.handleFullscreen}
+                  aria-label="FullScreen"
+                >
+                  <i class="material-icons">minimize</i>
+                </IconButton>
+              </Toolbar>
+            </AppBar>
+          )}
           <DialogTitle id="alert-dialog-title">
-            {"Use Google's location service?"}
+            <IconButton
+              color="inherit"
+              onClick={this.handleClose}
+              aria-label="Fermer"
+            >
+              <CloseIcon />
+            </IconButton>
+            <IconButton
+              color="inherit"
+              onClick={this.handleFullscreen}
+              aria-label="FullScreen"
+            >
+              <i class="material-icons">fullscreen</i>
+            </IconButton>
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
@@ -120,15 +149,6 @@ const MoreWithModal = withStyles(null)(MoreMapped);
 
 export default [
   {
-    name: "Identifiant",
-    label: "Identifiant",
-    options: {
-      filter: false,
-      sort: true,
-      display: false
-    }
-  },
-  {
     name: "code",
     label: "Code",
     options: {
@@ -148,7 +168,7 @@ export default [
     name: "categorie",
     label: "Catégorie",
     options: {
-      filter: false,
+      filter: true,
       sort: true
     }
   },
@@ -156,7 +176,7 @@ export default [
     name: "utilite",
     label: "Utilité",
     options: {
-      filter: false,
+      filter: true,
       sort: true
     }
   },

@@ -98,7 +98,8 @@ export default function Initiale({
       <FormGroup>
         <TextField
           name="findvalidite"
-          handleChange={handleChange}
+          value={state.data.findvalidite}
+          onChange={handleChange}
           className={classes.initialeFields}
           label="Fin de validité"
           type="date"

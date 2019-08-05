@@ -1,6 +1,5 @@
 import React from "react";
 import CustomToolbarSelect from "./CustomToolbarSelect";
-import CustomToolbar from "./CustomToolbar";
 
 export default {
   textLabels: {
@@ -35,19 +34,16 @@ export default {
     }
   },
   filterType: "checkbox",
-  // showResponsive: true,
+  showResponsive: true,
   responsive: "scroll",
   print: false,
-  download: false
-  // filterList: ["Prévilège"],
-  // customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
-  //   <CustomToolbarSelect
-  //     selectedRows={selectedRows}
-  //     displayData={displayData}
-  //     setSelectedRows={setSelectedRows}
-  //   />
-  // ),
-  // customToolbar: () => {
-  //   return <CustomToolbar />;
-  // }
+  download: false,
+  filterList: ["categorie", "utilite"],
+  customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
+    <CustomToolbarSelect
+      selectedRows={selectedRows}
+      displayData={displayData}
+      setSelectedRows={setSelectedRows}
+    />
+  )
 };

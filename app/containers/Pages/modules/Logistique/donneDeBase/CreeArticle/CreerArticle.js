@@ -155,11 +155,11 @@ class CreerArticle extends React.Component {
     let data = this.state.data;
     let prix_de_vente_de_base_HT = parseFloat(
       data.prix_de_vente_de_base_HT
-    ).toFixed(2);
-    let prix_moyen_pendere = parseFloat(data.prix_moyen_pendere).toFixed(2);
+    ).toFixed(3);
+    let prix_moyen_pendere = parseFloat(data.prix_moyen_pendere).toFixed(3);
     let prix_de_vente_de_base_TTC = parseFloat(
       data.prix_de_vente_de_base_TTC
-    ).toFixed(2);
+    ).toFixed(3);
     this.props.addArticle(data);
     this.handleNext();
   };
@@ -352,36 +352,41 @@ class CreerArticle extends React.Component {
     const { classes, loading, closeNotif, notifMsg } = this.props;
     const { activeStep } = this.state;
     const submitter = this.getSubmitter();
-    const elements = (
-      <div className={classes.submitdiv}>
-        {/* <Grid item sm={2} lg={2}> */}
-        <Button
-          // onClick={submitter}
-          className={classes.button}
-          variant="contained"
-          color="primary"
-          disabled={activeStep === 0}
-          onClick={this.handleBack}
-          className={classes.backButton}
-        >
-          Précedent
-        </Button>
-        {/* </Grid> */}
-        {/* <Grid item sm={2} lg={2}> */}
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="primary"
-          type="submit"
-          form="addArticle"
-        >
-          {this.state.activeStep === this.state.steps.length - 1
-            ? "Sauvegarder"
-            : "Suivant"}
-        </Button>
-        {/* </Grid> */}
-      </div>
-    );
+    const elements =
+      this.state.activeStep !== 4 ? (
+        <div className={classes.submitdiv}>
+          {/* <Grid item sm={2} lg={2}> */}
+          <Button
+            // onClick={submitter}
+            className={classes.button}
+            variant="contained"
+            color="primary"
+            disabled={activeStep === 0}
+            onClick={this.handleBack}
+            className={classes.backButton}
+          >
+            Précedent
+          </Button>
+          {/* </Grid> */}
+          {/* <Grid item sm={2} lg={2}> */}
+
+          <Button
+            className={classes.button}
+            variant="contained"
+            color="primary"
+            type="submit"
+            form="addArticle"
+          >
+            {this.state.activeStep === this.state.steps.length - 1
+              ? "Sauvegarder"
+              : "Suivant"}
+          </Button>
+
+          {/* </Grid> */}
+        </div>
+      ) : (
+        <div />
+      );
 
     return (
       <div>

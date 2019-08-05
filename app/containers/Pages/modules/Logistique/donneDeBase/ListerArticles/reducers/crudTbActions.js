@@ -15,19 +15,19 @@ export const fetchActionFailure = (payload, branch) => ({
   payload
 });
 
-// export const deleteUser = payload => ({
-//   type: types.DELETE_USER_REQUEST,
-//   payload
-// });
-// export const deleteUserFailure = payload => ({
-//   type: types.DELETE_USER_FAILURE,
-//   payload
-// });
+export const deleteArticle = payload => ({
+  type: types.DELETE_ARTICLE_REQUEST,
+  payload
+});
+export const deleteArticleFailure = payload => ({
+  type: types.DELETE_ARTICLE_FAILURE,
+  payload
+});
 
-// export const userDeleted = payload => ({
-//   type: types.DELETE_USER_SUCCESS,
-//   payload
-// });
+export const articleDeleted = payload => ({
+  type: types.DELETE_ARTICLE_SUCCESS,
+  payload
+});
 
 export const closeNotifAction = branch => ({
   branch,
