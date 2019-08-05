@@ -4,16 +4,12 @@ import { fetchAPI } from "../../../../../../../serverActions";
 import {
   fetchAction,
   fetchActionFailure,
-  startLoading
-  // deleteUser,
-  // deleteUserFailure,
-  // userDeleted,
+  startLoading,
+  deleteArticle,
+  deleteArticleFailure,
+  articleDeleted
 } from "./crudTbActions";
-import {
-  FETCH_DATA_REQUEST
-
-  // DELETE_USER_REQUEST
-} from "./crudTbConstants";
+import { FETCH_DATA_REQUEST, DELETE_ARTICLE_REQUEST } from "./crudTbConstants";
 
 const erreur = "Erreur lors de l'action";
 function* fetchDataSaga() {
@@ -30,18 +26,20 @@ function* fetchDataSaga() {
   }
 }
 
-// function* deleteUserSaga(payload) {
-//   try {
-//     const data = yield fetchAPI({
-//       method: "DELETE",
-//       url: "/api/user/archive/" + payload.payload,
-//       token: window.localStorage.getItem("token")
-//     });
-//     yield put(userDeleted(payload));
-//   } catch (error) {
-//     yield put(deleteUserFailure(erreur));
-//   }
-// }
+function* deleteArticleSaga(payload) {
+  console.log(payload);
+  try {
+    const data = yield fetchAPI({
+      method: "DELETE",
+      url: "/api/logistic/article/archive/" + payload.payload,
+      token: window.localStorage.getItem("token")
+    });
+    console.log(data);
+    yield put(articleDeleted(payload));
+  } catch (error) {
+    yield put(deleteArticleFailure(erreur));
+  }
+}
 
 //= ====================================
 //  WATCHERS
@@ -49,9 +47,9 @@ function* fetchDataSaga() {
 
 function* crudTbArticlesRootSaga() {
   yield all([
-    takeEvery(FETCH_DATA_REQUEST, fetchDataSaga)
+    takeEvery(FETCH_DATA_REQUEST, fetchDataSaga),
 
-    // takeEvery(DELETE_USER_REQUEST, deleteUserSaga)
+    takeEvery(DELETE_ARTICLE_REQUEST, deleteArticleSaga)
   ]);
 }
 

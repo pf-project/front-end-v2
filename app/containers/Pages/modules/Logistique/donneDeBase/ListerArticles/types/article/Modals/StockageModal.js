@@ -60,7 +60,13 @@ export default function StockageModal({ value }) {
           </Typography>
         </Grid>
       </Grid>
-      <Divider className={classes.dividerMargin} />
+      <Grid container className={classes.root} xs={12} spacing={2}>
+        <Grid item xs={6}>
+          <Typography color="primary" variant="subtitle1" gutterBottom>
+            {"Informations de stockage :  "}
+          </Typography>
+        </Grid>
+      </Grid>
       <Grid container className={classes.root} xs={12} spacing={2}>
         {value.unite_de_quantite_de_base && (
           <Grid item xs={4}>

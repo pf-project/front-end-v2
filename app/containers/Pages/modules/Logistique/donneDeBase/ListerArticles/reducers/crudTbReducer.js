@@ -4,10 +4,9 @@ import { CLOSE_NOTIF } from "enl-redux/constants/notifConstants";
 import {
   FETCH_DATA_SUCCESS,
   FETCH_DATA_FAILURE,
-  START_LOADING
-
-  // DELETE_USER_SUCCESS,
-  // DELETE_USER_FAILURE,
+  START_LOADING,
+  DELETE_ARTICLE_SUCCESS,
+  DELETE_ARTICLE_FAILURE
 } from "./crudTbConstants";
 
 const initialState = {
@@ -56,20 +55,21 @@ export default function crudTbArticlesReducer(
         mutableState.set("notifMsg", action.payload).set("loading", false);
       });
 
-    // case DELETE_USER_SUCCESS:
-    //   return state.withMutations(mutableState => {
-    //     let notifMsg;
-    //     mutableState
-    //       .update("dataTable", dataTable =>
-    //         dataTable.filter(user => user.get("id") !== action.payload.payload)
-    //       )
-    //       .set("notifMsg", "l'utilisateur a été supprimé");
-    //   });
-    // case DELETE_USER_FAILURE:
-    //   return state.withMutations(mutableState => {
-    //     const dataTable = fromJS(action.users);
-    //     mutableState.set("notifMsg", action.payload);
-    //   });
+    case DELETE_ARTICLE_SUCCESS:
+      return state.withMutations(mutableState => {
+        mutableState
+          .update("dataTable", dataTable =>
+            dataTable.filter(
+              article => article.get("code") !== action.payload.payload
+            )
+          )
+          .set("notifMsg", "l'article a été supprimé");
+      });
+    case DELETE_ARTICLE_FAILURE:
+      return state.withMutations(mutableState => {
+        const dataTable = fromJS(action.users);
+        mutableState.set("notifMsg", "Erreur lors de l'action");
+      });
 
     case CLOSE_NOTIF:
       return state.withMutations(mutableState => {

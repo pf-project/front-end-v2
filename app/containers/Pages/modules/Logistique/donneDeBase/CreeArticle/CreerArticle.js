@@ -155,11 +155,11 @@ class CreerArticle extends React.Component {
     let data = this.state.data;
     let prix_de_vente_de_base_HT = parseFloat(
       data.prix_de_vente_de_base_HT
-    ).toFixed(2);
-    let prix_moyen_pendere = parseFloat(data.prix_moyen_pendere).toFixed(2);
+    ).toFixed(3);
+    let prix_moyen_pendere = parseFloat(data.prix_moyen_pendere).toFixed(3);
     let prix_de_vente_de_base_TTC = parseFloat(
       data.prix_de_vente_de_base_TTC
-    ).toFixed(2);
+    ).toFixed(3);
     this.props.addArticle(data);
     this.handleNext();
   };
