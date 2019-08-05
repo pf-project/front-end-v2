@@ -42,7 +42,7 @@ class Base extends React.Component {
   render() {
     const {
       handleChange,
-      handleSubmitBase,
+      caracteristiques_conditions,
       data,
       handleBack,
       classes,
@@ -50,7 +50,6 @@ class Base extends React.Component {
       designations,
       categorie
     } = this.props;
-
     const articlesMetaData = categorie.articlesMetaData;
     return (
       <Grid container spacing={1} className={classes.grid} direction="column">
@@ -197,6 +196,7 @@ class Base extends React.Component {
                 <TableBody>
                   {articlesMetaData.map((element, idx) => {
                     // element = element.toObject();
+                    // console.log(data.caracteristiques);
                     element.valeurs = element.valeurs ? element.valeurs : [];
                     if (element) {
                       let validators = [];
@@ -269,24 +269,26 @@ class Base extends React.Component {
                               <Grid container direction="row">
                                 <Grid item xs={6}>
                                   <TextValidator
-                                    className={classes.field}
+                                    className={classes.valuesFields}
                                     InputProps={{
                                       readOnly: element.limite
                                     }}
-                                    onChange={handleValeursChange}
-                                    name={idx}
+                                    onChange={handleValeursChange(idx)}
+                                    name={element.nom}
                                     type={element.type}
                                     validators={validators}
                                     errorMessages={errorMessages}
-                                    value={data.caracteristiques[idx].valeur}
+                                    value={
+                                      data.caracteristiques[idx][element.nom]
+                                    }
                                   />
                                 </Grid>
                                 {element.valeurs && element.valeurs.length > 0 && (
                                   <Grid item xs={6}>
                                     <SelectValidator
-                                      className={classes.field}
-                                      onChange={handleValeursChange}
-                                      name={idx}
+                                      className={classes.valuesFields}
+                                      oonChange={handleValeursChange(idx)}
+                                      name={element.nom}
                                       autoWidth="true"
                                       // style={{ minWidth: 15 }}
                                     >

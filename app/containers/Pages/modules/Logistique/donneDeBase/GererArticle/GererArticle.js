@@ -21,11 +21,13 @@ import { Notification } from "enl-components";
 import {
   fetchArticlesForSuggestion,
   closeNotifAction,
-  fetchArticle
+  fetchArticle,
+  updateArticle
 } from "../../reducers/crudLogisticActions";
 const styles = theme => ({
   root: {
     width: "90%",
+
     margin: "2em",
     minHeight: 500
   },
@@ -41,6 +43,9 @@ const styles = theme => ({
   },
   initialeFields: {
     width: "60%"
+  },
+  valuesFields: {
+    marginLeft: "8em"
   },
   grid: {
     flexGrow: 1
@@ -143,6 +148,7 @@ class GererArticle extends React.Component {
   handleChange = event => {
     const name = event.target.name;
     const value = event.target.value;
+    let data;
     switch (name) {
       case "controle_qualite_exige":
         this.setState({
@@ -153,11 +159,22 @@ class GererArticle extends React.Component {
         });
         break;
       case "gestion_par_lot":
+        data = { ...this.state.data };
+
+        if (data.gestion_par_lot) delete data.lot_standard;
+        data.gestion_par_lot = !data.gestion_par_lot;
         this.setState({
-          data: {
-            ...this.state.data,
-            gestion_par_lot: !this.state.data.gestion_par_lot
-          }
+          data
+        });
+        break;
+      case "utilite":
+        data = { ...this.state.data };
+        delete data.prix_de_vente_de_base_TTC;
+        delete data.taux_tva;
+        delete data.unite_de_vente;
+        data.utilite = value;
+        this.setState({
+          data
         });
         break;
 
@@ -177,11 +194,14 @@ class GererArticle extends React.Component {
     //
   };
 
-  handleValeursChange = event => {
-    const index = event.target.name;
+  handleValeursChange = index => event => {
+    name = event.target.name;
     const valeur = event.target.value;
     const caracteristiques = this.state.data.caracteristiques;
-    caracteristiques[index].valeur = valeur;
+    if (typeof caracteristiques[index] === "undefined")
+      caracteristiques[index] = {};
+
+    caracteristiques[index][name] = valeur;
     this.setState({
       data: {
         ...this.state.data,
@@ -245,6 +265,7 @@ class GererArticle extends React.Component {
             // handleSubmitBase={this.handleSubmitBase}
             // handleBack={this.handleBack}
             classes={classes}
+            caracteristiques_conditions={this.state.caracteristiques_conditions}
             // fetchCategorie={this.fetchCategorie}
             loading={this.props.loading}
             handleValeursChange={this.handleValeursChange}
@@ -277,7 +298,7 @@ class GererArticle extends React.Component {
   handlSubmit = () => {
     if (this.state.articleChoisi) {
       let article = this.state.data;
-      console.log(article);
+      this.props.updateArticle(article);
       this.setState({
         activeStep: 0,
         articleChoisi: false,
@@ -294,26 +315,29 @@ class GererArticle extends React.Component {
     const { articleInfo } = nextProps;
 
     if (articleInfo) {
-      let caracteristiques = [];
-      try {
-        const categorie = articleInfo.categorie;
+      // let caracteristiques = [];
+      // let caracteristiques_conditions = [];
+      // try {
+      //   const categorie = articleInfo.categorie;
 
-        const articlesMetaData = categorie.articlesMetaData;
-        articlesMetaData.map((caracteristique, idx) => {
-          caracteristique = caracteristique;
-          caracteristiques.push({
-            nom: caracteristique.nom,
-            limite: caracteristique.limite,
-            obligatoire: caracteristique.obligatoire,
-            longueur: caracteristique.longueur
-          });
-        });
-      } catch (e) {
-        // console.log(e);
-      }
+      //   const articlesMetaData = categorie.articlesMetaData;
+      //   articlesMetaData.map((caracteristique, idx) => {
+      //     caracteristiques.push({
+      //       nom: caracteristique.nom
+      //     });
+      //     caracteristiques_conditions.push({
+      //       limite: caracteristique.limite,
+      //       obligatoire: caracteristique.obligatoire,
+      //       longueur: caracteristique.longueur
+      //     });
+      //   });
+      // } catch (e) {
+      //   // console.log(e);
+      // }
       this.setState({
-        data: { ...articleInfo.article, caracteristiques },
+        data: { ...articleInfo.article },
         categorie: articleInfo.categorie
+        // caracteristiques_conditions
       });
       // console.log(articleInfo.article);
       // this.setState({
@@ -325,6 +349,19 @@ class GererArticle extends React.Component {
       // }
     }
   }
+
+  handleCancel = () => {
+    this.setState({
+      activeStep: 0,
+      articleChoisi: false,
+      errorMsg: "",
+      data: {
+        caracteristiques: [],
+        controleexige: false,
+        gestionparlot: false
+      }
+    });
+  };
 
   render() {
     const { activeStep, errorMsg } = this.state;
@@ -338,7 +375,7 @@ class GererArticle extends React.Component {
           // variant="contained"
           color="primary"
           // disabled={activeStep === 0}
-          // onClick={this.handleBack}
+          onClick={this.handleCancel}
           className={classes.backButton}
         >
           Annuler
@@ -422,6 +459,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch
   ),
   fetchArticle: bindActionCreators(fetchArticle, dispatch),
+  updateArticle: bindActionCreators(updateArticle, dispatch),
   closeNotif: () => dispatch(closeNotifAction())
 });
 

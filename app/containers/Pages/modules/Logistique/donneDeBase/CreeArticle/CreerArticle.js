@@ -164,31 +164,28 @@ class CreerArticle extends React.Component {
     this.handleNext();
   };
 
-  componentWillReceiveProps(nextProps) {
-    let caracteristiques = [];
-    try {
-      const categorie = nextProps.categorie.toObject();
+  // componentWillReceiveProps(nextProps) {
+  //   let caracteristiques = [];
+  //   try {
+  //     const categorie = nextProps.categorie.toObject();
 
-      const articlesMetaData = categorie.articlesMetaData.toArray();
-      articlesMetaData.map((caracteristique, idx) => {
-        caracteristique = caracteristique.toObject();
-        caracteristiques.push({
-          nom: caracteristique.nom,
-          limite: caracteristique.limite,
-          obligatoire: caracteristique.obligatoire,
-          longueur: caracteristique.longueur
-        });
-      });
-      this.setState({
-        data: {
-          ...this.state.data,
-          caracteristiques: caracteristiques
-        }
-      });
-    } catch (e) {
-      // console.log(e);
-    }
-  }
+  //     const articlesMetaData = categorie.articlesMetaData.toArray();
+  //     articlesMetaData.map((caracteristique, idx) => {
+  //       caracteristique = caracteristique.toObject();
+  //       caracteristiques.push({
+  //         nom: caracteristique.nom
+  //       });
+  //     });
+  //     this.setState({
+  //       data: {
+  //         ...this.state.data,
+  //         caracteristiques: caracteristiques
+  //       }
+  //     });
+  //   } catch (e) {
+  //     // console.log(e);
+  //   }
+  // }
 
   handleChange = event => {
     const name = event.target.name;
@@ -231,7 +228,6 @@ class CreerArticle extends React.Component {
 
   getStepContent = stepIndex => {
     const { classes, loading } = this.props;
-    console.log(loading);
 
     switch (stepIndex) {
       case 0:
@@ -313,11 +309,14 @@ class CreerArticle extends React.Component {
     // this.props.fetchCategorie(this.state.data.categorie);
   };
 
-  handleValeursChange = event => {
-    const index = event.target.name;
+  handleValeursChange = index => event => {
+    name = event.target.name;
     const valeur = event.target.value;
     const caracteristiques = this.state.data.caracteristiques;
-    caracteristiques[index].valeur = valeur;
+    if (typeof caracteristiques[index] === "undefined")
+      caracteristiques[index] = {};
+
+    caracteristiques[index][name] = valeur;
     this.setState({
       data: {
         ...this.state.data,

@@ -59,7 +59,6 @@ export default function Initiale({
       <FormGroup>
         <SelectValidator
           value={data.utilite}
-          // value="testttt"
           className={classes.initialeFields}
           onChange={handleChange}
           name="utilite"
@@ -68,7 +67,7 @@ export default function Initiale({
           validators={["required"]}
           errorMessages={["Ce Champ est Obligatoire"]}
         >
-          <MenuItem value={"CONS-Achat pour consomation"}>
+          <MenuItem value={"CONS-Achat-pour-consomation"}>
             CONS-Achat pour consomation
           </MenuItem>
           <MenuItem value={"MRCH-Achat-pour-vente"}>

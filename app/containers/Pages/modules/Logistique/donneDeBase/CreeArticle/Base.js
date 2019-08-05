@@ -49,7 +49,7 @@ class Base extends React.Component {
       loading
     } = this.props;
     const categorie = this.props.categorie.toObject();
-    const articlesMetaData = [];
+    let articlesMetaData = [];
     if (loading) {
       return (
         <center>
@@ -57,8 +57,14 @@ class Base extends React.Component {
         </center>
       );
     }
-    if (typeof categorie.articlesMetaData == !"undefined")
-      articlesMetaData = categorie.articlesMetaData.toArray();
+    if (typeof categorie.articlesMetaData === "undefined")
+      return (
+        <center>
+          <CircularProgress size={24} className={classes.buttonProgress} />
+        </center>
+      );
+
+    articlesMetaData = categorie.articlesMetaData.toArray();
     return (
       <Grid container spacing={1} className={classes.grid} direction="column">
         {/* <ValidatorForm onSubmit={handleSubmitBase} autoComplete="off"> */}
@@ -282,13 +288,17 @@ class Base extends React.Component {
                                     InputProps={{
                                       readOnly: data.limite
                                     }}
-                                    onChange={handleValeursChange}
-                                    name={idx}
+                                    onChange={handleValeursChange(idx)}
+                                    name={data.nom}
                                     type={data.type}
                                     validators={validators}
                                     errorMessages={errorMessages}
                                     value={
-                                      state.data.caracteristiques[idx].valeur
+                                      state.data.caracteristiques[idx]
+                                        ? state.data.caracteristiques[idx][
+                                            data.nom
+                                          ]
+                                        : ""
                                     }
                                   />
                                 </Grid>
@@ -296,8 +306,8 @@ class Base extends React.Component {
                                   <Grid item xs={6}>
                                     <SelectValidator
                                       className={classes.field}
-                                      onChange={handleValeursChange}
-                                      name={idx}
+                                      onChange={handleValeursChange(idx)}
+                                      name={data.nom}
                                       autoWidth="true"
                                       // style={{ minWidth: 15 }}
                                     >

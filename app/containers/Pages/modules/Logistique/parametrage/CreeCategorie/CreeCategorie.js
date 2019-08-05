@@ -264,7 +264,6 @@ const CreerCategorie = ({
       </Button>
     </div>
   );
-  console.log(loading);
   return (
     <div>
       {/* <AppBar position="sticky"> */}
