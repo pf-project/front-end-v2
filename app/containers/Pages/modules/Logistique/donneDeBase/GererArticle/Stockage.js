@@ -73,7 +73,7 @@ export default function Stockage({
                     readOnly: true,
                     fullWidth: true
                   }}
-                  onChange={handleChange}
+                  // onChange={handleChange}
                   name="code"
                   value={data.code}
                   label="Code Article *"
@@ -98,7 +98,7 @@ export default function Stockage({
                 <TextValidator
                   className={classes.field}
                   value={data.categorie}
-                  onChange={handleChange}
+                  // onChange={handleChange}
                   name="categorie"
                   label="Catégorie d'article"
                   validators={["required"]}

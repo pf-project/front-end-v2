@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 
 import MenuItem from "@material-ui/core/MenuItem";
 import FormGroup from "@material-ui/core/FormGroup";
-import MomentUtils from "@date-io/moment";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import {
   ValidatorForm,
   TextValidator,
@@ -19,8 +19,16 @@ export default function Initiale({
   handleSubmitInitial,
   handleBack,
   classes,
-  designations
+  designations,
+  loading
 }) {
+  if (loading) {
+    return (
+      <center>
+        <CircularProgress size={24} className={classes.buttonProgress} />
+      </center>
+    );
+  }
   return (
     <Grid
       container

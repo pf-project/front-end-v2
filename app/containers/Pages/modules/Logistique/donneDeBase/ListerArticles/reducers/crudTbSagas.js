@@ -18,7 +18,7 @@ import {
 const erreur = "Erreur lors de l'action";
 function* fetchDataSaga() {
   try {
-    yield put(startLoading());
+    // yield put(startLoading());
     const data = yield fetchAPI({
       method: "GET",
       url: "/api/logistic/article/find",

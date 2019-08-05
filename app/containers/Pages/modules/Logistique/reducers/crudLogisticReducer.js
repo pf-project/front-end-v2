@@ -48,11 +48,6 @@ export default function crudLogisticReducer(
           .set("articlesForSuggestion", action.payload)
           .set("loading", false);
       });
-    case FETCH_CATEGORIE_SUCCESS:
-      return state.withMutations(mutableState => {
-        const categorie = fromJS(action.payload);
-        mutableState.set("categorie", categorie).set("loading", false);
-      });
 
     case STOP_LOADING:
       return state.withMutations(mutableState => {
@@ -64,6 +59,7 @@ export default function crudLogisticReducer(
       });
     case FETCH_CATEGORIE_SUCCESS:
       return state.withMutations(mutableState => {
+        console.log("fetchedd");
         const categorie = fromJS(action.payload);
         mutableState.set("categorie", categorie).set("loading", false);
       });

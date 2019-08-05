@@ -193,6 +193,7 @@ class CreerArticle extends React.Component {
   handleChange = event => {
     const name = event.target.name;
     const value = event.target.value;
+    let data;
     switch (name) {
       case "controle_qualite_exige":
         this.setState({
@@ -203,11 +204,22 @@ class CreerArticle extends React.Component {
         });
         break;
       case "gestion_par_lot":
+        data = { ...this.state.data };
+
+        if (data.gestion_par_lot) delete data.lot_standard;
+        data.gestion_par_lot = !data.gestion_par_lot;
         this.setState({
-          data: {
-            ...this.state.data,
-            gestion_par_lot: !this.state.data.gestion_par_lot
-          }
+          data
+        });
+        break;
+      case "utilite":
+        data = { ...this.state.data };
+        delete data.prix_de_vente_de_base_TTC;
+        delete data.taux_tva;
+        delete data.unite_de_vente;
+        data.utilite = value;
+        this.setState({
+          data
         });
         break;
 
@@ -219,13 +231,8 @@ class CreerArticle extends React.Component {
 
   getStepContent = stepIndex => {
     const { classes, loading } = this.props;
-    if (loading) {
-      return (
-        <center>
-          <CircularProgress size={24} className={classes.buttonProgress} />
-        </center>
-      );
-    }
+    console.log(loading);
+
     switch (stepIndex) {
       case 0:
         return (
@@ -236,6 +243,7 @@ class CreerArticle extends React.Component {
             handleSubmitInitial={this.handleSubmitInitial}
             classes={classes}
             handleDateChange={this.handleDateChange}
+            loading={loading}
           />
         );
       case 1:
@@ -247,7 +255,8 @@ class CreerArticle extends React.Component {
             handleSubmitBase={this.handleSubmitBase}
             handleBack={this.handleBack}
             classes={classes}
-            fetchCategorie={this.fetchCategorie}
+            loading={loading}
+            // fetchCategorie={this.fetchCategorie}
             handleValeursChange={this.handleValeursChange}
           />
         );
@@ -259,12 +268,13 @@ class CreerArticle extends React.Component {
             handleSubmitStockage={this.handleSubmitStockage}
             handleBack={this.handleBack}
             classes={classes}
+            loading={loading}
           />
         );
       default:
         return (
           <Commerciale
-            loading={this.props.loading}
+            loading={loading}
             handleChange={this.handleChange}
             state={this.state}
             handleSubmitCommerciale={this.handleSubmitCommerciale}
@@ -300,7 +310,7 @@ class CreerArticle extends React.Component {
   };
 
   fetchCategorie = () => {
-    this.props.fetchCategorie(this.state.data.categorie);
+    // this.props.fetchCategorie(this.state.data.categorie);
   };
 
   handleValeursChange = event => {
@@ -434,6 +444,7 @@ const mapDispatchToProps = dispatch => ({
     fetchCategorieDesignation,
     dispatch
   ),
+  fetchCategorie: bindActionCreators(fetchCategorie, dispatch),
   closeNotif: () => dispatch(closeNotifAction()),
   addArticle: bindActionCreators(addArticle, dispatch)
 });
