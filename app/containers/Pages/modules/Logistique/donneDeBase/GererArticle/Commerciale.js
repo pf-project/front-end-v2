@@ -58,7 +58,7 @@ export default function Commerciale({
                   readOnly: true,
                   fullWidth: true
                 }}
-                onChange={handleChange}
+                // onChange={handleChange}
                 name="code"
                 value={data.code}
                 label="Code d'article *"
@@ -83,7 +83,7 @@ export default function Commerciale({
               <TextValidator
                 className={classes.field}
                 value={data.categorie}
-                onChange={handleChange}
+                // onChange={handleChange}
                 name="categorie"
                 label="Catégorie d'article *"
                 validators={["required"]}
@@ -108,6 +108,7 @@ export default function Commerciale({
               <SelectValidator
                 className={classes.field}
                 value={data.unite_de_quantite_achat}
+                // value="25"
                 onChange={handleChange}
                 name="unite_de_quantite_achat"
                 label="Unité de quantité d'achat *"

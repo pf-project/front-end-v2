@@ -51,7 +51,6 @@ export default function crudTbArticlesReducer(
 
     case FETCH_DATA_FAILURE:
       return state.withMutations(mutableState => {
-        const dataTable = fromJS(action.users);
         mutableState.set("notifMsg", action.payload).set("loading", false);
       });
 

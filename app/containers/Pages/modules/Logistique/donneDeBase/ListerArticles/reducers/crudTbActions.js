@@ -35,5 +35,5 @@ export const closeNotifAction = branch => ({
 });
 
 export const startLoading = () => ({
-  type: types.START_LOADING
+  type: types.START_LOADING_DATA
 });

@@ -46,10 +46,16 @@ class Base extends React.Component {
       handleBack,
       classes,
       handleValeursChange,
-      designations
+      loading
     } = this.props;
     const categorie = this.props.categorie.toObject();
-
+    if (loading) {
+      return (
+        <center>
+          <CircularProgress size={24} className={classes.buttonProgress} />
+        </center>
+      );
+    }
     if (categorie.articlesMetaData) {
       const articlesMetaData = categorie.articlesMetaData.toArray();
       return (
@@ -320,12 +326,6 @@ class Base extends React.Component {
             </Paper>
           </FormGroup>
         </Grid>
-      );
-    } else {
-      return (
-        <center>
-          <CircularProgress size={24} className={classes.buttonProgress} />
-        </center>
       );
     }
   }

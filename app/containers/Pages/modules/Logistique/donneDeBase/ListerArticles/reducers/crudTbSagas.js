@@ -14,7 +14,7 @@ import { FETCH_DATA_REQUEST, DELETE_ARTICLE_REQUEST } from "./crudTbConstants";
 const erreur = "Erreur lors de l'action";
 function* fetchDataSaga() {
   try {
-    yield put(startLoading());
+    // yield put(startLoading());
     const data = yield fetchAPI({
       method: "GET",
       url: "/api/logistic/article/find",

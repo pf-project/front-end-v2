@@ -240,6 +240,7 @@ class GererArticle extends React.Component {
           <Base
             handleChange={this.handleChange}
             data={this.state.data}
+            categorie={this.state.categorie}
             // designations={this.props.designations}
             // handleSubmitBase={this.handleSubmitBase}
             // handleBack={this.handleBack}
@@ -273,39 +274,55 @@ class GererArticle extends React.Component {
     }
   };
 
+  handlSubmit = () => {
+    if (this.state.articleChoisi) {
+      let article = this.state.data;
+      console.log(article);
+      this.setState({
+        activeStep: 0,
+        articleChoisi: false,
+        data: {
+          caracteristiques: [],
+          controleexige: false,
+          gestionparlot: false
+        }
+      });
+    }
+  };
+
   componentWillReceiveProps(nextProps) {
-    const { loading, articleInfo } = nextProps;
-
-    // let caracteristiques = [];
-    // try {
-    //   const categorie = nextProps.categorie.toObject();
-
-    //   const articlesMetaData = categorie.articlesMetaData.toArray();
-    //   articlesMetaData.map((caracteristique, idx) => {
-    //     caracteristique = caracteristique.toObject();
-    //     caracteristiques.push({
-    //       nom: caracteristique.nom,
-    //       limite: caracteristique.limite,
-    //       obligatoire: caracteristique.obligatoire,
-    //       longueur: caracteristique.longueur
-    //     });
-    //   });
-    //   this.setState({
-    //     data: {
-    //       ...this.state.data,
-    //       caracteristiques: caracteristiques
-    //     }
-    //   });
-    // }
+    const { articleInfo } = nextProps;
 
     if (articleInfo) {
-      // console.log(articleInfo.article);
+      let caracteristiques = [];
+      try {
+        const categorie = articleInfo.categorie;
+
+        const articlesMetaData = categorie.articlesMetaData;
+        articlesMetaData.map((caracteristique, idx) => {
+          caracteristique = caracteristique;
+          caracteristiques.push({
+            nom: caracteristique.nom,
+            limite: caracteristique.limite,
+            obligatoire: caracteristique.obligatoire,
+            longueur: caracteristique.longueur
+          });
+        });
+      } catch (e) {
+        // console.log(e);
+      }
       this.setState({
-        data: articleInfo.article,
+        data: { ...articleInfo.article, caracteristiques },
         categorie: articleInfo.categorie
-        // activeStep: 1,
-        // articleChoisi: true
       });
+      // console.log(articleInfo.article);
+      // this.setState({
+      //   data: articleInfo.article,
+      //   categorie: articleInfo.categorie
+      //   // activeStep: 1,
+      //   // articleChoisi: true
+      // });
+      // }
     }
   }
 
@@ -333,7 +350,7 @@ class GererArticle extends React.Component {
           variant="contained"
           color="primary"
           type="submit"
-          form="addArticle"
+          form="gererArticle"
         >
           Sauvegarder
         </Button>
@@ -385,7 +402,7 @@ class GererArticle extends React.Component {
               <ValidatorForm
                 id="gererArticle"
                 // ref={r => (this.form = r)}
-                // onSubmit={submitter}
+                onSubmit={this.handlSubmit}
                 autoComplete="off"
               >
                 {this.getStepContent(this.state.activeStep)}
