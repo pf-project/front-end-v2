@@ -49,6 +49,7 @@ class Base extends React.Component {
       loading
     } = this.props;
     const categorie = this.props.categorie.toObject();
+    const articlesMetaData = [];
     if (loading) {
       return (
         <center>
@@ -56,8 +57,8 @@ class Base extends React.Component {
         </center>
       );
     }
-
-    const articlesMetaData = categorie.articlesMetaData.toArray();
+    if (typeof categorie.articlesMetaData == !"undefined")
+      articlesMetaData = categorie.articlesMetaData.toArray();
     return (
       <Grid container spacing={1} className={classes.grid} direction="column">
         {/* <ValidatorForm onSubmit={handleSubmitBase} autoComplete="off"> */}
