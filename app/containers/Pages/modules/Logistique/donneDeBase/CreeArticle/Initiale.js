@@ -99,7 +99,7 @@ export default function Initiale({
         <TextField
           name="findvalidite"
           value={state.data.findvalidite}
-          handleChange={handleChange}
+          onChange={handleChange}
           className={classes.initialeFields}
           label="Fin de validité"
           type="date"

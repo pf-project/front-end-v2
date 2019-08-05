@@ -231,7 +231,6 @@ class CreerArticle extends React.Component {
 
   getStepContent = stepIndex => {
     const { classes, loading } = this.props;
-    console.log(loading);
 
     switch (stepIndex) {
       case 0:
@@ -353,36 +352,41 @@ class CreerArticle extends React.Component {
     const { classes, loading, closeNotif, notifMsg } = this.props;
     const { activeStep } = this.state;
     const submitter = this.getSubmitter();
-    const elements = (
-      <div className={classes.submitdiv}>
-        {/* <Grid item sm={2} lg={2}> */}
-        <Button
-          // onClick={submitter}
-          className={classes.button}
-          variant="contained"
-          color="primary"
-          disabled={activeStep === 0}
-          onClick={this.handleBack}
-          className={classes.backButton}
-        >
-          Précedent
-        </Button>
-        {/* </Grid> */}
-        {/* <Grid item sm={2} lg={2}> */}
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="primary"
-          type="submit"
-          form="addArticle"
-        >
-          {this.state.activeStep === this.state.steps.length - 1
-            ? "Sauvegarder"
-            : "Suivant"}
-        </Button>
-        {/* </Grid> */}
-      </div>
-    );
+    const elements =
+      this.state.activeStep !== 4 ? (
+        <div className={classes.submitdiv}>
+          {/* <Grid item sm={2} lg={2}> */}
+          <Button
+            // onClick={submitter}
+            className={classes.button}
+            variant="contained"
+            color="primary"
+            disabled={activeStep === 0}
+            onClick={this.handleBack}
+            className={classes.backButton}
+          >
+            Précedent
+          </Button>
+          {/* </Grid> */}
+          {/* <Grid item sm={2} lg={2}> */}
+
+          <Button
+            className={classes.button}
+            variant="contained"
+            color="primary"
+            type="submit"
+            form="addArticle"
+          >
+            {this.state.activeStep === this.state.steps.length - 1
+              ? "Sauvegarder"
+              : "Suivant"}
+          </Button>
+
+          {/* </Grid> */}
+        </div>
+      ) : (
+        <div />
+      );
 
     return (
       <div>
