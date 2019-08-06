@@ -34,8 +34,8 @@ export default {
     }
   },
   filterType: "checkbox",
-  showResponsive: true,
-  responsive: "scroll",
+  // showResponsive: true,
+  responsive: "stacked",
   print: false,
   download: false,
   filterList: ["categorie", "utilite"],

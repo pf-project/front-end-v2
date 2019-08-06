@@ -11,24 +11,22 @@ import {
   darken,
   fade
 } from "@material-ui/core/styles/colorManipulator";
-import Initiale from "./Initiale";
-import Base from "./Base";
-import Stockage from "./Stockage";
-import Commerciale from "./Commerciale";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import { ValidatorForm } from "react-material-ui-form-validator";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { PageTitle, Notification } from "enl-components";
+import Grid from "@material-ui/core/Grid";
 import {
   fetchCategorieDesignation,
   fetchCategorie,
   addArticle,
   closeNotifAction
 } from "../../reducers/crudLogisticActions";
-import { ValidatorForm } from "react-material-ui-form-validator";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { PageTitle } from "enl-components";
-import Grid from "@material-ui/core/Grid";
-
-import { Notification } from "enl-components";
+import Commerciale from "./Commerciale";
+import Stockage from "./Stockage";
+import Base from "./Base";
+import Initiale from "./Initiale";
 
 const styles = theme => ({
   root: {
@@ -142,9 +140,11 @@ class CreerArticle extends React.Component {
       categorie: []
     };
   }
+
   handleSubmitInitial = () => {
     this.handleNext();
   };
+
   handleSubmitBase = () => {
     this.handleNext();
   };
@@ -152,13 +152,14 @@ class CreerArticle extends React.Component {
   handleSubmitStockage = () => {
     this.handleNext();
   };
+
   handleSubmitCommerciale = () => {
-    let data = this.state.data;
-    let prix_de_vente_de_base_HT = parseFloat(
+    const { data } = this.state;
+    const prix_de_vente_de_base_HT = parseFloat(
       data.prix_de_vente_de_base_HT
     ).toFixed(3);
-    let prix_moyen_pendere = parseFloat(data.prix_moyen_pendere).toFixed(3);
-    let prix_de_vente_de_base_TTC = parseFloat(
+    const prix_moyen_pendere = parseFloat(data.prix_moyen_pendere).toFixed(3);
+    const prix_de_vente_de_base_TTC = parseFloat(
       data.prix_de_vente_de_base_TTC
     ).toFixed(3);
     this.props.addArticle(data);
@@ -189,8 +190,8 @@ class CreerArticle extends React.Component {
   // }
 
   handleChange = event => {
-    const name = event.target.name;
-    const value = event.target.value;
+    const { name } = event.target;
+    const { value } = event.target;
     let data;
     switch (name) {
       case "controle_qualite_exige":
@@ -285,12 +286,12 @@ class CreerArticle extends React.Component {
   };
 
   handleNext = () => {
-    let activeStep = this.state.activeStep + 1;
+    const activeStep = this.state.activeStep + 1;
     this.setState({ activeStep });
   };
 
   handleBack = () => {
-    let activeStep = this.state.activeStep - 1;
+    const activeStep = this.state.activeStep - 1;
     this.setState({ activeStep });
   };
 
@@ -474,14 +475,12 @@ const mapDispatchToProps = dispatch => ({
   addArticle: bindActionCreators(addArticle, dispatch)
 });
 
-const mapStateToProps = state => {
-  return {
-    notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
-    loading: state.get("crudLogisticReducer").get("loading"),
-    designations: state.get("crudLogisticReducer").get("designations"),
-    categorie: state.get("crudLogisticReducer").get("categorie")
-  };
-};
+const mapStateToProps = state => ({
+  notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
+  loading: state.get("crudLogisticReducer").get("loading"),
+  designations: state.get("crudLogisticReducer").get("designations"),
+  categorie: state.get("crudLogisticReducer").get("categorie")
+});
 
 // //const reducer = "initval";
 const CreerCategorieReduxed = connect(

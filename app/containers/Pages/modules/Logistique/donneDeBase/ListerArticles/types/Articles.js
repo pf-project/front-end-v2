@@ -15,6 +15,8 @@ import {
 } from "../reducers/crudTbActions";
 import { Notification } from "enl-components";
 
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+
 const styles = theme => ({
   table: {
     "& > div": {
@@ -22,6 +24,7 @@ const styles = theme => ({
     },
     "& table": {
       minWidth: 500,
+      overflow: "scroll",
       [theme.breakpoints.down("md")]: {
         "& td": {
           height: 40
@@ -32,6 +35,17 @@ const styles = theme => ({
 });
 
 class Articles extends React.Component {
+  getMuiTheme = () =>
+    createMuiTheme({
+      overrides: {
+        MUIDataTableBodyCell: {
+          root: {
+            // width: 40
+          }
+        }
+      }
+    });
+
   state = {};
 
   componentWillMount() {
@@ -69,15 +83,17 @@ class Articles extends React.Component {
             <CircularProgress size={24} className={classes.buttonProgress} />
           </center>
         ) : (
-          <MUIDataTable
-            key={Math.random()}
-            title=""
-            data={articles}
-            columns={Columns}
-            options={Options}
-            fixedHeader={false}
-            resizableColumns
-          />
+          <MuiThemeProvider theme={this.getMuiTheme()}>
+            <MUIDataTable
+              key={Math.random()}
+              title=""
+              data={articles}
+              columns={Columns}
+              options={Options}
+              // fixedHeader={false}
+              // resizableColumns
+            />
+          </MuiThemeProvider>
         )}
       </div>
     );
