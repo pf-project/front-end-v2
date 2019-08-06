@@ -21,7 +21,6 @@ export default function Initiale({
   classes,
   designations
 }) {
-  console.log(data.utilite);
   return (
     <Grid
       container

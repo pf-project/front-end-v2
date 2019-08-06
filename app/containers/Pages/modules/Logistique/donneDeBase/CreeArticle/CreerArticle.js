@@ -148,6 +148,7 @@ class CreerArticle extends React.Component {
   handleSubmitBase = () => {
     this.handleNext();
   };
+
   handleSubmitStockage = () => {
     this.handleNext();
   };
@@ -246,6 +247,7 @@ class CreerArticle extends React.Component {
         return (
           <Base
             handleChange={this.handleChange}
+            handleFixPrecisionValeurs={this.handleFixPrecisionValeurs}
             state={this.state}
             designations={this.props.designations}
             handleSubmitBase={this.handleSubmitBase}
@@ -271,6 +273,7 @@ class CreerArticle extends React.Component {
         return (
           <Commerciale
             loading={loading}
+            handleFixPrecisionValeurs={this.handleFixPrecisionValeurs}
             handleChange={this.handleChange}
             state={this.state}
             handleSubmitCommerciale={this.handleSubmitCommerciale}
@@ -325,6 +328,28 @@ class CreerArticle extends React.Component {
     });
   };
 
+  handleFixPrecisionValeurs = index => precision => event => {
+    const { name } = event.target;
+    if (index) {
+      const caracteristiques = this.state.data.caracteristiques;
+
+      if (typeof caracteristiques[index] === "undefined") return null;
+
+      caracteristiques[index][name] = parseFloat(
+        caracteristiques[index][name]
+      ).toFixed(precision);
+      this.setState({
+        data: {
+          ...this.state.data,
+          caracteristiques
+        }
+      });
+    } else {
+      let value = parseFloat(this.state.data[name]).toFixed(2);
+      this.setState({ data: { ...this.state.data, [name]: value } });
+    }
+  };
+
   componentWillMount() {
     this.props.fetchCategorieDesignation();
   }
@@ -353,7 +378,17 @@ class CreerArticle extends React.Component {
     const { activeStep } = this.state;
     const submitter = this.getSubmitter();
     const elements =
-      this.state.activeStep !== 4 ? (
+      this.state.activeStep === this.state.steps.length ? (
+        <div className={classes.submitdiv}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={this.handleReset}
+          >
+            Crééer un autre Article
+          </Button>
+        </div>
+      ) : (
         <div className={classes.submitdiv}>
           {/* <Grid item sm={2} lg={2}> */}
           <Button
@@ -384,8 +419,6 @@ class CreerArticle extends React.Component {
 
           {/* </Grid> */}
         </div>
-      ) : (
-        <div />
       );
 
     return (
@@ -408,18 +441,7 @@ class CreerArticle extends React.Component {
               ))}
             </Stepper>
             <div>
-              {this.state.activeStep === this.state.steps.length ? (
-                <div>
-                  {/* <Typography className={classes.instructions}>L'article </Typography> */}
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={this.handleReset}
-                  >
-                    Crééer un autre Article
-                  </Button>
-                </div>
-              ) : (
+              {this.state.activeStep < this.state.steps.length && (
                 <div>
                   <Typography className={classes.instructions}>
                     <ValidatorForm

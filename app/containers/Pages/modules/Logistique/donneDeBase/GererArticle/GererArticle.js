@@ -198,7 +198,11 @@ class GererArticle extends React.Component {
     name = event.target.name;
     const valeur = event.target.value;
     const caracteristiques = this.state.data.caracteristiques;
-    if (typeof caracteristiques[index] === "undefined")
+
+    if (
+      typeof caracteristiques[index] === "undefined" ||
+      caracteristiques[index] === null
+    )
       caracteristiques[index] = {};
 
     caracteristiques[index][name] = valeur;
@@ -265,7 +269,7 @@ class GererArticle extends React.Component {
             // handleSubmitBase={this.handleSubmitBase}
             // handleBack={this.handleBack}
             classes={classes}
-            caracteristiques_conditions={this.state.caracteristiques_conditions}
+            handleFixPrecisionValeurs={this.handleFixPrecisionValeurs}
             // fetchCategorie={this.fetchCategorie}
             loading={this.props.loading}
             handleValeursChange={this.handleValeursChange}
@@ -288,10 +292,32 @@ class GererArticle extends React.Component {
             handleChange={this.handleChange}
             data={this.state.data}
             // handleSubmitCommerciale={this.handleSubmitCommerciale}
-            // handleBack={this.handleBack}
+            handleFixPrecisionValeurs={this.handleFixPrecisionValeurs}
             classes={classes}
           />
         );
+    }
+  };
+
+  handleFixPrecisionValeurs = index => precision => event => {
+    const { name } = event.target;
+    if (index) {
+      const caracteristiques = this.state.data.caracteristiques;
+
+      if (typeof caracteristiques[index] === "undefined") return null;
+
+      caracteristiques[index][name] = parseFloat(
+        caracteristiques[index][name]
+      ).toFixed(precision);
+      this.setState({
+        data: {
+          ...this.state.data,
+          caracteristiques
+        }
+      });
+    } else {
+      let value = parseFloat(this.state.data[name]).toFixed(2);
+      this.setState({ data: { ...this.state.data, [name]: value } });
     }
   };
 

@@ -29,7 +29,7 @@ export default function Commerciale({
   handleChange,
   state,
   handleSubmitCommerciale,
-  handleBack,
+  handleFixPrecisionValeurs,
   classes,
   loading
 }) {
@@ -128,6 +128,7 @@ export default function Commerciale({
               <TextValidator
                 className={classes.field}
                 onChange={handleChange}
+                onBlur={handleFixPrecisionValeurs(false)(false)}
                 name="prix_moyen_pendere"
                 value={state.data.prix_moyen_pendere}
                 label="Prix moyen pondéré *"
@@ -154,6 +155,7 @@ export default function Commerciale({
                 onChange={handleChange}
                 className={classes.field}
                 name="prix_de_vente_de_base_HT"
+                onBlur={handleFixPrecisionValeurs(false)(false)}
                 value={state.data.prix_de_vente_de_base_HT}
                 label="Prix de vente de base HT *"
                 validators={[
@@ -183,6 +185,7 @@ export default function Commerciale({
                 <TextValidator
                   onChange={handleChange}
                   className={classes.field}
+                  onBlur={handleFixPrecisionValeurs(false)(false)}
                   name="prix_de_vente_de_base_TTC"
                   value={state.data.prix_de_vente_de_base_TTC}
                   label="Prix de vente de base TTC *"

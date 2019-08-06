@@ -24,9 +24,6 @@ import {
   SelectValidator
 } from "react-material-ui-form-validator";
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { fetchCategorie } from "../../reducers/crudLogisticActions";
 import Grid from "@material-ui/core/Grid";
 
 class Base extends React.Component {
@@ -35,22 +32,37 @@ class Base extends React.Component {
   }
 
   // componentWillMount() {
-  //   console.log(this.props.data);
-  //   this.props.fetchCategorie(this.props.state.element.categorie);
+  //   this.props.fetchCategorie(this.props.data.categorie);
   // }
 
   render() {
     const {
       handleChange,
-      caracteristiques_conditions,
+      handleFixPrecisionValeurs,
       data,
       handleBack,
       classes,
       handleValeursChange,
-      designations,
+      loading,
       categorie
     } = this.props;
-    const articlesMetaData = categorie.articlesMetaData;
+    let articlesMetaData = [];
+
+    if (loading) {
+      return (
+        <center>
+          <CircularProgress size={24} className={classes.buttonProgress} />
+        </center>
+      );
+    }
+    if (typeof categorie.articlesMetaData === "undefined")
+      return (
+        <center>
+          <CircularProgress size={24} className={classes.buttonProgress} />
+        </center>
+      );
+
+    articlesMetaData = categorie.articlesMetaData;
     return (
       <Grid container spacing={1} className={classes.grid} direction="column">
         {/* <ValidatorForm onSubmit={handleSubmitBase} autoComplete="off"> */}
@@ -64,7 +76,7 @@ class Base extends React.Component {
                     readOnly: true,
                     fullWidth: true
                   }}
-                  // onChange={handleChange}
+                  onChange={handleChange}
                   name="code"
                   value={data.code}
                   label="Code d'article *"
@@ -89,7 +101,7 @@ class Base extends React.Component {
                 <TextValidator
                   className={classes.field}
                   value={data.categorie}
-                  // onChange={handleChange}
+                  onChange={handleChange}
                   name="categorie"
                   label="Catégorie d'article *"
                   validators={["required"]}
@@ -195,12 +207,17 @@ class Base extends React.Component {
                 </TableHead>
                 <TableBody>
                   {articlesMetaData.map((element, idx) => {
-                    // element = element.toObject();
-                    // console.log(data.caracteristiques);
                     element.valeurs = element.valeurs ? element.valeurs : [];
                     if (element) {
                       let validators = [];
                       let errorMessages = [];
+                      let precision;
+
+                      if (element.type.includes("float")) {
+                        let split = element.type.split("-");
+                        if (split.length > 1) precision = parseInt(split[1]);
+                      }
+
                       if (element.type)
                         switch (element.type) {
                           case "number":
@@ -216,14 +233,12 @@ class Base extends React.Component {
                           case "time":
                             break;
                           default:
-                            validators.push("isNumber");
-                            errorMessages.push("Ce champ doit étre un nombre");
+                            validators.push("isFloat");
+                            errorMessages.push("Ce champ doit étre un Decimal");
+                            break;
 
-                          // case "float":
-                          //   validators.push("isFloat");
-                          //   errorMessages.push(
-                          //     "Ce champ doit étre un Decimal"
-                          //   );
+                          // validators.push("isNumber");
+
                           //   break;
                           // case "float-1":
                           //   validators.push("matchRegexp:^[0-9]*.[0-9]$");
@@ -259,6 +274,7 @@ class Base extends React.Component {
                         validators.push("maxStringLength:" + l);
                         errorMessages.push("Max longeur " + l);
                       }
+
                       return (
                         <TableRow key={idx}>
                           <TableCell component="th" scope="row">
@@ -269,7 +285,7 @@ class Base extends React.Component {
                               <Grid container direction="row">
                                 <Grid item xs={6}>
                                   <TextValidator
-                                    className={classes.valuesFields}
+                                    className={classes.field}
                                     InputProps={{
                                       readOnly: element.limite
                                     }}
@@ -278,16 +294,24 @@ class Base extends React.Component {
                                     type={element.type}
                                     validators={validators}
                                     errorMessages={errorMessages}
+                                    onBlur={
+                                      precision &&
+                                      handleFixPrecisionValeurs(idx)(precision)
+                                    }
                                     value={
-                                      data.caracteristiques[idx][element.nom]
+                                      data.caracteristiques[idx]
+                                        ? data.caracteristiques[idx][
+                                            element.nom
+                                          ]
+                                        : ""
                                     }
                                   />
                                 </Grid>
                                 {element.valeurs && element.valeurs.length > 0 && (
                                   <Grid item xs={6}>
                                     <SelectValidator
-                                      className={classes.valuesFields}
-                                      oonChange={handleValeursChange(idx)}
+                                      className={classes.field}
+                                      onChange={handleValeursChange(idx)}
                                       name={element.nom}
                                       autoWidth="true"
                                       // style={{ minWidth: 15 }}
@@ -317,5 +341,21 @@ class Base extends React.Component {
     );
   }
 }
+
+// const mapDispatchToProps = dispatch => ({
+//   fetchCategorie: bindActionCreators(fetchCategorie, dispatch),
+//   closeNotif: () => dispatch(closeNotifAction())
+// });
+
+// const mapStateToProps = state => ({
+//   // state: state.get("crudLogisticReducer"),
+//   categorie: state.get("crudLogisticReducer").get("categorie")
+// });
+
+// // //const reducer = "initval";
+// const BaseMapped = connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(Base);
 
 export default Base;

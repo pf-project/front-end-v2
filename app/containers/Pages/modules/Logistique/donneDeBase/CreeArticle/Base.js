@@ -41,7 +41,7 @@ class Base extends React.Component {
   render() {
     const {
       handleChange,
-      handleSubmitBase,
+      handleFixPrecisionValeurs,
       state,
       handleBack,
       classes,
@@ -215,6 +215,13 @@ class Base extends React.Component {
                     if (data) {
                       let validators = [];
                       let errorMessages = [];
+                      let precision;
+
+                      if (data.type.includes("float")) {
+                        let split = data.type.split("-");
+                        if (split.length > 1) precision = parseInt(split[1]);
+                      }
+
                       if (data.type)
                         switch (data.type) {
                           case "number":
@@ -230,14 +237,12 @@ class Base extends React.Component {
                           case "time":
                             break;
                           default:
-                            validators.push("isNumber");
-                            errorMessages.push("Ce champ doit étre un nombre");
+                            validators.push("isFloat");
+                            errorMessages.push("Ce champ doit étre un Decimal");
+                            break;
 
-                          // case "float":
-                          //   validators.push("isFloat");
-                          //   errorMessages.push(
-                          //     "Ce champ doit étre un Decimal"
-                          //   );
+                          // validators.push("isNumber");
+
                           //   break;
                           // case "float-1":
                           //   validators.push("matchRegexp:^[0-9]*.[0-9]$");
@@ -293,6 +298,10 @@ class Base extends React.Component {
                                     type={data.type}
                                     validators={validators}
                                     errorMessages={errorMessages}
+                                    onBlur={
+                                      precision &&
+                                      handleFixPrecisionValeurs(idx)(precision)
+                                    }
                                     value={
                                       state.data.caracteristiques[idx]
                                         ? state.data.caracteristiques[idx][
