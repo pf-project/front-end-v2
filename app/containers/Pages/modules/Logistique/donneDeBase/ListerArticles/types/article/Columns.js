@@ -191,7 +191,7 @@ export default [
 
   {
     name: "Donnees_de_base",
-    label: "Données de base",
+    label: "D_base",
     options: {
       filter: false,
       customBodyRender: value => <MoreWithModal modal={"base"} value={value} />
@@ -199,7 +199,7 @@ export default [
   },
   {
     name: "Donnees_de_stockage",
-    label: "Donées de stockage",
+    label: "D_stockage",
     options: {
       filter: false,
       customBodyRender: value => (
@@ -209,7 +209,7 @@ export default [
   },
   {
     name: "donnees_commerciales",
-    label: "Données commerciales",
+    label: "D_commerciales",
     options: {
       filter: false,
       customBodyRender: value => (

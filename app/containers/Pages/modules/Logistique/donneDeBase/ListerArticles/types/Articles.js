@@ -25,7 +25,7 @@ const styles = theme => ({
     "& table": {
       minWidth: 500,
       overflow: "scroll",
-      [theme.breakpoints.down("md")]: {
+      [theme.breakpoints.down("lg")]: {
         "& td": {
           height: 40
         }
@@ -40,7 +40,8 @@ class Articles extends React.Component {
       overrides: {
         MUIDataTableBodyCell: {
           root: {
-            // width: 40
+            // width: 60,
+            // fontSize: "8pt"
           }
         }
       }
