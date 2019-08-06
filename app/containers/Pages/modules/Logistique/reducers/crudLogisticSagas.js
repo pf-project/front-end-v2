@@ -1,5 +1,7 @@
-import { call, fork, put, take, takeEvery, all } from "redux-saga/effects";
-import { fetchAPI } from "../../../../../serverActions";
+import {
+  call, fork, put, take, takeEvery, all
+} from 'redux-saga/effects';
+import { fetchAPI } from '../../../../../serverActions';
 import {
   fetchCategorieDesignationFailure,
   fetchCategorieDesignationSuccess,
@@ -15,7 +17,7 @@ import {
   fetchArticlesForSuggestionFailure,
   fetchArticleSuccess,
   fetchArticleFailure
-} from "./crudLogisticActions";
+} from './crudLogisticActions';
 
 import {
   FETCH_CATEGORIE_DESIGNATIONS_REQUEST,
@@ -24,16 +26,16 @@ import {
   ADD_ARTICLE_REQUEST,
   ADD_CATEGORIE_REQUEST,
   FETCH_ARTICLE_REQUEST
-} from "./crudLogisticConstants";
+} from './crudLogisticConstants';
 
 const erreur = "Erreur lors de l'action";
 function* fetchCategorieSaga(payload) {
   try {
     yield put(startLoading());
     const data = yield fetchAPI({
-      method: "GET",
+      method: 'GET',
       url: `/api/logistic/categorie/find/${payload.payload}`,
-      token: window.localStorage.getItem("token")
+      token: window.localStorage.getItem('token')
     });
     yield put(fetchCategorieSuccess(data));
   } catch (error) {
@@ -47,9 +49,9 @@ function* fetchCategorieDesignationsSaga() {
   try {
     yield put(startLoading());
     const data = yield fetchAPI({
-      method: "GET",
-      url: "/api/logistic/categorie/find",
-      token: window.localStorage.getItem("token")
+      method: 'GET',
+      url: '/api/logistic/categorie/find',
+      token: window.localStorage.getItem('token')
     });
     yield put(fetchCategorieDesignationSuccess(data));
   } catch (error) {
@@ -64,9 +66,9 @@ function* addArticleSaga(payload) {
   try {
     yield put(startLoading());
     yield fetchAPI({
-      method: "POST",
-      url: "/api/logistic/article/create",
-      token: window.localStorage.getItem("token"),
+      method: 'POST',
+      url: '/api/logistic/article/create',
+      token: window.localStorage.getItem('token'),
       body: payload.payload
     });
     yield put(addArticleSuccess());
@@ -81,9 +83,9 @@ function* fetchArticlesForSuggestionSaga({ payload }) {
   try {
     yield put(startLoading());
     const data = yield fetchAPI({
-      method: "GET",
-      url: "/api/logistic/article/getCodesAndDesignations",
-      token: window.localStorage.getItem("token")
+      method: 'GET',
+      url: '/api/logistic/article/getCodesAndDesignations',
+      token: window.localStorage.getItem('token')
     });
     yield put(fetchArticlesForSuggestionSuccess(data));
     // yield put(stopLoading());
@@ -96,9 +98,9 @@ function* addCategorieSaga(payload) {
   try {
     yield put(startLoading());
     const data = yield fetchAPI({
-      method: "POST",
-      url: "/api/logistic/categorie/create",
-      token: window.localStorage.getItem("token"),
+      method: 'POST',
+      url: '/api/logistic/categorie/create',
+      token: window.localStorage.getItem('token'),
       body: payload.payload
     });
     yield put(addCategorieSuccess());
@@ -113,9 +115,9 @@ function* fetchArticleSaga({ payload }) {
   try {
     yield put(startLoading());
     const data = yield fetchAPI({
-      method: "GET",
+      method: 'GET',
       url: `/api/logistic/article/${payload}`,
-      token: window.localStorage.getItem("token")
+      token: window.localStorage.getItem('token')
     });
     yield put(fetchArticleSuccess(data));
     // yield put(stopLoading());

@@ -1,80 +1,79 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import { Container, Card, Row } from "@material-ui/core/";
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import { Container, Card, Row } from '@material-ui/core/';
 import {
   lighten,
   darken,
   fade
-} from "@material-ui/core/styles/colorManipulator";
-import Initiale from "./Initiale";
-import Base from "./Base";
-import Stockage from "./Stockage";
-import Commerciale from "./Commerciale";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+} from '@material-ui/core/styles/colorManipulator';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { ValidatorForm } from 'react-material-ui-form-validator';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { PageTitle, Notification } from 'enl-components';
+import Grid from '@material-ui/core/Grid';
 import {
   fetchCategorieDesignation,
   fetchCategorie,
   addArticle,
   closeNotifAction
-} from "../../reducers/crudLogisticActions";
-import { ValidatorForm } from "react-material-ui-form-validator";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { PageTitle } from "enl-components";
-import Grid from "@material-ui/core/Grid";
+} from '../../reducers/crudLogisticActions';
+import Commerciale from './Commerciale';
+import Stockage from './Stockage';
+import Base from './Base';
+import Initiale from './Initiale';
 
-import { Notification } from "enl-components";
 
 const styles = theme => ({
   root: {
-    width: "90%",
-    margin: "2em"
+    width: '90%',
+    margin: '2em'
   },
   backButton: {
-    marginRight: "1em"
+    marginRight: '1em'
   },
   instructions: {
-    marginTop: "1em",
-    marginBottom: "1em"
+    marginTop: '1em',
+    marginBottom: '1em'
   },
   field: {
-    width: "90%"
+    width: '90%'
   },
   initialeFields: {
-    width: "60%"
+    width: '60%'
   },
   grid: {
     flexGrow: 1
   },
   checkBoxMarginTop: {
-    marginTop: "20px"
+    marginTop: '20px'
   },
   toolbar: {
-    marginTop: "1em",
-    marginBottom: "1em",
+    marginTop: '1em',
+    marginBottom: '1em',
     backgroundColor:
-      theme.palette.type === "dark"
+      theme.palette.type === 'dark'
         ? darken(theme.palette.primary.light, 0.6)
         : theme.palette.primary.light,
     minHeight: 60
   },
   title: {
-    flex: "0 0 auto",
-    "& h6": {
+    flex: '0 0 auto',
+    '& h6': {
       fontSize: 16,
       color:
-        theme.palette.type === "dark"
+        theme.palette.type === 'dark'
           ? darken(theme.palette.primary.light, 0.2)
           : darken(theme.palette.primary.dark, 0.2)
     }
   },
   buttons: {
-    marginTop: "30px"
+    marginTop: '30px'
   },
   button: {
     marginLeft: theme.spacing(1)
@@ -93,10 +92,10 @@ const styles = theme => ({
     // width: "80",
     // display: "flex",
     // alignItems: "flex-end",
-    position: "sticky",
-    [theme.breakpoints.up("sm")]: {
-      display: "flex",
-      alignItems: "flex-end"
+    position: 'sticky',
+    [theme.breakpoints.up('sm')]: {
+      display: 'flex',
+      alignItems: 'flex-end'
     },
     zIndex: theme.zIndex.drawer + 10,
     // alignItems: "center",
@@ -105,17 +104,17 @@ const styles = theme => ({
     //   // display: "flex",
     //   alignItems: "flex-end"
     // },
-    "& h4": {
+    '& h4': {
       fontWeight: 700,
       fontSize: 24,
       paddingLeft: 10,
       paddingRight: theme.spacing(1),
       // textTransform: "capitalize",
       color:
-        theme.palette.type === "dark"
+        theme.palette.type === 'dark'
           ? theme.palette.secondary.light
           : theme.palette.primary.dark,
-      [theme.breakpoints.down("md")]: {
+      [theme.breakpoints.down('md')]: {
         marginBottom: theme.spacing(3)
       }
     }
@@ -128,10 +127,10 @@ class CreerArticle extends React.Component {
     this.state = {
       activeStep: 0,
       steps: [
-        "Données initiales",
-        "Données de base",
-        "Données de stockage",
-        "Données commerciales"
+        'Données initiales',
+        'Données de base',
+        'Données de stockage',
+        'Données commerciales'
       ],
       data: {
         caracteristiques: [],
@@ -142,22 +141,26 @@ class CreerArticle extends React.Component {
       categorie: []
     };
   }
+
   handleSubmitInitial = () => {
     this.handleNext();
   };
+
   handleSubmitBase = () => {
     this.handleNext();
   };
+
   handleSubmitStockage = () => {
     this.handleNext();
   };
+
   handleSubmitCommerciale = () => {
-    let data = this.state.data;
-    let prix_de_vente_de_base_HT = parseFloat(
+    const { data } = this.state;
+    const prix_de_vente_de_base_HT = parseFloat(
       data.prix_de_vente_de_base_HT
     ).toFixed(3);
-    let prix_moyen_pendere = parseFloat(data.prix_moyen_pendere).toFixed(3);
-    let prix_de_vente_de_base_TTC = parseFloat(
+    const prix_moyen_pendere = parseFloat(data.prix_moyen_pendere).toFixed(3);
+    const prix_de_vente_de_base_TTC = parseFloat(
       data.prix_de_vente_de_base_TTC
     ).toFixed(3);
     this.props.addArticle(data);
@@ -165,7 +168,7 @@ class CreerArticle extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    let caracteristiques = [];
+    const caracteristiques = [];
     try {
       const categorie = nextProps.categorie.toObject();
 
@@ -182,7 +185,7 @@ class CreerArticle extends React.Component {
       this.setState({
         data: {
           ...this.state.data,
-          caracteristiques: caracteristiques
+          caracteristiques
         }
       });
     } catch (e) {
@@ -191,11 +194,11 @@ class CreerArticle extends React.Component {
   }
 
   handleChange = event => {
-    const name = event.target.name;
-    const value = event.target.value;
+    const { name } = event.target;
+    const { value } = event.target;
     let data;
     switch (name) {
-      case "controle_qualite_exige":
+      case 'controle_qualite_exige':
         this.setState({
           data: {
             ...this.state.data,
@@ -203,7 +206,7 @@ class CreerArticle extends React.Component {
           }
         });
         break;
-      case "gestion_par_lot":
+      case 'gestion_par_lot':
         data = { ...this.state.data };
 
         if (data.gestion_par_lot) delete data.lot_standard;
@@ -212,7 +215,7 @@ class CreerArticle extends React.Component {
           data
         });
         break;
-      case "utilite":
+      case 'utilite':
         data = { ...this.state.data };
         delete data.prix_de_vente_de_base_TTC;
         delete data.taux_tva;
@@ -285,12 +288,12 @@ class CreerArticle extends React.Component {
   };
 
   handleNext = () => {
-    let activeStep = this.state.activeStep + 1;
+    const activeStep = this.state.activeStep + 1;
     this.setState({ activeStep });
   };
 
   handleBack = () => {
-    let activeStep = this.state.activeStep - 1;
+    const activeStep = this.state.activeStep - 1;
     this.setState({ activeStep });
   };
 
@@ -315,7 +318,7 @@ class CreerArticle extends React.Component {
   handleValeursChange = event => {
     const index = event.target.name;
     const valeur = event.target.value;
-    const caracteristiques = this.state.data.caracteristiques;
+    const { caracteristiques } = this.state.data;
     caracteristiques[index].valeur = valeur;
     this.setState({
       data: {
@@ -349,44 +352,45 @@ class CreerArticle extends React.Component {
   };
 
   render() {
-    const { classes, loading, closeNotif, notifMsg } = this.props;
+    const {
+      classes, loading, closeNotif, notifMsg
+    } = this.props;
     const { activeStep } = this.state;
     const submitter = this.getSubmitter();
-    const elements =
-      this.state.activeStep !== 4 ? (
-        <div className={classes.submitdiv}>
-          {/* <Grid item sm={2} lg={2}> */}
-          <Button
-            // onClick={submitter}
-            className={classes.button}
-            variant="contained"
-            color="primary"
-            disabled={activeStep === 0}
-            onClick={this.handleBack}
-            className={classes.backButton}
-          >
+    const elements = this.state.activeStep !== 4 ? (
+      <div className={classes.submitdiv}>
+        {/* <Grid item sm={2} lg={2}> */}
+        <Button
+          // onClick={submitter}
+          className={classes.button}
+          variant="contained"
+          color="primary"
+          disabled={activeStep === 0}
+          onClick={this.handleBack}
+          className={classes.backButton}
+        >
             Précedent
-          </Button>
-          {/* </Grid> */}
-          {/* <Grid item sm={2} lg={2}> */}
+        </Button>
+        {/* </Grid> */}
+        {/* <Grid item sm={2} lg={2}> */}
 
-          <Button
-            className={classes.button}
-            variant="contained"
-            color="primary"
-            type="submit"
-            form="addArticle"
-          >
-            {this.state.activeStep === this.state.steps.length - 1
-              ? "Sauvegarder"
-              : "Suivant"}
-          </Button>
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="primary"
+          type="submit"
+          form="addArticle"
+        >
+          {this.state.activeStep === this.state.steps.length - 1
+            ? 'Sauvegarder'
+            : 'Suivant'}
+        </Button>
 
-          {/* </Grid> */}
-        </div>
-      ) : (
-        <div />
-      );
+        {/* </Grid> */}
+      </div>
+    ) : (
+      <div />
+    );
 
     return (
       <div>
@@ -438,7 +442,7 @@ class CreerArticle extends React.Component {
         </Card>
       </div>
 
-      // </Container>
+    // </Container>
     );
   }
 }
@@ -453,14 +457,12 @@ const mapDispatchToProps = dispatch => ({
   addArticle: bindActionCreators(addArticle, dispatch)
 });
 
-const mapStateToProps = state => {
-  return {
-    notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
-    loading: state.get("crudLogisticReducer").get("loading"),
-    designations: state.get("crudLogisticReducer").get("designations"),
-    categorie: state.get("crudLogisticReducer").get("categorie")
-  };
-};
+const mapStateToProps = state => ({
+  notifMsg: state.get('crudLogisticReducer').get('notifMsg'),
+  loading: state.get('crudLogisticReducer').get('loading'),
+  designations: state.get('crudLogisticReducer').get('designations'),
+  categorie: state.get('crudLogisticReducer').get('categorie')
+});
 
 // //const reducer = "initval";
 const CreerCategorieReduxed = connect(
