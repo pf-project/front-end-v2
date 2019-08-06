@@ -15,7 +15,9 @@ import {
   FETCH_ARTICLES_FOR_SUGGESTION_SUCCESS,
   FETCH_ARTICLES_FOR_SUGGESTION_FAILURE,
   FETCH_ARTICLE_FAILURE,
-  FETCH_ARTICLE_SUCCESS
+  FETCH_ARTICLE_SUCCESS,
+  UPDATE_ARTICLE_FAILURE,
+  UPDATE_ARTICLE_SUCCESS
 } from "./crudLogisticConstants";
 
 const initialState = {
@@ -49,6 +51,17 @@ export default function crudLogisticReducer(
           .set("loading", false);
       });
 
+    case UPDATE_ARTICLE_SUCCESS:
+      return state.withMutations(mutableState => {
+        mutableState
+          .set("notifMsg", "Article mis à jour ")
+          .set("loading", false);
+      });
+
+    case UPDATE_ARTICLE_FAILURE:
+      return state.withMutations(mutableState => {
+        mutableState.set("notifMsg", action.payload).set("loading", false);
+      });
     case STOP_LOADING:
       return state.withMutations(mutableState => {
         mutableState.set("loading", false);
@@ -59,7 +72,6 @@ export default function crudLogisticReducer(
       });
     case FETCH_CATEGORIE_SUCCESS:
       return state.withMutations(mutableState => {
-        console.log("fetchedd");
         const categorie = fromJS(action.payload);
         mutableState.set("categorie", categorie).set("loading", false);
       });

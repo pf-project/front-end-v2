@@ -14,7 +14,7 @@ import Icon from "@material-ui/core/Icon";
 import { openMenuAction } from "enl-redux/actions/uiActions";
 import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 import messages from "enl-api/ui/menuMessages";
-import MenuProfile from "./MenuProfile";
+import Card from "@material-ui/core/Card";
 import styles from "./sidebarBig-jss";
 
 const LinkBtn = React.forwardRef(function LinkBtn(props, ref) {

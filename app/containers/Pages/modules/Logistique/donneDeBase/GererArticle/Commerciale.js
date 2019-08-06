@@ -29,7 +29,7 @@ export default function Commerciale({
   handleChange,
   data,
   handleSubmitCommerciale,
-  handleBack,
+  handleFixPrecisionValeurs,
   classes,
   loading
 }) {
@@ -40,11 +40,6 @@ export default function Commerciale({
   //   variant: "success"
   // });
 
-  const handleSubmit = () => {
-    // setLoading(true);
-    handleSubmitCommerciale();
-    // handleClickVariant("success");
-  };
   return (
     <Grid container spacing={1} className={classes.grid} direction="column">
       {/* <ValidatorForm autoComplete="off" onSubmit={handleSubmit}> */}
@@ -130,6 +125,7 @@ export default function Commerciale({
                 className={classes.field}
                 onChange={handleChange}
                 name="prix_moyen_pendere"
+                onBlur={handleFixPrecisionValeurs(false)(false)}
                 value={data.prix_moyen_pendere}
                 label="Prix moyen pondéré *"
                 validators={[
@@ -156,6 +152,7 @@ export default function Commerciale({
                 className={classes.field}
                 name="prix_de_vente_de_base_HT"
                 value={data.prix_de_vente_de_base_HT}
+                onBlur={handleFixPrecisionValeurs(false)(false)}
                 label="Prix de vente de base HT *"
                 validators={[
                   "required",
@@ -185,6 +182,7 @@ export default function Commerciale({
                   onChange={handleChange}
                   className={classes.field}
                   name="prix_de_vente_de_base_TTC"
+                  onBlur={handleFixPrecisionValeurs(false)(false)}
                   value={data.prix_de_vente_de_base_TTC}
                   label="Prix de vente de base TTC *"
                   validators={[

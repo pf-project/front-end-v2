@@ -55,7 +55,7 @@ export default function AjoutAttribut({
   };
 
   const [nbrValues, setNbrValues] = React.useState(
-    typeof item.valeurs === "undefined" ? 1 : item.valeurs.length
+    typeof item.valeurs === "undefined" ? 0 : item.valeurs.length
   );
 
   const open = Boolean(anchorEl);
@@ -187,13 +187,14 @@ export default function AjoutAttribut({
                 Annuler
               </Button>
             </div>
-            {[...Array(nbrValues + 1).keys()].map(index => (
+            {[...Array(nbrValues).keys()].map(index => (
               // <TableRow>
               //   <TableCell>
               <TextField
                 label={`${index + 1}`}
                 value={item.valeurs[index]}
                 onChange={addValues(position)(index)}
+                type={item.type}
                 // margin="normal"
                 // variant="outlined"
               />
@@ -223,6 +224,7 @@ export default function AjoutAttribut({
                 onClick={incrimentNbrValues}
                 color="primary"
                 className={classes.button}
+                disabled={!item.type || item.type === ""}
               >
                 +
               </IconButton>
@@ -233,6 +235,10 @@ export default function AjoutAttribut({
               >
                 -
               </IconButton>
+              <p />
+              {(!item.type || item.type === "") && (
+                <span>Veuillez choisir le type d'attribut </span>
+              )}
             </div>
 
             {/* <TableRow>

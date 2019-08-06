@@ -4,7 +4,6 @@ import { fetchAPI } from "../../../../../../../serverActions";
 import {
   fetchAction,
   fetchActionFailure,
-  startLoading,
   deleteArticle,
   deleteArticleFailure,
   articleDeleted
@@ -14,7 +13,6 @@ import { FETCH_DATA_REQUEST, DELETE_ARTICLE_REQUEST } from "./crudTbConstants";
 const erreur = "Erreur lors de l'action";
 function* fetchDataSaga() {
   try {
-    // yield put(startLoading());
     const data = yield fetchAPI({
       method: "GET",
       url: "/api/logistic/article/find",
@@ -27,14 +25,12 @@ function* fetchDataSaga() {
 }
 
 function* deleteArticleSaga(payload) {
-  console.log(payload);
   try {
-    const data = yield fetchAPI({
+    yield fetchAPI({
       method: "DELETE",
       url: "/api/logistic/article/archive/" + payload.payload,
       token: window.localStorage.getItem("token")
     });
-    console.log(data);
     yield put(articleDeleted(payload));
   } catch (error) {
     yield put(deleteArticleFailure(erreur));

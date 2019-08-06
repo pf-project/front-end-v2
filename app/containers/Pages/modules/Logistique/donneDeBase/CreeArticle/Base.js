@@ -41,7 +41,7 @@ class Base extends React.Component {
   render() {
     const {
       handleChange,
-      handleSubmitBase,
+      handleFixPrecisionValeurs,
       state,
       handleBack,
       classes,
@@ -49,7 +49,7 @@ class Base extends React.Component {
       loading
     } = this.props;
     const categorie = this.props.categorie.toObject();
-    const articlesMetaData = [];
+    let articlesMetaData = [];
     if (loading) {
       return (
         <center>
@@ -57,8 +57,14 @@ class Base extends React.Component {
         </center>
       );
     }
-    if (typeof categorie.articlesMetaData == !"undefined")
-      articlesMetaData = categorie.articlesMetaData.toArray();
+    if (typeof categorie.articlesMetaData === "undefined")
+      return (
+        <center>
+          <CircularProgress size={24} className={classes.buttonProgress} />
+        </center>
+      );
+
+    articlesMetaData = categorie.articlesMetaData.toArray();
     return (
       <Grid container spacing={1} className={classes.grid} direction="column">
         {/* <ValidatorForm onSubmit={handleSubmitBase} autoComplete="off"> */}
@@ -209,6 +215,13 @@ class Base extends React.Component {
                     if (data) {
                       let validators = [];
                       let errorMessages = [];
+                      let precision;
+
+                      if (data.type.includes("float")) {
+                        let split = data.type.split("-");
+                        if (split.length > 1) precision = parseInt(split[1]);
+                      }
+
                       if (data.type)
                         switch (data.type) {
                           case "number":
@@ -224,14 +237,12 @@ class Base extends React.Component {
                           case "time":
                             break;
                           default:
-                            validators.push("isNumber");
-                            errorMessages.push("Ce champ doit étre un nombre");
+                            validators.push("isFloat");
+                            errorMessages.push("Ce champ doit étre un Decimal");
+                            break;
 
-                          // case "float":
-                          //   validators.push("isFloat");
-                          //   errorMessages.push(
-                          //     "Ce champ doit étre un Decimal"
-                          //   );
+                          // validators.push("isNumber");
+
                           //   break;
                           // case "float-1":
                           //   validators.push("matchRegexp:^[0-9]*.[0-9]$");
@@ -282,13 +293,19 @@ class Base extends React.Component {
                                     InputProps={{
                                       readOnly: data.limite
                                     }}
-                                    onChange={handleValeursChange}
-                                    name={idx}
+                                    onChange={handleValeursChange(idx)}
+                                    name={data.nom}
                                     type={data.type}
                                     validators={validators}
                                     errorMessages={errorMessages}
+                                    onBlur={
+                                      precision &&
+                                      handleFixPrecisionValeurs(idx)(precision)
+                                    }
                                     value={
-                                      state.data.caracteristiques[idx].valeur
+                                      state.data.caracteristiques[idx]
+                                        ? state.data.caracteristiques[idx].value
+                                        : ""
                                     }
                                   />
                                 </Grid>
@@ -296,8 +313,8 @@ class Base extends React.Component {
                                   <Grid item xs={6}>
                                     <SelectValidator
                                       className={classes.field}
-                                      onChange={handleValeursChange}
-                                      name={idx}
+                                      onChange={handleValeursChange(idx)}
+                                      name={data.nom}
                                       autoWidth="true"
                                       // style={{ minWidth: 15 }}
                                     >
