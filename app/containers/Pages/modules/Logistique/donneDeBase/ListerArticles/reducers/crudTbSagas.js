@@ -8,7 +8,10 @@ import {
   deleteArticleFailure,
   articleDeleted
 } from "./crudTbActions";
-import { FETCH_DATA_REQUEST, DELETE_ARTICLE_REQUEST } from "./crudTbConstants";
+import {
+  FETCH_ARTICLES_REQUEST,
+  DELETE_ARTICLE_REQUEST
+} from "./crudTbConstants";
 
 const erreur = "Erreur lors de l'action";
 function* fetchDataSaga() {
@@ -43,7 +46,7 @@ function* deleteArticleSaga(payload) {
 
 function* crudTbArticlesRootSaga() {
   yield all([
-    takeEvery(FETCH_DATA_REQUEST, fetchDataSaga),
+    takeEvery(FETCH_ARTICLES_REQUEST, fetchDataSaga),
 
     takeEvery(DELETE_ARTICLE_REQUEST, deleteArticleSaga)
   ]);

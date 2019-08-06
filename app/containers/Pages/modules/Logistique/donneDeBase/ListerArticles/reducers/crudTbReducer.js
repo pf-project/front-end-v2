@@ -2,8 +2,8 @@ import { fromJS, List, Map, Immutable } from "immutable";
 import notif from "enl-api/ui/notifMessage";
 import { CLOSE_NOTIF } from "enl-redux/constants/notifConstants";
 import {
-  FETCH_DATA_SUCCESS,
-  FETCH_DATA_FAILURE,
+  FETCH_ARTICLES_SUCCESS,
+  FETCH_ARTICLES_FAILURE,
   START_LOADING,
   DELETE_ARTICLE_SUCCESS,
   DELETE_ARTICLE_FAILURE
@@ -43,13 +43,13 @@ export default function crudTbArticlesReducer(
       return state.withMutations(mutableState => {
         mutableState.set("loading", true);
       });
-    case FETCH_DATA_SUCCESS:
+    case FETCH_ARTICLES_SUCCESS:
       return state.withMutations(mutableState => {
         const dataTable = fromJS(action.data);
         mutableState.set("dataTable", dataTable).set("loading", false);
       });
 
-    case FETCH_DATA_FAILURE:
+    case FETCH_ARTICLES_FAILURE:
       return state.withMutations(mutableState => {
         mutableState.set("notifMsg", action.payload).set("loading", false);
       });

@@ -36,7 +36,7 @@ export default {
   },
   filterType: "checkbox",
   // showResponsive: true,
-  responsive: "scroll",
+  responsive: "stacked",
   print: false,
   download: false,
   filterList: ["Prévilège"],
