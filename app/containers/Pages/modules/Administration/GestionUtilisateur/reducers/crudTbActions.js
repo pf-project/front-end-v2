@@ -2,21 +2,21 @@ import * as notification from "enl-redux/constants/notifConstants";
 import * as types from "./crudTbConstants";
 
 export const fetch = () => ({
-  type: types.FETCH_DATA_REQUEST
+  type: types.FETCH_USERS_REQUEST
 });
 
 export const fetchAction = (users, branch) => ({
-  type: types.FETCH_DATA_SUCCESS,
+  type: types.FETCH_USERS_SUCCESS,
   users
 });
 
 export const fetchActionFailure = (payload, branch) => ({
-  type: types.FETCH_DATA_FAILURE,
+  type: types.FETCH_USERS_FAILURE,
   payload
 });
 
 export const blockuser = payload => ({
-  type: types.BOLCK_USER_REQUEST,
+  type: types.BOLCK_USERS_REQUEST,
   payload
 });
 export const blockuserFailure = payload => ({

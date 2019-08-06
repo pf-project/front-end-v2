@@ -300,9 +300,7 @@ class Base extends React.Component {
                                     }
                                     value={
                                       data.caracteristiques[idx]
-                                        ? data.caracteristiques[idx][
-                                            element.nom
-                                          ]
+                                        ? data.caracteristiques[idx].value
                                         : ""
                                     }
                                   />

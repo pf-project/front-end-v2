@@ -125,13 +125,16 @@ export default function BaseModal({ value }) {
               </TableHead>
               <TableBody>
                 {value.caracteristiques.toArray().map((row, i) => {
-                  let myRow = row.toObject();
-                  return [
-                    <TableRow key={i}>
-                      <TableCell>{myRow.nom}</TableCell>
-                      <TableCell>{myRow.valeur}</TableCell>
-                    </TableRow>
-                  ];
+                  let myRow;
+                  if (!(row === null)) {
+                    myRow = row.toObject();
+                    return [
+                      <TableRow key={i}>
+                        <TableCell>{myRow.name}</TableCell>
+                        <TableCell>{myRow.value}</TableCell>
+                      </TableRow>
+                    ];
+                  }
                 })}
               </TableBody>
             </Table>

@@ -18,7 +18,7 @@ import {
   userEdited
 } from "./crudTbActions";
 import {
-  FETCH_DATA_REQUEST,
+  FETCH_USERS_REQUEST,
   BOLCK_USER_REQUEST,
   ADD_USER_REQUEST,
   EDIT_USER_REQUEST,
@@ -107,7 +107,7 @@ function* editUserSaga(payload) {
 
 function* crudTbRootSaga() {
   yield all([
-    takeEvery(FETCH_DATA_REQUEST, fetchDataSaga),
+    takeEvery(FETCH_USERS_REQUEST, fetchDataSaga),
     takeEvery(BOLCK_USER_REQUEST, blockUserSaga),
     takeEvery(ADD_USER_REQUEST, addUserSaga),
     takeEvery(EDIT_USER_REQUEST, editUserSaga),

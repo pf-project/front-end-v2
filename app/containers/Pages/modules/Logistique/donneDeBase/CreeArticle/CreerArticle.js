@@ -313,13 +313,12 @@ class CreerArticle extends React.Component {
   };
 
   handleValeursChange = index => event => {
-    name = event.target.name;
-    const valeur = event.target.value;
+    const { value, name } = event.target;
     const caracteristiques = this.state.data.caracteristiques;
     if (typeof caracteristiques[index] === "undefined")
       caracteristiques[index] = {};
 
-    caracteristiques[index][name] = valeur;
+    caracteristiques[index] = { value, name };
     this.setState({
       data: {
         ...this.state.data,
@@ -335,8 +334,8 @@ class CreerArticle extends React.Component {
 
       if (typeof caracteristiques[index] === "undefined") return null;
 
-      caracteristiques[index][name] = parseFloat(
-        caracteristiques[index][name]
+      caracteristiques[index].value = parseFloat(
+        caracteristiques[index].value
       ).toFixed(precision);
       this.setState({
         data: {

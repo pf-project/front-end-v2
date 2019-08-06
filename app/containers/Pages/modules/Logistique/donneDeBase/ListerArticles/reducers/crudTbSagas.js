@@ -4,7 +4,6 @@ import { fetchAPI } from "../../../../../../../serverActions";
 import {
   fetchAction,
   fetchActionFailure,
-  startLoading,
   deleteArticle,
   deleteArticleFailure,
   articleDeleted
@@ -14,7 +13,6 @@ import { FETCH_DATA_REQUEST, DELETE_ARTICLE_REQUEST } from "./crudTbConstants";
 const erreur = "Erreur lors de l'action";
 function* fetchDataSaga() {
   try {
-    yield put(startLoading());
     const data = yield fetchAPI({
       method: "GET",
       url: "/api/logistic/article/find",

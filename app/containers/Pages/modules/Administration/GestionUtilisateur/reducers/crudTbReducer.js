@@ -2,8 +2,8 @@ import { fromJS, List, Map, Immutable } from "immutable";
 import notif from "enl-api/ui/notifMessage";
 import { CLOSE_NOTIF } from "enl-redux/constants/notifConstants";
 import {
-  FETCH_DATA_SUCCESS,
-  FETCH_DATA_FAILURE,
+  FETCH_USERS_SUCCESS,
+  FETCH_USERS_FAILURE,
   BOLCK_USER_SUCCESS,
   BOLCK_USER_FAILURE,
   CLOSE_ADD_USER_FORM,
@@ -52,13 +52,13 @@ export default function crudTbReducer(
 ) {
   const { branch } = action;
   switch (action.type) {
-    case FETCH_DATA_SUCCESS:
+    case FETCH_USERS_SUCCESS:
       return state.withMutations(mutableState => {
         const dataTable = fromJS(action.users);
         mutableState.set("dataTable", dataTable);
       });
 
-    case FETCH_DATA_FAILURE:
+    case FETCH_USERS_FAILURE:
       return state.withMutations(mutableState => {
         const dataTable = fromJS(action.users);
         mutableState.set("notifMsg", action.payload);
