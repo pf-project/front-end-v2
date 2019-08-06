@@ -145,10 +145,10 @@ class Header extends React.Component {
     return (
       <HideOnScroll {...this.props}>
         <AppBar
-          position="relative"
+          position="absolute"
           className={classNames(
             classes.appBar,
-            classes.floatingBar,
+            // classes.floatingBar,
             margin && classes.appBarShift,
             turnDarker && classes.darker
           )}

@@ -9,7 +9,6 @@ import dataMenu from "enl-api/ui/menu";
 import { injectIntl, FormattedMessage } from "react-intl";
 import messages from "enl-api/ui/menuMessages";
 import styles from "../appStyles-jss";
-import { Card, AppBar } from "@material-ui/core";
 
 class LeftSidebarBigLayout extends React.Component {
   render() {

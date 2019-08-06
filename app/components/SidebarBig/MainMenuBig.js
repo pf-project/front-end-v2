@@ -14,7 +14,6 @@ import Icon from "@material-ui/core/Icon";
 import { openMenuAction } from "enl-redux/actions/uiActions";
 import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 import messages from "enl-api/ui/menuMessages";
-import Card from "@material-ui/core/Card";
 import styles from "./sidebarBig-jss";
 
 const LinkBtn = React.forwardRef(function LinkBtn(props, ref) {
@@ -160,7 +159,9 @@ class MainMenuBig extends React.Component {
       if (selectedMenu.length < 1) {
         return (
           <List dense className={classes.fixedWrap}>
-            {currentMenu.length > 0 ? getChildMenu(currentMenu[0].child) : ""}
+            <div>
+              {currentMenu.length > 0 ? getChildMenu(currentMenu[0].child) : ""}
+            </div>
           </List>
         );
       }
@@ -182,13 +183,13 @@ class MainMenuBig extends React.Component {
       <aside className={classes.bigSidebar}>
         <nav className={classes.category}>
           <div className={classNames(classes.fixedWrap, classes.darker)}>
-            {/* <MenuProfile userAttr={userAttr} /> */}
             {getMenus(dataMenu)}
           </div>
         </nav>
         <nav
           className={classNames(
             classes.listMenu,
+            // classes.darker,
             !drawerPaper && classes.drawerPaperClose
           )}
         >
