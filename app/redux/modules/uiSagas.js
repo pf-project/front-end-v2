@@ -18,7 +18,7 @@ import {
 function* closeMenuAfterSomeSeconds({ isLoaded }) {
   try {
     yield put(playTransitionActionAfterSaga(isLoaded));
-    yield delay(3000);
+    yield delay(1200);
     yield put(toggleAction);
   } catch (error) {
     // yield put(changePasswordFailure("Erreur lors de l'action  :"));
