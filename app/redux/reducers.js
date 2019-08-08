@@ -5,6 +5,7 @@ import { reducer as form } from "redux-form/immutable";
 import { combineReducers } from "redux-immutable";
 import { connectRouter } from "connected-react-router/immutable";
 import history from "utils/history";
+import { LOGOUT_REQUEST } from "./constants/authConstants";
 
 // Global Reducers
 import languageProviderReducer from "containers/LanguageProvider/reducer";
@@ -32,7 +33,15 @@ export default function createReducer(injectedReducers = {}) {
     ...injectedReducers
   });
 
+  // for clearing the store after logout
+  const globalReducer = (state, action) => {
+    if (action.type === LOGOUT_REQUEST) {
+      state = undefined;
+    }
+
+    return rootReducer(state, action);
+  };
   // Wrap the root reducer and return a new root reducer with router state
   const mergeWithRouterState = connectRouter(history);
-  return mergeWithRouterState(rootReducer);
+  return mergeWithRouterState(globalReducer);
 }
