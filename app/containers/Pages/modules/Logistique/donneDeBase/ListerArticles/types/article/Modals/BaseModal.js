@@ -8,6 +8,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 
 const useStyles = makeStyles(theme => ({
   root: {

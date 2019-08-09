@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 
 import Typography from "@material-ui/core/Typography";
 

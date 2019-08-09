@@ -35,17 +35,17 @@ const styles = theme => ({
 });
 
 class Articles extends React.Component {
-  getMuiTheme = () =>
-    createMuiTheme({
-      overrides: {
-        MUIDataTableBodyCell: {
-          root: {
-            // width: 60,
-            // fontSize: "8pt"
-          }
-        }
-      }
-    });
+  // getMuiTheme = () =>
+  //   createMuiTheme({
+  //     overrides: {
+  //       MUIDataTableBodyCell: {
+  //         root: {
+  //           // width: 60,
+  //           // fontSize: "8pt"
+  //         }
+  //       }
+  //     }
+  //   });
 
   state = {};
 
@@ -84,17 +84,17 @@ class Articles extends React.Component {
             <CircularProgress size={24} className={classes.buttonProgress} />
           </center>
         ) : (
-          <MuiThemeProvider theme={this.getMuiTheme()}>
-            <MUIDataTable
-              key={Math.random()}
-              title=""
-              data={articles}
-              columns={Columns}
-              options={Options}
-              // fixedHeader={false}
-              // resizableColumns
-            />
-          </MuiThemeProvider>
+          // <MuiThemeProvider theme={this.getMuiTheme()}>
+          <MUIDataTable
+            key={Math.random()}
+            title=""
+            data={articles}
+            columns={Columns}
+            options={Options}
+            // fixedHeader={false}
+            // resizableColumns
+          />
+          // </MuiThemeProvider>
         )}
       </div>
     );
