@@ -77,13 +77,7 @@ const styles = theme => ({
   button: {
     marginLeft: theme.spacing(1)
   },
-  submitdiv: {
-    // marginLeft: "30%",
 
-    // right: 50,
-    marginTop: theme.spacing(1),
-    marginLeft: theme.spacing(20)
-  },
   pageTitle: {
     padding: theme.spacing(1),
     paddingBottom: theme.spacing(3),
@@ -379,7 +373,7 @@ class CreerArticle extends React.Component {
     const submitter = this.getSubmitter();
     const elements =
       this.state.activeStep === this.state.steps.length ? (
-        <div className={classes.submitdiv}>
+        <div>
           <Button
             variant="contained"
             color="primary"
@@ -389,7 +383,7 @@ class CreerArticle extends React.Component {
           </Button>
         </div>
       ) : (
-        <div className={classes.submitdiv}>
+        <div>
           {/* <Grid item sm={2} lg={2}> */}
           <Button
             // onClick={submitter}

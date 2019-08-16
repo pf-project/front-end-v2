@@ -5,6 +5,11 @@ import { Card } from "@material-ui/core";
 import { BreadCrumb } from "enl-components";
 
 const styles = theme => ({
+  elements: {
+    position: "absolute",
+    right: theme.spacing(4),
+    top: theme.spacing(1)
+  },
   pageTitle: {
     padding: theme.spacing(1),
     paddingBottom: theme.spacing(3),
@@ -53,7 +58,7 @@ const PageTitle = ({ classes, title, pathname, elements }) => {
           pathname
         }}
       />
-      <div>{elements}</div>
+      <div className={classes.elements}>{elements}</div>
     </Card>
   );
 };
