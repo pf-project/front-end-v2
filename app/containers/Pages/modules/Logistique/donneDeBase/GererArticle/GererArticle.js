@@ -442,7 +442,8 @@ class GererArticle extends React.Component {
               <Tabs
                 value={activeStep}
                 onChange={this.changeStep}
-                variant="fullWidth"
+                variant="scrollable"
+          scrollButtons="on"
                 indicatorColor="primary"
                 textColor="primary"
                 entered
