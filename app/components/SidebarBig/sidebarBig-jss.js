@@ -46,6 +46,7 @@ const styles = theme => ({
     position: "fixed",
     overflow: "auto",
     height: "100%",
+    border: "1px solid rgba(255,255,255,0.3)",
 
     [theme.breakpoints.up("lg")]: {
       height: "calc(100% - 64px)"
@@ -255,7 +256,8 @@ const styles = theme => ({
   },
   childMenuWrap: {
     opacity: 0,
-    transform: "translateX(-5px)"
+    transform: "translateX(-5px)",
+    borderRight: "2px solid " + theme.palette.primary.main
   },
   menuLoaded: {
     opacity: 1,
