@@ -89,10 +89,10 @@ class LeftSidebarBigLayout extends React.Component {
               in={pageLoaded}
               mountOnEnter
               unmountOnExit
-              {...(pageLoaded ? { timeout: 30 } : {})}
+              {...(pageLoaded ? { timeout: 1 } : {})}
             >
               <div
-                // style={{ marginTop: "80px" }}
+                // style={{ margin: "80px" }}
                 className={!pageLoaded ? classes.hideApp : ""}
               >
                 {/* Application content will load here */}

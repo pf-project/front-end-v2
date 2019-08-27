@@ -32,7 +32,7 @@ const initialState = {
     { name: "Brown", value: "brownTheme" }
   ]),
   sidebarOpen: true,
-  pageLoaded: false,
+  pageLoaded: true,
   subMenuOpen: []
 };
 

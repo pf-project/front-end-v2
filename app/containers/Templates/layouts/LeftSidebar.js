@@ -88,7 +88,7 @@ class LeftSidebarLayout extends React.Component {
               in={pageLoaded}
               mountOnEnter
               unmountOnExit
-              {...(pageLoaded ? { timeout: 700 } : {})}
+              {...(pageLoaded ? { timeout: 1 } : {})}
             >
               <div className={!pageLoaded ? classes.hideApp : ""}>
                 {/* Application content will load here */}

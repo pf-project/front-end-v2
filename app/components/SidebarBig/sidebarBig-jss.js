@@ -46,6 +46,7 @@ const styles = theme => ({
     position: "fixed",
     overflow: "auto",
     height: "100%",
+
     [theme.breakpoints.up("lg")]: {
       height: "calc(100% - 64px)"
     },
