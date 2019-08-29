@@ -130,12 +130,14 @@ export default function Commerciale({
                 label="Prix moyen pondéré *"
                 validators={[
                   "required",
-                  "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/
+
+                  "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/,
+                  "maxNumber:999999"
                 ]}
                 errorMessages={[
                   "Ce champ est obligatoire",
-                  "Chmap doit étre un nombre : ex 4.57 "
-                  // "deux  nombre(s) apres la virgule !"
+                  "Chmap doit étre un nombre : ex 4.57 ",
+                  "Maximum 6 nombres !"
                 ]}
               />
             </FormGroup>
@@ -156,12 +158,14 @@ export default function Commerciale({
                 label="Prix de vente de base HT *"
                 validators={[
                   "required",
-                  "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/
+
+                  "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/,
+                  "maxNumber:999999"
                 ]}
                 errorMessages={[
                   "Ce champ est obligatoire",
-                  "Chmap doit étre un nombre : ex 4.57 "
-                  // "deux  nombre(s) apres la virgule !"
+                  "Chmap doit étre un nombre : ex 4.57 ",
+                  "Maximum 6 nombres !"
                 ]}
               />
             </FormGroup>
@@ -187,12 +191,14 @@ export default function Commerciale({
                   label="Prix de vente de base TTC *"
                   validators={[
                     "required",
-                    "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/
+
+                    "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/,
+                    "maxNumber:999999"
                   ]}
                   errorMessages={[
                     "Ce champ est obligatoire",
-                    "Chmap doit étre un nombre : ex 4.57 "
-                    // "deux  nombre(s) apres la virgule !"
+                    "Chmap doit étre un nombre : ex 4.57 ",
+                    "Maximum 6 nombres !"
                   ]}
                 />
               </Grid>

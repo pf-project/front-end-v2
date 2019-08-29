@@ -170,8 +170,12 @@ export default function Stockage({
                   value={data.poids}
                   label="Poids"
                   id="#emplacement"
-                  validators={["isFloat"]}
-                  errorMessages={["Poids doit etre un nombre"]}
+                  validators={["maxNumber:999", "isFloat"]}
+                  errorMessages={[
+                    "Maximum 3 nombres !",
+                    ,
+                    "Poids doit etre un nombre"
+                  ]}
                 />
               </Grid>
               <Grid item xs={6} direction="column">

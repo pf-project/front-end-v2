@@ -12,14 +12,14 @@ import history from "../../utils/history";
 import { LOAD_PAGE } from "../constants/uiConstants";
 import {
   playTransitionActionAfterSaga,
-  toggleAction
+  closeMenuAction
 } from "../actions/uiActions";
 
 function* closeMenuAfterSomeSeconds({ isLoaded }) {
   try {
     yield put(playTransitionActionAfterSaga(isLoaded));
     yield delay(1200);
-    yield put(toggleAction);
+    yield put(closeMenuAction);
   } catch (error) {
     // yield put(changePasswordFailure("Erreur lors de l'action  :"));
   }

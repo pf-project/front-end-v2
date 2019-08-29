@@ -22,7 +22,7 @@ import {
   fetchCategorie,
   addArticle,
   closeNotifAction
-} from "../../reducers/crudLogisticActions";
+} from "../../../reducers/crudLogisticActions";
 import Commerciale from "./Commerciale";
 import Stockage from "./Stockage";
 import Base from "./Base";

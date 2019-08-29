@@ -31,7 +31,7 @@ import {
 import {
   addCategorie,
   closeNotifAction
-} from "../../reducers/crudLogisticActions";
+} from "../../../reducers/crudLogisticActions";
 // import Initiale from "./Initiale";
 // import Base from "./Base";
 // import Stockage from "./Stockage";
@@ -119,6 +119,12 @@ const CreerCategorie = ({
   const addValues = key => position => event => {
     let articlesMetaData = [...data.articlesMetaData];
     let item = articlesMetaData[key];
+    if (item.longueur && item.longueur !== "");
+    if (
+      event.target.value.length > item.longueur &&
+      item.valeurs[position] < event.target.value
+    )
+      return 0;
     if (typeof item === "undefined") {
       item = { obligatoire: false, valeurs: [], limite: false };
     }

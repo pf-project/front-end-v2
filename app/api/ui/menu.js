@@ -5,13 +5,13 @@ module.exports = [
     icon: "home",
     child: [
       {
-        key: "gestion_utilisateur",
-        name: "Gestion des utilisateurs",
+        key: "utilisateurs",
+        name: "Utilisateurs",
         title: true
       },
       {
-        key: "gerer",
-        name: "Gérer",
+        key: "gestion utilisateurs",
+        name: "Gestion utilisateurs",
         link: "/app/administration/gestion-utilisateur"
       }
     ]
@@ -37,19 +37,9 @@ module.exports = [
         title: true
       },
       {
-        key: "lister-articles",
-        name: "Lister articles",
-        link: "/app/logistique/Données-de-base/lister-articles"
-      },
-      {
-        key: "ajouter article",
-        name: "Ajouter article",
-        link: "/app/logistique/Données-de-base/Ajouter-article"
-      },
-      {
-        key: "Gerer Article",
-        name: "Gerer Article",
-        link: "/app/logistique/Données-de-base/GererArticle"
+        key: "Article",
+        name: "Article",
+        link: "/app/logistique/Données-de-base/article"
       }
     ]
   }

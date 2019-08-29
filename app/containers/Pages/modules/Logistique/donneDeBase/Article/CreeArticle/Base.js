@@ -26,7 +26,7 @@ import {
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { fetchCategorie } from "../../reducers/crudLogisticActions";
+import { fetchCategorie } from "../../../reducers/crudLogisticActions";
 import Grid from "@material-ui/core/Grid";
 
 class Base extends React.Component {

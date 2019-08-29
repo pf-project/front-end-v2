@@ -23,7 +23,7 @@ import {
   closeNotifAction,
   fetchArticle,
   updateArticle
-} from "../../reducers/crudLogisticActions";
+} from "../../../reducers/crudLogisticActions";
 const styles = theme => ({
   root: {
     width: "90%",
@@ -443,7 +443,7 @@ class GererArticle extends React.Component {
                 value={activeStep}
                 onChange={this.changeStep}
                 variant="scrollable"
-          scrollButtons="on"
+                scrollButtons="on"
                 indicatorColor="primary"
                 textColor="primary"
                 entered

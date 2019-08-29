@@ -1,4 +1,5 @@
 import Loadable from "react-loadable";
+import Loading from "enl-components/Loading";
 
 // Gestion Utilisateur
 export const GestionUtilisateur = Loadable({
@@ -11,36 +12,59 @@ export const GestionUtilisateur = Loadable({
 
 // logistique :
 // // Parametrage :
+// // // Catgeorie :
+// // // // index :
+
+export const Categorie = Loadable({
+  loader: () =>
+    import("./Pages/modules/Logistique/parametrage/Categorie/index"),
+  loading: Loading
+});
+
+// // // // Create Categorie
+
 export const CreerCategorie = Loadable({
   loader: () =>
     import(
-      "./Pages/modules/Logistique/parametrage/CreeCategorie/CreeCategorie"
+      "./Pages/modules/Logistique/parametrage/Categorie/CreeCategorie/CreeCategorie"
     ),
   loading: Loading
 });
 
 //// Donne de bas :
+// // // Article
+// // // // index :
+export const Article = Loadable({
+  loader: () => import("./Pages/modules/Logistique/donneDeBase/Article/index"),
+  loading: Loading
+});
+
+// // // // Create Article
 export const CreerArticle = Loadable({
   loader: () =>
-    import("./Pages/modules/Logistique/donneDeBase/CreeArticle/CreerArticle"),
-  loading: Loading
-});
-
-export const GererArticle = Loadable({
-  loader: () =>
-    import("./Pages/modules/Logistique/donneDeBase/GererArticle/GererArticle"),
-  loading: Loading
-});
-
-export const ListerArticles = Loadable({
-  loader: () =>
     import(
-      "./Pages/modules/Logistique/donneDeBase/ListerArticles/ListerArticles"
+      "./Pages/modules/Logistique/donneDeBase/Article/CreeArticle/CreerArticle"
     ),
   loading: Loading
 });
 
-import Loading from "enl-components/Loading";
+// // // // Gerer Article
+export const GererArticle = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Logistique/donneDeBase/Article/GererArticle/GererArticle"
+    ),
+  loading: Loading
+});
+
+// // // // List Article
+export const ListerArticles = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Logistique/donneDeBase/Article/ListerArticles/ListerArticles"
+    ),
+  loading: Loading
+});
 
 // export const DashboardPage = Loadable({
 //   loader: () => import("./Pages/Dashboard"),

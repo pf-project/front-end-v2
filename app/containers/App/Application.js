@@ -4,11 +4,11 @@ import { Switch, Route } from "react-router-dom";
 import Dashboard from "../Templates/Dashboard";
 import {
   GestionUtilisateur,
-  DashboardPage,
+  Categorie,
   BlankPage,
   Error,
   NotFound,
-  Form,
+  Article,
   CreerArticle,
   GererArticle,
   ListerArticles,
@@ -29,25 +29,36 @@ class Application extends React.Component {
             component={GestionUtilisateur}
           />
           <Route path="/app/administration" component={Parent} />
+
+          {/* ****  Parametrage :  */}
+          <Route
+            path="/app/logistique/paramétrage/configuration-Article/CreeCategorie"
+            component={CreerCategorie}
+          />
           <Route
             path="/app/logistique/paramétrage/configuration-Article"
-            component={CreerCategorie}
+            component={Categorie}
           />
 
           <Route path="/app/paramétrage" component={Parent} />
           {/* ****  Donnee de base :  */}
+
           <Route
-            path="/app/logistique/Données-de-base/GererArticle"
+            path="/app/logistique/Données-de-base/article/GererArticle"
             component={GererArticle}
           />
           <Route
-            path="/app/logistique/Données-de-base/ajouter-article"
+            path="/app/logistique/Données-de-base/article/ajouter-article"
             component={CreerArticle}
           />
 
           <Route
-            path="/app/logistique/Données-de-base/lister-articles"
+            path="/app/logistique/Données-de-base/article/lister-articles"
             component={ListerArticles}
+          />
+          <Route
+            path="/app/logistique/Données-de-base/article"
+            component={Article}
           />
 
           <Route path="/app/logistique/Données-de-base" component={Parent} />

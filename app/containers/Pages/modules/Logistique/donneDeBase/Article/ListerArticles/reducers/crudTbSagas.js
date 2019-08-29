@@ -1,5 +1,5 @@
 import { call, fork, put, take, takeEvery, all } from "redux-saga/effects";
-import { fetchAPI } from "../../../../../../../serverActions";
+import { fetchAPI } from "../../../../../../../../serverActions";
 
 import {
   fetchAction,

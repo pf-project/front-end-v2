@@ -9,7 +9,7 @@ import {
   CHANGE_MODE,
   CHANGE_LAYOUT,
   CHANGE_DIRECTION,
-  LOAD_PAGE,
+  CLOSE_MENU,
   LOAD_PAGE_AFTER_TIME_OUT
 } from "../constants/uiConstants";
 
@@ -63,6 +63,10 @@ export default function reducer(state = initialImmutableState, action = {}) {
     case TOGGLE_SIDEBAR:
       return state.withMutations(mutableState => {
         mutableState.set("sidebarOpen", !state.get("sidebarOpen"));
+      });
+    case CLOSE_MENU:
+      return state.withMutations(mutableState => {
+        mutableState.set("sidebarOpen", false);
       });
     case OPEN_MENU:
       return state.withMutations(mutableState => {

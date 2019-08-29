@@ -11,7 +11,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import Icon from "@material-ui/core/Icon";
-import { openMenuAction } from "enl-redux/actions/uiActions";
+import { openMenuAction, toggleAction } from "enl-redux/actions/uiActions";
 import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 import messages from "enl-api/ui/menuMessages";
 import styles from "./sidebarBig-jss";
@@ -26,7 +26,11 @@ class MainMenuBig extends React.Component {
   state = { selectedMenu: [], menuLoaded: true };
 
   handleLoadMenu(menu) {
-    const { openDrawer, mobile } = this.props;
+    const { closeDrawer, openDrawer, mobile } = this.props;
+    if (menu === this.state.selectedMenu) {
+      closeDrawer();
+      return 0;
+    }
     this.setState({
       selectedMenu: menu,
       menuLoaded: false // unload transtion menu
@@ -226,7 +230,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  openDrawer: () => dispatch(openMenuAction)
+  openDrawer: () => dispatch(openMenuAction),
+  closeDrawer: () => dispatch(toggleAction)
 });
 
 const MainMenuBigMapped = connect(
