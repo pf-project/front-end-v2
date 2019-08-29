@@ -37,7 +37,7 @@ class MainMenuBig extends React.Component {
     });
     setTimeout(() => {
       this.setState({ menuLoaded: true }); // load transtion menu
-    }, 50);
+    }, 1);
     // Unecessary in mobile, because toggle menu already handled
     if (!mobile) {
       openDrawer();

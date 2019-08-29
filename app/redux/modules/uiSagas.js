@@ -16,7 +16,7 @@ import {
 
 function* closeMenuAfterSomeSeconds({ isLoaded }) {
   try {
-    yield put(playTransitionActionAfterSaga(isLoaded));
+    // yield put(playTransitionActionAfterSaga(isLoaded));
     yield delay(1200);
     yield put(closeMenuAction);
   } catch (error) {

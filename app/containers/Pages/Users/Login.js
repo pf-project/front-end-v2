@@ -29,7 +29,7 @@ class Login extends React.Component {
         username: this.state.valueForm.get("username"),
         password: this.state.valueForm.get("password")
       }); // eslint-disable-line
-    }, 50); // simulate server latency
+    }, 1); // simulate server latency
   }
 
   render() {

@@ -37,7 +37,7 @@ class Dashboard extends React.Component {
       window.scrollTo(0, 0);
       setTimeout(() => {
         loadTransition(true);
-      }, 50);
+      }, 10);
     });
   };
 

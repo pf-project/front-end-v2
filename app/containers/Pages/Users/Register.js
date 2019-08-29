@@ -29,7 +29,7 @@ class Register extends React.Component {
         this.state.valueForm.get("email"),
         this.state.valueForm.get("password")
       ); // eslint-disable-line
-    }, 50); // simulate server latency
+    }, 1); // simulate server latency
   }
 
   render() {

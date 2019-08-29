@@ -42,7 +42,7 @@ class MainMenu extends React.Component {
     const { open } = this.props;
     setTimeout(() => {
       this.setState({ active: open });
-    }, 50);
+    }, 1);
   }
 
   handleOpenMenu = (event, key, keyParent) => {
@@ -55,7 +55,7 @@ class MainMenu extends React.Component {
       this.setState({
         openMenu: this.props.open // eslint-disable-line
       });
-    }, 50);
+    }, 1);
   };
 
   handleClose = () => {

@@ -16,7 +16,7 @@ class LockScreen extends React.Component {
     setTimeout(() => {
       this.setState({ valueForm: values });
       window.location.href = "/app";
-    }, 50); // simulate server latency
+    }, 1); // simulate server latency
   }
 
   render() {

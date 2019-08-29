@@ -121,7 +121,7 @@ export default function reducer(state = initialImmutableState, action = {}) {
     case LOAD_PAGE_AFTER_TIME_OUT:
       return state.withMutations(mutableState => {
         // if (!action.isLoaded) mutableState.set("sidebarOpen", false);
-        mutableState.set("pageLoaded", action.isLoaded);
+        mutableState.set("pageLoaded", true);
       });
     default:
       return state;

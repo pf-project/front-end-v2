@@ -20,7 +20,7 @@ class ReduxForm extends React.Component {
     setTimeout(() => {
       this.setState({ valueForm: values });
       window.alert(`You submitted:\n\n${this.state.valueForm}`); // eslint-disable-line
-    }, 50); // simulate server latency
+    }, 1); // simulate server latency
   }
 
   render() {
