@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Helmet } from "react-helmet";
 import brand from "enl-api/dummy/brand";
-import { SourceReader, PapperBlock } from "enl-components";
 import { injectIntl, intlShape } from "react-intl";
 import messages from "./messages";
 import Utilisateurs from "./types/Utilisateurs";

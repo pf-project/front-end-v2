@@ -7,8 +7,7 @@ import {
   all,
   delay
 } from "redux-saga/effects";
-import { fetchAPI } from "../../serverActions";
-import history from "../../utils/history";
+
 import { LOAD_PAGE } from "../constants/uiConstants";
 import {
   playTransitionActionAfterSaga,

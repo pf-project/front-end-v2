@@ -4,7 +4,7 @@ export HeaderMenu from "./Header/HeaderMenu";
 export Sidebar from "./Sidebar";
 export SidebarBig from "./SidebarBig";
 export BreadCrumb from "./BreadCrumb/BreadCrumb";
-export SourceReader from "./SourceReader/SourceReader";
+// export SourceReader from "./SourceReader/SourceReader";
 export PapperBlock from "./PapperBlock/PapperBlock";
 export SearchUi from "./Search/SearchUi";
 export SelectLanguage from "./SelectLanguage";
