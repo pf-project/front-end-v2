@@ -27,9 +27,14 @@ module.exports = [
         title: true
       },
       {
-        key: " Configuration : article",
-        name: " Configuration : article",
+        key: " Configuration : Article",
+        name: " Configuration : Article",
         link: "/app/logistique/paramétrage/Configuration-article"
+      },
+      {
+        key: " Configuration : Service",
+        name: " Configuration : Service",
+        link: "/app/logistique/paramétrage/Configuration-Service"
       },
       {
         key: "Données de base",
@@ -40,6 +45,11 @@ module.exports = [
         key: "Article",
         name: "Article",
         link: "/app/logistique/Données-de-base/article"
+      },
+      {
+        key: "Service",
+        name: "Service",
+        link: "/app/logistique/Données-de-base/Service"
       }
     ]
   }

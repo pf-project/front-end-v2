@@ -115,7 +115,7 @@ class CreerArticle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeStep: 3,
+      activeStep: 0,
       steps: [
         "Données initiales",
         "Données de base",
@@ -125,8 +125,7 @@ class CreerArticle extends React.Component {
       data: {
         caracteristiques: [],
         controleexige: false,
-        gestionparlot: false,
-        marge: false
+        gestionparlot: false
       },
       designations: [],
       categorie: []
@@ -147,47 +146,45 @@ class CreerArticle extends React.Component {
 
   handleSubmitCommerciale = () => {
     const { data } = this.state;
+    const prix_de_vente_de_base_HT = parseFloat(
+      data.prix_de_vente_de_base_HT
+    ).toFixed(3);
+    const prix_moyen_pendere = parseFloat(data.prix_moyen_pendere).toFixed(3);
+    const prix_de_vente_de_base_TTC = parseFloat(
+      data.prix_de_vente_de_base_TTC
+    ).toFixed(3);
     this.props.addArticle(data);
     this.handleNext();
   };
 
-  // calcul TTC
-  calculTTC = ({ taux_tva, prix_HT }) => {
-    if (prix_HT && !(prix_HT === "")) {
-      return (prix_HT + prix_HT * taux_tva).toFixed(2);
-    }
-  };
+  // componentWillReceiveProps(nextProps) {
+  //   let caracteristiques = [];
+  //   try {
+  //     const categorie = nextProps.categorie.toObject();
+
+  //     const articlesMetaData = categorie.articlesMetaData.toArray();
+  //     articlesMetaData.map((caracteristique, idx) => {
+  //       caracteristique = caracteristique.toObject();
+  //       caracteristiques.push({
+  //         nom: caracteristique.nom
+  //       });
+  //     });
+  //     this.setState({
+  //       data: {
+  //         ...this.state.data,
+  //         caracteristiques: caracteristiques
+  //       }
+  //     });
+  //   } catch (e) {
+  //     // console.log(e);
+  //   }
+  // }
 
   handleChange = event => {
-    const { value, name } = event.target;
+    const { name } = event.target;
+    const { value } = event.target;
     let data;
-    let taux_tva;
-    let prix_HT;
     switch (name) {
-      case "taux_tva_achat":
-        data = { ...this.state.data };
-
-        taux_tva = value === "Exonérer" ? 0 : parseInt(value) / 100;
-        prix_HT = parseFloat(data.prix_chat_HT);
-        data.taux_tva_achat = value;
-        data.prix_achat_TTC = this.calculTTC({ taux_tva, prix_HT });
-        this.setState({
-          data
-        });
-
-        break;
-      case "taux_tva_vente":
-        data = { ...this.state.data };
-
-        taux_tva = value === "Exonérer" ? 0 : parseInt(value) / 100;
-        prix_HT = parseFloat(data.prix_vente_HT);
-        data.taux_tva_vente = value;
-        data.prix_vente_TTC = this.calculTTC({ taux_tva, prix_HT });
-        this.setState({
-          data
-        });
-
-        break;
       case "controle_qualite_exige":
         this.setState({
           data: {
@@ -201,18 +198,6 @@ class CreerArticle extends React.Component {
 
         if (data.gestion_par_lot) delete data.lot_standard;
         data.gestion_par_lot = !data.gestion_par_lot;
-        this.setState({
-          data
-        });
-        break;
-      case "marge":
-        data = { ...this.state.data };
-        if (value === "false") {
-          delete data.taux_marge;
-          delete data.montant_marge;
-        }
-
-        data.marge = !data.marge;
         this.setState({
           data
         });

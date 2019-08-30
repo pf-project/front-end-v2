@@ -12,21 +12,40 @@ export const GestionUtilisateur = Loadable({
 
 // logistique :
 // // Parametrage :
-// // // Catgeorie :
+// // // Catgeorie Article :
 // // // // index :
 
-export const Categorie = Loadable({
+export const CategorieArticle = Loadable({
   loader: () =>
-    import("./Pages/modules/Logistique/parametrage/Categorie/index"),
+    import("./Pages/modules/Logistique/parametrage/CategorieArticle/index"),
   loading: Loading
 });
 
 // // // // Create Categorie
 
-export const CreerCategorie = Loadable({
+export const CreerArticleCategorie = Loadable({
   loader: () =>
     import(
-      "./Pages/modules/Logistique/parametrage/Categorie/CreeCategorie/CreeCategorie"
+      "./Pages/modules/Logistique/parametrage/CategorieArticle/CreeCategorie/CreeCategorie"
+    ),
+  loading: Loading
+});
+
+// // // Catgeorie Service :
+// // // // index :
+
+export const CategorieService = Loadable({
+  loader: () =>
+    import("./Pages/modules/Logistique/parametrage/CategorieService/index"),
+  loading: Loading
+});
+
+// // // // Create Categorie
+
+export const CreerServiceCategorie = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Logistique/parametrage/CategorieService/CreeCategorie/CreeCategorie"
     ),
   loading: Loading
 });
@@ -62,6 +81,40 @@ export const ListerArticles = Loadable({
   loader: () =>
     import(
       "./Pages/modules/Logistique/donneDeBase/Article/ListerArticles/ListerArticles"
+    ),
+  loading: Loading
+});
+
+// // // Service
+// // // // index :
+export const Service = Loadable({
+  loader: () => import("./Pages/modules/Logistique/donneDeBase/Service/index"),
+  loading: Loading
+});
+
+// // // // Create Service
+export const CreerService = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Logistique/donneDeBase/Service/CreeService/CreerService"
+    ),
+  loading: Loading
+});
+
+// // // // Gerer Service
+export const GererService = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Logistique/donneDeBase/Service/GererService/GererService"
+    ),
+  loading: Loading
+});
+
+// // // // List Service
+export const ListerServices = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Logistique/donneDeBase/Service/ListerService/ListerService"
     ),
   loading: Loading
 });

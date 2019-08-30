@@ -239,14 +239,14 @@ const CreerCategorie = ({
   };
   let form;
   let elements = (
-    <div className={classes.submitdiv}>
+    <>
       <Button
         disabled={loading}
         color="primary"
         variant="contained"
         type="submit"
         form="addCategorie"
-        className={classes.button}
+        // className={classes.button}
       >
         {loading && (
           <CircularProgress size={24} className={classes.buttonProgress} />
@@ -254,7 +254,7 @@ const CreerCategorie = ({
         Sauvgarder{" "}
       </Button>
       <Button
-        className={classes.button}
+        // className={classes.button}
         onClick={() => {
           setData({
             groupe: "",
@@ -268,7 +268,7 @@ const CreerCategorie = ({
       >
         Vider Les Champs{" "}
       </Button>
-    </div>
+    </>
   );
   return (
     <div>
@@ -277,6 +277,7 @@ const CreerCategorie = ({
         title="Créer Catégorie"
         pathname="Logistique/Paramétrage/Configuration article"
         elements={elements}
+        withBackOption={true}
       />
       {/* </AppBar> */}
       <Card>

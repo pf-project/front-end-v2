@@ -4,7 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import Dashboard from "../Templates/Dashboard";
 import {
   GestionUtilisateur,
-  Categorie,
+  CategorieArticle,
   BlankPage,
   Error,
   NotFound,
@@ -13,7 +13,13 @@ import {
   GererArticle,
   ListerArticles,
   Parent,
-  CreerCategorie
+  CreerArticleCategorie,
+  CategorieService,
+  CreerServiceCategorie,
+  Service,
+  CreerService,
+  GererService,
+  ListerServices
 } from "../pageListAsync";
 
 class Application extends React.Component {
@@ -23,26 +29,34 @@ class Application extends React.Component {
       <Dashboard history={history} changeMode={changeMode}>
         <Switch>
           {/* Home */}
-          <Route exact path="/app" component={BlankPage} />
+          {/* <Route exact path="/app" component={BlankPage} /> */}
           <Route
             path="/app/administration/gestion-utilisateur"
             component={GestionUtilisateur}
           />
-          <Route path="/app/administration" component={Parent} />
 
           {/* ****  Parametrage :  */}
+          {/* ******* Article */}
           <Route
             path="/app/logistique/paramétrage/configuration-Article/CreeCategorie"
-            component={CreerCategorie}
+            component={CreerArticleCategorie}
           />
           <Route
             path="/app/logistique/paramétrage/configuration-Article"
-            component={Categorie}
+            component={CategorieArticle}
           />
 
-          <Route path="/app/paramétrage" component={Parent} />
+          {/* ******* Service */}
+          <Route
+            path="/app/logistique/paramétrage/configuration-Service/CreeCategorie"
+            component={CreerServiceCategorie}
+          />
+          <Route
+            path="/app/logistique/paramétrage/configuration-Service"
+            component={CategorieService}
+          />
           {/* ****  Donnee de base :  */}
-
+          {/* ****** Article */}
           <Route
             path="/app/logistique/Données-de-base/article/GererArticle"
             component={GererArticle}
@@ -61,11 +75,26 @@ class Application extends React.Component {
             component={Article}
           />
 
-          <Route path="/app/logistique/Données-de-base" component={Parent} />
-          {/* parent page : */}
-          <Route path="/app/logistique" component={Parent} />
+          {/* ****** Service */}
+          <Route
+            path="/app/logistique/Données-de-base/service/GererService"
+            component={GererService}
+          />
+          <Route
+            path="/app/logistique/Données-de-base/service/ajouter-service"
+            component={CreerService}
+          />
 
-          <Route path="/app/page-list" component={Parent} />
+          <Route
+            path="/app/logistique/Données-de-base/service/lister-services"
+            component={ListerServices}
+          />
+          <Route
+            path="/app/logistique/Données-de-base/service"
+            component={Service}
+          />
+
+          {/* parent page : */}
           <Route path="/app/pages/not-found" component={NotFound} />
           <Route path="/app/pages/error" component={Error} />
           <Route component={NotFound} />
