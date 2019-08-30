@@ -16,23 +16,11 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 export default function Commerciale({
   handleChange,
   state,
-  handleSubmitCommerciale,
+  onLeavingMarge,
   handleFixPrecisionValeurs,
   classes,
-  loading
+  handle_price_leaving
 }) {
-  const { designations } = state;
-  // const [loading, setLoading] = React.useState(false);
-  // const handleClickVariant = SnackBar({
-  //   message: "L'article a été créer avec succes",
-  //   variant: "success"
-  // });
-
-  const handleSubmit = () => {
-    // setLoading(true);
-    handleSubmitCommerciale();
-    // handleClickVariant("success");
-  };
   return (
     <Grid container spacing={1} className={classes.grid} direction="column">
       {/* <ValidatorForm autoComplete="off" onSubmit={handleSubmit}> */}
@@ -100,9 +88,10 @@ export default function Commerciale({
                 defaultValue={" "}
                 type="number"
                 step="0.01"
-                name="prix_chat_HT"
-                onBlur={handleFixPrecisionValeurs(false)(false)}
-                value={state.data.prix_chat_HT}
+                name="prix_achat_HT"
+                // onBlur={handleFixPrecisionValeurs(false)(false)}
+                onBlur={handle_price_leaving({ achat: true, ht: true })}
+                value={state.data.prix_achat_HT}
                 label="Prix d'achat de base HT *"
                 validators={[
                   "required",
@@ -170,11 +159,11 @@ export default function Commerciale({
                 validators={["required"]}
                 errorMessages={["Ce champ est obligatoire"]}
               >
-                <MenuItem value={"20"}>20</MenuItem>
-                <MenuItem value={"14"}>14</MenuItem>
-                <MenuItem value={"10"}>10</MenuItem>
-                <MenuItem value={"7"}>7</MenuItem>
-                <MenuItem value={"Exonérer"}>Exonérer</MenuItem>
+                <MenuItem value={"0.20"}>20</MenuItem>
+                <MenuItem value={"0.14"}>14</MenuItem>
+                <MenuItem value={"0.10"}>10</MenuItem>
+                <MenuItem value={"0.07"}>7</MenuItem>
+                <MenuItem value={"0"}>Exonéré</MenuItem>
               </SelectValidator>
             </FormGroup>
           </Grid>
@@ -184,7 +173,7 @@ export default function Commerciale({
               className={classes.field}
               type="number"
               step="0.01"
-              onBlur={handleFixPrecisionValeurs(false)(false)}
+              onBlur={handle_price_leaving({ achat: true, ht: false })}
               name="prix_achat_TTC"
               value={state.data.prix_achat_TTC}
               defaultValue={" "}
@@ -275,9 +264,10 @@ export default function Commerciale({
                     <TextValidator
                       onChange={handleChange}
                       className={classes.field}
+                      defaultValue=" "
                       type="number"
                       step="0.01"
-                      // onBlur={handleFixPrecisionValeurs(false)(false)}
+                      onBlur={onLeavingMarge({ montant: false })}
                       name="taux_marge"
                       value={state.data.taux_marge}
                       label="Marge  %*"
@@ -298,7 +288,7 @@ export default function Commerciale({
                       onChange={handleChange}
                       className={classes.field}
                       defaultValue={" "}
-                      onBlur={handleFixPrecisionValeurs(false)(false)}
+                      onBlur={onLeavingMarge({ montant: true })}
                       name="montant_marge"
                       value={state.data.montant_marge}
                       label="Montant  de marge*"
@@ -331,7 +321,7 @@ export default function Commerciale({
                     name="prix_vente_HT"
                     type="number"
                     step="0.01"
-                    onBlur={handleFixPrecisionValeurs(false)(false)}
+                    onBlur={handle_price_leaving({ achat: false, ht: true })}
                     value={state.data.prix_vente_HT}
                     label="Prix de vente de base HT *"
                     validators={[
@@ -410,11 +400,11 @@ export default function Commerciale({
                     validators={["required"]}
                     errorMessages={["Ce champ est obligatoire"]}
                   >
-                    <MenuItem value={"20"}>20</MenuItem>
-                    <MenuItem value={"14"}>14</MenuItem>
-                    <MenuItem value={"10"}>10</MenuItem>
-                    <MenuItem value={"7"}>7</MenuItem>
-                    <MenuItem value={"Exonérer"}>Exonérer</MenuItem>
+                    <MenuItem value={"0.20"}>20</MenuItem>
+                    <MenuItem value={"0.14"}>14</MenuItem>
+                    <MenuItem value={"0.10"}>10</MenuItem>
+                    <MenuItem value={"0.07"}>7</MenuItem>
+                    <MenuItem value={"0"}>Exonéré</MenuItem>
                   </SelectValidator>
                 </FormGroup>
               </Grid>
@@ -425,7 +415,7 @@ export default function Commerciale({
                   defaultValue=" "
                   type="number"
                   step="0.01"
-                  onBlur={handleFixPrecisionValeurs(false)(false)}
+                  onBlur={handle_price_leaving({ achat: false, ht: false })}
                   name="prix_vente_TTC"
                   value={state.data.prix_vente_TTC}
                   label="Prix de vente de base TTC *"

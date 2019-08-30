@@ -151,11 +151,107 @@ class CreerArticle extends React.Component {
     this.handleNext();
   };
 
+  handle_price_leaving = ({ achat, ht }) => event => {
+    const { data } = this.state;
+    const { name, value } = event.target;
+    let taux_tva;
+    if (achat) {
+      taux_tva = parseFloat(data.taux_tva_achat);
+      if (ht) {
+        let prix_HT = parseFloat(value);
+        if (data.taux_tva_achat) {
+          data.prix_achat_TTC = this.calculTTC({ prix_HT, taux_tva });
+        }
+        if (data.taux_marge || data.montant_marge)
+          this.onLeavingMarge({ montant: false })();
+
+        data.prix_achat_HT = prix_HT.toFixed(2);
+      } else {
+        let prix_TTC = parseFloat(value);
+        if (data.taux_tva_achat) {
+          data.prix_achat_HT = this.calculHT({ prix_TTC, taux_tva });
+          this.onLeavingMarge({ montant: false })();
+        }
+
+        data.prix_TTC = prix_TTC.toFixed(2);
+      }
+    } else {
+      taux_tva = parseFloat(data.taux_tva_vente);
+      if (ht) {
+        let prix_HT = parseFloat(value);
+        if (data.taux_tva_vente) {
+          data.prix_vente_TTC = this.calculTTC({ prix_HT, taux_tva });
+        }
+        data.prix_vente_HT = prix_HT.toFixed(2);
+        data.montant_marge = (prix_HT - data.prix_achat_HT).toFixed(2);
+        data.taux_marge = (
+          (data.montant_marge / data.prix_achat_HT) *
+          100
+        ).toFixed(2);
+      } else {
+        let prix_TTC = parseFloat(value);
+        if (data.taux_tva_vente)
+          data.prix_vente_HT = this.calculHT({ prix_TTC, taux_tva });
+        data.vente_TTC = prix_TTC.toFixed(2);
+
+        if (data.taux_marge) {
+          data.montant_marge = parseFloat(
+            data.prix_vente_HT - data.prix_achat_HT
+          ).toFixed(2);
+          data.taux_marge = parseFloat(
+            (data.montant_marge / data.prix_achat_HT) * 100
+          ).toFixed(2);
+        }
+      }
+    }
+    this.setState({
+      data
+    });
+  };
+
+  // Marge function
+
+  onLeavingMarge = ({ montant }) => event => {
+    const { data } = this.state;
+    let prix_achat_HT = parseFloat(data.prix_achat_HT);
+    if (montant) {
+      let montant = parseFloat(data.montant_marge);
+      data.taux_marge = (montant / prix_achat_HT) * 100;
+
+      data.prix_vente_HT = parseFloat(montant + prix_achat_HT).toFixed(2);
+    } else {
+      let taux_marge = parseFloat(data.taux_marge) / 100;
+      data.montant_marge = parseFloat(prix_achat_HT * taux_marge).toFixed(2);
+      data.prix_vente_HT = parseFloat(prix_achat_HT * (1 + taux_marge)).toFixed(
+        2
+      );
+    }
+
+    if (data.taux_tva_vente)
+      data.prix_vente_TTC = this.calculTTC({
+        taux_tva: parseFloat(data.taux_tva_vente),
+        prix_HT: parseFloat(data.prix_vente_HT)
+      });
+    this.setState({
+      data
+    });
+  };
+
   // calcul TTC
   calculTTC = ({ taux_tva, prix_HT }) => {
     if (prix_HT && !(prix_HT === "")) {
-      return (prix_HT + prix_HT * taux_tva).toFixed(2);
+      return parseFloat(prix_HT + prix_HT * taux_tva).toFixed(2);
     }
+    return null;
+  };
+
+  // Calcul HT
+
+  calculHT = ({ taux_tva, prix_TTC }) => {
+    if (prix_TTC && !(prix_TTC === "")) {
+      return parseFloat(prix_TTC / (1 + taux_tva)).toFixed(2);
+    }
+    return null;
   };
 
   handleChange = event => {
@@ -167,8 +263,8 @@ class CreerArticle extends React.Component {
       case "taux_tva_achat":
         data = { ...this.state.data };
 
-        taux_tva = value === "Exonérer" ? 0 : parseInt(value) / 100;
-        prix_HT = parseFloat(data.prix_chat_HT);
+        taux_tva = parseFloat(value);
+        prix_HT = parseFloat(data.prix_achat_HT);
         data.taux_tva_achat = value;
         data.prix_achat_TTC = this.calculTTC({ taux_tva, prix_HT });
         this.setState({
@@ -179,7 +275,7 @@ class CreerArticle extends React.Component {
       case "taux_tva_vente":
         data = { ...this.state.data };
 
-        taux_tva = value === "Exonérer" ? 0 : parseInt(value) / 100;
+        taux_tva = parseFloat(value);
         prix_HT = parseFloat(data.prix_vente_HT);
         data.taux_tva_vente = value;
         data.prix_vente_TTC = this.calculTTC({ taux_tva, prix_HT });
@@ -279,7 +375,8 @@ class CreerArticle extends React.Component {
       default:
         return (
           <Commerciale
-            loading={loading}
+            onLeavingMarge={this.onLeavingMarge}
+            handle_price_leaving={this.handle_price_leaving}
             handleFixPrecisionValeurs={this.handleFixPrecisionValeurs}
             handleChange={this.handleChange}
             state={this.state}
