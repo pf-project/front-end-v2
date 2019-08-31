@@ -230,8 +230,8 @@ export default function Commerciale({
           </Grid>
         </Grid>
       </Grid>
-      {/* state.data.utilite === "MRCH-Achat-pour-vente" */}
-      {true && (
+     
+      {state.data.utilite === "MRCH-Achat-pour-vente" && (
         <div>
           <Toolbar className={classes.toolbar}>
             <div className={classes.title}>
