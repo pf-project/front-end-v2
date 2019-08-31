@@ -43,7 +43,6 @@ class Base extends React.Component {
       handleChange,
       handleFixPrecisionValeurs,
       state,
-      handleBack,
       classes,
       handleValeursChange,
       loading
@@ -129,8 +128,6 @@ class Base extends React.Component {
                   className={classes.field}
                   onChange={handleChange}
                   name="ancienCode"
-                  // validators={["required", "maxStringLength:25"]}
-                  // errorMessages={["champ obligatoire", "maximum 25 char"]}
                   value={state.data.ancienCode}
                   label="Ancien code "
                   id="#ancienCode"
@@ -141,8 +138,6 @@ class Base extends React.Component {
                   className={classes.field}
                   onChange={handleChange}
                   name="fabriquant"
-                  // validators={["required", "maxStringLength:25"]}
-                  // errorMessages={["champ obligatoire", "maximum 25 char"]}
                   value={state.data.fabriquant}
                   label="Fabriquant"
                   id="#fabriquant"
@@ -159,12 +154,6 @@ class Base extends React.Component {
                   className={classes.field}
                   onChange={handleChange}
                   name="note"
-                  // validators={["required", "isNumber", "maxNumber:999999"]}
-                  // errorMessages={[
-                  //   "champ obligatoire",
-                  //   "Ce champ doit étre un nombre",
-                  //   "maximum 6 taille du nombre"
-                  // ]}
                   value={state.data.note}
                   label="Note"
                   id="#note"
@@ -175,12 +164,6 @@ class Base extends React.Component {
                   className={classes.field}
                   onChange={handleChange}
                   name="num_piece_fabriquant"
-                  // validators={["required", "isNumber", "maxNumber:999999"]}
-                  // errorMessages={[
-                  //   "champ obligatoire",
-                  //   "Ce champ doit étre un nombre",
-                  //   "maximum 6 taille du nombre"
-                  // ]}
                   value={state.data.num_piece_fabriquuant}
                   label="N° pièce fabirquant"
                   id="#num_piece_fabriquuant"

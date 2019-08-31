@@ -32,8 +32,7 @@ import {
 export default function Stockage({
   handleChange,
   state,
-  handleSubmitStockage,
-  handleBack,
+  handleFixPrecisionValeurs,
   classes
 }) {
   const { designations } = state;
@@ -49,15 +48,15 @@ export default function Stockage({
   ) {
     dimensionValidator.validators = [
       "required",
-      "isNumber",
+      "isFloat",
       "isPositive",
-      "maxNumber:99"
+      "maxNumber:999999"
     ];
     dimensionValidator.errors = [
       "champ obligatoire",
-      "Ce champ doit étre un nombre",
+      "Chmap doit étre un nombre : ex 4.57 ",
       "Ce champ doit étre un nombre positive",
-      "maximum 2 taille du nombre"
+      "maximum 6 nombres"
     ];
   } else {
     dimensionValidator.validators = [];
@@ -86,7 +85,7 @@ export default function Stockage({
               </Grid>
               <Grid item xs={4}>
                 <TextValidator
-                  // fullWidth={true}
+                  fullWidth={true}
                   className={classes.field}
                   onChange={handleChange}
                   name="designation"
@@ -125,28 +124,28 @@ export default function Stockage({
           <FormGroup>
             <Grid container direction="row">
               <Grid item xs={6}>
-                <FormControl>
-                  <SelectValidator
-                    className={classes.field}
-                    value={state.data.unite_de_quantite_de_base}
-                    onChange={handleChange}
-                    name="unite_de_quantite_de_base"
-                    label="Unité de quantité de base"
-                    style={{ width: 190 }}
-                    validators={["isNumber", "isPositive", "maxNumber:999999"]}
-                    errorMessages={[
-                      "Ce champ doit étre un nombre",
-                      "Ce champ doit étre un nombre positive",
-                      "maximum 6 taille du nombre"
-                    ]}
-                  >
-                    <MenuItem value={"5"}>5</MenuItem>
-                    <MenuItem value={"10"}>10</MenuItem>
-                    <MenuItem value={"25"}>25</MenuItem>
-                    <MenuItem value={"50"}>50</MenuItem>
-                    <MenuItem value={"100"}>100</MenuItem>
-                  </SelectValidator>
-                </FormControl>
+                {/* <FormControl> */}
+                <SelectValidator
+                  className={classes.field}
+                  value={state.data.unite_de_quantite_de_base}
+                  onChange={handleChange}
+                  name="unite_de_quantite_de_base"
+                  label="Unité de quantité de base"
+                  // style={{ width: 190 }}
+                  validators={["isNumber", "isPositive", "maxNumber:999999"]}
+                  errorMessages={[
+                    "Ce champ doit étre un nombre",
+                    "Ce champ doit étre un nombre positive",
+                    "maximum 6 taille du nombre"
+                  ]}
+                >
+                  <MenuItem value={"5"}>5</MenuItem>
+                  <MenuItem value={"10"}>10</MenuItem>
+                  <MenuItem value={"25"}>25</MenuItem>
+                  <MenuItem value={"50"}>50</MenuItem>
+                  <MenuItem value={"100"}>100</MenuItem>
+                </SelectValidator>
+                {/* </FormControl> */}
               </Grid>
               <Grid item xs={6} direction="column">
                 <TextValidator
@@ -165,41 +164,44 @@ export default function Stockage({
         </Grid>
         <Grid item xs={12}>
           <FormGroup>
-            <Grid container direction="row">
+            <Grid container>
               <Grid item xs={6}>
                 <TextValidator
-                  style={{ width: "40%" }}
                   onChange={handleChange}
+                  className={classes.field}
                   name="poids"
                   value={state.data.poids}
+                  onBlur={handleFixPrecisionValeurs(false)(3)}
+                  type="number"
+                  step="0.01"
                   label="Poids"
                   id="#emplacement"
-                  validators={["maxNumber:999", "isFloat"]}
+                  validators={["maxNumber:999", "isFloat", "isPositive"]}
                   errorMessages={[
                     "Maximum 3 nombres !",
-                    "Poids doit etre un nombre"
+                    "Poids doit etre un nombre",
+                    "Ce champ doit étre un nombre positive"
                   ]}
                 />
               </Grid>
-              <Grid item xs={6} direction="column">
-                <FormControl style={{ minWidth: 300 }}>
-                  <SelectValidator
-                    className={classes.field}
-                    value={state.data.unite1}
-                    onChange={handleChange}
-                    name="unite1"
-                    label="Unité"
-                    style={{ minWidth: 300 }}
-                    validators={["maxNumber:100"]}
-                    errorMessages={["taille maximale est 100"]}
-                  >
-                    <MenuItem value={"5"}>5</MenuItem>
-                    <MenuItem value={"10"}>10</MenuItem>
-                    <MenuItem value={"25"}>25</MenuItem>
-                    <MenuItem value={"50"}>50</MenuItem>
-                    <MenuItem value={"100"}>100</MenuItem>
-                  </SelectValidator>
-                </FormControl>
+              <Grid item xs={6}>
+                {/* <FormControl> */}
+                <SelectValidator
+                  className={classes.field}
+                  value={state.data.unite_poid}
+                  onChange={handleChange}
+                  name="unite_poid"
+                  label="Unité"
+                  validators={["maxNumber:100"]}
+                  errorMessages={["taille maximale est 100"]}
+                >
+                  <MenuItem value={"5"}>5</MenuItem>
+                  <MenuItem value={"10"}>10</MenuItem>
+                  <MenuItem value={"25"}>25</MenuItem>
+                  <MenuItem value={"50"}>50</MenuItem>
+                  <MenuItem value={"100"}>100</MenuItem>
+                </SelectValidator>
+                {/* </FormControl> */}
               </Grid>
             </Grid>
           </FormGroup>
@@ -210,8 +212,10 @@ export default function Stockage({
               <Grid item xs={2}>
                 <TextValidator
                   onChange={handleChange}
-                  style={{ width: "70%" }}
+                  onBlur={handleFixPrecisionValeurs(false)(3)}
                   name="dimension_L"
+                  type="number"
+                  step="0.01"
                   value={state.data.dimension_L}
                   label="L"
                   id="#l"
@@ -223,7 +227,9 @@ export default function Stockage({
                 <TextValidator
                   onChange={handleChange}
                   name="dimension_I"
-                  style={{ width: "70%" }}
+                  onBlur={handleFixPrecisionValeurs(false)(3)}
+                  type="number"
+                  step="0.01"
                   value={state.data.dimension_I}
                   validators={dimensionValidator.validators}
                   errorMessages={dimensionValidator.errors}
@@ -235,7 +241,9 @@ export default function Stockage({
                 <TextValidator
                   onChange={handleChange}
                   name="dimension_H"
-                  style={{ width: "70%" }}
+                  onBlur={handleFixPrecisionValeurs(false)(3)}
+                  type="number"
+                  step="0.01"
                   value={state.data.dimension_H}
                   validators={dimensionValidator.validators}
                   errorMessages={dimensionValidator.errors}
@@ -244,78 +252,73 @@ export default function Stockage({
                 />
               </Grid>
               <Grid item xs={6} direction="column">
-                <FormControl style={{ minWidth: 300 }}>
-                  <SelectValidator
-                    value={state.data.unite2}
-                    onChange={handleChange}
-                    name="unite2"
-                    label="Unité"
-                    style={{ minWidth: 300 }}
-                    validators={["maxNumber:100"]}
-                    errorMessages={["taille maximale est 100"]}
-                  >
-                    <MenuItem value={"5"}>5</MenuItem>
-                    <MenuItem value={"10"}>10</MenuItem>
-                    <MenuItem value={"25"}>25</MenuItem>
-                    <MenuItem value={"50"}>50</MenuItem>
-                    <MenuItem value={"100"}>100</MenuItem>
-                  </SelectValidator>
-                </FormControl>
+                {/* <FormControl> */}
+                <SelectValidator
+                  value={state.data.unite_dim}
+                  onChange={handleChange}
+                  className={classes.field}
+                  name="unite_dim"
+                  label="Unité"
+                  validators={["maxNumber:100"]}
+                  errorMessages={["taille maximale est 100"]}
+                >
+                  <MenuItem value={"5"}>5</MenuItem>
+                  <MenuItem value={"10"}>10</MenuItem>
+                  <MenuItem value={"25"}>25</MenuItem>
+                  <MenuItem value={"50"}>50</MenuItem>
+                  <MenuItem value={"100"}>100</MenuItem>
+                </SelectValidator>
+                {/* </FormControl> */}
               </Grid>
             </Grid>
           </FormGroup>
         </Grid>
-        <Grid item xs={12} className={classes.checkBoxMarginTop}>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.data.gestion_par_lot}
-                  onChange={handleChange}
-                  color="primary"
-                  name="gestion_par_lot"
-                />
-              }
-              label="Gestion par lot"
-            />
-
-            {state.data.gestion_par_lot && (
-              <TextValidator
-                onChange={handleChange}
-                name="lot_standard"
-                style={{ width: "40%" }}
-                // className={classes.field}
-                // validators={[
-                //   "isNumber",
-                //   "isPositive",
-                //   "maxNumber:99"
-                // ]}
-                // errorMessages={[
-                //   "Ce champ doit étre un nombre",
-                //   "Ce champ doit étre un nombre positive",
-                //   "maximum 2 taille du nombre"
-                // ]}
-                value={state.data.lot_standard}
-                label="Lot standard"
-                id="lot_standard"
+        <Grid item xs={12}>
+          <Grid container direction="row">
+            <Grid item xs={4}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.data.controle_qualite_exige}
+                    onChange={handleChange}
+                    color="primary"
+                    name="controle_qualite_exige"
+                  />
+                }
+                label="Contrôle qualité exigé"
               />
-            )}
-          </FormGroup>
-        </Grid>
-        <Grid item xs={12} className={classes.checkBoxMarginTop}>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.data.controle_qualite_exige}
+            </Grid>
+            <Grid item xs={2}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.data.gestion_par_lot}
+                    onChange={handleChange}
+                    color="primary"
+                    name="gestion_par_lot"
+                  />
+                }
+                label="Gestion par lot"
+              />
+            </Grid>{" "}
+            <Grid item xs={6}>
+              {state.data.gestion_par_lot && (
+                <TextValidator
                   onChange={handleChange}
-                  color="primary"
-                  name="controle_qualite_exige"
+                  name="lot_standard"
+                  className={classes.field}
+                  validators={["isNumber", "isPositive"]}
+                  errorMessages={[
+                    "Ce champ doit étre un nombre",
+                    "Ce champ doit étre un nombre positive"
+                  ]}
+                  value={state.data.lot_standard}
+                  label="Lot standard"
+                  id="lot_standard"
                 />
-              }
-              label="Contrôle qualité exigé"
-            />
-          </FormGroup>
+              )}
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </div>

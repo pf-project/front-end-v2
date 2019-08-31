@@ -8,14 +8,15 @@ import Articles from "./types/Articles";
 
 class ListerArticles extends Component {
   render() {
-    const title = brand.name + " - Table";
-    const description = brand.desc;
-    const { intl } = this.props;
+    // const title = brand.name + " - Table";
+    // const description = brand.desc;
+    // const { intl } = this.props;
     return (
       <div>
         <PageTitle
           title="Lister Article"
           pathname="/Logistique/Données de base/Lister Article"
+          withBackOption={true}
         />
         <div>
           <Articles />

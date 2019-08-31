@@ -31,10 +31,6 @@ class Base extends React.Component {
     super(props);
   }
 
-  // componentWillMount() {
-  //   this.props.fetchCategorie(this.props.data.categorie);
-  // }
-
   render() {
     const {
       handleChange,

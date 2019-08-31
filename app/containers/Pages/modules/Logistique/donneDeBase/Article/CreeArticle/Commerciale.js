@@ -5,6 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
 import {
   ValidatorForm,
   TextValidator,
@@ -22,7 +23,7 @@ export default function Commerciale({
   handle_price_leaving
 }) {
   return (
-    <Grid container spacing={1} className={classes.grid} direction="column">
+    <>
       {/* <ValidatorForm autoComplete="off" onSubmit={handleSubmit}> */}
       <Grid item xs={12}>
         <FormGroup>
@@ -96,12 +97,14 @@ export default function Commerciale({
                 validators={[
                   "required",
                   "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/,
-                  "maxNumber:999999"
+                  "maxNumber:999999",
+                  "isPositive"
                 ]}
                 errorMessages={[
                   "Ce champ est obligatoire",
                   "Chmap doit étre un nombre : ex 4.57 ",
-                  "Maximum 6 nombres !"
+                  "Maximum 6 nombres !",
+                  "Ce champ doit étre un nombre positive"
                 ]}
               />
             </FormGroup>
@@ -181,12 +184,14 @@ export default function Commerciale({
               validators={[
                 "required",
                 "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/,
-                "maxNumber:999999"
+                "maxNumber:999999",
+                "isPositive"
               ]}
               errorMessages={[
                 "Ce champ est obligatoire",
                 "Chmap doit étre un nombre : ex 4.57 ",
-                "Maximum 6 nombres !"
+                "Maximum 6 nombres !",
+                "Ce champ doit étre un nombre positive"
               ]}
             />
           </Grid>
@@ -201,7 +206,7 @@ export default function Commerciale({
               <TextValidator
                 className={classes.field}
                 onChange={handleChange}
-                onBlur={handleFixPrecisionValeurs(false)(false)}
+                onBlur={handleFixPrecisionValeurs(false)(3)}
                 name="prix_moyen_pendere"
                 value={state.data.prix_moyen_pendere}
                 label="Prix moyen pondéré *"
@@ -210,22 +215,20 @@ export default function Commerciale({
                 validators={[
                   "required",
                   "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/,
-                  "maxNumber:999999"
+                  "maxNumber:999999",
+                  "isPositive"
                 ]}
                 errorMessages={[
                   "Ce champ est obligatoire",
                   "Chmap doit étre un nombre : ex 4.57 ",
-                  "Maximum 6 nombres !"
+                  "Maximum 6 nombres !",
+                  "Ce champ doit étre un nombre positive"
                   // "deux  nombre(s) apres la virgule !"
                 ]}
               />
             </FormGroup>
           </Grid>
         </Grid>
-      </Grid>
-
-      <Grid item xs={12}>
-        <Grid container direction="row" />
       </Grid>
       {/* state.data.utilite === "MRCH-Achat-pour-vente" */}
       {true && (
@@ -274,12 +277,14 @@ export default function Commerciale({
                       validators={[
                         "required",
                         "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/,
-                        "maxNumber:100"
+                        "maxNumber:100",
+                        "isPositive"
                       ]}
                       errorMessages={[
                         "Ce champ est obligatoire",
                         "Chmap doit étre un nombre : ex 4.57 ",
-                        "Maximum 100%  !"
+                        "Maximum 100%  !",
+                        "Ce champ doit étre un nombre positive"
                       ]}
                     />
                   </Grid>
@@ -297,12 +302,14 @@ export default function Commerciale({
                       validators={[
                         "required",
                         "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/,
-                        "maxNumber:999999"
+                        "maxNumber:999999",
+                        "isPositive"
                       ]}
                       errorMessages={[
                         "Ce champ est obligatoire",
                         "Chmap doit étre un nombre : ex 4.57 ",
-                        "Maximum 6  nombres  !"
+                        "Maximum 6  nombres  !",
+                        "Ce champ doit étre un nombre positive"
                       ]}
                     />
                   </Grid>
@@ -327,12 +334,14 @@ export default function Commerciale({
                     validators={[
                       "required",
                       "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/,
-                      "maxNumber:999999"
+                      "maxNumber:999999",
+                      "isPositive"
                     ]}
                     errorMessages={[
                       "Ce champ est obligatoire",
                       "Chmap doit étre un nombre : ex 4.57 ",
-                      "Maximum 6 nombres !"
+                      "Maximum 6 nombres !",
+                      "Ce champ doit étre un nombre positive"
                     ]}
                   />
                 </FormGroup>
@@ -344,6 +353,7 @@ export default function Commerciale({
                     value={state.data.devise_vente}
                     onChange={handleChange}
                     className={classes.field}
+                    defaultValue=" "
                     name="devise_vente"
                     label="Devise *"
                     validators={["required"]}
@@ -357,31 +367,33 @@ export default function Commerciale({
               </Grid>
               <Grid item xs={4}>
                 <FormGroup>
-                  <SelectValidator
-                    value={state.data.unite_de_vente}
-                    onChange={handleChange}
-                    className={classes.field}
-                    name="unite_de_vente"
-                    label="Unité de vente *"
-                    validators={[
-                      "required",
-                      "isNumber",
-                      "isPositive",
-                      "maxNumber:999999"
-                    ]}
-                    errorMessages={[
-                      "Ce champ est obligatoire",
-                      "Ce champ doit étre un nombre",
-                      "Ce champ doit étre un nombre positive",
-                      "maximum 6 taille du nombre"
-                    ]}
-                  >
-                    <MenuItem value={"5"}>5</MenuItem>
-                    <MenuItem value={"10"}>10</MenuItem>
-                    <MenuItem value={"25"}>25</MenuItem>
-                    <MenuItem value={"50"}>50</MenuItem>
-                    <MenuItem value={"100"}>100</MenuItem>
-                  </SelectValidator>
+                  <FormControl>
+                    <SelectValidator
+                      value={state.data.unite_vente}
+                      onChange={handleChange}
+                      className={classes.field}
+                      name="unite_vente"
+                      label="Unité de vente *"
+                      validators={[
+                        "required",
+                        "isNumber",
+                        "isPositive",
+                        "maxNumber:999999"
+                      ]}
+                      errorMessages={[
+                        "Ce champ est obligatoire",
+                        "Ce champ doit étre un nombre",
+                        "Ce champ doit étre un nombre positive",
+                        "maximum 6 taille du nombre"
+                      ]}
+                    >
+                      <MenuItem value={"5"}>5</MenuItem>
+                      <MenuItem value={"10"}>10</MenuItem>
+                      <MenuItem value={"25"}>25</MenuItem>
+                      <MenuItem value={"50"}>50</MenuItem>
+                      <MenuItem value={"100"}>100</MenuItem>
+                    </SelectValidator>
+                  </FormControl>
                 </FormGroup>
               </Grid>
             </Grid>
@@ -422,12 +434,14 @@ export default function Commerciale({
                   validators={[
                     "required",
                     "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/,
-                    "maxNumber:999999"
+                    "maxNumber:999999",
+                    "isPositive"
                   ]}
                   errorMessages={[
                     "Ce champ est obligatoire",
                     "Chmap doit étre un nombre : ex 4.57 ",
-                    "Maximum 6 nombres !"
+                    "Maximum 6 nombres !",
+                    "Ce champ doit étre un nombre positive"
                   ]}
                 />
               </Grid>
@@ -435,6 +449,6 @@ export default function Commerciale({
           </Grid>
         </div>
       )}
-    </Grid>
+    </>
   );
 }
