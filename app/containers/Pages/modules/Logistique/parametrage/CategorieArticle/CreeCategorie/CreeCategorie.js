@@ -216,18 +216,6 @@ const CreerCategorie = ({
     // alert(data);
     setData({ groupe: "", code: "", designation: "", articlesMetaData: [] });
     setNbrAttributes(0);
-    // let token = window.localStorage.getItem("token");
-    // let body = { ...data };
-    // let method = "POST";
-    // let url = "/api/logistic/categorie/create";
-    // fetchApi({ token, body, method, url })
-    //   .then(res => {
-    //     // setData({ articlesMetaData: [] });
-    //     succes("success");
-    //   })
-    //   .catch(error => {
-    //     failure("danger");
-    //   });
   };
 
   // errors messages :
@@ -274,8 +262,8 @@ const CreerCategorie = ({
     <div>
       {/* <AppBar position="sticky"> */}
       <PageTitle
-        title="Créer Catégorie"
-        pathname="Logistique/Paramétrage/Configuration article"
+        title="Ajouter Catégorie"
+        pathname="/Logistique/Paramétrage/Configuration article/Ajouter catégorie"
         elements={elements}
         withBackOption={true}
       />

@@ -43,7 +43,6 @@ class Base extends React.Component {
       handleChange,
       handleFixPrecisionValeurs,
       state,
-      handleBack,
       classes,
       handleValeursChange,
       loading
@@ -129,66 +128,25 @@ class Base extends React.Component {
                   className={classes.field}
                   onChange={handleChange}
                   name="ancienCode"
-                  // validators={["required", "maxStringLength:25"]}
-                  // errorMessages={["champ obligatoire", "maximum 25 char"]}
                   value={state.data.ancienCode}
                   label="Ancien code "
                   id="#ancienCode"
                 />
               </Grid>
-              <Grid item xs={6} direction="column">
-                <TextValidator
-                  className={classes.field}
-                  onChange={handleChange}
-                  name="fabriquant"
-                  // validators={["required", "maxStringLength:25"]}
-                  // errorMessages={["champ obligatoire", "maximum 25 char"]}
-                  value={state.data.fabriquant}
-                  label="Fabriquant"
-                  id="#fabriquant"
-                />
-              </Grid>
-            </Grid>
-          </FormGroup>
-        </Grid>
-        <Grid item>
-          <FormGroup>
-            <Grid container direction="row">
               <Grid item xs={6}>
                 <TextValidator
                   className={classes.field}
                   onChange={handleChange}
                   name="note"
-                  // validators={["required", "isNumber", "maxNumber:999999"]}
-                  // errorMessages={[
-                  //   "champ obligatoire",
-                  //   "Ce champ doit étre un nombre",
-                  //   "maximum 6 taille du nombre"
-                  // ]}
                   value={state.data.note}
                   label="Note"
                   id="#note"
                 />
               </Grid>
-              <Grid item xs={6}>
-                <TextValidator
-                  className={classes.field}
-                  onChange={handleChange}
-                  name="num_piece_fabriquant"
-                  // validators={["required", "isNumber", "maxNumber:999999"]}
-                  // errorMessages={[
-                  //   "champ obligatoire",
-                  //   "Ce champ doit étre un nombre",
-                  //   "maximum 6 taille du nombre"
-                  // ]}
-                  value={state.data.num_piece_fabriquuant}
-                  label="N° pièce fabirquant"
-                  id="#num_piece_fabriquuant"
-                />
-              </Grid>
             </Grid>
           </FormGroup>
         </Grid>
+
         <FormGroup>
           <Paper
             className={{
@@ -208,17 +166,19 @@ class Base extends React.Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {articlesMetaData.map((data, idx) => {
-                    data = data.toObject();
+                  {articlesMetaData.map((metadata, idx) => {
+                    metadata = metadata.toObject();
 
-                    data.valeurs = data.valeurs ? data.valeurs.toArray() : [];
+                    metadata.valeurs = metadata.valeurs
+                      ? metadata.valeurs.toArray()
+                      : [];
                     if (data) {
                       let validators = [];
                       let errorMessages = [];
                       let precision;
 
                       if (data.type.includes("float")) {
-                        let split = data.type.split("-");
+                        let split = metadata.type.split("-");
                         if (split.length > 1) precision = parseInt(split[1]);
                       }
 
@@ -274,7 +234,7 @@ class Base extends React.Component {
                         errorMessages.push("Ce champ est obligatoire");
                       }
                       if (data.longueur) {
-                        let l = data.longueur;
+                        let l = metadata.longueur;
                         validators.push("maxStringLength:" + l);
                         errorMessages.push("Max longeur " + l);
                       }
@@ -291,7 +251,7 @@ class Base extends React.Component {
                                   <TextValidator
                                     className={classes.field}
                                     InputProps={{
-                                      readOnly: data.limite
+                                      readOnly: metadata.limite
                                     }}
                                     onChange={handleValeursChange(idx)}
                                     name={data.nom}
@@ -309,7 +269,7 @@ class Base extends React.Component {
                                     }
                                   />
                                 </Grid>
-                                {data.valeurs && data.valeurs.length > 0 && (
+                                {data.valeurs && metadata.valeurs.length > 0 && (
                                   <Grid item xs={6}>
                                     <SelectValidator
                                       className={classes.field}
@@ -319,7 +279,7 @@ class Base extends React.Component {
                                       // style={{ minWidth: 15 }}
                                     >
                                       {data.valeurs &&
-                                        data.valeurs.map(valeur => (
+                                        metadata.valeurs.map(valeur => (
                                           <MenuItem value={valeur}>
                                             {valeur}{" "}
                                           </MenuItem>

@@ -43,14 +43,12 @@ function* updateArticleSaga({ payload }) {
     yield put(updateArticleSuccess());
   } catch (error) {
     yield put(updateArticleFailure(erreur));
-    // yield put(stopLoading());
-    // yield put(logingit Failure(error.message));
   }
 }
 
 function* fetchCategorieSaga(payload) {
   try {
-    yield put(startLoading());
+    // yield put(startLoading());
     const data = yield fetchAPI({
       method: "GET",
       url: `/api/logistic/categorie/find/${payload.payload}`,
@@ -59,8 +57,6 @@ function* fetchCategorieSaga(payload) {
     yield put(fetchCategorieSuccess(data));
   } catch (error) {
     yield put(fetchCategorieFailure(erreur));
-    // yield put(stopLoading());
-    // yield put(logingit Failure(error.message));
   }
 }
 
@@ -75,13 +71,10 @@ function* fetchCategorieDesignationsSaga() {
     yield put(fetchCategorieDesignationSuccess(data));
   } catch (error) {
     yield put(fetchCategorieDesignationFailure(erreur));
-    // yield put(stopLoading());
-    // yield put(logingit Failure(error.message));
   }
 }
 
 function* addArticleSaga(payload) {
-  console.log(payload.payload);
   try {
     yield put(startLoading());
     yield fetchAPI({

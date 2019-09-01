@@ -1,10 +1,10 @@
 import React from "react";
-import Paper from "@material-ui/core/Paper";
+import { Map, fromJS } from "immutable";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Initiale from "./Initiale";
-import Base from "./Base";
+import Base from "../CreeArticle/Base";
 import Stockage from "../CreeArticle/Stockage";
 import Commerciale from "../CreeArticle/Commerciale";
 import ChoisirArticle from "./ChoisirArticle";
@@ -405,6 +405,15 @@ class GererArticle extends React.Component {
     });
   };
 
+  // convert object to map
+  xah_obj_to_map = obj => {
+    const mp = new Map();
+    Object.keys(obj).forEach(k => {
+      mp.set(k, obj[k]);
+    });
+    return mp;
+  };
+
   getStepContent = stepIndex => {
     const classes = this.props.classes;
     const { codes, designations } = this.props.articlesForSuggestion;
@@ -437,11 +446,14 @@ class GererArticle extends React.Component {
           />
         );
       case 2:
+        // simulate getting categorie from redcucer (to let toArray and to Object work )
+        let state = fromJS(this.state);
+        let categorie = state.get("categorie");
         return (
           <Base
             handleChange={this.handleChange}
             data={this.state.data}
-            categorie={this.state.categorie}
+            categorie={categorie}
             classes={classes}
             handleFixPrecisionValeurs={this.handleFixPrecisionValeurs}
             loading={this.props.loading}
@@ -452,7 +464,7 @@ class GererArticle extends React.Component {
         return (
           <Stockage
             handleChange={this.handleChange}
-            state={this.state}
+            data={this.state.data}
             handleFixPrecisionValeurs={this.handleFixPrecisionValeurs}
             handleSubmitStockage={this.handleSubmitStockage}
             handleBack={this.handleBack}
@@ -466,7 +478,7 @@ class GererArticle extends React.Component {
             handle_price_leaving={this.handle_price_leaving}
             handleFixPrecisionValeurs={this.handleFixPrecisionValeurs}
             handleChange={this.handleChange}
-            state={this.state}
+            data={this.state.data}
             handleSubmitCommerciale={this.handleSubmitCommerciale}
             handleBack={this.handleBack}
             classes={classes}
@@ -572,7 +584,7 @@ class GererArticle extends React.Component {
       <div>
         <PageTitle
           title="Gérer Article"
-          pathname="/Logistique/Données de base/Gérer Article"
+          pathname="/Logistique/Données de base/Article/Gérer Article"
           elements={elements}
           withBackOption={true}
         />

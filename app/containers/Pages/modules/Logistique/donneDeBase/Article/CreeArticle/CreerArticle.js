@@ -390,14 +390,15 @@ class CreerArticle extends React.Component {
   };
 
   getStepContent = stepIndex => {
-    const { classes, loading } = this.props;
+    const { classes, loading, categorie, fetchCategorie } = this.props;
 
     switch (stepIndex) {
       case 0:
         return (
           <Initiale
+            fetchCategorie={fetchCategorie}
             handleChange={this.handleChange}
-            state={this.state}
+            data={this.state.data}
             designations={this.props.designations}
             handleSubmitInitial={this.handleSubmitInitial}
             classes={classes}
@@ -410,13 +411,13 @@ class CreerArticle extends React.Component {
           <Base
             handleChange={this.handleChange}
             handleFixPrecisionValeurs={this.handleFixPrecisionValeurs}
-            state={this.state}
+            data={this.state.data}
             designations={this.props.designations}
             handleSubmitBase={this.handleSubmitBase}
             handleBack={this.handleBack}
             classes={classes}
-            // fetchCategorie={this.fetchCategorie}
             handleValeursChange={this.handleValeursChange}
+            categorie={categorie}
           />
         );
       case 2:
@@ -424,7 +425,7 @@ class CreerArticle extends React.Component {
           <Stockage
             handleChange={this.handleChange}
             handleFixPrecisionValeurs={this.handleFixPrecisionValeurs}
-            state={this.state}
+            data={this.state.data}
             handleSubmitStockage={this.handleSubmitStockage}
             handleBack={this.handleBack}
             classes={classes}
@@ -437,7 +438,7 @@ class CreerArticle extends React.Component {
             handle_price_leaving={this.handle_price_leaving}
             handleFixPrecisionValeurs={this.handleFixPrecisionValeurs}
             handleChange={this.handleChange}
-            state={this.state}
+            data={this.state.data}
             handleSubmitCommerciale={this.handleSubmitCommerciale}
             handleBack={this.handleBack}
             classes={classes}
@@ -586,7 +587,7 @@ class CreerArticle extends React.Component {
       <div>
         <PageTitle
           title="Créer Article"
-          pathname="/Logistique/Données de base/Créer Article"
+          pathname="/Logistique/Données de base/Article/Créer Article"
           elements={elements}
           withBackOption={true}
         />

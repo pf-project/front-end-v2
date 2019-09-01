@@ -31,21 +31,15 @@ import {
 
 export default function Stockage({
   handleChange,
-  state,
+  data,
   handleFixPrecisionValeurs,
   classes
 }) {
-  const { designations } = state;
-
   let dimensionValidator = {
     validators: [],
     errors: []
   };
-  if (
-    state.data.dimension_H ||
-    state.data.dimension_I ||
-    state.data.dimension_L
-  ) {
+  if (data.dimension_H || data.dimension_I || data.dimension_L) {
     dimensionValidator.validators = [
       "required",
       "isFloat",
@@ -78,7 +72,7 @@ export default function Stockage({
                   }}
                   onChange={handleChange}
                   name="code"
-                  value={state.data.code}
+                  value={data.code}
                   label="Code Article *"
                   id="#codearticle"
                 />
@@ -91,7 +85,7 @@ export default function Stockage({
                   name="designation"
                   validators={["required", "maxStringLength:25"]}
                   errorMessages={["champ obligatoire", "maximum 25 char"]}
-                  value={state.data.designation}
+                  value={data.designation}
                   label="Désignation *"
                   id="#designation"
                 />
@@ -100,7 +94,7 @@ export default function Stockage({
               <Grid item xs={4}>
                 <TextValidator
                   className={classes.field}
-                  value={state.data.categorie}
+                  value={data.categorie}
                   onChange={handleChange}
                   name="categorie"
                   label="Catégorie d'article"
@@ -127,7 +121,7 @@ export default function Stockage({
                 {/* <FormControl> */}
                 <SelectValidator
                   className={classes.field}
-                  value={state.data.unite_de_quantite_de_base}
+                  value={data.unite_de_quantite_de_base}
                   onChange={handleChange}
                   name="unite_de_quantite_de_base"
                   label="Unité de quantité de base"
@@ -154,7 +148,7 @@ export default function Stockage({
                   name="emplacement"
                   // validators={["maxStringLength:10"]}
                   // errorMessages={["maximum 10 char"]}
-                  value={state.data.emplacement}
+                  value={data.emplacement}
                   label="Emplacement "
                   id="#emplacement"
                 />
@@ -170,7 +164,7 @@ export default function Stockage({
                   onChange={handleChange}
                   className={classes.field}
                   name="poids"
-                  value={state.data.poids}
+                  value={data.poids}
                   onBlur={handleFixPrecisionValeurs(false)(3)}
                   type="number"
                   step="0.01"
@@ -188,7 +182,7 @@ export default function Stockage({
                 {/* <FormControl> */}
                 <SelectValidator
                   className={classes.field}
-                  value={state.data.unite_poid}
+                  value={data.unite_poid}
                   onChange={handleChange}
                   name="unite_poid"
                   label="Unité"
@@ -216,7 +210,7 @@ export default function Stockage({
                   name="dimension_L"
                   type="number"
                   step="0.01"
-                  value={state.data.dimension_L}
+                  value={data.dimension_L}
                   label="L"
                   id="#l"
                   validators={dimensionValidator.validators}
@@ -230,7 +224,7 @@ export default function Stockage({
                   onBlur={handleFixPrecisionValeurs(false)(3)}
                   type="number"
                   step="0.01"
-                  value={state.data.dimension_I}
+                  value={data.dimension_I}
                   validators={dimensionValidator.validators}
                   errorMessages={dimensionValidator.errors}
                   label="I"
@@ -244,7 +238,7 @@ export default function Stockage({
                   onBlur={handleFixPrecisionValeurs(false)(3)}
                   type="number"
                   step="0.01"
-                  value={state.data.dimension_H}
+                  value={data.dimension_H}
                   validators={dimensionValidator.validators}
                   errorMessages={dimensionValidator.errors}
                   label="H"
@@ -254,7 +248,7 @@ export default function Stockage({
               <Grid item xs={6} direction="column">
                 {/* <FormControl> */}
                 <SelectValidator
-                  value={state.data.unite_dim}
+                  value={data.unite_dim}
                   onChange={handleChange}
                   className={classes.field}
                   name="unite_dim"
@@ -279,7 +273,7 @@ export default function Stockage({
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.data.controle_qualite_exige}
+                    checked={data.controle_qualite_exige}
                     onChange={handleChange}
                     color="primary"
                     name="controle_qualite_exige"
@@ -292,7 +286,7 @@ export default function Stockage({
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.data.gestion_par_lot}
+                    checked={data.gestion_par_lot}
                     onChange={handleChange}
                     color="primary"
                     name="gestion_par_lot"
@@ -302,7 +296,7 @@ export default function Stockage({
               />
             </Grid>{" "}
             <Grid item xs={6}>
-              {state.data.gestion_par_lot && (
+              {data.gestion_par_lot && (
                 <TextValidator
                   onChange={handleChange}
                   name="lot_standard"
@@ -312,7 +306,7 @@ export default function Stockage({
                     "Ce champ doit étre un nombre",
                     "Ce champ doit étre un nombre positive"
                   ]}
-                  value={state.data.lot_standard}
+                  value={data.lot_standard}
                   label="Lot standard"
                   id="lot_standard"
                 />

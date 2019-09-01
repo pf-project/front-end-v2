@@ -6,16 +6,16 @@ import { injectIntl, intlShape } from "react-intl";
 import messages from "./messages";
 import Articles from "./types/Articles";
 
-class ListerArticles extends Component {
+class ListerService extends Component {
   render() {
-    const title = brand.name + " - Table";
-    const description = brand.desc;
-    const { intl } = this.props;
+    // const title = brand.name + " - Table";
+    // const description = brand.desc;
+    // const { intl } = this.props;
     return (
       <div>
         <PageTitle
-          title="Lister Article"
-          pathname="/Logistique/Données de base/Lister Article"
+          title="Lister Service"
+          pathname="/Logistique/Données de base/Service/Lister Service"
           withBackOption={true}
         />
         <div>
@@ -26,8 +26,8 @@ class ListerArticles extends Component {
   }
 }
 
-ListerArticles.propTypes = {
+ListerService.propTypes = {
   intl: intlShape.isRequired
 };
 
-export default injectIntl(ListerArticles);
+export default injectIntl(ListerService);

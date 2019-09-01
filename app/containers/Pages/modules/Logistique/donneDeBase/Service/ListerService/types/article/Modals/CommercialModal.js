@@ -102,7 +102,7 @@ export default function CommercialModal({ value }) {
         </Grid>
       </div>
 
-      {value.utilite === "MRCH-Achat-pour-vente" && (
+      {value.utilite === "MRCH" && (
         <div>
           <Grid container className={classes.root} xs={12} spacing={2}>
             <Grid item xs={6}>

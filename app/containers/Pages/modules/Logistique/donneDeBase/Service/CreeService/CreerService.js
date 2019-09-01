@@ -111,21 +111,22 @@ const styles = theme => ({
   }
 });
 
-class CreerArticle extends React.Component {
+class CreerService extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       activeStep: 0,
-      steps: [
-        "Données initiales",
-        "Données de base",
-        "Données de stockage",
-        "Données commerciales"
-      ],
+      steps: ["Données initiales", "Données de base", "Données commerciales"],
       data: {
         caracteristiques: [],
-        controleexige: false,
-        gestionparlot: false
+        marge: false,
+        unite_vente: "",
+        devise_vente: "",
+        taux_tva_vente: "",
+        prix_achat_HT: "",
+        prix_achat_TTC: "",
+        prix_vente_HT: "",
+        prix_vente_TTC: ""
       },
       designations: [],
       categorie: []
@@ -146,45 +147,195 @@ class CreerArticle extends React.Component {
 
   handleSubmitCommerciale = () => {
     const { data } = this.state;
-    const prix_de_vente_de_base_HT = parseFloat(
-      data.prix_de_vente_de_base_HT
-    ).toFixed(3);
-    const prix_moyen_pendere = parseFloat(data.prix_moyen_pendere).toFixed(3);
-    const prix_de_vente_de_base_TTC = parseFloat(
-      data.prix_de_vente_de_base_TTC
-    ).toFixed(3);
     this.props.addArticle(data);
     this.handleNext();
   };
 
-  // componentWillReceiveProps(nextProps) {
-  //   let caracteristiques = [];
-  //   try {
-  //     const categorie = nextProps.categorie.toObject();
+  // when leaving a price filed this function is executed
+  handle_price_leaving = ({ achat, ht }) => event => {
+    const { data } = this.state;
+    const { name, value } = event.target;
+    let taux_tva;
+    // if leaving a achat price (ht or ttc)
+    if (achat) {
+      taux_tva = parseFloat(data.taux_tva_achat);
+      // if leaving a hors tax field
+      if (ht) {
+        // take the price value
+        let prix_HT = parseFloat(value);
+        // if taux tva achat filled . fill ttc
+        if (data.taux_tva_achat) {
+          data.prix_achat_TTC = this.calculTTC({ prix_HT, taux_tva });
+        }
+        // if price with marge fill the marge
+        if (data.marge) {
+          this.onLeavingMarge({ montant: false })();
+        }
+        // round the price
+        data.prix_achat_HT = prix_HT.toFixed(3);
+      } else {
+        // if ttc is filled take value
+        let prix_TTC = parseFloat(value);
+        // if tva is filled fill automaticly the ht
+        if (data.taux_tva_achat) {
+          data.prix_achat_HT = this.calculHT({ prix_TTC, taux_tva });
+          // after filling the ht if marge adjust the marge
+          if (data.marge) this.onLeavingMarge({ montant: false })();
+        }
 
-  //     const articlesMetaData = categorie.articlesMetaData.toArray();
-  //     articlesMetaData.map((caracteristique, idx) => {
-  //       caracteristique = caracteristique.toObject();
-  //       caracteristiques.push({
-  //         nom: caracteristique.nom
-  //       });
-  //     });
-  //     this.setState({
-  //       data: {
-  //         ...this.state.data,
-  //         caracteristiques: caracteristiques
-  //       }
-  //     });
-  //   } catch (e) {
-  //     // console.log(e);
-  //   }
-  // }
+        data.prix_TTC = prix_TTC.toFixed(3);
+      }
+    } // if leaving a vente price (ht or ttc)
+    else {
+      taux_tva = parseFloat(data.taux_tva_vente);
+      // if leaving a hors tax field
+      if (ht) {
+        // if vente ht is leaved  take the value
+        let prix_HT = parseFloat(value);
+        // if tva vente is filled fill automaticly the vent ttc
+        if (data.taux_tva_vente) {
+          data.prix_vente_TTC = this.calculTTC({ prix_HT, taux_tva });
+        }
+        // round the value
+        data.prix_vente_HT = prix_HT.toFixed(3);
+        // adjust the marge
+        if (data.marge) {
+          data.montant_marge = (prix_HT - data.prix_achat_HT).toFixed(3);
+          data.taux_marge = (
+            (data.montant_marge / data.prix_achat_HT) *
+            100
+          ).toFixed(3);
+        }
+      } else {
+        // if vente ttc is leaved  get the value
+        let prix_TTC = parseFloat(value);
+        // if tva vente if filled fill automaticly the ht
+        if (data.taux_tva_vente)
+          data.prix_vente_HT = this.calculHT({ prix_TTC, taux_tva });
+        // round the value
+        data.vente_TTC = prix_TTC.toFixed(3);
+
+        // if marge adjust the marge
+        if (data.marge) {
+          data.montant_marge = parseFloat(
+            data.prix_vente_HT - data.prix_achat_HT
+          ).toFixed(3);
+          data.taux_marge = parseFloat(
+            (data.montant_marge / data.prix_achat_HT) * 100
+          ).toFixed(3);
+        }
+      }
+    }
+    this.setState({
+      data
+    });
+  };
+
+  // Marge function
+  // when leaving marge% field or montant marge this function is excuted :
+  onLeavingMarge = ({ montant }) => event => {
+    const { data } = this.state;
+    let prix_achat_HT = parseFloat(data.prix_achat_HT);
+    // if the montant fild leaved
+    if (montant) {
+      let montant = parseFloat(data.montant_marge);
+      data.taux_marge = (montant / prix_achat_HT) * 100;
+
+      data.prix_vente_HT = parseFloat(montant + prix_achat_HT).toFixed(3);
+    }
+    // if the % field is leaved
+    else {
+      let taux_marge = parseFloat(data.taux_marge) / 100;
+      data.montant_marge = parseFloat(prix_achat_HT * taux_marge).toFixed(3);
+      data.prix_vente_HT = parseFloat(prix_achat_HT * (1 + taux_marge)).toFixed(
+        2
+      );
+    }
+    // if taux tva vent is filled , fill automaticly prix vente ttc
+    if (data.taux_tva_vente)
+      data.prix_vente_TTC = this.calculTTC({
+        taux_tva: parseFloat(data.taux_tva_vente),
+        prix_HT: parseFloat(data.prix_vente_HT)
+      });
+    this.setState({
+      data
+    });
+  };
+
+  // calcul TTC
+  calculTTC = ({ taux_tva, prix_HT }) => {
+    if (prix_HT && !(prix_HT === "")) {
+      return parseFloat(prix_HT + prix_HT * taux_tva).toFixed(3);
+    }
+    return null;
+  };
+
+  // Calcul HT
+
+  calculHT = ({ taux_tva, prix_TTC }) => {
+    if (prix_TTC && !(prix_TTC === "")) {
+      return parseFloat(prix_TTC / (1 + taux_tva)).toFixed(3);
+    }
+    return null;
+  };
 
   handleChange = event => {
-    const { name } = event.target;
-    const { value } = event.target;
+    const { value, name } = event.target;
     let data;
+    let taux_tva;
+    let prix_HT;
     switch (name) {
+      case "devise_achat":
+        data = { ...this.state.data };
+        if (!data.devise_vente) data.devise_vente = value;
+        data.devise_achat = value;
+        this.setState({
+          data
+        });
+        break;
+      case "unite_achat":
+        data = { ...this.state.data };
+        if (!data.unite_vente) data.unite_vente = value;
+        data.unite_achat = value;
+        this.setState({
+          data
+        });
+        break;
+      case "taux_tva_achat":
+        data = { ...this.state.data };
+
+        taux_tva = parseFloat(value);
+        prix_HT = parseFloat(data.prix_achat_HT);
+        data.taux_tva_achat = value;
+        data.prix_achat_TTC = this.calculTTC({ taux_tva, prix_HT });
+        if (!data.taux_tva_vente) {
+          data.taux_tva_vente = value;
+          if (data.prix_vente_HT)
+            data.prix_vente_TTC = parseFloat(
+              this.calculTTC({
+                taux_tva,
+                prix_HT: parseFloat(data.prix_vente_HT)
+              })
+            ).toFixed(3);
+        }
+
+        this.setState({
+          data
+        });
+
+        break;
+      case "taux_tva_vente":
+        data = { ...this.state.data };
+
+        taux_tva = parseFloat(value);
+        prix_HT = parseFloat(data.prix_vente_HT);
+        data.taux_tva_vente = value;
+        data.prix_vente_TTC = this.calculTTC({ taux_tva, prix_HT });
+        this.setState({
+          data
+        });
+
+        break;
       case "controle_qualite_exige":
         this.setState({
           data: {
@@ -202,11 +353,23 @@ class CreerArticle extends React.Component {
           data
         });
         break;
+      case "marge":
+        data = { ...this.state.data };
+        if (value === "false") {
+          delete data.taux_marge;
+          delete data.montant_marge;
+        }
+
+        data.marge = !data.marge;
+        this.setState({
+          data
+        });
+        break;
       case "utilite":
         data = { ...this.state.data };
         delete data.prix_de_vente_de_base_TTC;
         delete data.taux_tva;
-        delete data.unite_de_vente;
+        delete data.unite_vente;
         data.utilite = value;
         this.setState({
           data
@@ -245,26 +408,16 @@ class CreerArticle extends React.Component {
             handleSubmitBase={this.handleSubmitBase}
             handleBack={this.handleBack}
             classes={classes}
-            loading={loading}
             // fetchCategorie={this.fetchCategorie}
             handleValeursChange={this.handleValeursChange}
           />
         );
-      case 2:
-        return (
-          <Stockage
-            handleChange={this.handleChange}
-            state={this.state}
-            handleSubmitStockage={this.handleSubmitStockage}
-            handleBack={this.handleBack}
-            classes={classes}
-            loading={loading}
-          />
-        );
+
       default:
         return (
           <Commerciale
-            loading={loading}
+            onLeavingMarge={this.onLeavingMarge}
+            handle_price_leaving={this.handle_price_leaving}
             handleFixPrecisionValeurs={this.handleFixPrecisionValeurs}
             handleChange={this.handleChange}
             state={this.state}
@@ -336,7 +489,7 @@ class CreerArticle extends React.Component {
         }
       });
     } else {
-      let value = parseFloat(this.state.data[name]).toFixed(2);
+      let value = parseFloat(this.state.data[name]).toFixed(precision);
       this.setState({ data: { ...this.state.data, [name]: value } });
     }
   };
@@ -415,8 +568,8 @@ class CreerArticle extends React.Component {
     return (
       <div>
         <PageTitle
-          title="Créer Article"
-          pathname="/Logistique/Données de base/Créer Article"
+          title="Créer Service"
+          pathname="/Logistique/Données de base/Service/Créer Service"
           elements={elements}
           withBackOption={true}
         />
@@ -475,9 +628,9 @@ const mapStateToProps = state => ({
 });
 
 // //const reducer = "initval";
-const CreerCategorieReduxed = connect(
+const CreerServiceReduxed = connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreerArticle);
+)(CreerService);
 
-export default withStyles(styles)(CreerCategorieReduxed);
+export default withStyles(styles)(CreerServiceReduxed);

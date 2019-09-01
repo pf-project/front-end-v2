@@ -15,7 +15,7 @@ class ListerArticles extends Component {
       <div>
         <PageTitle
           title="Lister Article"
-          pathname="/Logistique/Données de base/Lister Article"
+          pathname="/Logistique/Données de base/Article/Lister Article"
           withBackOption={true}
         />
         <div>

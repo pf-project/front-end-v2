@@ -16,7 +16,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 
 export default function Commerciale({
   handleChange,
-  state,
+  data,
   onLeavingMarge,
   handleFixPrecisionValeurs,
   classes,
@@ -37,7 +37,7 @@ export default function Commerciale({
                 }}
                 onChange={handleChange}
                 name="code"
-                value={state.data.code}
+                value={data.code}
                 label="Code d'article *"
                 id="#codearticle"
               />
@@ -50,7 +50,7 @@ export default function Commerciale({
                 name="designation"
                 validators={["required", "maxStringLength:25"]}
                 errorMessages={["Ce champ est obligatoire", "maximum 25 char"]}
-                value={state.data.designation}
+                value={data.designation}
                 label="Désignation *"
                 id="#designation"
               />
@@ -59,7 +59,7 @@ export default function Commerciale({
             <Grid item xs={4}>
               <TextValidator
                 className={classes.field}
-                value={state.data.categorie}
+                value={data.categorie}
                 onChange={handleChange}
                 name="categorie"
                 label="Catégorie d'article *"
@@ -92,7 +92,7 @@ export default function Commerciale({
                 name="prix_achat_HT"
                 // onBlur={handleFixPrecisionValeurs(false)(false)}
                 onBlur={handle_price_leaving({ achat: true, ht: true })}
-                value={state.data.prix_achat_HT}
+                value={data.prix_achat_HT}
                 label="Prix d'achat de base HT *"
                 validators={[
                   "required",
@@ -113,7 +113,7 @@ export default function Commerciale({
           <Grid item xs={2}>
             <FormGroup>
               <SelectValidator
-                value={state.data.devise_achat}
+                value={data.devise_achat}
                 onChange={handleChange}
                 className={classes.field}
                 name="devise_achat"
@@ -131,7 +131,7 @@ export default function Commerciale({
             <FormGroup>
               <SelectValidator
                 className={classes.field}
-                value={state.data.unite_achat}
+                value={data.unite_achat}
                 onChange={handleChange}
                 name="unite_achat"
                 label="Unité  d'achat *"
@@ -154,7 +154,7 @@ export default function Commerciale({
           <Grid item xs={6}>
             <FormGroup>
               <SelectValidator
-                value={state.data.taux_tva_achat}
+                value={data.taux_tva_achat}
                 className={classes.field}
                 onChange={handleChange}
                 name="taux_tva_achat"
@@ -178,7 +178,7 @@ export default function Commerciale({
               step="0.01"
               onBlur={handle_price_leaving({ achat: true, ht: false })}
               name="prix_achat_TTC"
-              value={state.data.prix_achat_TTC}
+              value={data.prix_achat_TTC}
               defaultValue={" "}
               label="Prix d'achat de base TTC *"
               validators={[
@@ -208,7 +208,7 @@ export default function Commerciale({
                 onChange={handleChange}
                 onBlur={handleFixPrecisionValeurs(false)(3)}
                 name="prix_moyen_pendere"
-                value={state.data.prix_moyen_pendere}
+                value={data.prix_moyen_pendere}
                 label="Prix moyen pondéré *"
                 type="number"
                 step="0.01"
@@ -230,8 +230,8 @@ export default function Commerciale({
           </Grid>
         </Grid>
       </Grid>
-     
-      {state.data.utilite === "MRCH-Achat-pour-vente" && (
+
+      {data.utilite === "MRCH" && (
         <div>
           <Toolbar className={classes.toolbar}>
             <div className={classes.title}>
@@ -244,7 +244,7 @@ export default function Commerciale({
                 <RadioGroup
                   name="marge"
                   className={classes.group}
-                  value={state.data.marge}
+                  value={data.marge}
                   onChange={handleChange}
                 >
                   <FormControlLabel
@@ -259,7 +259,7 @@ export default function Commerciale({
                   />
                 </RadioGroup>
               </Grid>
-              {state.data.marge && (
+              {data.marge && (
                 <>
                   {" "}
                   <Grid item xs={2}>
@@ -272,7 +272,7 @@ export default function Commerciale({
                       step="0.01"
                       onBlur={onLeavingMarge({ montant: false })}
                       name="taux_marge"
-                      value={state.data.taux_marge}
+                      value={data.taux_marge}
                       label="Marge  %*"
                       validators={[
                         "required",
@@ -295,7 +295,7 @@ export default function Commerciale({
                       defaultValue={" "}
                       onBlur={onLeavingMarge({ montant: true })}
                       name="montant_marge"
-                      value={state.data.montant_marge}
+                      value={data.montant_marge}
                       label="Montant  de marge*"
                       type="number"
                       step="0.01"
@@ -329,7 +329,7 @@ export default function Commerciale({
                     type="number"
                     step="0.01"
                     onBlur={handle_price_leaving({ achat: false, ht: true })}
-                    value={state.data.prix_vente_HT}
+                    value={data.prix_vente_HT}
                     label="Prix de vente de base HT *"
                     validators={[
                       "required",
@@ -350,7 +350,7 @@ export default function Commerciale({
               <Grid item xs={2}>
                 <FormGroup>
                   <SelectValidator
-                    value={state.data.devise_vente}
+                    value={data.devise_vente}
                     onChange={handleChange}
                     className={classes.field}
                     defaultValue=" "
@@ -369,7 +369,7 @@ export default function Commerciale({
                 <FormGroup>
                   <FormControl>
                     <SelectValidator
-                      value={state.data.unite_vente}
+                      value={data.unite_vente}
                       onChange={handleChange}
                       className={classes.field}
                       name="unite_vente"
@@ -403,7 +403,7 @@ export default function Commerciale({
               <Grid item xs={6}>
                 <FormGroup>
                   <SelectValidator
-                    value={state.data.taux_tva_vente}
+                    value={data.taux_tva_vente}
                     className={classes.field}
                     onChange={handleChange}
                     defaultValue={" "}
@@ -429,7 +429,7 @@ export default function Commerciale({
                   step="0.01"
                   onBlur={handle_price_leaving({ achat: false, ht: false })}
                   name="prix_vente_TTC"
-                  value={state.data.prix_vente_TTC}
+                  value={data.prix_vente_TTC}
                   label="Prix de vente de base TTC *"
                   validators={[
                     "required",
