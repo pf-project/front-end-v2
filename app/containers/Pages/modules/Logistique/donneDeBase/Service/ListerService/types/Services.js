@@ -69,7 +69,6 @@ class Services extends React.Component {
           service.designation,
           service.categorie,
           service.utilite,
-          service.findvalidite ? article.findvalidite : "---",
           service,
           service
         ]);

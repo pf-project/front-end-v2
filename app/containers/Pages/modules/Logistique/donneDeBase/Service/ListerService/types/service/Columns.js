@@ -176,14 +176,6 @@ export default [
       sort: true
     }
   },
-  {
-    name: "fin_de_validite",
-    label: "Fin de validité",
-    options: {
-      filter: false,
-      sort: true
-    }
-  },
 
   {
     name: "Donnees_de_base",

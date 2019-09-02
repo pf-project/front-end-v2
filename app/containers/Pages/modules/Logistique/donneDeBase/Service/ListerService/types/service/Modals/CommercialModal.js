@@ -115,17 +115,6 @@ export default function CommercialModal({ value }) {
             </Grid>
           )}
         </Grid>
-        {/* <Divider className={classes.dividerMargin} /> */}
-        <Grid container className={classes.root} xs={12} spacing={2}>
-          {value.prix_moyen_pendere && (
-            <Grid item xs={6}>
-              <Typography variant="subtitle1" gutterBottom>
-                {"Prix moyenne pondéré : "}
-                {value.prix_moyen_pendere}
-              </Typography>
-            </Grid>
-          )}
-        </Grid>
       </div>
       {/* <Divider className={classes.dividerMargin} /> */}
       {value.utilite === "MRCH" && (

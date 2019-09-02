@@ -29,12 +29,12 @@ function* fetchDataSaga() {
 
 function* deleteServiceSaga(payload) {
   try {
-    yield fetchAPI({
+    const data = yield fetchAPI({
       method: "DELETE",
       url: "/api/logistic/service/archive/" + payload.payload,
       token: window.localStorage.getItem("token")
     });
-    yield put(servicDeleted(payload));
+    yield put(serviceDeleted(payload));
   } catch (error) {
     yield put(deleteServiceFailure(erreur));
   }

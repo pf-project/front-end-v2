@@ -59,7 +59,7 @@ export default function crudTbServicesReducer(
         mutableState
           .update("dataTable", dataTable =>
             dataTable.filter(
-              article => article.get("code") !== action.payload.payload
+              service => service.get("code") !== action.payload.payload
             )
           )
           .set("notifMsg", "le service a été supprimé");
