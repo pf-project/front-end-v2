@@ -45,7 +45,7 @@ export default function Initiale({
           validators={["required", "maxStringLength:25"]}
           errorMessages={["Ce champ est obligatoire", "maximum 25 char"]}
           value={data.code}
-          label="Code d'article *"
+          label="Code de service *"
         />
       </FormGroup>
       <FormGroup>
@@ -58,7 +58,7 @@ export default function Initiale({
               fetchCategorie(data.categorie, "categorie/service/find");
           }}
           name="categorie"
-          label="Catégorie d'article *"
+          label="Catégorie de service *"
           style={{ minWidth: 300 }}
           validators={["required"]}
           errorMessages={["Ce champ est obligatoire "]}
@@ -94,19 +94,6 @@ export default function Initiale({
           errorMessages={["Ce Champ est Obligatoire", "maximum 25 char"]}
           value={data.designation}
           label="Désignation *"
-        />
-      </FormGroup>
-      <FormGroup>
-        <TextField
-          name="findvalidite"
-          value={data.findvalidite}
-          onChange={handleChange}
-          className={classes.initialeFields}
-          label="Fin de validité"
-          type="date"
-          InputLabelProps={{
-            shrink: true
-          }}
         />
       </FormGroup>
     </Grid>

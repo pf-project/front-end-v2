@@ -198,39 +198,6 @@ export default function Commerciale({
         </Grid>
       </Grid>
 
-      <Grid item xs={12}>
-        <Grid container direction="row">
-          <Grid item xs={4} />
-          <Grid item xs={4}>
-            <FormGroup>
-              <TextValidator
-                className={classes.field}
-                onChange={handleChange}
-                onBlur={handleFixPrecisionValeurs(false)(3)}
-                name="prix_moyen_pendere"
-                value={data.prix_moyen_pendere}
-                label="Prix moyen pondéré *"
-                type="number"
-                step="0.01"
-                validators={[
-                  "required",
-                  "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/,
-                  "maxNumber:999999",
-                  "isPositive"
-                ]}
-                errorMessages={[
-                  "Ce champ est obligatoire",
-                  "Chmap doit étre un nombre : ex 4.57 ",
-                  "Maximum 6 nombres !",
-                  "Ce champ doit étre un nombre positive"
-                  // "deux  nombre(s) apres la virgule !"
-                ]}
-              />
-            </FormGroup>
-          </Grid>
-        </Grid>
-      </Grid>
-
       {data.utilite === "MRCH" && (
         <div>
           <Toolbar className={classes.toolbar}>
