@@ -54,7 +54,8 @@ export default function Initiale({
           className={classes.initialeFields}
           onChange={handleChange}
           onBlur={() => {
-            if (data.categorie) fetchCategorie(data.categorie);
+            if (data.categorie)
+              fetchCategorie(data.categorie, "categorie/article/find");
           }}
           name="categorie"
           label="Catégorie d'article *"

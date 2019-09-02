@@ -110,16 +110,14 @@ export const stopLoading = () => ({
 // };
 
 // Fetch action
-export const fetchItemFailure = (payload, branch) => ({
+export const fetchItemFailure = payload => ({
   type: types.FETCH_ITEM_FAILURE,
-  payload,
-  branch
+  payload
 });
 
-export const fetchItemSuccess = (payload, branch) => ({
+export const fetchItemSuccess = payload => ({
   type: types.FETCH_ITEM_SUCCESS,
-  payload,
-  branch
+  payload
 });
 
 export const fetchItem = (payload, branch) => ({
@@ -165,4 +163,20 @@ export const updateItem = (payload, branch) => ({
   type: types.UPDATE_ITEM_REQUEST,
   payload,
   branch
+});
+
+// suggestions
+export const fetchSuggestions = branch => ({
+  type: types.FETCH_ITEMS_FOR_SUGGESTION_REQUEST,
+  branch
+});
+
+export const fetchSuggestionsSuccess = payload => ({
+  type: types.FETCH_ITEMS_FOR_SUGGESTION_SUCCESS,
+  payload
+});
+
+export const fetchSuggestionsFailure = payload => ({
+  type: types.FETCH_ITEMS_FOR_SUGGESTION_FAILURE,
+  payload
 });

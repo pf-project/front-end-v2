@@ -43,8 +43,7 @@ class Base extends React.Component {
       handleValeursChange,
       loading
     } = this.props;
-
-    const categorie = this.props.categorie.toObject();
+    const categorie = this.props.categorie;
     let articlesMetaData = [];
     if (loading) {
       return (
@@ -60,7 +59,7 @@ class Base extends React.Component {
         </center>
       );
 
-    articlesMetaData = categorie.articlesMetaData.toArray();
+    articlesMetaData = categorie.articlesMetaData;
     return (
       <Grid container spacing={1} className={classes.grid} direction="column">
         {/* <ValidatorForm onSubmit={handleSubmitBase} autoComplete="off"> */}
@@ -189,11 +188,9 @@ class Base extends React.Component {
                 </TableHead>
                 <TableBody>
                   {articlesMetaData.map((metadata, idx) => {
-                    metadata = metadata.toObject();
+                    metadata = metadata;
 
-                    metadata.valeurs = metadata.valeurs
-                      ? metadata.valeurs.toArray()
-                      : [];
+                    metadata.valeurs = metadata.valeurs ? metadata.valeurs : [];
                     if (metadata) {
                       let validators = [];
                       let errorMessages = [];

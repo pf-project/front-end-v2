@@ -19,16 +19,22 @@ import {
   UPDATE_ARTICLE_FAILURE,
   UPDATE_ARTICLE_SUCCESS,
   ADD_ITEM_SUCCESS,
-  ADD_ITEM_FAILURE
+  ADD_ITEM_FAILURE,
+  FETCH_ITEMS_FOR_SUGGESTION_SUCCESS,
+  FETCH_ITEMS_FOR_SUGGESTION_FAILURE,
+  FETCH_ITEM_SUCCESS,
+  FETCH_ITEM_FAILURE,
+  UPDATE_ITEM_FAILURE,
+  UPDATE_ITEM_SUCCESS
 } from "./crudLogisticConstants";
 
 const initialState = {
   notifMsg: "",
   loading: false,
-  designations: List([]),
-  categorie: Map({}),
-  articlesForSuggestion: Map({}),
-  article: null
+  suggestions: List([]),
+  // categorie: Map({}),
+  // articlesForSuggestion: Map({}),
+  item: null
 };
 
 const initialImmutableState = fromJS(initialState);
@@ -38,6 +44,38 @@ export default function crudLogisticReducer(
   action = {}
 ) {
   switch (action.type) {
+    case UPDATE_ITEM_FAILURE:
+      return state.withMutations(mutableState => {
+        mutableState
+          .set("notifMsg", "Erreur lors du mis à jour ...")
+          .set("loading", false);
+      });
+    case UPDATE_ITEM_SUCCESS:
+      return state.withMutations(mutableState => {
+        mutableState
+          .set("notifMsg", "Bien mis à jour ...")
+          .set("loading", false);
+      });
+    case FETCH_ITEM_SUCCESS:
+      return state.withMutations(mutableState => {
+        mutableState.set("item", action.payload).set("loading", false);
+      });
+    case FETCH_ITEM_FAILURE:
+      return state.withMutations(mutableState => {
+        mutableState
+          .set("notifMsg", "Erreur lors du chargement ...")
+          .set("loading", false);
+      });
+    case FETCH_ITEMS_FOR_SUGGESTION_SUCCESS:
+      return state.withMutations(mutableState => {
+        mutableState.set("suggestions", action.payload).set("loading", false);
+      });
+    case FETCH_ITEMS_FOR_SUGGESTION_FAILURE:
+      return state.withMutations(mutableState => {
+        mutableState
+          .set("notifMsg", "Erreur lors du chargement ...")
+          .set("loading", false);
+      });
     case ADD_ITEM_FAILURE:
       return state.withMutations(mutableState => {
         mutableState
@@ -48,6 +86,7 @@ export default function crudLogisticReducer(
       return state.withMutations(mutableState => {
         mutableState.set("notifMsg", "Bien Ajouter ...").set("loading", false);
       });
+
     case START_LOADING:
       return state.withMutations(mutableState => {
         mutableState.set("loading", true);

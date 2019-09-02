@@ -18,9 +18,10 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { PageTitle, Notification } from "enl-components";
 import Grid from "@material-ui/core/Grid";
 import {
-  fetchCategorieDesignation,
-  fetchCategorie,
+  fetchItem,
+  addItem,
   addArticle,
+  fetchSuggestions,
   closeNotifAction
 } from "../../../reducers/crudLogisticActions";
 import Commerciale from "./Commerciale";
@@ -125,15 +126,7 @@ class CreerArticle extends React.Component {
       data: {
         caracteristiques: [],
         controleexige: false,
-        gestionparlot: false,
-        marge: false,
-        unite_vente: "",
-        devise_vente: "",
-        taux_tva_vente: "",
-        prix_achat_HT: "",
-        prix_achat_TTC: "",
-        prix_vente_HT: "",
-        prix_vente_TTC: ""
+        gestionparlot: false
       },
       designations: [],
       categorie: []
@@ -154,7 +147,7 @@ class CreerArticle extends React.Component {
 
   handleSubmitCommerciale = () => {
     const { data } = this.state;
-    this.props.addArticle(data);
+    this.props.addArticle(data, "article");
     this.handleNext();
   };
 
@@ -294,7 +287,8 @@ class CreerArticle extends React.Component {
     switch (name) {
       case "devise_achat":
         data = { ...this.state.data };
-        if (!data.devise_vente) data.devise_vente = value;
+        if (data.utilite === "MRCH" && !data.devise_vente)
+          data.devise_vente = value;
         data.devise_achat = value;
         this.setState({
           data
@@ -302,7 +296,8 @@ class CreerArticle extends React.Component {
         break;
       case "unite_achat":
         data = { ...this.state.data };
-        if (!data.unite_vente) data.unite_vente = value;
+        if (data.utilite === "MRCH" && !data.devise_vente)
+          data.unite_vente = value;
         data.unite_achat = value;
         this.setState({
           data
@@ -315,7 +310,7 @@ class CreerArticle extends React.Component {
         prix_HT = parseFloat(data.prix_achat_HT);
         data.taux_tva_achat = value;
         data.prix_achat_TTC = this.calculTTC({ taux_tva, prix_HT });
-        if (!data.taux_tva_vente) {
+        if (data.utilite === "MRCH" && !data.devise_vente) {
           data.taux_tva_vente = value;
           if (data.prix_vente_HT)
             data.prix_vente_TTC = parseFloat(
@@ -374,9 +369,27 @@ class CreerArticle extends React.Component {
         break;
       case "utilite":
         data = { ...this.state.data };
-        delete data.prix_de_vente_de_base_TTC;
-        delete data.taux_tva;
-        delete data.unite_vente;
+        switch (value) {
+          case "MRCH":
+            (data.marge = false),
+              (data.unite_vente = ""),
+              (data.devise_vente = ""),
+              (data.taux_tva_vente = ""),
+              (data.prix_achat_HT = ""),
+              (data.prix_achat_TTC = ""),
+              (data.prix_vente_HT = ""),
+              (data.prix_vente_TTC = "");
+            break;
+          case "CONS":
+            delete data.marge,
+              delete data.unite_vente,
+              delete data.devise_vente,
+              delete data.taux_tva_vente,
+              delete data.prix_vente_HT,
+              delete data.prix_vente_TTC;
+            break;
+        }
+
         data.utilite = value;
         this.setState({
           data
@@ -390,7 +403,13 @@ class CreerArticle extends React.Component {
   };
 
   getStepContent = stepIndex => {
-    const { classes, loading, categorie, fetchCategorie } = this.props;
+    const {
+      classes,
+      loading,
+      categorie,
+      fetchCategorie,
+      designations
+    } = this.props;
 
     switch (stepIndex) {
       case 0:
@@ -513,7 +532,7 @@ class CreerArticle extends React.Component {
   };
 
   componentWillMount() {
-    this.props.fetchCategorieDesignation();
+    this.props.fetchCategorieDesignation("categorie/article/find");
   }
 
   getSubmitter = () => {
@@ -629,20 +648,17 @@ class CreerArticle extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchCategorieDesignation: bindActionCreators(
-    fetchCategorieDesignation,
-    dispatch
-  ),
-  fetchCategorie: bindActionCreators(fetchCategorie, dispatch),
+  fetchCategorieDesignation: bindActionCreators(fetchSuggestions, dispatch),
+  fetchCategorie: bindActionCreators(fetchItem, dispatch),
   closeNotif: () => dispatch(closeNotifAction()),
-  addArticle: bindActionCreators(addArticle, dispatch)
+  addArticle: bindActionCreators(addItem, dispatch)
 });
 
 const mapStateToProps = state => ({
   notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
   loading: state.get("crudLogisticReducer").get("loading"),
-  designations: state.get("crudLogisticReducer").get("designations"),
-  categorie: state.get("crudLogisticReducer").get("categorie")
+  designations: state.get("crudLogisticReducer").get("suggestions"),
+  categorie: state.get("crudLogisticReducer").get("item")
 });
 
 // //const reducer = "initval";
