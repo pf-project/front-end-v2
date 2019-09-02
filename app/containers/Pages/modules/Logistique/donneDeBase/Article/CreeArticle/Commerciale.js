@@ -213,13 +213,11 @@ export default function Commerciale({
                 type="number"
                 step="0.01"
                 validators={[
-                  "required",
                   "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/,
                   "maxNumber:999999",
                   "isPositive"
                 ]}
                 errorMessages={[
-                  "Ce champ est obligatoire",
                   "Chmap doit étre un nombre : ex 4.57 ",
                   "Maximum 6 nombres !",
                   "Ce champ doit étre un nombre positive"
