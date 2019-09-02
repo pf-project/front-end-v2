@@ -15,23 +15,6 @@ export const addArticleFailure = payload => ({
   payload
 });
 
-// Add Categorie :
-
-export const addCategorie = payload => ({
-  type: types.ADD_CATEGORIE_REQUEST,
-  payload
-});
-
-export const addCategorieSuccess = payload => ({
-  type: types.ADD_CATEGORIE_SUCCESS,
-  payload
-});
-
-export const addCategorieFailure = payload => ({
-  type: types.ADD_CATEGORIE_FAILURE,
-  payload
-});
-
 // Fetch categorie :
 export const fetchCategorie = payload => ({
   type: types.FETCH_CATEGORIE_REQUEST,
@@ -125,3 +108,61 @@ export const stopLoading = () => ({
 // export const addUserAction = {
 //   type: types.ADD_USER
 // };
+
+// Fetch action
+export const fetchItemFailure = (payload, branch) => ({
+  type: types.FETCH_ITEM_FAILURE,
+  payload,
+  branch
+});
+
+export const fetchItemSuccess = (payload, branch) => ({
+  type: types.FETCH_ITEM_SUCCESS,
+  payload,
+  branch
+});
+
+export const fetchItem = (payload, branch) => ({
+  type: types.FETCH_ITEM_REQUEST,
+  payload,
+  branch
+});
+
+// add Item
+export const addItemFailure = (payload, branch) => ({
+  type: types.ADD_ITEM_FAILURE,
+  payload,
+  branch
+});
+
+export const addItemSuccess = (payload, branch) => ({
+  type: types.ADD_ITEM_SUCCESS,
+  payload,
+  branch
+});
+
+export const addItem = (payload, branch) => ({
+  type: types.ADD_ITEM_REQUEST,
+  payload,
+  branch
+});
+
+// update
+
+export const updateItemFailure = (payload, branch) => ({
+  type: types.UPDATE_ITEM_FAILURE,
+  payload,
+  branch
+});
+
+export const updateItemSuccess = (payload, branch) => ({
+  type: types.UPDATE_ITEM_SUCCESS,
+  payload,
+  branch
+});
+
+export const updateItem = (payload, branch) => ({
+  type: types.UPDATE_ITEM_REQUEST,
+  payload,
+  branch
+});

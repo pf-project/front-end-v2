@@ -17,7 +17,9 @@ import {
   FETCH_ARTICLE_FAILURE,
   FETCH_ARTICLE_SUCCESS,
   UPDATE_ARTICLE_FAILURE,
-  UPDATE_ARTICLE_SUCCESS
+  UPDATE_ARTICLE_SUCCESS,
+  ADD_ITEM_SUCCESS,
+  ADD_ITEM_FAILURE
 } from "./crudLogisticConstants";
 
 const initialState = {
@@ -36,6 +38,16 @@ export default function crudLogisticReducer(
   action = {}
 ) {
   switch (action.type) {
+    case ADD_ITEM_FAILURE:
+      return state.withMutations(mutableState => {
+        mutableState
+          .set("notifMsg", "Erreur lors de l'ajout ...")
+          .set("loading", false);
+      });
+    case ADD_ITEM_SUCCESS:
+      return state.withMutations(mutableState => {
+        mutableState.set("notifMsg", "Bien Ajouter ...").set("loading", false);
+      });
     case START_LOADING:
       return state.withMutations(mutableState => {
         mutableState.set("loading", true);

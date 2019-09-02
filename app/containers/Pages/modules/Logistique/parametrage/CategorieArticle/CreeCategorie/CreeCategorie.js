@@ -29,7 +29,7 @@ import {
 } from "react-material-ui-form-validator";
 
 import {
-  addCategorie,
+  addItem,
   closeNotifAction
 } from "../../../reducers/crudLogisticActions";
 // import Initiale from "./Initiale";
@@ -102,7 +102,7 @@ const CreerCategorie = ({
   closeNotif,
   notifMsg,
   classes,
-  addCategorie,
+  addItem,
   error
 }) => {
   // state :
@@ -212,7 +212,8 @@ const CreerCategorie = ({
   // handle submit :
 
   const handleSubmit = () => {
-    addCategorie(data);
+    // addCategorie(data);
+    addItem(data, "categorie/article");
     // alert(data);
     setData({ groupe: "", code: "", designation: "", articlesMetaData: [] });
     setNbrAttributes(0);
@@ -475,7 +476,7 @@ const CreerCategorie = ({
 };
 
 const mapDispatchToProps = dispatch => ({
-  addCategorie: bindActionCreators(addCategorie, dispatch),
+  addItem: bindActionCreators(addItem, dispatch),
   closeNotif: () => dispatch(closeNotifAction())
 });
 

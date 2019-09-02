@@ -5,8 +5,6 @@ import {
   fetchCategorieDesignationSuccess,
   fetchCategorieFailure,
   fetchCategorieSuccess,
-  addCategorieSuccess,
-  addCategorieFailure,
   startLoading,
   stopLoading,
   addArticleSuccess,
@@ -16,7 +14,9 @@ import {
   fetchArticleSuccess,
   fetchArticleFailure,
   updateArticleFailure,
-  updateArticleSuccess
+  updateArticleSuccess,
+  addItemFailure,
+  addItemSuccess
 } from "./crudLogisticActions";
 
 import {
@@ -26,7 +26,8 @@ import {
   ADD_ARTICLE_REQUEST,
   ADD_CATEGORIE_REQUEST,
   FETCH_ARTICLE_REQUEST,
-  UPDATE_ARTICLE_REQUEST
+  UPDATE_ARTICLE_REQUEST,
+  ADD_ITEM_REQUEST
 } from "./crudLogisticConstants";
 
 const erreur = "Erreur lors de l'action";
@@ -74,22 +75,22 @@ function* fetchCategorieDesignationsSaga() {
   }
 }
 
-function* addArticleSaga(payload) {
-  try {
-    yield put(startLoading());
-    yield fetchAPI({
-      method: "POST",
-      url: "/api/logistic/article/create",
-      token: window.localStorage.getItem("token"),
-      body: payload.payload
-    });
-    yield put(addArticleSuccess());
-    // yield put(stopLoading());
-  } catch (error) {
-    yield put(addArticleFailure(erreur));
-    // yield put(stopLoading());
-  }
-}
+// function* addArticleSaga(payload) {
+//   try {
+//     yield put(startLoading());
+//     yield fetchAPI({
+//       method: "POST",
+//       url: "/api/logistic/article/create",
+//       token: window.localStorage.getItem("token"),
+//       body: payload.payload
+//     });
+//     yield put(addArticleSuccess());
+//     // yield put(stopLoading());
+//   } catch (error) {
+//     yield put(addArticleFailure(erreur));
+//     // yield put(stopLoading());
+//   }
+// }
 
 function* fetchArticlesForSuggestionSaga({ payload }) {
   try {
@@ -103,23 +104,6 @@ function* fetchArticlesForSuggestionSaga({ payload }) {
     // yield put(stopLoading());
   } catch (error) {
     yield put(fetchArticlesForSuggestionFailure(erreur));
-  }
-}
-
-function* addCategorieSaga(payload) {
-  try {
-    yield put(startLoading());
-    const data = yield fetchAPI({
-      method: "POST",
-      url: "/api/logistic/categorie/create",
-      token: window.localStorage.getItem("token"),
-      body: payload.payload
-    });
-    yield put(addCategorieSuccess());
-    // yield put(stopLoading());
-  } catch (error) {
-    // yield put(stopLoading());
-    yield put(addCategorieFailure(erreur));
   }
 }
 
@@ -137,6 +121,23 @@ function* fetchArticleSaga({ payload }) {
     yield put(fetchArticleFailure(erreur));
   }
 }
+
+function* addSaga({ payload, branch }) {
+  try {
+    yield put(startLoading());
+    yield fetchAPI({
+      method: "POST",
+      url: `/api/logistic/${branch}/create`,
+      token: window.localStorage.getItem("token"),
+      body: payload
+    });
+    yield put(addItemSuccess());
+    // yield put(stopLoading());
+  } catch (error) {
+    // yield put(stopLoading());
+    yield put(addItemFailure(erreur));
+  }
+}
 //= ====================================
 //  WATCHERS
 //-------------------------------------
@@ -148,8 +149,8 @@ function* crudLogisticRootSaga() {
       fetchCategorieDesignationsSaga
     ),
     takeEvery(FETCH_CATEGORIE_REQUEST, fetchCategorieSaga),
-    takeEvery(ADD_ARTICLE_REQUEST, addArticleSaga),
-    takeEvery(ADD_CATEGORIE_REQUEST, addCategorieSaga),
+    // takeEvery(ADD_ARTICLE_REQUEST, addArticleSaga),
+    takeEvery(ADD_ITEM_REQUEST, addSaga),
     takeEvery(
       FETCH_ARTICLES_FOR_SUGGESTION_REQUEST,
       fetchArticlesForSuggestionSaga
