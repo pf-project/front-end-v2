@@ -19,7 +19,7 @@ import {
   Service,
   CreerService,
   GererService,
-  ListerServices
+  ListerService
 } from "../pageListAsync";
 
 class Application extends React.Component {
@@ -87,7 +87,7 @@ class Application extends React.Component {
 
           <Route
             path="/app/logistique/Données-de-base/service/lister-services"
-            component={ListerServices}
+            component={ListerService}
           />
           <Route
             path="/app/logistique/Données-de-base/service"

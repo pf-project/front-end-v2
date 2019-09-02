@@ -111,7 +111,7 @@ export const GererService = Loadable({
 });
 
 // // // // List Service
-export const ListerServices = Loadable({
+export const ListerService = Loadable({
   loader: () =>
     import(
       "./Pages/modules/Logistique/donneDeBase/Service/ListerService/ListerService"

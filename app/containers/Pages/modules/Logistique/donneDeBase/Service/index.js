@@ -8,11 +8,11 @@ const index = () => {
       title: "Ajouter",
       width: "33%"
     },
-    // {
-    //   url: "/app/logistique/Données-de-base/service/lister-services",
-    //   title: "Lister",
-    //   width: "33%"
-    // },
+    {
+      url: "/app/logistique/Données-de-base/service/lister-services",
+      title: "Lister",
+      width: "33%"
+    },
     {
       url: "/app/logistique/Données-de-base/service/GererService",
       title: "Gerer",
