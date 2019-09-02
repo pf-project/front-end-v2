@@ -2,11 +2,11 @@ import { fromJS, List, Map, Immutable } from "immutable";
 import notif from "enl-api/ui/notifMessage";
 import { CLOSE_NOTIF } from "enl-redux/constants/notifConstants";
 import {
-  FETCH_ARTICLES_SUCCESS,
-  FETCH_ARTICLES_FAILURE,
+  FETCH_SERVICES_SUCCESS,
+  FETCH_SERVICES_FAILURE,
   START_LOADING,
-  DELETE_ARTICLE_SUCCESS,
-  DELETE_ARTICLE_FAILURE
+  DELETE_SERVICE_SUCCESS,
+  DELETE_SERVICE_FAILURE
 } from "./crudTbConstants";
 
 const initialState = {
@@ -33,7 +33,7 @@ const initialItem = (keyTemplate, anchor) => {
 
 const initialImmutableState = fromJS(initialState);
 
-export default function crudTbArticlesReducer(
+export default function crudTbServicesReducer(
   state = initialImmutableState,
   action = {}
 ) {
@@ -43,18 +43,18 @@ export default function crudTbArticlesReducer(
       return state.withMutations(mutableState => {
         mutableState.set("loading", true);
       });
-    case FETCH_ARTICLES_SUCCESS:
+    case FETCH_SERVICES_SUCCESS:
       return state.withMutations(mutableState => {
         const dataTable = fromJS(action.data);
         mutableState.set("dataTable", dataTable).set("loading", false);
       });
 
-    case FETCH_ARTICLES_FAILURE:
+    case FETCH_SERVICES_FAILURE:
       return state.withMutations(mutableState => {
         mutableState.set("notifMsg", action.payload).set("loading", false);
       });
 
-    case DELETE_ARTICLE_SUCCESS:
+    case DELETE_SERVICE_SUCCESS:
       return state.withMutations(mutableState => {
         mutableState
           .update("dataTable", dataTable =>
@@ -62,9 +62,9 @@ export default function crudTbArticlesReducer(
               article => article.get("code") !== action.payload.payload
             )
           )
-          .set("notifMsg", "l'article a été supprimé");
+          .set("notifMsg", "le service a été supprimé");
       });
-    case DELETE_ARTICLE_FAILURE:
+    case DELETE_SERVICE_FAILURE:
       return state.withMutations(mutableState => {
         const dataTable = fromJS(action.users);
         mutableState.set("notifMsg", "Erreur lors de l'action");

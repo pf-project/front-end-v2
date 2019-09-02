@@ -1,29 +1,31 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles, withTheme } from '@material-ui/core/styles';
-import classNames from 'classnames';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import Collapse from '@material-ui/core/Collapse';
-import Chip from '@material-ui/core/Chip';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import Icon from '@material-ui/core/Icon';
-import messages from 'enl-api/ui/menuMessages';
-import styles from './sidebar-jss';
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles, withTheme } from "@material-ui/core/styles";
+import classNames from "classnames";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import Collapse from "@material-ui/core/Collapse";
+import Chip from "@material-ui/core/Chip";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import { injectIntl, intlShape, FormattedMessage } from "react-intl";
+import Icon from "@material-ui/core/Icon";
+import messages from "enl-api/ui/menuMessages";
+import styles from "./sidebar-jss";
 
-const LinkBtn = React.forwardRef(function LinkBtn(props, ref) { // eslint-disable-line
+const LinkBtn = React.forwardRef(function LinkBtn(props, ref) {
+  // eslint-disable-line
   return <NavLink to={props.to} {...props} innerRef={ref} />; // eslint-disable-line
 });
 
-class MainMenu extends React.Component { // eslint-disable-line
+class MainMenu extends React.Component {
+  // eslint-disable-line
   handleClick() {
     const { toggleDrawerOpen, loadTransition } = this.props;
     toggleDrawerOpen();
@@ -31,108 +33,101 @@ class MainMenu extends React.Component { // eslint-disable-line
   }
 
   render() {
-    const {
-      classes,
-      openSubMenu,
-      open,
-      dataMenu,
-      intl
-    } = this.props;
-    const getMenus = menuArray => menuArray.map((item, index) => {
-      if (item.child) {
-        return (
-          <div key={index.toString()}>
-            <ListItem
-              button
-              className={
-                classNames(
+    const { classes, openSubMenu, open, dataMenu, intl } = this.props;
+    const getMenus = menuArray =>
+      menuArray.map((item, index) => {
+        if (item.child) {
+          return (
+            <div key={index.toString()}>
+              <ListItem
+                button
+                className={classNames(
                   classes.head,
-                  item.icon ? classes.iconed : '',
-                  open.indexOf(item.key) > -1 ? classes.opened : '',
-                )
-              }
-              onClick={() => openSubMenu(item.key, item.keyParent)}
-            >
-              {item.icon && (
+                  item.icon ? classes.iconed : "",
+                  open.indexOf(item.key) > -1 ? classes.opened : ""
+                )}
+                onClick={() => openSubMenu(item.key, item.keyParent)}
+              >
+                {/* {item.icon && (
                 <ListItemIcon className={classes.icon}>
                   <Icon>{item.icon}</Icon>
                 </ListItemIcon>
-              )}
-              <ListItemText
-                classes={{ primary: classes.primary }}
-                variant="inset"
-                primary={
-                  messages[item.key] !== undefined
-                    ? intl.formatMessage(messages[item.key])
-                    : item.name
-                }
-              />
-              { open.indexOf(item.key) > -1 ? <ExpandLess /> : <ExpandMore /> }
-            </ListItem>
-            <Collapse
+              )} */}
+                <ListItemText
+                  classes={{ primary: classes.primary }}
+                  variant="inset"
+                  primary={
+                    messages[item.key] !== undefined
+                      ? intl.formatMessage(messages[item.key])
+                      : item.name
+                  }
+                />
+                {open.indexOf(item.key) > -1 ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse
+                component="div"
+                className={classNames(
+                  classes.nolist,
+                  item.keyParent ? classes.child : ""
+                )}
+                in={open.indexOf(item.key) > -1}
+                timeout="auto"
+                unmountOnExit
+              >
+                <List className={classes.dense} component="nav" dense>
+                  {getMenus(item.child, "key")}
+                </List>
+              </Collapse>
+            </div>
+          );
+        }
+        if (item.title) {
+          return (
+            <ListSubheader
+              disableSticky
+              key={index.toString()}
               component="div"
-              className={classNames(
-                classes.nolist,
-                (item.keyParent ? classes.child : ''),
-              )}
-              in={open.indexOf(item.key) > -1}
-              timeout="auto"
-              unmountOnExit
+              className={classes.title}
             >
-              <List className={classes.dense} component="nav" dense>
-                { getMenus(item.child, 'key') }
-              </List>
-            </Collapse>
-          </div>
-        );
-      }
-      if (item.title) {
+              {messages[item.key] !== undefined ? (
+                <FormattedMessage {...messages[item.key]} />
+              ) : (
+                item.name
+              )}
+            </ListSubheader>
+          );
+        }
         return (
-          <ListSubheader
-            disableSticky
+          <ListItem
             key={index.toString()}
-            component="div"
-            className={classes.title}
+            button
+            exact
+            className={classes.nested}
+            activeClassName={classes.active}
+            component={LinkBtn}
+            to={item.link}
+            onClick={() => this.handleClick()}
           >
-            {
-              messages[item.key] !== undefined
-                ? <FormattedMessage {...messages[item.key]} />
-                : item.name
-            }
-          </ListSubheader>
+            <ListItemText
+              classes={{ primary: classes.primary }}
+              variant="inset"
+              primary={
+                messages[item.key] !== undefined
+                  ? intl.formatMessage(messages[item.key])
+                  : item.name
+              }
+            />
+            {item.badge && (
+              <Chip
+                color="primary"
+                label={item.badge}
+                className={classes.badge}
+              />
+            )}
+          </ListItem>
         );
-      }
-      return (
-        <ListItem
-          key={index.toString()}
-          button
-          exact
-          className={classes.nested}
-          activeClassName={classes.active}
-          component={LinkBtn}
-          to={item.link}
-          onClick={() => this.handleClick()}
-        >
-          <ListItemText
-            classes={{ primary: classes.primary }}
-            variant="inset"
-            primary={
-              messages[item.key] !== undefined
-                ? intl.formatMessage(messages[item.key])
-                : item.name
-            }
-          />
-          {item.badge && (
-            <Chip color="primary" label={item.badge} className={classes.badge} />
-          )}
-        </ListItem>
-      );
-    });
-    return (
-      <div>
-        {getMenus(dataMenu)}
-      </div>
-    );
+      });
+    return <div>{getMenus(dataMenu)}</div>;
   }
 }
 
@@ -146,12 +141,16 @@ MainMenu.propTypes = {
   intl: intlShape.isRequired
 };
 
-const openAction = (key, keyParent) => ({ type: 'OPEN_SUBMENU', key, keyParent });
-const reducer = 'ui';
+const openAction = (key, keyParent) => ({
+  type: "OPEN_SUBMENU",
+  key,
+  keyParent
+});
+const reducer = "ui";
 
 const mapStateToProps = state => ({
   force: state, // force active class for sidebar menu
-  open: state.getIn([reducer, 'subMenuOpen'])
+  open: state.getIn([reducer, "subMenuOpen"])
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -163,4 +162,4 @@ const MainMenuMapped = connect(
   mapDispatchToProps
 )(MainMenu);
 
-export default withTheme((withStyles(styles)(injectIntl(MainMenuMapped))));
+export default withTheme(withStyles(styles)(injectIntl(MainMenuMapped)));

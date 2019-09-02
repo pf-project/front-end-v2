@@ -1,18 +1,18 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
-import Hidden from '@material-ui/core/Hidden';
-import Drawer from '@material-ui/core/Drawer';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import dummy from 'enl-api/dummy/dummyContents';
-import styles from './sidebar-jss';
-import SidebarContent from './SidebarContent';
+import React, { Fragment } from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import classNames from "classnames";
+import Hidden from "@material-ui/core/Hidden";
+import Drawer from "@material-ui/core/Drawer";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import dummy from "enl-api/dummy/dummyContents";
+import styles from "./sidebar-jss";
+import SidebarContent from "./SidebarContent";
 
 class Sidebar extends React.Component {
   state = {
     status: dummy.user.status,
-    anchorEl: null,
+    anchorEl: null
   };
 
   handleOpen = event => {
@@ -26,7 +26,7 @@ class Sidebar extends React.Component {
   handleChangeStatus = status => {
     this.setState({ status });
     this.handleClose();
-  }
+  };
 
   render() {
     const { status, anchorEl } = this.state;
@@ -46,7 +46,7 @@ class Sidebar extends React.Component {
             onClose={toggleDrawerOpen}
             onOpen={toggleDrawerOpen}
             open={!open}
-            anchor={leftSidebar ? 'left' : 'right'}
+            anchor={leftSidebar ? "left" : "right"}
           >
             <div className={classes.swipeDrawerPaper}>
               <SidebarContent
@@ -70,10 +70,14 @@ class Sidebar extends React.Component {
             variant="permanent"
             onClose={toggleDrawerOpen}
             classes={{
-              paper: classNames(classes.drawer, classes.drawerPaper, !open ? classes.drawerPaperClose : ''),
+              paper: classNames(
+                classes.drawer,
+                classes.drawerPaper,
+                !open ? classes.drawerPaperClose : ""
+              )
             }}
             open={open}
-            anchor={leftSidebar ? 'left' : 'right'}
+            anchor={leftSidebar ? "left" : "right"}
           >
             <SidebarContent
               drawerPaper={open}
@@ -101,7 +105,7 @@ Sidebar.propTypes = {
   loadTransition: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   leftSidebar: PropTypes.bool,
-  dataMenu: PropTypes.array.isRequired,
+  dataMenu: PropTypes.array.isRequired
 };
 
 Sidebar.defaultProps = {

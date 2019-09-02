@@ -9,7 +9,6 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-import ModifierUtilisateur from "./ModifierUtilisateur";
 
 import PropTypes from "prop-types";
 
