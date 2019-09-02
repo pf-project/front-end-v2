@@ -285,7 +285,7 @@ class CreerService extends React.Component {
         break;
       case "unite_achat":
         data = { ...this.state.data };
-        if (data.utilite === "MRCH" && !data.devise_vente)
+        if (data.utilite === "MRCH" && !data.unite_vente)
           data.unite_vente = value;
         data.unite_achat = value;
         this.setState({
@@ -299,7 +299,7 @@ class CreerService extends React.Component {
         prix_HT = parseFloat(data.prix_achat_HT);
         data.taux_tva_achat = value;
         data.prix_achat_TTC = this.calculTTC({ taux_tva, prix_HT });
-        if (data.utilite === "MRCH" && !data.devise_vente) {
+        if (data.utilite === "MRCH" && !data.taux_tva_vente) {
           data.taux_tva_vente = value;
           if (data.prix_vente_HT)
             data.prix_vente_TTC = parseFloat(
