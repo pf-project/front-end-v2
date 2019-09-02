@@ -90,7 +90,7 @@ export default function BaseModal({ value }) {
           </Grid>
         )}
       </Grid>
-      <Divider className={classes.dividerMargin} />
+      {/* <Divider className={classes.dividerMargin} /> */}
       <Grid container className={classes.root} xs={12} spacing={2}>
         {value.note && (
           <Grid item xs={4}>

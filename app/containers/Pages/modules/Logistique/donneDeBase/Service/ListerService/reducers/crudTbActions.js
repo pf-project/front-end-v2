@@ -2,30 +2,30 @@ import * as notification from "enl-redux/constants/notifConstants";
 import * as types from "./crudTbConstants";
 
 export const fetch = () => ({
-  type: types.FETCH_ARTICLES_REQUEST
+  type: types.FETCH_SERVICES_REQUEST
 });
 
 export const fetchAction = (data, branch) => ({
-  type: types.FETCH_ARTICLES_SUCCESS,
+  type: types.FETCH_SERVICES_SUCCESS,
   data
 });
 
 export const fetchActionFailure = (payload, branch) => ({
-  type: types.FETCH_ARTICLES_FAILURE,
+  type: types.FETCH_SERVICES_FAILURE,
   payload
 });
 
-export const deleteArticle = payload => ({
-  type: types.DELETE_ARTICLE_REQUEST,
+export const deleteService = payload => ({
+  type: types.DELETE_SERVICE_REQUEST,
   payload
 });
-export const deleteArticleFailure = payload => ({
-  type: types.DELETE_ARTICLE_FAILURE,
+export const deleteServiceFailure = payload => ({
+  type: types.DELETE_SERVICE_FAILURE,
   payload
 });
 
-export const articleDeleted = payload => ({
-  type: types.DELETE_ARTICLE_SUCCESS,
+export const serviceDeleted = payload => ({
+  type: types.DELETE_SERVICE_SUCCESS,
   payload
 });
 
@@ -35,5 +35,5 @@ export const closeNotifAction = branch => ({
 });
 
 export const startLoading = () => ({
-  type: types.START_LOADING_DATA
+  type: types.START_LOADING_SERVICES
 });

@@ -6,8 +6,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import MUIDataTable from "mui-datatables";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import Columns from "./article/Columns";
-import Options from "./article/Options";
+import Columns from "./service/Columns";
+import Options from "./service/Options";
 import {
   fetch,
   fetchAction,
@@ -34,7 +34,7 @@ const styles = theme => ({
   }
 });
 
-class Articles extends React.Component {
+class Services extends React.Component {
   // getMuiTheme = () =>
   //   createMuiTheme({
   //     overrides: {
@@ -60,19 +60,18 @@ class Articles extends React.Component {
       messageNotif,
       loading
     } = this.props;
-    let articles = [];
+    let services = [];
     if (dataTable)
       dataTable.toArray().map(element => {
-        let article = element.toObject();
-        articles.push([
-          article.code,
-          article.designation,
-          article.categorie,
-          article.utilite,
-          article.findvalidite ? article.findvalidite : "---",
-          article,
-          article,
-          article
+        let service = element.toObject();
+        services.push([
+          service.code,
+          service.designation,
+          service.categorie,
+          service.utilite,
+          service.findvalidite ? article.findvalidite : "---",
+          service,
+          service
         ]);
       });
     return (
@@ -88,7 +87,7 @@ class Articles extends React.Component {
           <MUIDataTable
             key={Math.random()}
             title=""
-            data={articles}
+            data={services}
             columns={Columns}
             options={Options}
             // fixedHeader={false}
@@ -101,14 +100,14 @@ class Articles extends React.Component {
   }
 }
 
-Articles.propTypes = {
+Services.propTypes = {
   classes: PropTypes.object.isRequired,
   fetchdata: PropTypes.func.isRequired,
   closeNotif: PropTypes.func.isRequired,
   messageNotif: PropTypes.string.isRequired
 };
 
-const reducer = "crudTbArticlesReducer";
+const reducer = "crudTbServicesReducer";
 const mapStateToProps = state => ({
   dataTable: state.get(reducer).get("dataTable"),
   loading: state.get(reducer).get("loading"),
@@ -120,9 +119,9 @@ const mapDispatchToProps = dispatch => ({
   closeNotif: bindActionCreators(closeNotifAction, dispatch)
 });
 
-const ArticlesMapped = connect(
+const ServicesMapped = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Articles);
+)(Services);
 
-export default withStyles(styles)(ArticlesMapped);
+export default withStyles(styles)(ServicesMapped);

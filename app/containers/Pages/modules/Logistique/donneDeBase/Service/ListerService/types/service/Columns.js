@@ -10,7 +10,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import BaseModal from "./Modals/BaseModal";
-import StockageModal from "./Modals/StockageModal";
 import Button from "@material-ui/core/Button";
 import CommercialModal from "./Modals/CommercialModal";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -53,9 +52,6 @@ class More extends React.Component {
         break;
       case "commercial":
         modal = <CommercialModal value={value} />;
-        break;
-      case "stockage":
-        modal = <StockageModal value={value} />;
         break;
     }
 
@@ -195,16 +191,6 @@ export default [
     options: {
       filter: false,
       customBodyRender: value => <MoreWithModal modal={"base"} value={value} />
-    }
-  },
-  {
-    name: "Donnees_de_stockage",
-    label: "D_stockage",
-    options: {
-      filter: false,
-      customBodyRender: value => (
-        <MoreWithModal modal={"stockage"} value={value} />
-      )
     }
   },
   {

@@ -85,7 +85,7 @@ export default function StockageModal({ value }) {
           </Grid>
         )}
       </Grid>
-      <Divider className={classes.dividerMargin} />
+      {/* <Divider className={classes.dividerMargin} /> */}
       <Grid container className={classes.root} xs={12} spacing={2}>
         {value.poids && (
           <Grid item xs={4}>
@@ -95,16 +95,16 @@ export default function StockageModal({ value }) {
             </Typography>
           </Grid>
         )}
-        {value.unite1 && (
+        {value.unite_poid && (
           <Grid item xs={4}>
             <Typography variant="subtitle1" gutterBottom>
               {"Unité : "}
-              {value.unite1}
+              {value.unite_poid}
             </Typography>
           </Grid>
         )}
       </Grid>
-      <Divider className={classes.dividerMargin} />
+      {/* <Divider className={classes.dividerMargin} /> */}
       <Grid container className={classes.root} xs={12} spacing={2}>
         {value.dimension_H && (
           <React.Fragment>
@@ -129,16 +129,16 @@ export default function StockageModal({ value }) {
           </React.Fragment>
         )}
         <Grid item xs={2} />
-        {value.unite2 && (
+        {value.unite_dim && (
           <Grid item xs={4}>
             <Typography variant="subtitle1" gutterBottom>
               {"Unité : "}
-              {value.unite2}
+              {value.unite_dim}
             </Typography>
           </Grid>
         )}
       </Grid>
-      <Divider className={classes.dividerMargin} />
+      {/* <Divider className={classes.dividerMargin} /> */}
       <Grid container className={classes.root} xs={12} spacing={2}>
         <Grid item xs={4}>
           <Typography variant="subtitle1" gutterBottom>
@@ -156,7 +156,7 @@ export default function StockageModal({ value }) {
         )}
       </Grid>
 
-      <Divider className={classes.dividerMargin} />
+      {/* <Divider className={classes.dividerMargin} /> */}
 
       <Grid container className={classes.root} xs={12} spacing={2}>
         <Grid item xs={4}>

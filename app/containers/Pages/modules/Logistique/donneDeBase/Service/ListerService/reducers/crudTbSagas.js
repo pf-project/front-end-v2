@@ -4,13 +4,13 @@ import { fetchAPI } from "../../../../../../../../serverActions";
 import {
   fetchAction,
   fetchActionFailure,
-  deleteArticle,
-  deleteArticleFailure,
-  articleDeleted
+  deleteService,
+  deleteServiceFailure,
+  serviceDeleted
 } from "./crudTbActions";
 import {
-  FETCH_ARTICLES_REQUEST,
-  DELETE_ARTICLE_REQUEST
+  FETCH_SERVICES_REQUEST,
+  DELETE_SERVICE_REQUEST
 } from "./crudTbConstants";
 
 const erreur = "Erreur lors de l'action";
@@ -18,7 +18,7 @@ function* fetchDataSaga() {
   try {
     const data = yield fetchAPI({
       method: "GET",
-      url: "/api/logistic/article/find",
+      url: "/api/logistic/service/find",
       token: window.localStorage.getItem("token")
     });
     yield put(fetchAction(data));
@@ -27,16 +27,16 @@ function* fetchDataSaga() {
   }
 }
 
-function* deleteArticleSaga(payload) {
+function* deleteServiceSaga(payload) {
   try {
     yield fetchAPI({
       method: "DELETE",
-      url: "/api/logistic/article/archive/" + payload.payload,
+      url: "/api/logistic/service/archive/" + payload.payload,
       token: window.localStorage.getItem("token")
     });
-    yield put(articleDeleted(payload));
+    yield put(servicDeleted(payload));
   } catch (error) {
-    yield put(deleteArticleFailure(erreur));
+    yield put(deleteServiceFailure(erreur));
   }
 }
 
@@ -44,14 +44,14 @@ function* deleteArticleSaga(payload) {
 //  WATCHERS
 //-------------------------------------
 
-function* crudTbArticlesRootSaga() {
+function* crudTbServicesRootSaga() {
   yield all([
-    takeEvery(FETCH_ARTICLES_REQUEST, fetchDataSaga),
+    takeEvery(FETCH_SERVICES_REQUEST, fetchDataSaga),
 
-    takeEvery(DELETE_ARTICLE_REQUEST, deleteArticleSaga)
+    takeEvery(DELETE_SERVICE_REQUEST, deleteServiceSaga)
   ]);
 }
 
-const crudTbArticlesRootSagas = [fork(crudTbArticlesRootSaga)];
+const crudTbServicesRootSagas = [fork(crudTbServicesRootSaga)];
 
-export default crudTbArticlesRootSagas;
+export default crudTbServicesRootSagas;

@@ -56,11 +56,11 @@ class SidebarContent extends React.Component {
             classes.drawerHeader
           )}
         >
-          <MainMenu
+          {/* <MainMenu
             loadTransition={loadTransition}
             dataMenu={dataMenu}
             toggleDrawerOpen={toggleDrawerOpen}
-          />
+          /> */}
         </div>
       </div>
     );

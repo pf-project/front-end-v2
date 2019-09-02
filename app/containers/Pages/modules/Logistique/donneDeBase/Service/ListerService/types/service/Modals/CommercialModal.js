@@ -72,27 +72,53 @@ export default function CommercialModal({ value }) {
           </Grid>
         </Grid>
         <Grid container className={classes.root} xs={12} spacing={2}>
-          {value.prix_standar_achat && (
-            <Grid item xs={4}>
+          {value.prix_achat_HT && (
+            <Grid item xs={6}>
               <Typography variant="subtitle1" gutterBottom>
-                {"Prix standard d'achat : "}
-                {value.prix_standar_achat}
+                {"Prix d'achat standard HT : "}
+                {value.prix_achat_HT}
               </Typography>
             </Grid>
           )}
-          {value.unite_de_quantite_achat && (
-            <Grid item xs={4}>
+          {value.devise_achat && (
+            <Grid item xs={3}>
               <Typography variant="subtitle1" gutterBottom>
-                {"Unité de quantité d'achat : "}
-                {value.unite_de_quantite_achat}
+                {"Devise : "}
+                {value.devise_achat}
+              </Typography>
+            </Grid>
+          )}
+          {value.unite_achat && (
+            <Grid item xs={3}>
+              <Typography variant="subtitle1" gutterBottom>
+                {"Unité d'achat : "}
+                {value.unite_achat}
               </Typography>
             </Grid>
           )}
         </Grid>
-        <Divider className={classes.dividerMargin} />
+        <Grid container className={classes.root} xs={12} spacing={2}>
+          {value.prix_achat_TTC && (
+            <Grid item xs={6}>
+              <Typography variant="subtitle1" gutterBottom>
+                {"Prix d'achat standard TTC : "}
+                {value.prix_achat_TTC}
+              </Typography>
+            </Grid>
+          )}
+          {value.devise_achat && (
+            <Grid item xs={3}>
+              <Typography variant="subtitle1" gutterBottom>
+                {"TVA : "}
+                {value.taux_tva_achat + " %"}
+              </Typography>
+            </Grid>
+          )}
+        </Grid>
+        {/* <Divider className={classes.dividerMargin} /> */}
         <Grid container className={classes.root} xs={12} spacing={2}>
           {value.prix_moyen_pendere && (
-            <Grid item xs={4}>
+            <Grid item xs={6}>
               <Typography variant="subtitle1" gutterBottom>
                 {"Prix moyenne pondéré : "}
                 {value.prix_moyen_pendere}
@@ -101,7 +127,7 @@ export default function CommercialModal({ value }) {
           )}
         </Grid>
       </div>
-
+      {/* <Divider className={classes.dividerMargin} /> */}
       {value.utilite === "MRCH" && (
         <div>
           <Grid container className={classes.root} xs={12} spacing={2}>
@@ -112,49 +138,74 @@ export default function CommercialModal({ value }) {
             </Grid>
           </Grid>
           <Grid container className={classes.root} xs={12} spacing={2}>
-            {value.prix_de_vente_de_base_HT && (
-              <Grid item xs={4}>
-                <Typography variant="subtitle1" gutterBottom>
-                  {"Prix de vente de base HT   : "}
-                  {value.prix_de_vente_de_base_HT}
-                </Typography>
-              </Grid>
-            )}
-          </Grid>
-
-          <Divider className={classes.dividerMargin} />
-          <Grid container className={classes.root} xs={12} spacing={2}>
-            {value.taux_tva && (
-              <Grid item xs={4}>
-                <Typography variant="subtitle1" gutterBottom>
-                  {"Taux de TVA : "}
-                  {value.taux_tva}
-                </Typography>
-              </Grid>
-            )}
-            {value.prix_de_vente_de_base_TTC && (
-              <Grid item xs={4}>
-                <Typography variant="subtitle1" gutterBottom>
-                  {"Prix de vente de base TTC : "}
-                  {value.prix_de_vente_de_base_TTC}
-                </Typography>
-              </Grid>
-            )}
-          </Grid>
-          {value.unite_de_vente && (
-            <>
-              <Divider className={classes.dividerMargin} />
-
-              <Grid container className={classes.root} xs={12} spacing={2}>
+            {value.marge == true && (
+              <>
                 <Grid item xs={4}>
                   <Typography variant="subtitle1" gutterBottom>
-                    {"Unité de vente : "}
-                    {value.unite_de_vente}
+                    {"Marge  "}
+                    {value.taux_marge + " %"}
                   </Typography>
                 </Grid>
+                <Grid item xs={4}>
+                  <Typography variant="subtitle1" gutterBottom>
+                    {"Montant de marge : "}
+                    {value.montant_marge}
+                  </Typography>
+                </Grid>
+              </>
+            )}
+            {value.marge == false && (
+              <Grid item xs={4}>
+                <Typography variant="subtitle1" gutterBottom>
+                  {"Prix fixe : Oui"}
+                </Typography>
               </Grid>
-            </>
-          )}
+            )}
+          </Grid>
+          <Grid container className={classes.root} xs={12} spacing={2}>
+            {value.prix_vente_HT && (
+              <Grid item xs={6}>
+                <Typography variant="subtitle1" gutterBottom>
+                  {"Prix de vente HT : "}
+                  {value.prix_vente_HT}
+                </Typography>
+              </Grid>
+            )}
+            {value.devise_vente && (
+              <Grid item xs={3}>
+                <Typography variant="subtitle1" gutterBottom>
+                  {"Devise : "}
+                  {value.devise_vente}
+                </Typography>
+              </Grid>
+            )}
+            {value.unite_vente && (
+              <Grid item xs={3}>
+                <Typography variant="subtitle1" gutterBottom>
+                  {"Unité de vente : "}
+                  {value.unite_vente}
+                </Typography>
+              </Grid>
+            )}
+          </Grid>
+          <Grid container className={classes.root} xs={12} spacing={2}>
+            {value.prix_vente_TTC && (
+              <Grid item xs={6}>
+                <Typography variant="subtitle1" gutterBottom>
+                  {"Prix de vente TTC : "}
+                  {value.prix_vente_TTC}
+                </Typography>
+              </Grid>
+            )}
+            {value.taux_tva_vente && (
+              <Grid item xs={3}>
+                <Typography variant="subtitle1" gutterBottom>
+                  {"TVA : "}
+                  {value.taux_tva_vente + " %"}
+                </Typography>
+              </Grid>
+            )}
+          </Grid>
         </div>
       )}
     </div>
