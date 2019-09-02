@@ -1,13 +1,12 @@
 import React from "react";
-import { fromJS } from "immutable";
+import { Map, fromJS } from "immutable";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Initiale from "./Initiale";
 import Base from "../CreeService/Base";
-import Stockage from "../CreeService/Stockage";
 import Commerciale from "../CreeService/Commerciale";
-import ChoisirArticle from "./ChoisirArticle";
+import ChoisirService from "./ChoisirService";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import { withStyles } from "@material-ui/core/styles";
@@ -19,10 +18,10 @@ import { connect } from "react-redux";
 import { PageTitle } from "enl-components";
 import { Notification } from "enl-components";
 import {
-  fetchArticlesForSuggestion,
   closeNotifAction,
-  fetchArticle,
-  updateArticle
+  fetchItem,
+  updateItem,
+  fetchSuggestions
 } from "../../../reducers/crudLogisticActions";
 const styles = theme => ({
   root: {
@@ -116,13 +115,12 @@ class GererService extends React.Component {
     super(props);
     this.state = {
       activeStep: 0,
-      articleChoisi: false,
+      serviceChoisi: false,
       errorMsg: "",
       steps: [
-        { label: "Choisir l'article", icon: "search" },
+        { label: "Choisir l'service", icon: "search" },
         { label: "Données initiales", icon: "perm_identity" },
         { label: "Données de base", icon: "assignment" },
-        { label: "Données de stockage", icon: "storage" },
         { label: "Données commerciales", icon: "business" }
       ],
       data: {
@@ -144,12 +142,12 @@ class GererService extends React.Component {
   }
 
   componentWillMount = () => {
-    this.props.fetchArticlesForSuggestion();
+    this.props.fetchServicesForSuggestion("service/getCodesAndDesignations");
   };
 
   changeStep = (event, activeStep) => {
-    if (this.state.articleChoisi) this.setState({ activeStep });
-    else this.setState({ errorMsg: "Veuillez Choisir un article d'abord !" });
+    if (this.state.serviceChoisi) this.setState({ activeStep });
+    else this.setState({ errorMsg: "Veuillez Choisir un service d'abord !" });
   };
 
   // when leaving a price filed this function is executed
@@ -162,19 +160,26 @@ class GererService extends React.Component {
       taux_tva = parseFloat(data.taux_tva_achat);
       // if leaving a hors tax field
       if (ht) {
+        // take the price value
         let prix_HT = parseFloat(value);
+        // if taux tva achat filled . fill ttc
         if (data.taux_tva_achat) {
           data.prix_achat_TTC = this.calculTTC({ prix_HT, taux_tva });
         }
-        if (data.taux_marge || data.montant_marge)
+        // if price with marge fill the marge
+        if (data.marge) {
           this.onLeavingMarge({ montant: false })();
-
+        }
+        // round the price
         data.prix_achat_HT = prix_HT.toFixed(3);
       } else {
+        // if ttc is filled take value
         let prix_TTC = parseFloat(value);
+        // if tva is filled fill automaticly the ht
         if (data.taux_tva_achat) {
           data.prix_achat_HT = this.calculHT({ prix_TTC, taux_tva });
-          this.onLeavingMarge({ montant: false })();
+          // after filling the ht if marge adjust the marge
+          if (data.marge) this.onLeavingMarge({ montant: false })();
         }
 
         data.prix_TTC = prix_TTC.toFixed(3);
@@ -184,23 +189,33 @@ class GererService extends React.Component {
       taux_tva = parseFloat(data.taux_tva_vente);
       // if leaving a hors tax field
       if (ht) {
+        // if vente ht is leaved  take the value
         let prix_HT = parseFloat(value);
+        // if tva vente is filled fill automaticly the vent ttc
         if (data.taux_tva_vente) {
           data.prix_vente_TTC = this.calculTTC({ prix_HT, taux_tva });
         }
+        // round the value
         data.prix_vente_HT = prix_HT.toFixed(3);
-        data.montant_marge = (prix_HT - data.prix_achat_HT).toFixed(3);
-        data.taux_marge = (
-          (data.montant_marge / data.prix_achat_HT) *
-          100
-        ).toFixed(3);
+        // adjust the marge
+        if (data.marge) {
+          data.montant_marge = (prix_HT - data.prix_achat_HT).toFixed(3);
+          data.taux_marge = (
+            (data.montant_marge / data.prix_achat_HT) *
+            100
+          ).toFixed(3);
+        }
       } else {
+        // if vente ttc is leaved  get the value
         let prix_TTC = parseFloat(value);
+        // if tva vente if filled fill automaticly the ht
         if (data.taux_tva_vente)
           data.prix_vente_HT = this.calculHT({ prix_TTC, taux_tva });
+        // round the value
         data.vente_TTC = prix_TTC.toFixed(3);
 
-        if (data.taux_marge) {
+        // if marge adjust the marge
+        if (data.marge) {
           data.montant_marge = parseFloat(
             data.prix_vente_HT - data.prix_achat_HT
           ).toFixed(3);
@@ -271,7 +286,8 @@ class GererService extends React.Component {
     switch (name) {
       case "devise_achat":
         data = { ...this.state.data };
-        if (!data.devise_vente) data.devise_vente = value;
+        if (data.utilite === "MRCH" && !data.devise_vente)
+          data.devise_vente = value;
         data.devise_achat = value;
         this.setState({
           data
@@ -279,7 +295,8 @@ class GererService extends React.Component {
         break;
       case "unite_achat":
         data = { ...this.state.data };
-        if (!data.unite_vente) data.unite_vente = value;
+        if (data.utilite === "MRCH" && !data.devise_vente)
+          data.unite_vente = value;
         data.unite_achat = value;
         this.setState({
           data
@@ -292,7 +309,7 @@ class GererService extends React.Component {
         prix_HT = parseFloat(data.prix_achat_HT);
         data.taux_tva_achat = value;
         data.prix_achat_TTC = this.calculTTC({ taux_tva, prix_HT });
-        if (!data.taux_tva_vente) {
+        if (data.utilite === "MRCH" && !data.devise_vente) {
           data.taux_tva_vente = value;
           if (data.prix_vente_HT)
             data.prix_vente_TTC = parseFloat(
@@ -351,9 +368,25 @@ class GererService extends React.Component {
         break;
       case "utilite":
         data = { ...this.state.data };
-        delete data.prix_de_vente_de_base_TTC;
-        delete data.taux_tva;
-        delete data.unite_vente;
+        switch (value) {
+          case "MRCH":
+            (data.marge = false),
+              (data.unite_vente = ""),
+              (data.devise_vente = ""),
+              (data.taux_tva_vente = ""),
+              (data.prix_vente_HT = ""),
+              (data.prix_vente_TTC = "");
+            break;
+          case "CONS":
+            delete data.marge,
+              delete data.unite_vente,
+              delete data.devise_vente,
+              delete data.taux_tva_vente,
+              delete data.prix_vente_HT,
+              delete data.prix_vente_TTC;
+            break;
+        }
+
         data.utilite = value;
         this.setState({
           data
@@ -369,8 +402,8 @@ class GererService extends React.Component {
   handleSelect = filterByDesignations => value => () => {
     let route = filterByDesignations ? "findByDesignation" : "findByCode";
     let url = `${route}/${value}`;
-    this.props.fetchArticle(url);
-    this.setState({ activeStep: 1, articleChoisi: true });
+    this.props.fetchService(url, "service", true);
+    this.setState({ activeStep: 1, serviceChoisi: true });
     // this.changeStep(null, 1);
 
     //
@@ -405,9 +438,18 @@ class GererService extends React.Component {
     });
   };
 
+  // convert object to map
+  xah_obj_to_map = obj => {
+    const mp = new Map();
+    Object.keys(obj).forEach(k => {
+      mp.set(k, obj[k]);
+    });
+    return mp;
+  };
+
   getStepContent = stepIndex => {
     const classes = this.props.classes;
-    const { codes, designations } = this.props.articlesForSuggestion;
+    const { codes, designations } = this.props.servicesForSuggestion;
     if (this.props.loading)
       return (
         <center>
@@ -418,7 +460,7 @@ class GererService extends React.Component {
     switch (stepIndex) {
       case 0:
         return (
-          <ChoisirArticle
+          <ChoisirService
             handleSelect={this.handleSelect}
             codes={codes}
             designations={designations}
@@ -437,30 +479,21 @@ class GererService extends React.Component {
           />
         );
       case 2:
-        let state = fromJS(this.state);
-        let categorie = state.get("categorie");
+        // simulate getting categorie from redcucer (to let toArray and to Object work )
+        // let state = fromJS(this.state);
+        // let categorie = state.get("categorie");
         return (
           <Base
             handleChange={this.handleChange}
             data={this.state.data}
-            categorie={categorie}
+            categorie={this.state.categorie}
             classes={classes}
             handleFixPrecisionValeurs={this.handleFixPrecisionValeurs}
             loading={this.props.loading}
             handleValeursChange={this.handleValeursChange}
           />
         );
-      case 3:
-        return (
-          <Stockage
-            handleChange={this.handleChange}
-            state={this.state}
-            handleFixPrecisionValeurs={this.handleFixPrecisionValeurs}
-            handleSubmitStockage={this.handleSubmitStockage}
-            handleBack={this.handleBack}
-            classes={classes}
-          />
-        );
+
       default:
         return (
           <Commerciale
@@ -468,7 +501,7 @@ class GererService extends React.Component {
             handle_price_leaving={this.handle_price_leaving}
             handleFixPrecisionValeurs={this.handleFixPrecisionValeurs}
             handleChange={this.handleChange}
-            state={this.state}
+            data={this.state.data}
             handleSubmitCommerciale={this.handleSubmitCommerciale}
             handleBack={this.handleBack}
             classes={classes}
@@ -499,12 +532,12 @@ class GererService extends React.Component {
     }
   };
   handlSubmit = () => {
-    if (this.state.articleChoisi) {
-      let article = this.state.data;
-      this.props.updateArticle(article);
+    if (this.state.serviceChoisi) {
+      let service = this.state.data;
+      this.props.updateService(service, "service");
       this.setState({
         activeStep: 0,
-        articleChoisi: false,
+        serviceChoisi: false,
         data: {
           caracteristiques: [],
           controleexige: false,
@@ -515,12 +548,12 @@ class GererService extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    const { articleInfo } = nextProps;
+    const { serviceInfo } = nextProps;
 
-    if (articleInfo) {
+    if (serviceInfo) {
       this.setState({
-        data: { ...articleInfo.article },
-        categorie: articleInfo.categorie
+        data: { ...serviceInfo.service },
+        categorie: serviceInfo.categorie
         // caracteristiques_conditions
       });
     }
@@ -529,7 +562,7 @@ class GererService extends React.Component {
   handleCancel = () => {
     this.setState({
       activeStep: 0,
-      articleChoisi: false,
+      serviceChoisi: false,
       errorMsg: "",
       data: {
         caracteristiques: [],
@@ -563,7 +596,7 @@ class GererService extends React.Component {
           variant="contained"
           color="primary"
           type="submit"
-          form="gererArticle"
+          form="gererService"
         >
           Sauvegarder
         </Button>
@@ -615,7 +648,7 @@ class GererService extends React.Component {
             </AppBar>
             <Typography component="div" style={{ padding: 8 * 3 }}>
               <ValidatorForm
-                id="gererArticle"
+                id="gererService"
                 // ref={r => (this.form = r)}
                 onSubmit={this.handlSubmit}
                 autoComplete="off"
@@ -632,12 +665,9 @@ class GererService extends React.Component {
   }
 }
 const mapDispatchToProps = dispatch => ({
-  fetchArticlesForSuggestion: bindActionCreators(
-    fetchArticlesForSuggestion,
-    dispatch
-  ),
-  fetchArticle: bindActionCreators(fetchArticle, dispatch),
-  updateArticle: bindActionCreators(updateArticle, dispatch),
+  fetchServicesForSuggestion: bindActionCreators(fetchSuggestions, dispatch),
+  fetchService: bindActionCreators(fetchItem, dispatch),
+  updateService: bindActionCreators(updateItem, dispatch),
   closeNotif: () => dispatch(closeNotifAction())
 });
 
@@ -645,10 +675,8 @@ const mapStateToProps = state => {
   return {
     notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
     loading: state.get("crudLogisticReducer").get("loading"),
-    articleInfo: state.get("crudLogisticReducer").get("article"),
-    articlesForSuggestion: state
-      .get("crudLogisticReducer")
-      .get("articlesForSuggestion")
+    serviceInfo: state.get("crudLogisticReducer").get("item"),
+    servicesForSuggestion: state.get("crudLogisticReducer").get("suggestions")
   };
 };
 

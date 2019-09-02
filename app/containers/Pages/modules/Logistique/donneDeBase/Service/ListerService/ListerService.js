@@ -6,7 +6,7 @@ import { injectIntl, intlShape } from "react-intl";
 import messages from "./messages";
 import Articles from "./types/Articles";
 
-class ListerService extends Component {
+class ListerArticles extends Component {
   render() {
     // const title = brand.name + " - Table";
     // const description = brand.desc;
@@ -14,8 +14,8 @@ class ListerService extends Component {
     return (
       <div>
         <PageTitle
-          title="Lister Service"
-          pathname="/Logistique/Données de base/Service/Lister Service"
+          title="Lister Article"
+          pathname="/Logistique/Données de base/Article/Lister Article"
           withBackOption={true}
         />
         <div>
@@ -26,8 +26,8 @@ class ListerService extends Component {
   }
 }
 
-ListerService.propTypes = {
+ListerArticles.propTypes = {
   intl: intlShape.isRequired
 };
 
-export default injectIntl(ListerService);
+export default injectIntl(ListerArticles);

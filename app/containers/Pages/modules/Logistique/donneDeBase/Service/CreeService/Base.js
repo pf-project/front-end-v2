@@ -34,20 +34,16 @@ class Base extends React.Component {
     super(props);
   }
 
-  componentWillMount() {
-    this.props.fetchCategorie(this.props.state.data.categorie);
-  }
-
   render() {
     const {
       handleChange,
       handleFixPrecisionValeurs,
-      state,
+      data,
       classes,
       handleValeursChange,
       loading
     } = this.props;
-    const categorie = this.props.categorie.toObject();
+    const categorie = this.props.categorie;
     let articlesMetaData = [];
     if (loading) {
       return (
@@ -63,7 +59,7 @@ class Base extends React.Component {
         </center>
       );
 
-    articlesMetaData = categorie.articlesMetaData.toArray();
+    articlesMetaData = categorie.articlesMetaData;
     return (
       <Grid container spacing={1} className={classes.grid} direction="column">
         {/* <ValidatorForm onSubmit={handleSubmitBase} autoComplete="off"> */}
@@ -79,7 +75,7 @@ class Base extends React.Component {
                   }}
                   onChange={handleChange}
                   name="code"
-                  value={state.data.code}
+                  value={data.code}
                   label="Code d'article *"
                   id="#codearticle"
                 />
@@ -92,7 +88,7 @@ class Base extends React.Component {
                   name="designation"
                   validators={["required", "maxStringLength:25"]}
                   errorMessages={["champ obligatoire", "maximum 25 char"]}
-                  value={state.data.designation}
+                  value={data.designation}
                   label="Désignation *"
                   id="#designation"
                 />
@@ -101,7 +97,7 @@ class Base extends React.Component {
               <Grid item xs={4}>
                 <TextValidator
                   className={classes.field}
-                  value={state.data.categorie}
+                  value={data.categorie}
                   onChange={handleChange}
                   name="categorie"
                   label="Catégorie d'article *"
@@ -128,7 +124,7 @@ class Base extends React.Component {
                   className={classes.field}
                   onChange={handleChange}
                   name="ancienCode"
-                  value={state.data.ancienCode}
+                  value={data.ancienCode}
                   label="Ancien code "
                   id="#ancienCode"
                 />
@@ -138,7 +134,7 @@ class Base extends React.Component {
                   className={classes.field}
                   onChange={handleChange}
                   name="note"
-                  value={state.data.note}
+                  value={data.note}
                   label="Note"
                   id="#note"
                 />
@@ -167,23 +163,21 @@ class Base extends React.Component {
                 </TableHead>
                 <TableBody>
                   {articlesMetaData.map((metadata, idx) => {
-                    metadata = metadata.toObject();
+                    metadata = metadata;
 
-                    metadata.valeurs = metadata.valeurs
-                      ? metadata.valeurs.toArray()
-                      : [];
-                    if (data) {
+                    metadata.valeurs = metadata.valeurs ? metadata.valeurs : [];
+                    if (metadata) {
                       let validators = [];
                       let errorMessages = [];
                       let precision;
 
-                      if (data.type.includes("float")) {
+                      if (metadata.type.includes("float")) {
                         let split = metadata.type.split("-");
                         if (split.length > 1) precision = parseInt(split[1]);
                       }
 
-                      if (data.type)
-                        switch (data.type) {
+                      if (metadata.type)
+                        switch (metadata.type) {
                           case "number":
                             validators.push("isNumber");
                             errorMessages.push("Ce champ doit étre un nombre");
@@ -229,11 +223,11 @@ class Base extends React.Component {
                           //   );
                           //   break;
                         }
-                      if (data.obligatoire) {
+                      if (metadata.obligatoire) {
                         validators.push("required");
                         errorMessages.push("Ce champ est obligatoire");
                       }
-                      if (data.longueur) {
+                      if (metadata.longueur) {
                         let l = metadata.longueur;
                         validators.push("maxStringLength:" + l);
                         errorMessages.push("Max longeur " + l);
@@ -242,7 +236,7 @@ class Base extends React.Component {
                       return (
                         <TableRow key={idx}>
                           <TableCell component="th" scope="row">
-                            {data.nom}
+                            {metadata.nom}
                           </TableCell>
                           <TableCell>
                             <FormControl style={{ minWidth: 250 }}>
@@ -254,8 +248,8 @@ class Base extends React.Component {
                                       readOnly: metadata.limite
                                     }}
                                     onChange={handleValeursChange(idx)}
-                                    name={data.nom}
-                                    type={data.type}
+                                    name={metadata.nom}
+                                    type={metadata.type}
                                     validators={validators}
                                     errorMessages={errorMessages}
                                     onBlur={
@@ -263,30 +257,31 @@ class Base extends React.Component {
                                       handleFixPrecisionValeurs(idx)(precision)
                                     }
                                     value={
-                                      state.data.caracteristiques[idx]
-                                        ? state.data.caracteristiques[idx].value
+                                      data.caracteristiques[idx]
+                                        ? data.caracteristiques[idx].value
                                         : ""
                                     }
                                   />
                                 </Grid>
-                                {data.valeurs && metadata.valeurs.length > 0 && (
-                                  <Grid item xs={6}>
-                                    <SelectValidator
-                                      className={classes.field}
-                                      onChange={handleValeursChange(idx)}
-                                      name={data.nom}
-                                      autoWidth="true"
-                                      // style={{ minWidth: 15 }}
-                                    >
-                                      {data.valeurs &&
-                                        metadata.valeurs.map(valeur => (
-                                          <MenuItem value={valeur}>
-                                            {valeur}{" "}
-                                          </MenuItem>
-                                        ))}
-                                    </SelectValidator>
-                                  </Grid>
-                                )}
+                                {metadata.valeurs &&
+                                  metadata.valeurs.length > 0 && (
+                                    <Grid item xs={6}>
+                                      <SelectValidator
+                                        className={classes.field}
+                                        onChange={handleValeursChange(idx)}
+                                        name={metadata.nom}
+                                        autoWidth="true"
+                                        // style={{ minWidth: 15 }}
+                                      >
+                                        {metadata.valeurs &&
+                                          metadata.valeurs.map(valeur => (
+                                            <MenuItem value={valeur}>
+                                              {valeur}{" "}
+                                            </MenuItem>
+                                          ))}
+                                      </SelectValidator>
+                                    </Grid>
+                                  )}
                               </Grid>
                             </FormControl>
                           </TableCell>
@@ -304,20 +299,4 @@ class Base extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  fetchCategorie: bindActionCreators(fetchCategorie, dispatch),
-  closeNotif: () => dispatch(closeNotifAction())
-});
-
-const mapStateToProps = state => ({
-  // state: state.get("crudLogisticReducer"),
-  categorie: state.get("crudLogisticReducer").get("categorie")
-});
-
-// //const reducer = "initval";
-const BaseMapped = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Base);
-
-export default BaseMapped;
+export default Base;

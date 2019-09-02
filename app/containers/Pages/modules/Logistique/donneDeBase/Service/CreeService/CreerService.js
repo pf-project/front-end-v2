@@ -18,13 +18,12 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { PageTitle, Notification } from "enl-components";
 import Grid from "@material-ui/core/Grid";
 import {
-  fetchCategorieDesignation,
-  fetchCategorie,
-  addArticle,
+  fetchItem,
+  addItem,
+  fetchSuggestions,
   closeNotifAction
 } from "../../../reducers/crudLogisticActions";
 import Commerciale from "./Commerciale";
-import Stockage from "./Stockage";
 import Base from "./Base";
 import Initiale from "./Initiale";
 
@@ -119,14 +118,8 @@ class CreerService extends React.Component {
       steps: ["Données initiales", "Données de base", "Données commerciales"],
       data: {
         caracteristiques: [],
-        marge: false,
-        unite_vente: "",
-        devise_vente: "",
-        taux_tva_vente: "",
-        prix_achat_HT: "",
-        prix_achat_TTC: "",
-        prix_vente_HT: "",
-        prix_vente_TTC: ""
+        controleexige: false,
+        gestionparlot: false
       },
       designations: [],
       categorie: []
@@ -141,13 +134,9 @@ class CreerService extends React.Component {
     this.handleNext();
   };
 
-  handleSubmitStockage = () => {
-    this.handleNext();
-  };
-
   handleSubmitCommerciale = () => {
     const { data } = this.state;
-    this.props.addArticle(data);
+    this.props.addService(data, "service");
     this.handleNext();
   };
 
@@ -287,7 +276,8 @@ class CreerService extends React.Component {
     switch (name) {
       case "devise_achat":
         data = { ...this.state.data };
-        if (!data.devise_vente) data.devise_vente = value;
+        if (data.utilite === "MRCH" && !data.devise_vente)
+          data.devise_vente = value;
         data.devise_achat = value;
         this.setState({
           data
@@ -295,7 +285,8 @@ class CreerService extends React.Component {
         break;
       case "unite_achat":
         data = { ...this.state.data };
-        if (!data.unite_vente) data.unite_vente = value;
+        if (data.utilite === "MRCH" && !data.devise_vente)
+          data.unite_vente = value;
         data.unite_achat = value;
         this.setState({
           data
@@ -308,7 +299,7 @@ class CreerService extends React.Component {
         prix_HT = parseFloat(data.prix_achat_HT);
         data.taux_tva_achat = value;
         data.prix_achat_TTC = this.calculTTC({ taux_tva, prix_HT });
-        if (!data.taux_tva_vente) {
+        if (data.utilite === "MRCH" && !data.devise_vente) {
           data.taux_tva_vente = value;
           if (data.prix_vente_HT)
             data.prix_vente_TTC = parseFloat(
@@ -367,9 +358,27 @@ class CreerService extends React.Component {
         break;
       case "utilite":
         data = { ...this.state.data };
-        delete data.prix_de_vente_de_base_TTC;
-        delete data.taux_tva;
-        delete data.unite_vente;
+        switch (value) {
+          case "MRCH":
+            (data.marge = false),
+              (data.unite_vente = ""),
+              (data.devise_vente = ""),
+              (data.taux_tva_vente = ""),
+              (data.prix_achat_HT = ""),
+              (data.prix_achat_TTC = ""),
+              (data.prix_vente_HT = ""),
+              (data.prix_vente_TTC = "");
+            break;
+          case "CONS":
+            delete data.marge,
+              delete data.unite_vente,
+              delete data.devise_vente,
+              delete data.taux_tva_vente,
+              delete data.prix_vente_HT,
+              delete data.prix_vente_TTC;
+            break;
+        }
+
         data.utilite = value;
         this.setState({
           data
@@ -383,14 +392,26 @@ class CreerService extends React.Component {
   };
 
   getStepContent = stepIndex => {
-    const { classes, loading } = this.props;
-
+    const {
+      classes,
+      loading,
+      categorie,
+      fetchCategorie,
+      designations
+    } = this.props;
+    if (loading)
+      return (
+        <center>
+          <CircularProgress size={24} className={classes.buttonProgress} />
+        </center>
+      );
     switch (stepIndex) {
       case 0:
         return (
           <Initiale
+            fetchCategorie={fetchCategorie}
             handleChange={this.handleChange}
-            state={this.state}
+            data={this.state.data}
             designations={this.props.designations}
             handleSubmitInitial={this.handleSubmitInitial}
             classes={classes}
@@ -403,13 +424,13 @@ class CreerService extends React.Component {
           <Base
             handleChange={this.handleChange}
             handleFixPrecisionValeurs={this.handleFixPrecisionValeurs}
-            state={this.state}
+            data={this.state.data}
             designations={this.props.designations}
             handleSubmitBase={this.handleSubmitBase}
             handleBack={this.handleBack}
             classes={classes}
-            // fetchCategorie={this.fetchCategorie}
             handleValeursChange={this.handleValeursChange}
+            categorie={categorie}
           />
         );
 
@@ -420,7 +441,7 @@ class CreerService extends React.Component {
             handle_price_leaving={this.handle_price_leaving}
             handleFixPrecisionValeurs={this.handleFixPrecisionValeurs}
             handleChange={this.handleChange}
-            state={this.state}
+            data={this.state.data}
             handleSubmitCommerciale={this.handleSubmitCommerciale}
             handleBack={this.handleBack}
             classes={classes}
@@ -495,7 +516,7 @@ class CreerService extends React.Component {
   };
 
   componentWillMount() {
-    this.props.fetchCategorieDesignation();
+    this.props.fetchCategorieDesignation("categorie/service/find");
   }
 
   getSubmitter = () => {
@@ -506,10 +527,8 @@ class CreerService extends React.Component {
       case 1:
         return this.handleSubmitBase;
         break;
+
       case 2:
-        return this.handleSubmitStockage;
-        break;
-      case 3:
         return this.handleSubmitCommerciale;
         break;
       default:
@@ -529,7 +548,7 @@ class CreerService extends React.Component {
             color="primary"
             onClick={this.handleReset}
           >
-            Crééer un autre Article
+            Crééer un autre Service
           </Button>
         </>
       ) : (
@@ -554,7 +573,7 @@ class CreerService extends React.Component {
             variant="contained"
             color="primary"
             type="submit"
-            form="addArticle"
+            form="addService"
           >
             {this.state.activeStep === this.state.steps.length - 1
               ? "Sauvegarder"
@@ -590,7 +609,7 @@ class CreerService extends React.Component {
                 <div>
                   <Typography className={classes.instructions}>
                     <ValidatorForm
-                      id="addArticle"
+                      id="addService"
                       // ref={r => (this.form = r)}
                       onSubmit={submitter}
                       autoComplete="off"
@@ -611,26 +630,23 @@ class CreerService extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchCategorieDesignation: bindActionCreators(
-    fetchCategorieDesignation,
-    dispatch
-  ),
-  fetchCategorie: bindActionCreators(fetchCategorie, dispatch),
+  fetchCategorieDesignation: bindActionCreators(fetchSuggestions, dispatch),
+  fetchCategorie: bindActionCreators(fetchItem, dispatch),
   closeNotif: () => dispatch(closeNotifAction()),
-  addArticle: bindActionCreators(addArticle, dispatch)
+  addService: bindActionCreators(addItem, dispatch)
 });
 
 const mapStateToProps = state => ({
   notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
   loading: state.get("crudLogisticReducer").get("loading"),
-  designations: state.get("crudLogisticReducer").get("designations"),
-  categorie: state.get("crudLogisticReducer").get("categorie")
+  designations: state.get("crudLogisticReducer").get("suggestions"),
+  categorie: state.get("crudLogisticReducer").get("item")
 });
 
 // //const reducer = "initval";
-const CreerServiceReduxed = connect(
+const CreerCategorieReduxed = connect(
   mapStateToProps,
   mapDispatchToProps
 )(CreerService);
 
-export default withStyles(styles)(CreerServiceReduxed);
+export default withStyles(styles)(CreerCategorieReduxed);

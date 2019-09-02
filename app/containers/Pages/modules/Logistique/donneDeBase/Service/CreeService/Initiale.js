@@ -14,8 +14,9 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 
 export default function Initiale({
-  state,
+  data,
   handleChange,
+  fetchCategorie,
   classes,
   designations,
   loading
@@ -43,29 +44,34 @@ export default function Initiale({
           name="code"
           validators={["required", "maxStringLength:25"]}
           errorMessages={["Ce champ est obligatoire", "maximum 25 char"]}
-          value={state.data.code}
+          value={data.code}
           label="Code d'article *"
         />
       </FormGroup>
       <FormGroup>
         <SelectValidator
-          value={state.data.categorie}
+          value={data.categorie}
           className={classes.initialeFields}
           onChange={handleChange}
+          onBlur={() => {
+            if (data.categorie)
+              fetchCategorie(data.categorie, "categorie/service/find");
+          }}
           name="categorie"
           label="Catégorie d'article *"
           style={{ minWidth: 300 }}
           validators={["required"]}
           errorMessages={["Ce champ est obligatoire "]}
         >
-          {designations.map(designation => (
-            <MenuItem value={designation}>{designation}</MenuItem>
-          ))}
+          {designations &&
+            designations.map(designation => (
+              <MenuItem value={designation}>{designation}</MenuItem>
+            ))}
         </SelectValidator>
       </FormGroup>
       <FormGroup>
         <SelectValidator
-          value={state.data.utilite}
+          value={data.utilite}
           className={classes.initialeFields}
           onChange={handleChange}
           name="utilite"
@@ -74,8 +80,9 @@ export default function Initiale({
           validators={["required"]}
           errorMessages={["Ce Champ est Obligatoire"]}
         >
-          <MenuItem value="CONS">Achat pour consomation</MenuItem>
-          <MenuItem value="MRCH">Achat pour vente </MenuItem>
+          <MenuItem value="CONS">Service à achter</MenuItem>
+          <MenuItem value="MRCH">Service à vendre </MenuItem>
+          <MenuItem value="FCTR">Service prestaté facturé </MenuItem>
         </SelectValidator>
       </FormGroup>
       <FormGroup>
@@ -85,8 +92,21 @@ export default function Initiale({
           name="designation"
           validators={["required", "maxStringLength:25"]}
           errorMessages={["Ce Champ est Obligatoire", "maximum 25 char"]}
-          value={state.data.designation}
+          value={data.designation}
           label="Désignation *"
+        />
+      </FormGroup>
+      <FormGroup>
+        <TextField
+          name="findvalidite"
+          value={data.findvalidite}
+          onChange={handleChange}
+          className={classes.initialeFields}
+          label="Fin de validité"
+          type="date"
+          InputLabelProps={{
+            shrink: true
+          }}
         />
       </FormGroup>
     </Grid>

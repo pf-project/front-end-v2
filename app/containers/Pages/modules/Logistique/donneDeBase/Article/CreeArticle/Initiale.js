@@ -63,9 +63,10 @@ export default function Initiale({
           validators={["required"]}
           errorMessages={["Ce champ est obligatoire "]}
         >
-          {designations.map(designation => (
-            <MenuItem value={designation}>{designation}</MenuItem>
-          ))}
+          {designations &&
+            designations.map(designation => (
+              <MenuItem value={designation}>{designation}</MenuItem>
+            ))}
         </SelectValidator>
       </FormGroup>
       <FormGroup>

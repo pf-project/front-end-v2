@@ -19,10 +19,7 @@ import { connect } from "react-redux";
 import { PageTitle } from "enl-components";
 import { Notification } from "enl-components";
 import {
-  fetchArticlesForSuggestion,
   closeNotifAction,
-  fetchArticle,
-  updateArticle,
   fetchItem,
   updateItem,
   fetchSuggestions
@@ -407,7 +404,7 @@ class GererArticle extends React.Component {
   handleSelect = filterByDesignations => value => () => {
     let route = filterByDesignations ? "findByDesignation" : "findByCode";
     let url = `${route}/${value}`;
-    this.props.fetchArticle(url, "article");
+    this.props.fetchArticle(url, "article", true);
     this.setState({ activeStep: 1, articleChoisi: true });
     // this.changeStep(null, 1);
 

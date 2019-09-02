@@ -20,7 +20,6 @@ import Grid from "@material-ui/core/Grid";
 import {
   fetchItem,
   addItem,
-  addArticle,
   fetchSuggestions,
   closeNotifAction
 } from "../../../reducers/crudLogisticActions";
@@ -410,7 +409,12 @@ class CreerArticle extends React.Component {
       fetchCategorie,
       designations
     } = this.props;
-
+    if (loading)
+      return (
+        <center>
+          <CircularProgress size={24} className={classes.buttonProgress} />
+        </center>
+      );
     switch (stepIndex) {
       case 0:
         return (

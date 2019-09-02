@@ -66,8 +66,9 @@ export default function Initiale({
           validators={["required"]}
           errorMessages={["Ce Champ est Obligatoire"]}
         >
-          <MenuItem value={"CONS"}>Achat pour consomation</MenuItem>
-          <MenuItem value={"MRCH"}>Achat pour vente </MenuItem>
+          <MenuItem value="CONS">Service à achter</MenuItem>
+          <MenuItem value="MRCH">Service à vendre </MenuItem>
+          <MenuItem value="FCTR">Service prestaté facturé </MenuItem>
         </SelectValidator>
       </FormGroup>
       <FormGroup>
