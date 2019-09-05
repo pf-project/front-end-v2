@@ -1,8 +1,22 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { Card, Button, Grid } from "@material-ui/core";
+import {
+  Card,
+  Button,
+  Grid,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  useMediaQuery
+} from "@material-ui/core";
+import { useTheme } from "@material-ui/core/styles";
 import { BreadCrumb } from "enl-components";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { cleareStore } from "../../containers/Pages/modules/Logistique/reducers/crudLogisticActions";
 
 const styles = theme => ({
   elements: {
@@ -45,11 +59,59 @@ const styles = theme => ({
   }
 });
 
-const PageTitle = ({ withBackOption, classes, title, pathname, elements }) => {
+const PageTitle = ({
+  withBackOption,
+  classes,
+  title,
+  pathname,
+  elements,
+  cleareStore
+}) => {
+  const [open, setOpen] = React.useState(false);
+
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleLeave = () => {
+    cleareStore();
+    window.history.back();
+  };
+
   return (
     <Card small className={classes.pageTitle}>
       <Grid container>
         <Grid xs={6}>
+          <Dialog
+            fullScreen={fullScreen}
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="responsive-dialog-title"
+          >
+            <DialogTitle id="responsive-dialog-title">
+              {"voulez vous vraiment quitter cette page ?"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Tout travail non enregistré sera perdu ...
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Non , Rester .
+              </Button>
+              <Button onClick={handleLeave} color="primary" autoFocus>
+                Oui , Quitter la page
+              </Button>
+            </DialogActions>
+          </Dialog>
           <Typography component="h4" variant="h4">
             {title}
           </Typography>
@@ -68,7 +130,7 @@ const PageTitle = ({ withBackOption, classes, title, pathname, elements }) => {
               <Button
                 color="primary"
                 variant="contained"
-                onClick={() => window.history.back()}
+                onClick={handleOpen}
                 className={classes.button}
               >
                 {" "}
@@ -82,4 +144,14 @@ const PageTitle = ({ withBackOption, classes, title, pathname, elements }) => {
   );
 };
 
-export default withStyles(styles)(PageTitle);
+const mapDispatchToProps = dispatch => ({
+  cleareStore: bindActionCreators(cleareStore, dispatch)
+});
+
+// //const reducer = "initval";
+const PageTitleReduxed = connect(
+  null,
+  mapDispatchToProps
+)(PageTitle);
+
+export default withStyles(styles)(PageTitleReduxed);

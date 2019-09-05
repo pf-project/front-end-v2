@@ -15,9 +15,6 @@ export const startLoading = () => ({
 export const stopLoading = () => ({
   type: types.STOP_LOADING
 });
-// export const addUserAction = {
-//   type: types.ADD_USER
-// };
 
 // Fetch action
 export const fetchItemFailure = payload => ({
@@ -90,4 +87,10 @@ export const fetchSuggestionsSuccess = payload => ({
 export const fetchSuggestionsFailure = payload => ({
   type: types.FETCH_ITEMS_FOR_SUGGESTION_FAILURE,
   payload
+});
+
+// Cleare Store :
+
+export const cleareStore = () => ({
+  type: types.CLEARE_LOGISTIC_STORE
 });

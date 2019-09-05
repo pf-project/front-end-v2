@@ -11,12 +11,13 @@ import {
   FETCH_ITEM_SUCCESS,
   FETCH_ITEM_FAILURE,
   UPDATE_ITEM_FAILURE,
-  UPDATE_ITEM_SUCCESS
+  UPDATE_ITEM_SUCCESS,
+  CLEARE_LOGISTIC_STORE
 } from "./crudLogisticConstants";
 
 const initialState = {
   notifMsg: "",
-  loading: false,
+  loading: true,
   suggestions: List([]),
   // categorie: Map({}),
   // articlesForSuggestion: Map({}),
@@ -30,6 +31,8 @@ export default function crudLogisticReducer(
   action = {}
 ) {
   switch (action.type) {
+    case CLEARE_LOGISTIC_STORE:
+      return fromJS(initialState);
     case UPDATE_ITEM_FAILURE:
       return state.withMutations(mutableState => {
         mutableState
@@ -75,6 +78,7 @@ export default function crudLogisticReducer(
 
     case START_LOADING:
       return state.withMutations(mutableState => {
+        console.log("starting loading from reducer");
         mutableState.set("loading", true);
       });
 

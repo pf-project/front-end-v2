@@ -415,6 +415,7 @@ class CreerArticle extends React.Component {
           <CircularProgress size={24} className={classes.buttonProgress} />
         </center>
       );
+
     switch (stepIndex) {
       case 0:
         return (
@@ -422,7 +423,7 @@ class CreerArticle extends React.Component {
             fetchCategorie={fetchCategorie}
             handleChange={this.handleChange}
             data={this.state.data}
-            designations={this.props.designations}
+            designations={designations}
             handleSubmitInitial={this.handleSubmitInitial}
             classes={classes}
             handleDateChange={this.handleDateChange}
