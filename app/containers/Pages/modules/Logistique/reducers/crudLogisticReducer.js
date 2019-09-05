@@ -17,7 +17,7 @@ import {
 
 const initialState = {
   notifMsg: "",
-  loading: true,
+  loading: false,
   suggestions: List([]),
   // categorie: Map({}),
   // articlesForSuggestion: Map({}),
