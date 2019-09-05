@@ -286,7 +286,7 @@ class GererService extends React.Component {
     switch (name) {
       case "devise_achat":
         data = { ...this.state.data };
-        if (data.utilite === "MRCH" && !data.devise_vente)
+        if (data.utilite === "FCTR" && !data.devise_vente)
           data.devise_vente = value;
         data.devise_achat = value;
         this.setState({
@@ -295,7 +295,7 @@ class GererService extends React.Component {
         break;
       case "unite_achat":
         data = { ...this.state.data };
-        if (data.utilite === "MRCH" && !data.unite_vente)
+        if (data.utilite === "FCTR" && !data.unite_vente)
           data.unite_vente = value;
         data.unite_achat = value;
         this.setState({
@@ -309,7 +309,7 @@ class GererService extends React.Component {
         prix_HT = parseFloat(data.prix_achat_HT);
         data.taux_tva_achat = value;
         data.prix_achat_TTC = this.calculTTC({ taux_tva, prix_HT });
-        if (data.utilite === "MRCH" && !data.taux_tva_vente) {
+        if (data.utilite === "FCTR" && !data.taux_tva_vente) {
           data.taux_tva_vente = value;
           if (data.prix_vente_HT)
             data.prix_vente_TTC = parseFloat(
@@ -370,12 +370,12 @@ class GererService extends React.Component {
         data = { ...this.state.data };
         switch (value) {
           case "MRCH":
-            (data.marge = false),
-              (data.unite_vente = ""),
-              (data.devise_vente = ""),
-              (data.taux_tva_vente = ""),
-              (data.prix_achat_HT = ""),
-              (data.prix_achat_TTC = ""),
+            delete data.marge,
+              delete data.prix_achat_HT,
+              delete data.prix_achat_TTC,
+              delete data.devise_achat,
+              delete data.taux_tva_achat,
+              delete data.unite_achat,
               (data.prix_vente_HT = ""),
               (data.prix_vente_TTC = "");
             break;
@@ -386,6 +386,13 @@ class GererService extends React.Component {
               delete data.taux_tva_vente,
               delete data.prix_vente_HT,
               delete data.prix_vente_TTC;
+            (data.prix_achat_HT = ""), (data.prix_achat_TTC = "");
+            break;
+          default:
+            (data.marge = false),
+              (data.unite_vente = ""),
+              (data.devise_vente = ""),
+              (data.taux_tva_vente = "");
             break;
         }
 

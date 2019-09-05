@@ -73,132 +73,135 @@ export default function Commerciale({
           </Grid>
         </FormGroup>
       </Grid>
-      <Toolbar className={classes.toolbar}>
-        <div className={classes.title}>
-          <Typography variant="h6">Informations d'achat</Typography>
-        </div>
-      </Toolbar>
+      {!(data.utilite === "MRCH") && (
+        <>
+          {" "}
+          <Toolbar className={classes.toolbar}>
+            <div className={classes.title}>
+              <Typography variant="h6">Informations d'achat</Typography>
+            </div>
+          </Toolbar>
+          <Grid item xs={12}>
+            <Grid container direction="row">
+              <Grid item xs={6}>
+                <FormGroup>
+                  <TextValidator
+                    onChange={handleChange}
+                    className={classes.field}
+                    defaultValue={" "}
+                    type="number"
+                    step="0.01"
+                    name="prix_achat_HT"
+                    // onBlur={handleFixPrecisionValeurs(false)(false)}
+                    onBlur={handle_price_leaving({ achat: true, ht: true })}
+                    value={data.prix_achat_HT}
+                    label="Prix d'achat de base HT *"
+                    validators={[
+                      "required",
+                      "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/,
+                      "maxNumber:999999",
+                      "isPositive"
+                    ]}
+                    errorMessages={[
+                      "Ce champ est obligatoire",
+                      "Chmap doit étre un nombre : ex 4.57 ",
+                      "Maximum 6 nombres !",
+                      "Ce champ doit étre un nombre positive"
+                    ]}
+                  />
+                </FormGroup>
+              </Grid>
 
-      <Grid item xs={12}>
-        <Grid container direction="row">
-          <Grid item xs={6}>
-            <FormGroup>
-              <TextValidator
-                onChange={handleChange}
-                className={classes.field}
-                defaultValue={" "}
-                type="number"
-                step="0.01"
-                name="prix_achat_HT"
-                // onBlur={handleFixPrecisionValeurs(false)(false)}
-                onBlur={handle_price_leaving({ achat: true, ht: true })}
-                value={data.prix_achat_HT}
-                label="Prix d'achat de base HT *"
-                validators={[
-                  "required",
-                  "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/,
-                  "maxNumber:999999",
-                  "isPositive"
-                ]}
-                errorMessages={[
-                  "Ce champ est obligatoire",
-                  "Chmap doit étre un nombre : ex 4.57 ",
-                  "Maximum 6 nombres !",
-                  "Ce champ doit étre un nombre positive"
-                ]}
-              />
-            </FormGroup>
+              <Grid item xs={2}>
+                <FormGroup>
+                  <SelectValidator
+                    value={data.devise_achat}
+                    onChange={handleChange}
+                    className={classes.field}
+                    name="devise_achat"
+                    label="Devise *"
+                    validators={["required"]}
+                    errorMessages={["Ce champ est obligatoire"]}
+                  >
+                    <MenuItem value={"MAD"}>MAD</MenuItem>
+                    <MenuItem value={"EUR"}>EUR</MenuItem>
+                    <MenuItem value={"USD"}>USD</MenuItem>
+                  </SelectValidator>
+                </FormGroup>
+              </Grid>
+              <Grid item xs={4}>
+                <FormGroup>
+                  <SelectValidator
+                    className={classes.field}
+                    value={data.unite_achat}
+                    onChange={handleChange}
+                    name="unite_achat"
+                    label="Unité  d'achat *"
+                    // style={{ minWidth: 300 }}
+                    validators={["required"]}
+                    errorMessages={["Ce champ est obligatoire "]}
+                  >
+                    <MenuItem value={"5"}>5</MenuItem>
+                    <MenuItem value={"10"}>10</MenuItem>
+                    <MenuItem value={"25"}>25</MenuItem>
+                    <MenuItem value={"50"}>50</MenuItem>
+                    <MenuItem value={"100"}>100</MenuItem>
+                  </SelectValidator>
+                </FormGroup>
+              </Grid>
+            </Grid>
           </Grid>
-
-          <Grid item xs={2}>
-            <FormGroup>
-              <SelectValidator
-                value={data.devise_achat}
-                onChange={handleChange}
-                className={classes.field}
-                name="devise_achat"
-                label="Devise *"
-                validators={["required"]}
-                errorMessages={["Ce champ est obligatoire"]}
-              >
-                <MenuItem value={"MAD"}>MAD</MenuItem>
-                <MenuItem value={"EUR"}>EUR</MenuItem>
-                <MenuItem value={"USD"}>USD</MenuItem>
-              </SelectValidator>
-            </FormGroup>
+          <Grid item xs={12}>
+            <Grid container direction="row">
+              <Grid item xs={6}>
+                <FormGroup>
+                  <SelectValidator
+                    value={data.taux_tva_achat}
+                    className={classes.field}
+                    onChange={handleChange}
+                    name="taux_tva_achat"
+                    label="Taux de TVA *"
+                    validators={["required"]}
+                    errorMessages={["Ce champ est obligatoire"]}
+                  >
+                    <MenuItem value={"0.20"}>20</MenuItem>
+                    <MenuItem value={"0.14"}>14</MenuItem>
+                    <MenuItem value={"0.10"}>10</MenuItem>
+                    <MenuItem value={"0.07"}>7</MenuItem>
+                    <MenuItem value={"0"}>Exonéré</MenuItem>
+                  </SelectValidator>
+                </FormGroup>
+              </Grid>
+              <Grid item xs={6}>
+                <TextValidator
+                  onChange={handleChange}
+                  className={classes.field}
+                  type="number"
+                  step="0.01"
+                  onBlur={handle_price_leaving({ achat: true, ht: false })}
+                  name="prix_achat_TTC"
+                  value={data.prix_achat_TTC}
+                  defaultValue={" "}
+                  label="Prix d'achat de base TTC *"
+                  validators={[
+                    "required",
+                    "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/,
+                    "maxNumber:999999",
+                    "isPositive"
+                  ]}
+                  errorMessages={[
+                    "Ce champ est obligatoire",
+                    "Chmap doit étre un nombre : ex 4.57 ",
+                    "Maximum 6 nombres !",
+                    "Ce champ doit étre un nombre positive"
+                  ]}
+                />
+              </Grid>
+            </Grid>
           </Grid>
-          <Grid item xs={4}>
-            <FormGroup>
-              <SelectValidator
-                className={classes.field}
-                value={data.unite_achat}
-                onChange={handleChange}
-                name="unite_achat"
-                label="Unité  d'achat *"
-                // style={{ minWidth: 300 }}
-                validators={["required"]}
-                errorMessages={["Ce champ est obligatoire "]}
-              >
-                <MenuItem value={"5"}>5</MenuItem>
-                <MenuItem value={"10"}>10</MenuItem>
-                <MenuItem value={"25"}>25</MenuItem>
-                <MenuItem value={"50"}>50</MenuItem>
-                <MenuItem value={"100"}>100</MenuItem>
-              </SelectValidator>
-            </FormGroup>
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item xs={12}>
-        <Grid container direction="row">
-          <Grid item xs={6}>
-            <FormGroup>
-              <SelectValidator
-                value={data.taux_tva_achat}
-                className={classes.field}
-                onChange={handleChange}
-                name="taux_tva_achat"
-                label="Taux de TVA *"
-                validators={["required"]}
-                errorMessages={["Ce champ est obligatoire"]}
-              >
-                <MenuItem value={"0.20"}>20</MenuItem>
-                <MenuItem value={"0.14"}>14</MenuItem>
-                <MenuItem value={"0.10"}>10</MenuItem>
-                <MenuItem value={"0.07"}>7</MenuItem>
-                <MenuItem value={"0"}>Exonéré</MenuItem>
-              </SelectValidator>
-            </FormGroup>
-          </Grid>
-          <Grid item xs={6}>
-            <TextValidator
-              onChange={handleChange}
-              className={classes.field}
-              type="number"
-              step="0.01"
-              onBlur={handle_price_leaving({ achat: true, ht: false })}
-              name="prix_achat_TTC"
-              value={data.prix_achat_TTC}
-              defaultValue={" "}
-              label="Prix d'achat de base TTC *"
-              validators={[
-                "required",
-                "isFloat" /*, "matchRegexp:^[0-9]*.[0-9]{2}$"*/,
-                "maxNumber:999999",
-                "isPositive"
-              ]}
-              errorMessages={[
-                "Ce champ est obligatoire",
-                "Chmap doit étre un nombre : ex 4.57 ",
-                "Maximum 6 nombres !",
-                "Ce champ doit étre un nombre positive"
-              ]}
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-
-      {data.utilite === "MRCH" && (
+        </>
+      )}
+      {!(data.utilite === "CONS") && (
         <div>
           <Toolbar className={classes.toolbar}>
             <div className={classes.title}>
@@ -207,25 +210,27 @@ export default function Commerciale({
           </Toolbar>
           <Grid item xs={12}>
             <Grid container direction="row">
-              <Grid item xs={2}>
-                <RadioGroup
-                  name="marge"
-                  className={classes.group}
-                  value={data.marge}
-                  onChange={handleChange}
-                >
-                  <FormControlLabel
-                    value={false}
-                    control={<Radio />}
-                    label="Prix fix"
-                  />
-                  <FormControlLabel
-                    value={true}
-                    control={<Radio />}
-                    label="Marge sur achat"
-                  />
-                </RadioGroup>
-              </Grid>
+              {data.utilite === "FCTR" && (
+                <Grid item xs={2}>
+                  <RadioGroup
+                    name="marge"
+                    className={classes.group}
+                    value={data.marge}
+                    onChange={handleChange}
+                  >
+                    <FormControlLabel
+                      value={false}
+                      control={<Radio />}
+                      label="Prix fix"
+                    />
+                    <FormControlLabel
+                      value={true}
+                      control={<Radio />}
+                      label="Marge sur achat"
+                    />
+                  </RadioGroup>
+                </Grid>
+              )}
               {data.marge && (
                 <>
                   {" "}
