@@ -29,3 +29,4 @@ export MenuChooser from "./MenuChooser/MenuChooser";
 export CrudTable from "./Tables/CrudTable";
 export AdvTable from "./Tables/AdvTable";
 export EmptyData from "./Tables/EmptyData";
+export SimpleTable from "./SimpleTable/index";
