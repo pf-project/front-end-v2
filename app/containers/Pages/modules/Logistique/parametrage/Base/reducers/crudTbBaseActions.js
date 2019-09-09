@@ -1,38 +1,45 @@
 import * as notification from "enl-redux/constants/notifConstants";
 import * as types from "./crudTbBaseConstants";
 
-export const fetchAction = (items, branch) => ({
-  branch,
-  type: `${branch}/${types.FETCH_DATA}`,
-  items
+export const fetchAction = payload => ({
+  type: types.FETCH_LISTES_DE_BASE,
+  payload
 });
-export const addAction = (anchor, branch) => ({
-  branch,
-  type: `${branch}/${types.ADD_EMPTY_ROW}`,
-  anchor
+
+export const fetchActionSuccess = payload => ({
+  type: types.FETCH_LISTES_DE_BASE_SUCCESS,
+  payload
 });
-export const removeAction = (item, branch) => ({
-  branch,
-  type: `${branch}/${types.REMOVE_ROW}`,
-  item
+
+export const fetchActionFailure = payload => ({
+  type: types.FETCH_LISTES_DE_BASE_FAILURE,
+  payload
 });
-export const updateAction = (event, item, branch) => ({
-  branch,
-  type: `${branch}/${types.UPDATE_ROW}`,
-  event,
-  item
+
+export const updateAction = payload => ({
+  type: types.UPDATE_LISTES_DE_BASE,
+  payload
 });
-export const editAction = (item, branch) => ({
-  branch,
-  type: `${branch}/${types.EDIT_ROW}`,
-  item
+
+export const updateActionSuccess = payload => ({
+  type: types.UPDATE_LISTES_DE_BASE_SUCCESS,
+  payload
 });
-export const saveAction = (item, branch) => ({
-  branch,
-  type: `${branch}/${types.SAVE_ROW}`,
-  item
+
+export const updateActionFailure = payload => ({
+  type: types.UPDATE_LISTES_DE_BASE_FAILURE,
+  payload
 });
-export const closeNotifAction = branch => ({
-  branch,
-  type: `${branch}/${notification.CLOSE_NOTIF}`
+
+export const closeNotifAction = () => ({
+  type: notification.CLOSE_NOTIF
+});
+
+// Loading
+export const startLoading = () => ({
+  type: types.START_LOADING
+});
+
+export const stopLoading = () => ({
+  type: types.STOP_LOADING
 });
