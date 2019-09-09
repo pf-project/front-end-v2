@@ -35,10 +35,9 @@ export default function SimpleTable({ data, handleSelect, selectedRows }) {
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
+            <TableCell key={0} component="th" scope="row" />
             {keys.map((key, idx) => (
-              <TableCell key={idx + 1} align="right">
-                {key}
-              </TableCell>
+              <TableCell key={idx + 1}>{key}</TableCell>
             ))}
           </TableRow>
         </TableHead>

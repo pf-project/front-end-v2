@@ -44,7 +44,8 @@ const styles = theme => ({
     width: "60%"
   },
   grid: {
-    flexGrow: 1
+    flexGrow: 1,
+    marginTop: theme.spacing(1)
   },
   checkBoxMarginTop: {
     marginTop: "20px"
@@ -74,7 +75,7 @@ class CreerFournisseur extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeStep: 3,
+      activeStep: 0,
       steps: [
         "Données initiales",
         "Données de base",
@@ -183,6 +184,7 @@ class CreerFournisseur extends React.Component {
         return (
           <Initial
             data={this.state.data}
+            handleSubmit={this.handleSubmit}
             classes={classes}
             handleChange={this.handleChange}
           />
@@ -191,6 +193,7 @@ class CreerFournisseur extends React.Component {
         return (
           <Base
             data={this.state.data}
+            handleSubmit={this.handleSubmit}
             classes={classes}
             handleChange={this.handleChange}
             addContact={this.addContact}
@@ -202,6 +205,7 @@ class CreerFournisseur extends React.Component {
         return (
           <Bancaire
             data={this.state.data}
+            handleSubmit={this.handleSubmit}
             classes={classes}
             handleChange={this.handleChange}
             addCoordonneBancaire={this.addCoordonneBancaire}
@@ -215,6 +219,7 @@ class CreerFournisseur extends React.Component {
             data={this.state.data}
             classes={classes}
             handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
           />
         );
     }
@@ -234,16 +239,13 @@ class CreerFournisseur extends React.Component {
     this.setState({
       activeStep: 0,
 
-      data: {}
+      data: { contacts: [], coord_bancaire: [], honoraire: false }
     });
   };
 
-  // handleValeursChange = index => event => {
-  //   const { value, name } = event.target;
-  // };
-
   handleSubmit = () => {
-    if (this.state.activeStep == 3) this.props.addFournisseur();
+    // if (this.state.activeStep == 3) this.props.addFournisseur();
+    if (this.state.activeStep == 3) console.log(this.state.data);
     this.handleNext();
   };
 
@@ -297,7 +299,7 @@ class CreerFournisseur extends React.Component {
       <div>
         <PageTitle
           title="Ajouter fournisseur"
-          pathname="/Logistique/Données de base/Service/Ajouter fournisseur"
+          pathname="/Logistique/Données de base/Fournisseur/Ajouter fournisseur"
           elements={elements}
           withBackOption={true}
         />
@@ -317,14 +319,7 @@ class CreerFournisseur extends React.Component {
               {this.state.activeStep < this.state.steps.length && (
                 <div>
                   <Typography className={classes.instructions}>
-                    <ValidatorForm
-                      id="addfourni"
-                      // ref={r => (this.form = r)}
-                      onSubmit={this.handleSubmit}
-                      autoComplete="off"
-                    >
-                      {this.getStepContent(this.state.activeStep)}
-                    </ValidatorForm>
+                    {this.getStepContent(this.state.activeStep)}
                   </Typography>
                 </div>
               )}
@@ -357,3 +352,31 @@ const CreerFournisseurReduxed = connect(
 )(CreerFournisseur);
 
 export default withStyles(styles)(CreerFournisseurReduxed);
+
+const test = {
+  retenu_a_la_source: "retenu",
+  adresse: "addresse",
+  civilite: "Monsieur",
+  cnss: "cnss",
+  code: "codefourni",
+  code_postal: "52000",
+  condition_paiement: "apres_N_jours",
+  contacts: [],
+  coord_bancaire: [],
+  designation: "designation",
+  devise: "List_Devise",
+  group: "list",
+  honoraire: true,
+  ice: "ice",
+  identifiant_fiscale: "identifiantfiscale",
+  langue: "AR",
+  libelle_additionnel: "liblee",
+  mode_paiement: "espece",
+  nombre_jours: "78",
+  patente: "patente",
+  pays: "Canada",
+  regestre_commerce: "regestre",
+  status_honoraire: "Avocat (là encore, il y a un ordre professionnel),",
+  taux_tva: "89",
+  ville: "casa"
+};
