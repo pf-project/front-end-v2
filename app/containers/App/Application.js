@@ -5,14 +5,14 @@ import Dashboard from "../Templates/Dashboard";
 import {
   GestionUtilisateur,
   CategorieArticle,
-  BlankPage,
+  Fournisseur,
   Error,
   NotFound,
   Article,
   CreerArticle,
   GererArticle,
   ListerArticles,
-  Parent,
+  CreerFournisseur,
   CreerArticleCategorie,
   CategorieService,
   CreerServiceCategorie,
@@ -93,7 +93,15 @@ class Application extends React.Component {
             path="/app/logistique/Données-de-base/service"
             component={Service}
           />
-
+          {/* ****** Fournisseur */}
+          <Route
+            path="/app/logistique/Données-de-base/Fournisseur/ajouter-fournisseur"
+            component={CreerFournisseur}
+          />
+          <Route
+            path="/app/logistique/Données-de-base/Fournisseur"
+            component={Fournisseur}
+          />
           {/* parent page : */}
           <Route path="/app/pages/not-found" component={NotFound} />
           <Route path="/app/pages/error" component={Error} />

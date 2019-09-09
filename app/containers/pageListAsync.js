@@ -118,27 +118,28 @@ export const ListerService = Loadable({
     ),
   loading: Loading
 });
+// // // Fournisseur
+//  // // // index :
+export const CreerFournisseur = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Logistique/donneDeBase/Fournisseur/creeFournisseur/index"
+    ),
+  loading: Loading
+});
 
-// export const DashboardPage = Loadable({
-//   loader: () => import("./Pages/Dashboard"),
-//   loading: Loading
-// });
-// export const Table = Loadable({
-//   loader: () => import("./Pages/Table/BasicTable"),
-//   loading: Loading
-// });
-// export const Form = Loadable({
-//   loader: () => import("./Pages/Forms/ReduxForm"),
-//   loading: Loading
-// });
+export const Fournisseur = Loadable({
+  loader: () =>
+    import("./Pages/modules/Logistique/donneDeBase/Fournisseur/index"),
+  loading: Loading
+});
+
+// User auth
 export const Login = Loadable({
   loader: () => import("./Pages/Users/Login"),
   loading: Loading
 });
-// export const Register = Loadable({
-//   loader: () => import("./Pages/Users/Register"),
-//   loading: Loading
-// });
+
 export const ResetPassword = Loadable({
   loader: () => import("./Pages/Users/ResetPassword"),
   loading: Loading

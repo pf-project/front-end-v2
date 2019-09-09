@@ -25,3 +25,4 @@ export TemplateSettings from "./TemplateSettings";
 export FloatingPanel from "./Panel/FloatingPanel";
 export PageTitle from "./PageTitle/PageTitle";
 export MenuChooser from "./MenuChooser/MenuChooser";
+export SimpleTable from "./SimpleTable/index";

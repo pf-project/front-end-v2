@@ -50,6 +50,11 @@ module.exports = [
         key: "Service",
         name: "Service",
         link: "/app/logistique/Données-de-base/Service"
+      },
+      {
+        key: "Fournisseur",
+        name: "Fournisseur",
+        link: "/app/logistique/Données-de-base/Fournisseur"
       }
     ]
   }
