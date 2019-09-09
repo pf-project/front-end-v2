@@ -15,8 +15,7 @@ export Notification from "./Notification/Notification";
 export LoginForm from "./Forms/LoginForm";
 export RegisterForm from "./Forms/RegisterForm";
 export ResetForm from "./Forms/ResetForm";
-// Table Components
-export EmptyData from "./Tables/EmptyData";
+
 // Error
 export ErrorWrap from "./Error/ErrorWrap";
 // Theme an Layout Settings
@@ -25,3 +24,8 @@ export TemplateSettings from "./TemplateSettings";
 export FloatingPanel from "./Panel/FloatingPanel";
 export PageTitle from "./PageTitle/PageTitle";
 export MenuChooser from "./MenuChooser/MenuChooser";
+
+// Table Components
+export CrudTable from "./Tables/CrudTable";
+export AdvTable from "./Tables/AdvTable";
+export EmptyData from "./Tables/EmptyData";

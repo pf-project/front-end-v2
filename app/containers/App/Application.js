@@ -19,7 +19,11 @@ import {
   Service,
   CreerService,
   GererService,
-  ListerService
+  ListerService,
+  Base,
+  CoursDeChange,
+  ListesDeBase,
+  Unites
 } from "../pageListAsync";
 
 class Application extends React.Component {
@@ -54,6 +58,24 @@ class Application extends React.Component {
           <Route
             path="/app/logistique/paramétrage/configuration-Service"
             component={CategorieService}
+          />
+
+          {/* ******* Base */}
+          <Route
+            path="/app/logistique/paramétrage/configuration-de-base/cours-de-change"
+            component={CoursDeChange}
+          />
+          <Route
+            path="/app/logistique/paramétrage/configuration-de-base/listes-de-base"
+            component={ListesDeBase}
+          />
+          <Route
+            path="/app/logistique/paramétrage/configuration-de-base/Unites"
+            component={Unites}
+          />
+          <Route
+            path="/app/logistique/paramétrage/configuration-de-base"
+            component={Base}
           />
           {/* ****  Donnee de base :  */}
           {/* ****** Article */}

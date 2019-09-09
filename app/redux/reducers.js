@@ -17,6 +17,23 @@ import crudTbReducer from "../containers/Pages/modules/Administration/GestionUti
 import crudTbArticlesReducer from "../containers/Pages/modules/Logistique/donneDeBase/Article/ListerArticles/reducers/crudTbReducer";
 import crudTbServicesReducer from "../containers/Pages/modules/Logistique/donneDeBase/Service/ListerService/reducers/crudTbReducer";
 
+import crudTbBaseReducer from "../containers/Pages/modules/Logistique/parametrage/Base/reducers/crudTbBaseReducer";
+
+/**
+ * Branching reducers to use one reducer for many components
+ */
+
+function branchReducer(reducerFunction, reducerName) {
+  return (state, action) => {
+    const { branch } = action;
+    const isInitializationCall = state === undefined;
+    if (branch !== reducerName && !isInitializationCall) {
+      return state;
+    }
+    return reducerFunction(state, action);
+  };
+}
+
 /**
  * Creates the main reducer with the dynamically injected ones
  */
@@ -30,6 +47,7 @@ export default function createReducer(injectedReducers = {}) {
     crudTbArticlesReducer,
     crudTbServicesReducer,
     crudLogisticReducer,
+    ListesDeBase: branchReducer(crudTbBaseReducer, "ListesDeBase"),
     language: languageProviderReducer,
     router: connectRouter(history),
     ...injectedReducers
