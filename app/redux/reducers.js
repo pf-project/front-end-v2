@@ -17,6 +17,8 @@ import crudTbReducer from "../containers/Pages/modules/Administration/GestionUti
 import crudTbArticlesReducer from "../containers/Pages/modules/Logistique/donneDeBase/Article/ListerArticles/reducers/crudTbReducer";
 import crudTbServicesReducer from "../containers/Pages/modules/Logistique/donneDeBase/Service/ListerService/reducers/crudTbReducer";
 
+import crudTbBaseReducer from "../containers/Pages/modules/Logistique/parametrage/Base/reducers/crudTbBaseReducer";
+
 /**
  * Creates the main reducer with the dynamically injected ones
  */
@@ -30,6 +32,7 @@ export default function createReducer(injectedReducers = {}) {
     crudTbArticlesReducer,
     crudTbServicesReducer,
     crudLogisticReducer,
+    ListesDeBase: crudTbBaseReducer,
     language: languageProviderReducer,
     router: connectRouter(history),
     ...injectedReducers

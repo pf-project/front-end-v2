@@ -19,7 +19,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SimpleTable({ data, handleSelect, selectedRows }) {
+export default function SimpleTable({
+  data,
+  handleSelect,
+  selectedRows,
+  headers
+}) {
   const classes = useStyles();
   const keys = data.length > 0 ? Object.keys(data[0]) : [];
 
@@ -35,10 +40,16 @@ export default function SimpleTable({ data, handleSelect, selectedRows }) {
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell key={0} component="th" scope="row" />
-            {keys.map((key, idx) => (
-              <TableCell key={idx + 1}>{key}</TableCell>
-            ))}
+            <TableCell />
+            {!headers &&
+              keys.map((key, idx) => (
+                <TableCell key={idx + 1}>{key}</TableCell>
+              ))}
+            {headers &&
+              data.length !== 0 &&
+              headers.map((key, idx) => (
+                <TableCell key={idx + 1}>{key}</TableCell>
+              ))}
           </TableRow>
         </TableHead>
         <TableBody>

@@ -36,6 +36,12 @@ module.exports = [
         name: " Configuration : Service",
         link: "/app/logistique/paramétrage/Configuration-Service"
       },
+      
+      {
+        key: " Configuration de base",
+        name: " Configuration de base",
+        link: "/app/logistique/paramétrage/Configuration-de-base"
+      },
       {
         key: "Données de base",
         name: "Données de base",

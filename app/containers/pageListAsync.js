@@ -50,7 +50,35 @@ export const CreerServiceCategorie = Loadable({
   loading: Loading
 });
 
-//// Donne de bas :
+// // // Configuration de base :
+// // // // index :
+export const Base = Loadable({
+  loader: () => import("./Pages/modules/Logistique/parametrage/Base/index"),
+  loading: Loading
+});
+
+// // // cours de charges
+export const CoursDeChange = Loadable({
+  loader: () =>
+    import("./Pages/modules/Logistique/parametrage/Base/Gestion/CoursDeChange"),
+  loading: Loading
+});
+
+// // // // listes de base
+export const ListesDeBase = Loadable({
+  loader: () =>
+    import("./Pages/modules/Logistique/parametrage/Base/Gestion/ListesDeBase"),
+  loading: Loading
+});
+
+// // // // unites
+export const Unites = Loadable({
+  loader: () =>
+    import("./Pages/modules/Logistique/parametrage/Base/Gestion/Unites"),
+  loading: Loading
+});
+
+//// Donnee de base :
 // // // Article
 // // // // index :
 export const Article = Loadable({
