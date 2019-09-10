@@ -21,7 +21,8 @@ export default function Bancaire({
   classes,
   addCoordonneBancaire,
   removeCoordonne,
-  addCopyCoordonne
+  addCopyCoordonne,
+  handleSubmit
 }) {
   const initialState = {
     id_compte: "",
@@ -53,7 +54,7 @@ export default function Bancaire({
     }
   };
 
-  const handleSubmit = () => {
+  const addCoordonne = () => {
     addCoordonneBancaire(coordonnes);
     if (clearCoordonnesFileds) {
       setCoordonnes({
@@ -75,144 +76,157 @@ export default function Bancaire({
     <div>
       <Grid container spacing={1} className={classes.grid} direction="column">
         {/* <ValidatorForm onSubmit={handleSubmitStockage} autoComplete="off"> */}
-        <Grid item xs={12}>
-          <FormGroup>
-            <Grid container>
-              <Grid item xs={6}>
-                <TextValidator
-                  className={classes.field}
-                  InputProps={{
-                    readOnly: true,
-                    fullWidth: true
-                  }}
-                  onChange={handleChange}
-                  name="code"
-                  value={data.code}
-                  label="Code Article *"
-                  id="#codearticle"
-                />
+        <ValidatorForm
+          id="addfourni"
+          onSubmit={handleSubmit}
+          autoComplete="off"
+        >
+          <Grid item xs={12}>
+            <FormGroup>
+              <Grid container>
+                <Grid item xs={6}>
+                  <TextValidator
+                    className={classes.field}
+                    InputProps={{
+                      readOnly: true,
+                      fullWidth: true
+                    }}
+                    onChange={handleChange}
+                    name="code"
+                    value={data.code}
+                    label="Code Article *"
+                    id="#codearticle"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextValidator
+                    fullWidth={true}
+                    className={classes.field}
+                    onChange={handleChange}
+                    name="designation"
+                    validators={["required", "maxStringLength:25"]}
+                    errorMessages={["champ obligatoire", "maximum 25 char"]}
+                    value={data.designation}
+                    label="Désignation *"
+                    id="#designation"
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={6}>
-                <TextValidator
-                  fullWidth={true}
-                  className={classes.field}
-                  onChange={handleChange}
-                  name="designation"
-                  validators={["required", "maxStringLength:25"]}
-                  errorMessages={["champ obligatoire", "maximum 25 char"]}
-                  value={data.designation}
-                  label="Désignation *"
-                  id="#designation"
-                />
-              </Grid>
-            </Grid>
-          </FormGroup>
-        </Grid>
-
+            </FormGroup>
+          </Grid>
+        </ValidatorForm>
         <Toolbar className={classes.toolbar}>
           <div className={classes.title}>
             <Typography variant="h6">Ajout d'un compte bancaire</Typography>
           </div>
         </Toolbar>
-        <Grid item xs={12}>
-          <Grid container direction="row">
-            <Grid item xs={6} direction="column">
-              <SelectValidator
-                className={classes.field}
-                value={coordonnes.pays}
-                onChange={handleCoordonnesChange}
-                name="pays"
-                label="Pays"
-              >
-                <MenuItem value={"Maroc"}>Maroc</MenuItem>
-                <MenuItem value={"Canada"}>Canada</MenuItem>
-                <MenuItem value={"Australie"}>Australie</MenuItem>
-                <MenuItem value={"Qatar"}>Qatar</MenuItem>
-                <MenuItem value={"Italie"}>Italie</MenuItem>
-              </SelectValidator>
-            </Grid>
-            <Grid item xs={6} direction="column">
-              <TextValidator
-                onChange={handleCoordonnesChange}
-                name="titulaire"
-                className={classes.field}
-                value={coordonnes.titulaire}
-                label="Titulaire"
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container direction="row">
-            <Grid item xs={6}>
-              <TextValidator
-                onChange={handleCoordonnesChange}
-                name="banque"
-                className={classes.field}
-                label="Banque"
-                value={coordonnes.banque}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <SelectValidator
-                className={classes.field}
-                value={coordonnes.ville_agence}
-                onChange={handleCoordonnesChange}
-                name="ville_agence"
-                label="Ville d'agence"
-              >
-                <MenuItem value={"marakesh"}>marakesh</MenuItem>
-                <MenuItem value={"casa"}>casa</MenuItem>
-                <MenuItem value={"Tanger"}>Tanger</MenuItem>
-              </SelectValidator>
+        <ValidatorForm
+          id="addCoordonne"
+          onSubmit={addCoordonne}
+          autoComplete="off"
+        >
+          <Grid item xs={12}>
+            <Grid container direction="row">
+              <Grid item xs={6} direction="column">
+                <SelectValidator
+                  className={classes.field}
+                  value={coordonnes.pays}
+                  onChange={handleCoordonnesChange}
+                  name="pays"
+                  label="Pays"
+                >
+                  <MenuItem value={"Maroc"}>Maroc</MenuItem>
+                  <MenuItem value={"Canada"}>Canada</MenuItem>
+                  <MenuItem value={"Australie"}>Australie</MenuItem>
+                  <MenuItem value={"Qatar"}>Qatar</MenuItem>
+                  <MenuItem value={"Italie"}>Italie</MenuItem>
+                </SelectValidator>
+              </Grid>
+              <Grid item xs={6} direction="column">
+                <TextValidator
+                  onChange={handleCoordonnesChange}
+                  name="titulaire"
+                  className={classes.field}
+                  value={coordonnes.titulaire}
+                  label="Titulaire"
+                />
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container direction="row">
-            <Grid item xs={6}>
-              <TextValidator
-                onChange={handleCoordonnesChange}
-                name="cle_RIB"
-                className={classes.field}
-                label="Cle RIB"
-                value={coordonnes.cle_RIB}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextValidator
-                onChange={handleCoordonnesChange}
-                name="nom_agence"
-                className={classes.field}
-                label="Nom d'agence"
-                value={coordonnes.nom_agence}
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container direction="row">
-            <Grid item xs={6}>
-              <TextValidator
-                onChange={handleCoordonnesChange}
-                name="type_compte"
-                className={classes.field}
-                label="Type de compte"
-                value={coordonnes.type_compte}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextValidator
-                onChange={handleCoordonnesChange}
-                name="IBAN"
-                className={classes.field}
-                label="IBAN"
-                value={coordonnes.IBAN}
-              />
+          <Grid item xs={12}>
+            <Grid container direction="row">
+              <Grid item xs={6}>
+                <TextValidator
+                  onChange={handleCoordonnesChange}
+                  name="banque"
+                  className={classes.field}
+                  label="Banque"
+                  value={coordonnes.banque}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <SelectValidator
+                  className={classes.field}
+                  value={coordonnes.ville_agence}
+                  onChange={handleCoordonnesChange}
+                  name="ville_agence"
+                  label="Ville d'agence"
+                >
+                  <MenuItem value={"marakesh"}>marakesh</MenuItem>
+                  <MenuItem value={"casa"}>casa</MenuItem>
+                  <MenuItem value={"Tanger"}>Tanger</MenuItem>
+                </SelectValidator>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        <Grid item xs={12}>
+          <Grid item xs={12}>
+            <Grid container direction="row">
+              <Grid item xs={6}>
+                <TextValidator
+                  onChange={handleCoordonnesChange}
+                  name="cle_RIB"
+                  className={classes.field}
+                  label="Cle RIB"
+                  value={coordonnes.cle_RIB}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextValidator
+                  onChange={handleCoordonnesChange}
+                  name="nom_agence"
+                  className={classes.field}
+                  label="Nom d'agence"
+                  value={coordonnes.nom_agence}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container direction="row">
+              <Grid item xs={6}>
+                <TextValidator
+                  onChange={handleCoordonnesChange}
+                  name="type_compte"
+                  className={classes.field}
+                  label="Type de compte"
+                  value={coordonnes.type_compte}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextValidator
+                  onChange={handleCoordonnesChange}
+                  name="IBAN"
+                  className={classes.field}
+                  label="IBAN"
+                  value={coordonnes.IBAN}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+        </ValidatorForm>
+      </Grid>
+      <Grid container spacing={1} className={classes.grid} direction="column">
+        <Grid item xs={12} className={classes.grid}>
           <Grid container direction="row">
             <Grid item xs={3}>
               <FormControlLabel
@@ -230,16 +244,16 @@ export default function Bancaire({
             </Grid>
             <Grid item xs={3}>
               <Button
-                onClick={handleSubmit}
                 variant="contained"
                 color="primary"
+                type="submit"
+                form="addCoordonne"
               >
                 Ajouter{" "}
               </Button>
             </Grid>
             <Grid item xs={3}>
               <Button
-                onClick={handleSubmit}
                 variant="contained"
                 color="primary"
                 disabled={selectedRows.length == 0}
@@ -250,7 +264,6 @@ export default function Bancaire({
             </Grid>
             <Grid item xs={3}>
               <Button
-                onClick={handleSubmit}
                 variant="contained"
                 color="primary"
                 disabled={!(selectedRows.length === 1)}
