@@ -564,7 +564,7 @@ class Unites extends React.Component {
               </Grid>
               <Grid item md={3}>
                 <SelectValidator
-                  label="Type unité"
+                  label="Unité de conversion"
                   value={unite_conversion}
                   style={{ width: "80%" }}
                   onChange={this.handleChange}
