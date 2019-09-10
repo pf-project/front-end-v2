@@ -3,6 +3,8 @@ import { withStyles } from "@material-ui/core/styles";
 
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import Toolbar from "@material-ui/core/Toolbar";
+
 import {
   lighten,
   darken,
@@ -122,6 +124,7 @@ const styles = theme => ({
     }
   }
 });
+const branch = "listesdebase";
 class ListesDeBase extends React.Component {
   state = {
     id: "",
@@ -147,7 +150,10 @@ class ListesDeBase extends React.Component {
   };
 
   componentWillMount() {
-    this.props.fetchListesDeBase();
+    this.props.fetchListesDeBase(branch);
+  }
+
+  componentWillReceiveProps(newprops) {
     const dataTable = this.props.dataTable;
     const tables = [
       "pays",
@@ -158,7 +164,7 @@ class ListesDeBase extends React.Component {
       "banques",
       "honoraires"
     ];
-    if (dataTable && dataTable.toArray() && dataTable.toArray()[0]) {
+    if (newprops.branch === "listesdebase") {
       const response = dataTable.toArray()[0];
       this.setState({ id: response.get("id") });
       let data = [];
@@ -397,7 +403,7 @@ class ListesDeBase extends React.Component {
       mode_payment,
       banques
     };
-    this.props.updateListesDeBase(data);
+    this.props.updateListesDeBase(data, branch);
   };
 
   render() {
@@ -471,6 +477,13 @@ class ListesDeBase extends React.Component {
                   <MenuItem value={"Banques"}>Banques</MenuItem>
                 </SelectValidator>
               </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Toolbar className={classes.toolbar}>
+                <div className={classes.title}>
+                  <Typography variant="h6" />
+                </div>
+              </Toolbar>
             </Grid>
             <Grid container>
               <Grid item xs={4}>
@@ -576,7 +589,8 @@ const reducer = "ListesDeBase";
 const mapStateToProps = state => ({
   notifMsg: state.get(reducer).get("notifMsg"),
   loading: state.get(reducer).get("loading"),
-  dataTable: state.get(reducer).get("dataTable")
+  dataTable: state.get(reducer).get("dataTable"),
+  branch: state.get(reducer).get("branch")
 });
 
 // //const reducer = "initval";

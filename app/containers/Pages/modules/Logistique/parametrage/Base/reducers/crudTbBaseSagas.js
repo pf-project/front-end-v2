@@ -6,7 +6,8 @@ import {
   fetchActionSuccess,
   fetchActionFailure,
   updateActionSuccess,
-  updateActionFailure
+  updateActionFailure,
+  changeBranch
 } from "./crudTbBaseActions";
 
 import {
@@ -16,36 +17,40 @@ import {
 
 const erreur = "Erreur lors de l'action";
 
-function* fetchDataSaga() {
+function* fetchDataSaga({ branch }) {
   try {
     yield put(startLoading());
+
     const data = yield fetchAPI({
       method: "GET",
-      url: "/api/logistic/configurationdebase/listesdebase/find",
+      url: "/api/logistic/configurationdebase/" + branch + "/find",
       token: window.localStorage.getItem("token")
     });
     yield put(fetchActionSuccess(data));
+    yield put(changeBranch(branch));
     yield put(stopLoading());
+
     // yield put(stopLoading());
   } catch (error) {
+    yield put(stopLoading());
     yield put(fetchActionFailure(erreur));
   }
 }
 
-function* updateListeDeBaseSaga({ payload }) {
+function* updateListeDeBaseSaga({ payload, branch }) {
   try {
     yield put(startLoading());
+
     const data = yield fetchAPI({
       method: "POST",
-      url: `/api/logistic/configurationdebase/listesdebase//update/${
-        payload.id
-      }`,
+      url: `/api/logistic/configurationdebase/${branch}//update/${payload.id}`,
       token: window.localStorage.getItem("token"),
       body: payload
     });
-    yield put(updateActionSuccess(data));
+    yield put(updateActionSuccess(data, branch));
     yield put(stopLoading());
   } catch (error) {
+    yield put(stopLoading());
     yield put(updateActionFailure(erreur));
   }
 }
