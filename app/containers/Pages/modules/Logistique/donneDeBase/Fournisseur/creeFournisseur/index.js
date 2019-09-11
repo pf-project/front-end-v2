@@ -75,7 +75,7 @@ class CreerFournisseur extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeStep: 0,
+      activeStep: 2,
       steps: [
         "Données initiales",
         "Données de base",
@@ -117,29 +117,6 @@ class CreerFournisseur extends React.Component {
   addCoordonneBancaire = coordonne => {
     let data = { ...this.state.data };
     data.coord_bancaire.push(coordonne);
-    this.setState({ data });
-  };
-
-  addCopyCoordonne = index => {
-    let data = { ...this.state.data };
-    let new_coord_bancaire = [...data.coord_bancaire];
-    new_coord_bancaire.push({
-      ...new_coord_bancaire[index],
-      IBAN: "",
-      id_compte: ""
-    });
-    data.coord_bancaire = [...new_coord_bancaire];
-    this.setState({ data });
-  };
-
-  addCopyContact = index => {
-    let data = { ...this.state.data };
-    let new_contacts = [...data.contacts];
-    new_contacts.push({
-      ...new_contacts[index],
-      id_compte: ""
-    });
-    data.contacts = [...new_contacts];
     this.setState({ data });
   };
 
@@ -198,7 +175,6 @@ class CreerFournisseur extends React.Component {
             handleChange={this.handleChange}
             addContact={this.addContact}
             removeContact={this.removeContact}
-            addCopyContact={this.addCopyContact}
           />
         );
       case 2:
@@ -210,7 +186,6 @@ class CreerFournisseur extends React.Component {
             handleChange={this.handleChange}
             addCoordonneBancaire={this.addCoordonneBancaire}
             removeCoordonne={this.removeCoordonne}
-            addCopyCoordonne={this.addCopyCoordonne}
           />
         );
       default:
@@ -244,8 +219,9 @@ class CreerFournisseur extends React.Component {
   };
 
   handleSubmit = () => {
-    // if (this.state.activeStep == 3) this.props.addFournisseur();
-    if (this.state.activeStep == 3) console.log(this.state.data);
+    const { data } = this.state;
+    if (this.state.activeStep == 3)
+      this.props.addFournisseur(data, "fournisseur");
     this.handleNext();
   };
 
@@ -352,31 +328,3 @@ const CreerFournisseurReduxed = connect(
 )(CreerFournisseur);
 
 export default withStyles(styles)(CreerFournisseurReduxed);
-
-const test = {
-  retenu_a_la_source: false,
-  adresse: "addresse",
-  civilite: "Monsieur",
-  cnss: "cnss",
-  code: "codefourni",
-  code_postal: "52000",
-  condition_paiement: "apres_N_jours",
-  contacts: [],
-  coord_bancaire: [],
-  designation: "designation",
-  devise: "List_Devise",
-  group: "list",
-  honoraire: true,
-  ice: "ice",
-  identifiant_fiscale: "identifiantfiscale",
-  langue: "AR",
-  libelle_additionnel: "liblee",
-  mode_paiement: "espece",
-  nombre_jours: "78",
-  patente: "patente",
-  pays: "Canada",
-  regestre_commerce: "regestre",
-  status_honoraire: "Avocat (là encore, il y a un ordre professionnel),",
-  taux_tva: "89",
-  ville: "casa"
-};

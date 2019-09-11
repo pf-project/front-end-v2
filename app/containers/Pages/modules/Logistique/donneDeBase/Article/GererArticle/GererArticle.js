@@ -408,9 +408,6 @@ class GererArticle extends React.Component {
     let url = `${route}/${value}`;
     this.props.fetchArticle(url, "article", true);
     this.setState({ activeStep: 1, articleChoisi: true });
-    // this.changeStep(null, 1);
-
-    //
   };
 
   handleValeursChange = index => event => {
@@ -440,15 +437,6 @@ class GererArticle extends React.Component {
       designations: [],
       categorie: []
     });
-  };
-
-  // convert object to map
-  xah_obj_to_map = obj => {
-    const mp = new Map();
-    Object.keys(obj).forEach(k => {
-      mp.set(k, obj[k]);
-    });
-    return mp;
   };
 
   getStepContent = stepIndex => {

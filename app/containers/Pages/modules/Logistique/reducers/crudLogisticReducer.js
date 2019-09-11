@@ -78,7 +78,6 @@ export default function crudLogisticReducer(
 
     case START_LOADING:
       return state.withMutations(mutableState => {
-        console.log("starting loading from reducer");
         mutableState.set("loading", true);
       });
 

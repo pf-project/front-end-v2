@@ -23,7 +23,8 @@ import {
   Base,
   CoursDeChange,
   ListesDeBase,
-  Unites
+  Unites,
+  GererFournisseur
 } from "../pageListAsync";
 
 class Application extends React.Component {
@@ -120,6 +121,11 @@ class Application extends React.Component {
             path="/app/logistique/Données-de-base/Fournisseur/ajouter-fournisseur"
             component={CreerFournisseur}
           />
+          <Route
+            path="/app/logistique/Données-de-base/Fournisseur/Gererfournisseur"
+            component={GererFournisseur}
+          />
+
           <Route
             path="/app/logistique/Données-de-base/Fournisseur"
             component={Fournisseur}

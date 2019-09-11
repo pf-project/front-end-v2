@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import Typography from "@material-ui/core/Typography";
 import { NavLink } from "react-router-dom";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { cleareStore } from "../../containers/Pages/modules/Logistique/reducers/crudLogisticActions";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -88,8 +91,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function MenuChooser({ images }) {
+const MenuChooser = ({ images, cleareStore }) => {
   const classes = useStyles();
+
+  useEffect(() => {
+    cleareStore();
+  }, false);
 
   return (
     <div className={classes.root}>
@@ -127,4 +134,16 @@ export default function MenuChooser({ images }) {
       ))}
     </div>
   );
-}
+};
+
+const mapDispatchToProps = dispatch => ({
+  cleareStore: bindActionCreators(cleareStore, dispatch)
+});
+
+// //const reducer = "initval";
+const MenuChooserReduxed = connect(
+  null,
+  mapDispatchToProps
+)(MenuChooser);
+
+export default MenuChooserReduxed;
