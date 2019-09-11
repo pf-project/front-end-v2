@@ -9,7 +9,7 @@ const index = () => {
       width: "33%"
     },
     {
-      url: "/app/logistique/Données-de-base/Fournisseur/lister-fournisseurs",
+      url: "/app/logistique/Données-de-base/Fournisseur/lister-fournisseur",
       title: "Lister",
       width: "33%"
     },

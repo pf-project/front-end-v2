@@ -164,6 +164,15 @@ export const GererFournisseur = Loadable({
   loading: Loading
 });
 
+// // // // List Article
+export const ListerFournisseur = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Logistique/donneDeBase/Fournisseur/ListerFournisseur/ListerFournisseur"
+    ),
+  loading: Loading
+});
+
 export const Fournisseur = Loadable({
   loader: () =>
     import("./Pages/modules/Logistique/donneDeBase/Fournisseur/index"),

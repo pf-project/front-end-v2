@@ -12,6 +12,7 @@ import {
   CreerArticle,
   GererArticle,
   ListerArticles,
+  ListerFournisseur,
   CreerFournisseur,
   CreerArticleCategorie,
   CategorieService,
@@ -124,6 +125,11 @@ class Application extends React.Component {
           <Route
             path="/app/logistique/Données-de-base/Fournisseur/Gererfournisseur"
             component={GererFournisseur}
+          />
+
+          <Route
+            path="/app/logistique/Données-de-base/Fournisseur/lister-fournisseur"
+            component={ListerFournisseur}
           />
 
           <Route
