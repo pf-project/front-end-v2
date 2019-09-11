@@ -53,18 +53,24 @@ export default function SimpleTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row, idx) => (
-            <TableRow key={idx}>
-              {" "}
-              <TableCell component="th" scope="row">
-                <Checkbox
-                  checked={selectedRows.includes(idx)}
-                  onChange={handleSelect(idx)}
-                />
-              </TableCell>{" "}
-              {renderRow(row)}
-            </TableRow>
-          ))}
+          {data.map((row, idx) => {
+            let selected = selectedRows.includes(idx);
+            return (
+              <TableRow
+                key={idx}
+                hover
+                onClick={handleSelect(idx)}
+                role="checkbox"
+                selected={selected}
+              >
+                {" "}
+                <TableCell component="th" scope="row">
+                  <Checkbox checked={selected} padding="checkbox" />
+                </TableCell>{" "}
+                {renderRow(row)}
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </Paper>

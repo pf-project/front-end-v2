@@ -21,7 +21,6 @@ export default function Base({
   classes,
   addContact,
   removeContact,
-  addCopyContact,
   handleSubmit
 }) {
   const initialState = {
@@ -34,6 +33,10 @@ export default function Base({
   const [contacts, setContacts] = useState(initialState);
   const [clearContactsFileds, setClearContactsFileds] = useState(true);
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const addCopyContact = idx => {
+    setContacts({ ...data.contacts[idx] });
+  };
 
   const handleDelete = () => {
     removeContact(selectedRows);

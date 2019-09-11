@@ -156,6 +156,14 @@ export const CreerFournisseur = Loadable({
   loading: Loading
 });
 
+export const GererFournisseur = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Logistique/donneDeBase/Fournisseur/GererFournisseur/index"
+    ),
+  loading: Loading
+});
+
 export const Fournisseur = Loadable({
   loader: () =>
     import("./Pages/modules/Logistique/donneDeBase/Fournisseur/index"),

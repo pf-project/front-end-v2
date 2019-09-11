@@ -14,9 +14,6 @@ import {
 } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import { BreadCrumb } from "enl-components";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { cleareStore } from "../../containers/Pages/modules/Logistique/reducers/crudLogisticActions";
 
 const styles = theme => ({
   elements: {
@@ -81,7 +78,6 @@ const PageTitle = ({
   };
 
   const handleLeave = () => {
-    cleareStore();
     window.history.back();
   };
 
@@ -144,14 +140,4 @@ const PageTitle = ({
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  cleareStore: bindActionCreators(cleareStore, dispatch)
-});
-
-// //const reducer = "initval";
-const PageTitleReduxed = connect(
-  null,
-  mapDispatchToProps
-)(PageTitle);
-
-export default withStyles(styles)(PageTitleReduxed);
+export default withStyles(styles)(PageTitle);

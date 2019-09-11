@@ -21,7 +21,6 @@ export default function Bancaire({
   classes,
   addCoordonneBancaire,
   removeCoordonne,
-  addCopyCoordonne,
   handleSubmit
 }) {
   const initialState = {
@@ -38,6 +37,10 @@ export default function Bancaire({
   const [coordonnes, setCoordonnes] = useState(initialState);
   const [clearCoordonnesFileds, setClearCoordonnesFileds] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const addCopyCoordonne = idx => {
+    setCoordonnes({ ...data.coord_bancaire[idx], IBAN: "", id_compte: "" });
+  };
 
   const handleDelete = () => {
     removeCoordonne(selectedRows);
