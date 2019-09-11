@@ -32,7 +32,8 @@ import Modal from "@material-ui/core/Modal";
 import {
   fetchAction,
   updateAction,
-  closeNotifAction
+  closeNotifAction,
+  fetchDevise
 } from "../reducers/crudTbBaseActions";
 
 const styles = theme => ({
@@ -129,7 +130,7 @@ class Unites extends React.Component {
   state = {
     id: "",
     coursdechange: [],
-
+    devise: [],
     selectedRows: [],
     dateDebut: "2019-01-01",
     dateFin: "2019-01-31",
@@ -145,6 +146,7 @@ class Unites extends React.Component {
   };
 
   componentWillMount() {
+    this.props.fetchDevise(branch);
     this.props.fetchListesDeBase(branch);
   }
 
@@ -152,6 +154,7 @@ class Unites extends React.Component {
     const dataTable = this.props.dataTable;
     const tables = ["coursdechange"];
     if (newprops.branch === "coursdechange") {
+      const devises = this.props.devise.toArray();
       const response = dataTable.toArray()[0];
       this.setState({ id: response.get("id") });
       let data = [];
@@ -164,6 +167,13 @@ class Unites extends React.Component {
         });
         this.setState({ [table]: newData });
       });
+      const devise = [];
+      devises.map(d => {
+        if (devise.filter(code => code === d.toObject().code).length === 0) {
+          devise.push(d.toObject().code);
+        }
+      });
+      this.setState({ devise });
     }
   }
 
@@ -205,6 +215,134 @@ class Unites extends React.Component {
     }
     this.setState({ selectedRows: [] });
   };
+
+  handleChovochement = () => {
+    const {
+      coursdechange,
+      dateDebut,
+      dateFin,
+      convertir,
+      taux,
+      deviseCible,
+      type
+    } = this.state;
+    // date debut entred
+    let dateDebutParts = dateDebut.split("-");
+    let myDateDebut = new Date(
+      dateDebutParts[0],
+      dateDebutParts[1] - 1,
+      dateDebutParts[2]
+    );
+    //date fin entred
+    let dateFinParts = dateFin.split("-");
+    let myDateFin = new Date(
+      dateFinParts[0],
+      dateFinParts[1] - 1,
+      dateFinParts[2]
+    );
+
+    coursdechange.map(change => {
+      if (
+        change.convertir === convertir &&
+        change.deviseCible === deviseCible &&
+        change.taux !== taux
+      ) {
+        // date debut already exist
+        let changedateDebutParts = change.dateDebut.split("-");
+        let mychangeDateDebut = new Date(
+          changedateDebutParts[0],
+          changedateDebutParts[1] - 1,
+          changedateDebutParts[2]
+        );
+        // date fin already exist
+        let changedateFinParts = change.dateFin.split("-");
+        let mychangeDateFin = new Date(
+          changedateFinParts[0],
+          changedateFinParts[1] - 1,
+          changedateFinParts[2]
+        );
+
+        // if date fin entred is inbetween date already exist we split this date into two parts
+        // if year entred inbetween date already exist
+
+        let year = -1,
+          month = -1,
+          day = -1;
+        if (
+          myDateFin.getTime() >= mychangeDateDebut.getTime() &&
+          myDateFin.getTime() <= mychangeDateFin.getTime()
+        ) {
+          year = myDateFin.getFullYear();
+          month = myDateFin.getMonth();
+          day = myDateFin.getDate() + 1;
+          // push the new date to the table ( if only day is setted !!!)
+
+          if (day !== -1 && month !== -1 && year !== -1) {
+            // if (day === 32) {
+            //   month = month + 1;
+            //   day = 1;
+            // }
+            // if (month === 12) {
+            //   year = year + 1;
+            //   month = 0;
+            // }
+            coursdechange.push({
+              id: this.getId(coursdechange),
+              dateDebut:
+                year +
+                "-" +
+                ("0" + (month + 1)).slice(-2) +
+                "-" +
+                ("0" + day).slice(-2),
+              dateFin: change.dateFin,
+              convertir,
+              taux: change.taux,
+              deviseCible
+            });
+          }
+        }
+
+        // if date debut entred is inbetween date already exist we split this date into two parts
+        // if year entred inbetween date already exist
+        if (
+          myDateDebut.getTime() >= mychangeDateDebut.getTime() &&
+          myDateDebut.getTime() <= mychangeDateFin.getTime()
+        ) {
+          // if month entred inbetween date already exist
+
+          mychangeDateFin.setFullYear(myDateDebut.getFullYear());
+          mychangeDateFin.setMonth(myDateDebut.getMonth());
+          mychangeDateFin.setDate(myDateDebut.getDate() - 1);
+          //change the current date fin
+
+          // if (mychangeDateFin.getDate() === 0) {
+          //   mychangeDateFin.setMonth(mychangeDateFin.getMonth() - 1);
+          //   mychangeDateFin.setDate(31);
+          // }
+          // if (mychangeDateFin.getMonth() === -1) {
+          //   mychangeDateFin.setFullYear(mychangeDateFin.getFullYear() - 1);
+          //   mychangeDateFin.setMonth(11);
+          // }
+          change.dateFin =
+            mychangeDateFin.getFullYear() +
+            "-" +
+            ("0" + (mychangeDateFin.getMonth() + 1)).slice(-2) +
+            "-" +
+            ("0" + mychangeDateFin.getDate()).slice(-2);
+        }
+      }
+    });
+
+    coursdechange.push({
+      id: this.getId(coursdechange),
+      dateDebut,
+      dateFin,
+      convertir,
+      taux,
+      deviseCible
+    });
+    this.setState({ coursdechange });
+  };
   handleAdd = () => {
     const {
       coursdechange,
@@ -218,15 +356,8 @@ class Unites extends React.Component {
 
     switch (type) {
       case "Cours de change":
-        coursdechange.push({
-          id: this.getId(coursdechange),
-          dateDebut,
-          dateFin,
-          convertir,
-          taux,
-          deviseCible
-        });
-        this.setState({ coursdechange });
+        this.handleChovochement();
+
         break;
     }
     this.setState({
@@ -277,6 +408,7 @@ class Unites extends React.Component {
     const { classes, notifMsg, closeNotif } = this.props;
     const {
       coursdechange,
+      devise,
       dateDebut,
       dateFin,
       convertir,
@@ -285,7 +417,6 @@ class Unites extends React.Component {
       selectedRows,
       type
     } = this.state;
-
     const elements = (
       <>
         <Button
@@ -302,7 +433,7 @@ class Unites extends React.Component {
     return (
       <div>
         <PageTitle
-          title="Listes de base"
+          title="Cours de change"
           pathname="/Logistique/Paramétrage/Configuration de base/Cours de change"
           elements={elements}
           withBackOption={true}
@@ -341,6 +472,7 @@ class Unites extends React.Component {
                 <TextValidator
                   onChange={this.handleChange}
                   name="dateFin"
+                  type="date"
                   style={{ width: "80%" }}
                   value={dateFin}
                   validators={["required"]}
@@ -350,16 +482,22 @@ class Unites extends React.Component {
                 />
               </Grid>
               <Grid item md={2}>
-                <TextValidator
-                  onChange={this.handleChange}
-                  name="convertir"
-                  style={{ width: "80%" }}
+                <SelectValidator
+                  label="Convertir *"
                   value={convertir}
+                  style={{ width: "80%" }}
+                  onChange={this.handleChange}
                   validators={["required"]}
                   errorMessages={["champ obligatoire"]}
-                  label="Convertir * "
-                  id="#convertir"
-                />
+                  inputProps={{
+                    name: "convertir",
+                    id: "type-unite"
+                  }}
+                >
+                  {devise.map(d => (
+                    <MenuItem value={d}>{d}</MenuItem>
+                  ))}
+                </SelectValidator>
               </Grid>
               <Grid item md={2}>
                 <TextValidator
@@ -377,16 +515,22 @@ class Unites extends React.Component {
                 />
               </Grid>
               <Grid item md={2}>
-                <TextValidator
-                  onChange={this.handleChange}
-                  name="deviseCible"
-                  style={{ width: "80%" }}
+                <SelectValidator
+                  label="Devise cible * "
                   value={deviseCible}
+                  style={{ width: "80%" }}
+                  onChange={this.handleChange}
                   validators={["required"]}
                   errorMessages={["champ obligatoire"]}
-                  label="Devise cible * "
-                  id="#deviseCible"
-                />
+                  inputProps={{
+                    name: "deviseCible",
+                    id: "type-unite"
+                  }}
+                >
+                  {devise.map(d => (
+                    <MenuItem value={d}>{d}</MenuItem>
+                  ))}
+                </SelectValidator>
               </Grid>
               <Grid item md={2} />
             </Grid>
@@ -423,13 +567,15 @@ class Unites extends React.Component {
 const mapDispatchToProps = dispatch => ({
   closeNotif: bindActionCreators(closeNotifAction, dispatch),
   fetchListesDeBase: bindActionCreators(fetchAction, dispatch),
-  updateListesDeBase: bindActionCreators(updateAction, dispatch)
+  updateListesDeBase: bindActionCreators(updateAction, dispatch),
+  fetchDevise: bindActionCreators(fetchDevise, dispatch)
 });
 const reducer = "ListesDeBase";
 const mapStateToProps = state => ({
   notifMsg: state.get(reducer).get("notifMsg"),
   loading: state.get(reducer).get("loading"),
   dataTable: state.get(reducer).get("dataTable"),
+  devise: state.get(reducer).get("devise"),
   branch: state.get(reducer).get("branch")
 });
 

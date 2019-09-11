@@ -5,6 +5,8 @@ import {
   stopLoading,
   fetchActionSuccess,
   fetchActionFailure,
+  fetchDeviseSuccess,
+  fetchDeviseFailure,
   updateActionSuccess,
   updateActionFailure,
   changeBranch
@@ -12,7 +14,8 @@ import {
 
 import {
   FETCH_LISTES_DE_BASE,
-  UPDATE_LISTES_DE_BASE
+  UPDATE_LISTES_DE_BASE,
+  FETCH_DEVISE
 } from "./crudTbBaseConstants";
 
 const erreur = "Erreur lors de l'action";
@@ -34,6 +37,25 @@ function* fetchDataSaga({ branch }) {
   } catch (error) {
     yield put(stopLoading());
     yield put(fetchActionFailure(erreur));
+  }
+}
+
+function* fetchDeviseSaga({ branch }) {
+  try {
+    yield put(startLoading());
+
+    const data = yield fetchAPI({
+      method: "GET",
+      url: "/api/logistic/configurationdebase/" + branch + "/findDevise",
+      token: window.localStorage.getItem("token")
+    });
+    yield put(fetchDeviseSuccess(data));
+    yield put(stopLoading());
+
+    // yield put(stopLoading());
+  } catch (error) {
+    yield put(stopLoading());
+    yield put(fetchDeviseFailure(erreur));
   }
 }
 
@@ -62,7 +84,8 @@ function* updateListeDeBaseSaga({ payload, branch }) {
 function* crudTbBaseRootSaga() {
   yield all([
     takeEvery(FETCH_LISTES_DE_BASE, fetchDataSaga),
-    takeEvery(UPDATE_LISTES_DE_BASE, updateListeDeBaseSaga)
+    takeEvery(UPDATE_LISTES_DE_BASE, updateListeDeBaseSaga),
+    takeEvery(FETCH_DEVISE, fetchDeviseSaga)
   ]);
 }
 

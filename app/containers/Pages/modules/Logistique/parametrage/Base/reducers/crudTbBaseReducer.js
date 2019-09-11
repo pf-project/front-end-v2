@@ -5,6 +5,9 @@ import {
   FETCH_LISTES_DE_BASE_FAILURE,
   FETCH_LISTES_DE_BASE,
   FETCH_LISTES_DE_BASE_SUCCESS,
+  FETCH_DEVISE_FAILURE,
+  FETCH_DEVISE,
+  FETCH_DEVISE_SUCCESS,
   UPDATE_LISTES_DE_BASE_FAILURE,
   UPDATE_LISTES_DE_BASE_SUCCESS,
   START_LOADING,
@@ -14,6 +17,7 @@ import {
 
 const initialState = {
   dataTable: List([]),
+  devise: List([]),
   notifMsg: "",
   loading: false,
   branch: ""
@@ -25,7 +29,6 @@ export default function reducer(state = initialImmutableState, action = {}) {
   switch (action.type) {
     case CHANGE_BRANCH:
       return state.withMutations(mutableState => {
-        console.log(action.branch);
         mutableState.set("branch", action.branch);
       });
     case FETCH_LISTES_DE_BASE_SUCCESS:
@@ -33,6 +36,12 @@ export default function reducer(state = initialImmutableState, action = {}) {
         const payload = fromJS(action.payload);
 
         mutableState.set("dataTable", payload);
+      });
+
+    case FETCH_DEVISE_SUCCESS:
+      return state.withMutations(mutableState => {
+        const payload = fromJS(action.payload);
+        mutableState.set("devise", payload);
       });
 
     case UPDATE_LISTES_DE_BASE_SUCCESS:
@@ -50,6 +59,10 @@ export default function reducer(state = initialImmutableState, action = {}) {
         mutableState.set("notifMsg", "");
       });
     case FETCH_LISTES_DE_BASE_FAILURE:
+      return state.withMutations(mutableState => {
+        mutableState.set("notifMsg", "Erreur lors de l'action");
+      });
+    case FETCH_DEVISE_FAILURE:
       return state.withMutations(mutableState => {
         mutableState.set("notifMsg", "Erreur lors de l'action");
       });

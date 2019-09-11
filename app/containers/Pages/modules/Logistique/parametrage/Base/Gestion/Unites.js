@@ -458,6 +458,13 @@ class Unites extends React.Component {
       type
     } = this.state;
 
+    const unites = [];
+    this.showTable().data.map(unite => {
+      if (unites.filter(code => code === unite.code).length === 0) {
+        unites.push(unite.code);
+      }
+    });
+
     const elements = (
       <>
         <Button
@@ -474,7 +481,7 @@ class Unites extends React.Component {
     return (
       <div>
         <PageTitle
-          title="Listes de base"
+          title="Unités"
           pathname="/Logistique/Paramétrage/Configuration de base/Unités"
           elements={elements}
           withBackOption={true}
@@ -573,8 +580,8 @@ class Unites extends React.Component {
                     id: "type-unite"
                   }}
                 >
-                  {this.showTable().data.map(row => (
-                    <MenuItem value={row.code}>{row.code}</MenuItem>
+                  {unites.map(unite => (
+                    <MenuItem value={unite}>{unite}</MenuItem>
                   ))}
                 </SelectValidator>
               </Grid>

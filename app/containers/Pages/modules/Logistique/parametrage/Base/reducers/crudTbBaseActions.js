@@ -16,6 +16,21 @@ export const fetchActionFailure = payload => ({
   payload
 });
 
+export const fetchDevise = branch => ({
+  type: types.FETCH_DEVISE,
+  branch
+});
+
+export const fetchDeviseSuccess = payload => ({
+  type: types.FETCH_DEVISE_SUCCESS,
+  payload
+});
+
+export const fetchDeviseFailure = payload => ({
+  type: types.FETCH_DEVISE_FAILURE,
+  payload
+});
+
 export const updateAction = (payload, branch) => ({
   type: types.UPDATE_LISTES_DE_BASE,
   payload,
