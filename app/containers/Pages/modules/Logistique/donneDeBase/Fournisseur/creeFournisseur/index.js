@@ -75,7 +75,7 @@ class CreerFournisseur extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeStep: 2,
+      activeStep: 0,
       steps: [
         "Données initiales",
         "Données de base",
