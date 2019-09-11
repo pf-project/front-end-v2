@@ -88,8 +88,7 @@ export default function Base({
                     onChange={handleChange}
                     name="code"
                     value={data.code}
-                    label="Code Article *"
-                    id="#codearticle"
+                    label="Code fournisseur *"
                   />
                 </Grid>
                 <Grid item xs={6}>

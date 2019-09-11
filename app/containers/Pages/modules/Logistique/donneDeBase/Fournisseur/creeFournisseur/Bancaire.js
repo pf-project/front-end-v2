@@ -97,8 +97,7 @@ export default function Bancaire({
                     onChange={handleChange}
                     name="code"
                     value={data.code}
-                    label="Code Article *"
-                    id="#codearticle"
+                    label="Code fournisseur *"
                   />
                 </Grid>
                 <Grid item xs={6}>
@@ -188,6 +187,12 @@ export default function Bancaire({
                 <TextValidator
                   onChange={handleCoordonnesChange}
                   name="cle_RIB"
+                  type="number"
+                  validators={["isNumber", "isPositive"]}
+                  errorMessages={[
+                    "Ce champ doit étre un nombre",
+                    "Ce champ doit étre un nombre positive"
+                  ]}
                   className={classes.field}
                   label="Cle RIB"
                   value={coordonnes.cle_RIB}
@@ -221,6 +226,12 @@ export default function Bancaire({
                   name="IBAN"
                   className={classes.field}
                   label="IBAN"
+                  type="number"
+                  validators={["isNumber", "isPositive"]}
+                  errorMessages={[
+                    "Ce champ doit étre un nombre",
+                    "Ce champ doit étre un nombre positive"
+                  ]}
                   value={coordonnes.IBAN}
                 />
               </Grid>

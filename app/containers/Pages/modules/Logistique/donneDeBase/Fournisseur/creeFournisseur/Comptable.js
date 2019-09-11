@@ -51,8 +51,7 @@ export default function Comptable({
                   onChange={handleChange}
                   name="code"
                   value={data.code}
-                  label="Code Article *"
-                  id="#codearticle"
+                  label="Code fournisseur *"
                 />
               </Grid>
               <Grid item xs={6}>
@@ -328,6 +327,13 @@ export default function Comptable({
                 name="regestre_commerce"
                 value={data.regestre_commerce}
                 label="Registre de commerce"
+                type="number"
+                validators={["isNumber", "isPositive", "maxStringLength:16"]}
+                errorMessages={[
+                  "Ce champ doit étre un nombre",
+                  "Ce champ doit étre un nombre positive",
+                  "Maximum 16 nombres !"
+                ]}
               />
             </Grid>
             <Grid item xs={6}>
@@ -337,6 +343,14 @@ export default function Comptable({
                 name="cnss"
                 value={data.cnss}
                 label="C.N.S.S"
+                type="number"
+                type="number"
+                validators={["isNumber", "isPositive", "maxStringLength:16"]}
+                errorMessages={[
+                  "Ce champ doit étre un nombre",
+                  "Ce champ doit étre un nombre positive",
+                  "Maximum 16 nombres !"
+                ]}
               />
             </Grid>
           </Grid>
@@ -350,6 +364,13 @@ export default function Comptable({
                 name="patente"
                 value={data.patente}
                 label="Patente"
+                type="number"
+                validators={["isNumber", "isPositive", "maxStringLength:12"]}
+                errorMessages={[
+                  "Ce champ doit étre un nombre",
+                  "Ce champ doit étre un nombre positive",
+                  "Maximum 12 nombres !"
+                ]}
               />
             </Grid>
             <Grid item xs={6}>
@@ -359,6 +380,13 @@ export default function Comptable({
                 name="ice"
                 value={data.ice}
                 label="I.C.E"
+                type="number"
+                validators={["isNumber", "isPositive", "maxStringLength:12"]}
+                errorMessages={[
+                  "Ce champ doit étre un nombre",
+                  "Ce champ doit étre un nombre positive",
+                  "Maximum 12 nombres !"
+                ]}
               />
             </Grid>
           </Grid>
@@ -372,6 +400,8 @@ export default function Comptable({
                 name="identifiant_fiscale"
                 value={data.identifiant_fiscale}
                 label="Identifiant Fiscale"
+                validators={["maxStringLength:18"]}
+                errorMessages={["Maximum 18 nombres !"]}
               />
             </Grid>
           </Grid>

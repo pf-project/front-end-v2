@@ -85,7 +85,12 @@ class CreerFournisseur extends React.Component {
       data: {
         contacts: [],
         coord_bancaire: [],
-        honoraire: false
+        honoraire: false,
+        identifiant_fiscale: "",
+        ice: "",
+        patente: "",
+        cnss: "",
+        regestre_commerce: ""
       }
     };
   }
