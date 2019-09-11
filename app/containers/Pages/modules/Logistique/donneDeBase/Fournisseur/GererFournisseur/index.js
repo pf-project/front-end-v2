@@ -46,7 +46,8 @@ const styles = theme => ({
     marginLeft: "8em"
   },
   grid: {
-    flexGrow: 1
+    flexGrow: 1,
+    marginTop: theme.spacing(1)
   },
   checkBoxMarginTop: {
     marginTop: "20px"
