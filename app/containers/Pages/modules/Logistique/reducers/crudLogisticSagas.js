@@ -1,4 +1,4 @@
-import { call, fork, put, take, takeEvery, all } from "redux-saga/effects";
+import { fork, put, takeEvery, all } from "redux-saga/effects";
 import { fetchAPI } from "../../../../../serverActions";
 import {
   startLoading,
@@ -40,13 +40,14 @@ function* addItemSaga({ payload, branch }) {
 function* fetchSuggestionsSaga({ branch }) {
   try {
     yield put(startLoading());
+
     const data = yield fetchAPI({
       method: "GET",
       url: `/api/logistic/${branch}`,
       token: window.localStorage.getItem("token")
     });
+
     yield put(fetchSuggestionsSuccess(data));
-    // yield put(stopLoading());
   } catch (error) {
     yield put(fetchSuggestionsFailure(erreur));
   }
@@ -61,7 +62,6 @@ function* fetchItemSaga({ branch, payload, withLoading }) {
       token: window.localStorage.getItem("token")
     });
     yield put(fetchItemSuccess(data));
-    // yield put(stopLoading());
   } catch (error) {
     yield put(fetchItemFailure(erreur));
   }
