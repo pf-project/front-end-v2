@@ -32,7 +32,8 @@ export default function Bancaire({
     titulaire: "",
     ville_agence: "",
     nom_agence: "",
-    IBAN: ""
+    IBAN: "",
+    devise: ""
   };
   const [coordonnes, setCoordonnes] = useState(initialState);
   const [clearCoordonnesFileds, setClearCoordonnesFileds] = useState(false);
@@ -40,6 +41,7 @@ export default function Bancaire({
 
   const addCopyCoordonne = idx => {
     setCoordonnes({ ...data.coord_bancaire[idx], IBAN: "", id_compte: "" });
+    setSelectedRows([]);
   };
 
   const handleDelete = () => {
@@ -130,6 +132,15 @@ export default function Bancaire({
           <Grid item xs={12}>
             <Grid container direction="row">
               <Grid item xs={6} direction="column">
+                <TextValidator
+                  onChange={handleCoordonnesChange}
+                  name="titulaire"
+                  className={classes.field}
+                  value={coordonnes.titulaire}
+                  label="Titulaire"
+                />
+              </Grid>
+              <Grid item xs={6} direction="column">
                 <SelectValidator
                   className={classes.field}
                   value={coordonnes.pays}
@@ -143,15 +154,6 @@ export default function Bancaire({
                   <MenuItem value={"Qatar"}>Qatar</MenuItem>
                   <MenuItem value={"Italie"}>Italie</MenuItem>
                 </SelectValidator>
-              </Grid>
-              <Grid item xs={6} direction="column">
-                <TextValidator
-                  onChange={handleCoordonnesChange}
-                  name="titulaire"
-                  className={classes.field}
-                  value={coordonnes.titulaire}
-                  label="Titulaire"
-                />
               </Grid>
             </Grid>
           </Grid>
@@ -167,6 +169,19 @@ export default function Bancaire({
                 />
               </Grid>
               <Grid item xs={6}>
+                <TextValidator
+                  onChange={handleCoordonnesChange}
+                  name="type_compte"
+                  className={classes.field}
+                  label="Type de compte"
+                  value={coordonnes.type_compte}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container direction="row">
+              <Grid item xs={4}>
                 <SelectValidator
                   className={classes.field}
                   value={coordonnes.ville_agence}
@@ -179,26 +194,7 @@ export default function Bancaire({
                   <MenuItem value={"Tanger"}>Tanger</MenuItem>
                 </SelectValidator>
               </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container direction="row">
-              <Grid item xs={6}>
-                <TextValidator
-                  onChange={handleCoordonnesChange}
-                  name="cle_RIB"
-                  type="number"
-                  validators={["isNumber", "isPositive"]}
-                  errorMessages={[
-                    "Ce champ doit étre un nombre",
-                    "Ce champ doit étre un nombre positive"
-                  ]}
-                  className={classes.field}
-                  label="Cle RIB"
-                  value={coordonnes.cle_RIB}
-                />
-              </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 <TextValidator
                   onChange={handleCoordonnesChange}
                   name="nom_agence"
@@ -207,6 +203,17 @@ export default function Bancaire({
                   value={coordonnes.nom_agence}
                 />
               </Grid>
+              <Grid item xs={4}>
+                <SelectValidator
+                  className={classes.field}
+                  onChange={handleCoordonnesChange}
+                  name="devise"
+                  value={coordonnes.devise}
+                  label="Devise"
+                >
+                  <MenuItem value="List_Devise">List de divise</MenuItem>
+                </SelectValidator>
+              </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12}>
@@ -214,25 +221,47 @@ export default function Bancaire({
               <Grid item xs={6}>
                 <TextValidator
                   onChange={handleCoordonnesChange}
-                  name="type_compte"
+                  name="IBAN"
                   className={classes.field}
-                  label="Type de compte"
-                  value={coordonnes.type_compte}
+                  label="IBAN"
+                  type="number"
+                  validators={[
+                    "required",
+                    "isNumber",
+                    "isPositive",
+                    "maxStringLength:34"
+                  ]}
+                  errorMessages={[
+                    "champ obligatoire",
+                    "Ce champ doit étre un nombre",
+                    "Ce champ doit étre un nombre positive",
+                    "maximum 34 char"
+                  ]}
+                  value={coordonnes.IBAN}
                 />
               </Grid>
               <Grid item xs={6}>
                 <TextValidator
                   onChange={handleCoordonnesChange}
-                  name="IBAN"
-                  className={classes.field}
-                  label="IBAN"
+                  name="cle_RIB"
                   type="number"
-                  validators={["isNumber", "isPositive"]}
-                  errorMessages={[
-                    "Ce champ doit étre un nombre",
-                    "Ce champ doit étre un nombre positive"
+                  validators={[
+                    "required",
+                    "isNumber",
+                    "isPositive",
+                    "maxStringLength:16",
+                    "minStringLength:16"
                   ]}
-                  value={coordonnes.IBAN}
+                  errorMessages={[
+                    "champ obligatoire",
+                    "Ce champ doit étre un nombre",
+                    "Ce champ doit étre un nombre positive",
+                    "maximum 16 nombre",
+                    "minimum 16 nombre"
+                  ]}
+                  className={classes.field}
+                  label="Cle RIB"
+                  value={coordonnes.cle_RIB}
                 />
               </Grid>
             </Grid>

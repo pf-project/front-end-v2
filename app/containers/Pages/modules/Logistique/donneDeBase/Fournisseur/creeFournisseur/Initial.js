@@ -71,7 +71,7 @@ export default function Initiale({
             validators={["required"]}
             errorMessages={["Ce Champ est Obligatoire"]}
           >
-            <MenuItem value="STDR">Standard</MenuItem>
+            <MenuItem value={"list"}>list</MenuItem>
           </SelectValidator>
         </FormGroup>
       </ValidatorForm>

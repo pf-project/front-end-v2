@@ -177,8 +177,13 @@ class GererArticle extends React.Component {
     let data = { ...this.state.data };
     switch (name) {
       case "pays":
-        if (!value === "Maroc") delete data.retenu_a_la_source;
+        if (value === "Maroc") data.retenu_a_la_source = false;
+        else delete data.retenu_a_la_source;
         data[name] = value;
+        this.setState({ data });
+        break;
+      case "retenu_a_la_source":
+        data.retenu_a_la_source = !data.retenu_a_la_source;
         this.setState({ data });
         break;
       case "condition_paiement":
