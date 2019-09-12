@@ -42,7 +42,7 @@ export default function BaseModal({ value }) {
     <div>
       <Grid container className={classes.root} xs={12} spacing={2}>
         <Grid item xs={6}>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" color="primary" gutterBottom>
             {"Information Fournisseur   "}
           </Typography>
         </Grid>
@@ -123,7 +123,7 @@ export default function BaseModal({ value }) {
       </Grid>
       <Grid container className={classes.root} xs={12} spacing={2}>
         <Grid item xs={6}>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" color="primary" gutterBottom>
             {"Contact   "}
           </Typography>
         </Grid>

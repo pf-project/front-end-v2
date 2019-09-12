@@ -70,6 +70,7 @@ class Articles extends React.Component {
     if (dataTable)
       dataTable.map(article => {
         articles.push([
+          // article.id,
           article.code,
           article.designation,
           article.categorie,

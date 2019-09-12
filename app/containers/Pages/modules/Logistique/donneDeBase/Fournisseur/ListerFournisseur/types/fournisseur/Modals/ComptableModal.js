@@ -31,7 +31,6 @@ const useStyles = makeStyles(theme => ({
 export default function ComptableModal({ value }) {
   const [spacing, setSpacing] = React.useState(2);
   const classes = useStyles();
-  console.log(value);
   return (
     <div>
       <Grid container className={classes.root} xs={12} spacing={2}>
@@ -125,6 +124,58 @@ export default function ComptableModal({ value }) {
             </Grid>
           </>
         )}
+      </Grid>
+      <Grid container className={classes.root} xs={12} spacing={2}>
+        <Grid item xs={2}>
+          <Typography variant="subtitle1" gutterBottom>
+            {"Honoraire : "}
+            {value.retenu_a_la_source ? "Oui" : "Non"}
+          </Typography>
+        </Grid>
+      </Grid>
+
+      <Grid container className={classes.root} xs={12} spacing={2}>
+        <Grid item xs={6}>
+          <Typography variant="h5" color="primary" gutterBottom>
+            {"Informations Fiscales  "}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container className={classes.root} xs={12} spacing={2}>
+        <Grid item xs={4}>
+          <Typography variant="subtitle1" gutterBottom>
+            {"Registre de commerce : "}
+            {value.regestre_commerce}
+          </Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Typography variant="subtitle1" gutterBottom>
+            {"CNSS : "}
+            {value.cnss}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container className={classes.root} xs={12} spacing={2}>
+        <Grid item xs={4}>
+          <Typography variant="subtitle1" gutterBottom>
+            {"Patente : "}
+            {value.patente}
+          </Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Typography variant="subtitle1" gutterBottom>
+            {"I.C.E : "}
+            {value.ice}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container className={classes.root} xs={12} spacing={2}>
+        <Grid item xs={4}>
+          <Typography variant="subtitle1" gutterBottom>
+            {"Identifiant Fiscale : "}
+            {value.identifiant_fiscale}
+          </Typography>
+        </Grid>
       </Grid>
     </div>
   );

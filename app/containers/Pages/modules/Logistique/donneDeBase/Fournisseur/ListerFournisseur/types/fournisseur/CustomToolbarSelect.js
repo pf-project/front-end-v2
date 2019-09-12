@@ -12,7 +12,7 @@ import EditIcon from "@material-ui/icons/Edit";
 
 import PropTypes from "prop-types";
 
-import { FloatingPanel, Notification } from "enl-components";
+import { FloatingPanel, Notification, ConfirmeDialog } from "enl-components";
 
 import { injectIntl, intlShape } from "react-intl";
 import {
@@ -31,6 +31,7 @@ const defaultToolbarSelectStyles = {
 };
 
 class CustomToolbarSelect extends React.Component {
+  state = { open: false };
   handleClickInverseSelection = () => {
     const nextSelectedRows = this.props.displayData.reduce(
       (nextSelectedRows, _, index) => {
@@ -53,20 +54,30 @@ class CustomToolbarSelect extends React.Component {
   delete = () => {
     this.props.selectedRows.data.map(row => {
       const code = this.props.displayData[row.index].data[0];
+      console.log(code);
       this.props.deleteItem(code, "fournisseur");
     });
   };
 
   render() {
     const { classes, closeNotif, notifMsg, intl } = this.props;
+    const { open } = this.state;
 
     return (
       <div className={classes.iconContainer}>
         <Tooltip title="Supprimer">
-          <IconButton className={classes.iconButton} onClick={this.delete}>
+          <IconButton
+            className={classes.iconButton}
+            onClick={() => this.setState({ open: true })}
+          >
             <DeleteIcon />
           </IconButton>
         </Tooltip>
+        <ConfirmeDialog
+          open={open}
+          handleDelete={this.delete}
+          closeDialog={() => this.setState({ open: false })}
+        />
       </div>
     );
   }

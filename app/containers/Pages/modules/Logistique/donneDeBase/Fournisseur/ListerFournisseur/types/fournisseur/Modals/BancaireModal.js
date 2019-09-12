@@ -49,7 +49,7 @@ export default function BancaireModal({ value }) {
       </Grid>
       <Grid container className={classes.root} xs={12} spacing={2}>
         <Grid item xs={6}>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" color="primary" gutterBottom>
             {"Information Fournisseur   "}
           </Typography>
         </Grid>
@@ -73,7 +73,7 @@ export default function BancaireModal({ value }) {
         <>
           <Grid container className={classes.root} xs={12} spacing={2}>
             <Grid item xs={6}>
-              <Typography variant="h5" gutterBottom>
+              <Typography variant="h5" color="primary" gutterBottom>
                 {"Cordonnées bancaires   "}
               </Typography>
             </Grid>

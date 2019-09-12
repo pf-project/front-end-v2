@@ -33,3 +33,5 @@ export SimpleTable from "./SimpleTable/index";
 
 // Loading
 export LoadingModal from "./LoadingModal/index";
+
+export ConfirmeDialog from "./ConfrimeDialog/index";
