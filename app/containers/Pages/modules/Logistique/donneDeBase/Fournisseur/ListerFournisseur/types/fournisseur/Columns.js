@@ -10,9 +10,9 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import BaseModal from "./Modals/BaseModal";
-import StockageModal from "./Modals/StockageModal";
+import ComptableModal from "./Modals/ComptableModal";
 import Button from "@material-ui/core/Button";
-import CommercialModal from "./Modals/CommercialModal";
+import BancaireModal from "./Modals/BancaireModal";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Slide from "@material-ui/core/Slide";
 import AppBar from "@material-ui/core/AppBar";
@@ -51,11 +51,11 @@ class More extends React.Component {
       case "base":
         modal = <BaseModal value={value} />;
         break;
-      case "commercial":
-        modal = <CommercialModal value={value} />;
+      case "bancaires":
+        modal = <BancaireModal value={value} />;
         break;
-      case "stockage":
-        modal = <StockageModal value={value} />;
+      case "comptables":
+        modal = <ComptableModal value={value} />;
         break;
     }
 
@@ -128,9 +128,9 @@ class More extends React.Component {
   }
 }
 
-const reducer = "crudTbArticlesReducer";
+const reducer = "crudLogisticReducer";
 const mapStateToProps = state => ({
-  dataTable: state.get(reducer).get("dataTable")
+  dataTable: state.get(reducer).get("item")
   // messageNotif: state.get(reducer).get("notifMsg")
 });
 
@@ -165,8 +165,8 @@ export default [
     }
   },
   {
-    name: "group",
-    label: "group",
+    name: "groupe",
+    label: "groupe",
     options: {
       filter: true,
       sort: true
@@ -180,25 +180,25 @@ export default [
       filter: false,
       customBodyRender: value => <MoreWithModal modal={"base"} value={value} />
     }
+  },
+  {
+    name: "Donnees_bancaires",
+    label: "D_bancaires",
+    options: {
+      filter: false,
+      customBodyRender: value => (
+        <MoreWithModal modal={"bancaires"} value={value} />
+      )
+    }
+  },
+  {
+    name: "donnees_comptables",
+    label: "D_comptables",
+    options: {
+      filter: false,
+      customBodyRender: value => (
+        <MoreWithModal modal={"comptables"} value={value} />
+      )
+    }
   }
-  // {
-  //   name: "Donnees_bancaires",
-  //   label: "D_bancaires",
-  //   options: {
-  //     filter: false,
-  //     customBodyRender: value => (
-  //       <MoreWithModal modal={"bancaires"} value={value} />
-  //     )
-  //   }
-  // },
-  // {
-  //   name: "donnees_comptables",
-  //   label: "D_comptables",
-  //   options: {
-  //     filter: false,
-  //     customBodyRender: value => (
-  //       <MoreWithModal modal={"comptables"} value={value} />
-  //     )
-  //   }
-  // }
 ];

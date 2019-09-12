@@ -12,7 +12,9 @@ import {
   FETCH_ITEM_FAILURE,
   UPDATE_ITEM_FAILURE,
   UPDATE_ITEM_SUCCESS,
-  CLEARE_LOGISTIC_STORE
+  CLEARE_LOGISTIC_STORE,
+  DELETE_ITEM_FAILURE,
+  DELETE_ITEM_SUCCESS
 } from "./crudLogisticConstants";
 
 const initialState = {
@@ -74,6 +76,22 @@ export default function crudLogisticReducer(
     case ADD_ITEM_SUCCESS:
       return state.withMutations(mutableState => {
         mutableState.set("notifMsg", "Bien Ajouter ...").set("loading", false);
+      });
+
+    // case DELETE_ITEM_SUCCESS:
+    // return state.withMutations(mutableState => {
+    //   mutableState
+    //     .update("dataTable", dataTable =>
+    //       dataTable.filter(
+    //         article => article.get("code") !== action.payload.payload
+    //       )
+    //     )
+    //     .set("notifMsg", "l'article a été supprimé");
+    // });
+    case DELETE_ITEM_FAILURE:
+      return state.withMutations(mutableState => {
+        const dataTable = fromJS(action.users);
+        mutableState.set("notifMsg", "Erreur lors de l'action");
       });
 
     case START_LOADING:

@@ -144,8 +144,7 @@ export default function BaseModal({ value }) {
               </TableHead>
               <TableBody>
                 {value.contacts &&
-                  value.contacts.map(row => {
-                    const data = row.toObject();
+                  value.contacts.map(data => {
                     return (
                       <TableRow key={data.id_compte}>
                         <TableCell component="th" scope="row">

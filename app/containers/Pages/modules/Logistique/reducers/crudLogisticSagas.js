@@ -6,17 +6,21 @@ import {
   fetchSuggestionsSuccess,
   addItemFailure,
   addItemSuccess,
+  fetchItem,
   fetchItemFailure,
   fetchItemSuccess,
   updateItemSuccess,
-  updateItemFailure
+  updateItemFailure,
+  deleteItemSuccess,
+  deleteItemFailure
 } from "./crudLogisticActions";
 
 import {
   UPDATE_ITEM_REQUEST,
   FETCH_ITEMS_FOR_SUGGESTION_REQUEST,
   ADD_ITEM_REQUEST,
-  FETCH_ITEM_REQUEST
+  FETCH_ITEM_REQUEST,
+  DELETE_ITEM_REQUEST
 } from "./crudLogisticConstants";
 
 const erreur = "Erreur lors de l'action";
@@ -82,6 +86,23 @@ function* updateItemSaga({ payload, branch }) {
   }
 }
 
+function* deleteItemSaga({ payload, branch }) {
+  try {
+    console.log("pre delete");
+    yield fetchAPI({
+      method: "DELETE",
+      url: `/api/logistic/${branch}/archive/${payload}`,
+      token: window.localStorage.getItem("token")
+    });
+    yield put(deleteItemSuccess(payload));
+    yield put(fetchItem("find", branch, false));
+
+    console.log("post delete");
+  } catch (error) {
+    yield put(deleteItemFailure(erreur));
+  }
+}
+
 //= ====================================
 //  WATCHERS
 //-------------------------------------
@@ -91,6 +112,7 @@ function* crudLogisticRootSaga() {
     takeEvery(FETCH_ITEMS_FOR_SUGGESTION_REQUEST, fetchSuggestionsSaga),
     takeEvery(FETCH_ITEM_REQUEST, fetchItemSaga),
     takeEvery(UPDATE_ITEM_REQUEST, updateItemSaga),
+    takeEvery(DELETE_ITEM_REQUEST, deleteItemSaga),
     takeEvery(ADD_ITEM_REQUEST, addItemSaga)
   ]);
 }

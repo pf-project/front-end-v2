@@ -8,8 +8,11 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Columns from "./fournisseur/Columns";
 import Options from "./fournisseur/Options";
-import { fetch, closeNotifAction } from "../reducers/crudTbActions";
-import { Notification } from "enl-components";
+import {
+  closeNotifAction,
+  fetchItem
+} from "../../../../reducers/crudLogisticActions";
+import { Notification, LoadingModal } from "enl-components";
 
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
@@ -27,6 +30,12 @@ const styles = theme => ({
         }
       }
     }
+  },
+  progress: {
+    marginTop: "5em"
+  },
+  encours: {
+    marginTop: "1em"
   }
 });
 
@@ -46,7 +55,7 @@ class Fournisseurs extends React.Component {
   state = {};
 
   componentWillMount() {
-    this.props.fetchdata();
+    this.props.fetchdata("find", "fournisseur", true);
   }
   render() {
     const {
@@ -58,16 +67,14 @@ class Fournisseurs extends React.Component {
     } = this.props;
     let fournisseurs = [];
     if (dataTable)
-      dataTable.toArray().map(element => {
-        let fournisseur = element.toObject();
-        console.log(fournisseur);
+      dataTable.map(fournisseur => {
         fournisseurs.push([
           fournisseur.code,
           fournisseur.designation,
           fournisseur.group,
+          fournisseur,
+          fournisseur,
           fournisseur
-          // fournisseur,
-          // fournisseur
         ]);
       });
     return (
@@ -76,7 +83,14 @@ class Fournisseurs extends React.Component {
 
         {loading ? (
           <center>
-            <CircularProgress size={24} className={classes.buttonProgress} />
+            <div className={classes.progress}>
+              <CircularProgress
+                size={100}
+                thickness={1.2}
+                className={classes.buttonProgress}
+              />{" "}
+              <div className={classes.encours}>En cours de chargement</div>
+            </div>
           </center>
         ) : (
           // <MuiThemeProvider theme={this.getMuiTheme()}>
@@ -103,15 +117,15 @@ Fournisseurs.propTypes = {
   messageNotif: PropTypes.string.isRequired
 };
 
-const reducer = "crudTbFournisseurReducer";
+const reducer = "crudLogisticReducer";
 const mapStateToProps = state => ({
-  dataTable: state.get(reducer).get("dataTable"),
+  dataTable: state.get(reducer).get("item"),
   loading: state.get(reducer).get("loading"),
   messageNotif: state.get(reducer).get("notifMsg")
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchdata: bindActionCreators(fetch, dispatch),
+  fetchdata: bindActionCreators(fetchItem, dispatch),
   closeNotif: bindActionCreators(closeNotifAction, dispatch)
 });
 

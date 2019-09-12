@@ -16,7 +16,10 @@ import { FloatingPanel, Notification } from "enl-components";
 
 import { injectIntl, intlShape } from "react-intl";
 
-import { closeNotifAction, deleteArticle } from "../../reducers/crudTbActions";
+import {
+  deleteItem,
+  closeNotifAction
+} from "../../../../../reducers/crudLogisticActions";
 
 const defaultToolbarSelectStyles = {
   iconButton: {},
@@ -51,7 +54,8 @@ class CustomToolbarSelect extends React.Component {
   delete = () => {
     this.props.selectedRows.data.map(row => {
       const code = this.props.displayData[row.index].data[0];
-      this.props.deleteArticle(code);
+
+      this.props.deleteItem(code, "article");
     });
   };
 
@@ -76,13 +80,13 @@ CustomToolbarSelect.propTypes = {
   intl: intlShape.isRequired
 };
 
-const reducer = "crudTbArticlesReducer";
+const reducer = "crudLogisticReducer";
 const mapStateToProps = state => ({
   notifMsg: state.get(reducer).get("notifMsg")
 });
 
 const mapDispatchToProps = dispatch => ({
-  deleteArticle: bindActionCreators(deleteArticle, dispatch),
+  deleteItem: bindActionCreators(deleteItem, dispatch),
   closeNotif: () => dispatch(closeNotifAction)
 });
 
