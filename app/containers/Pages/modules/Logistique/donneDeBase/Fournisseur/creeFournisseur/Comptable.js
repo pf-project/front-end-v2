@@ -127,7 +127,13 @@ export default function Comptable({
                   name="nombre_jours"
                   className={classes.field}
                   validators={["required"]}
-                  errorMessages={["champ obligatoire"]}
+                  errorMessages={[]}
+                  validators={["required", "isNumber", "isPositive"]}
+                  errorMessages={[
+                    "champ obligatoire",
+                    "Ce champ doit étre un nombre",
+                    "Ce champ doit étre un nombre positive"
+                  ]}
                   value={data.nombre_jours}
                   label="Nombre de jours "
                 />

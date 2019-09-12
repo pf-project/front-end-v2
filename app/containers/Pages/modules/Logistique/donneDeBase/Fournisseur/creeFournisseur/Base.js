@@ -142,8 +142,8 @@ export default function Base({
                     onChange={handleChange}
                     name="group"
                     label="Group frounisseur"
-                    // validators={["required"]}
-                    // errorMessages={["Ce champ est obligatoire"]}
+                    validators={["required"]}
+                    errorMessages={["Ce champ est obligatoire"]}
                   >
                     <MenuItem value={"list"}>list</MenuItem>
                   </SelectValidator>
