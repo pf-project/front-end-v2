@@ -179,6 +179,27 @@ export const Fournisseur = Loadable({
   loading: Loading
 });
 
+// comptabilite :
+// // donnee de base :
+// // // creer caisse :
+// // // // index :
+
+export const Caisse = Loadable({
+  loader: () =>
+    import("./Pages/modules/Comptabilite/DonneeDeBase/Caisse/index"),
+  loading: Loading
+});
+
+// // // // creer caisse :
+
+export const CreerCaisse = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Comptabilite/DonneeDeBase/Caisse/CreeCaisse/CreerCaisse"
+    ),
+  loading: Loading
+});
+
 // User auth
 export const Login = Loadable({
   loader: () => import("./Pages/Users/Login"),
