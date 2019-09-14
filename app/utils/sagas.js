@@ -4,6 +4,7 @@ import uiSagas from "enl-redux/modules/uiSagas";
 import crudTbRootSagas from "../containers/Pages/modules/Administration/GestionUtilisateur/reducers/crudTbSagas";
 
 import crudLogisticRootSagas from "../containers/Pages/modules/Logistique/reducers/crudLogisticSagas";
+import crudComptabiliteRootSagas from "../containers/Pages/modules/Comptabilite/reducers/crudComptabiliteSagas";
 import crudTbBaseRootSagas from "../containers/Pages/modules/Logistique/parametrage/Base/reducers/crudTbBaseSagas";
 
 export default function* sagas() {
@@ -12,6 +13,7 @@ export default function* sagas() {
     ...uiSagas,
     ...crudTbRootSagas,
     ...crudLogisticRootSagas,
-    ...crudTbBaseRootSagas
+    ...crudTbBaseRootSagas,
+    ...crudComptabiliteRootSagas
   ]);
 }

@@ -7,12 +7,12 @@ const index = () => {
       url: "/app/Comptabilite/Données-de-base/caisse/ajouter-caisse",
       title: "Ajouter",
       width: "33%"
+    },
+    {
+      url: "/app/Comptabilite/Données-de-base/article/lister-caisse",
+      title: "Liste",
+      width: "33%"
     }
-    // {
-    //   url: "/app/Comptabilite/Données-de-base/article/lister-caisse",
-    //   title: "Liste",
-    //   width: "33%"
-    // },
     // {
     //   url: "/app/Comptabilite/Données-de-base/article/GererCaisse",
     //   title: "Gerer",

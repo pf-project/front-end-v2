@@ -200,6 +200,16 @@ export const CreerCaisse = Loadable({
   loading: Loading
 });
 
+// // // // liste caisse :
+
+export const ListerCaisses = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Comptabilite/DonneeDeBase/Caisse/ListerCaisse/ListerCaisses"
+    ),
+  loading: Loading
+});
+
 // User auth
 export const Login = Loadable({
   loader: () => import("./Pages/Users/Login"),

@@ -13,7 +13,12 @@ import {
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 
-export default function Initiale({ handleChange, classes, data }) {
+export default function Initiale({
+  handleChange,
+  classes,
+  data,
+  handleChangeWithIntitialValue
+}) {
   return (
     <Grid
       container
@@ -25,10 +30,10 @@ export default function Initiale({ handleChange, classes, data }) {
       {/* <ValidatorForm onSubmit={handleSubmitInitial} autoComplete="off"> */}
       <FormGroup>
         <TextValidator
-          onChange={handleChange}
+          onChange={handleChangeWithIntitialValue}
           className={classes.initialeFields}
           name="code"
-          validators={["required", "maxStringLength:25"]}
+          validators={["minStringLength:4", "maxStringLength:25"]}
           errorMessages={["Ce champ est obligatoire", "maximum 25 char"]}
           value={data.code}
           label="Code de caisse *"

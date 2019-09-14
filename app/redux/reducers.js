@@ -13,6 +13,7 @@ import authReducer from "./modules/authReducer";
 import uiReducer from "./modules/uiReducer";
 import initval from "./modules/initFormReducer";
 import crudLogisticReducer from "../containers/Pages/modules/Logistique/reducers/crudLogisticReducer";
+import crudComptabiliteReducer from "../containers/Pages/modules/Comptabilite/reducers/crudComptabiliteReducer";
 import crudTbReducer from "../containers/Pages/modules/Administration/GestionUtilisateur/reducers/crudTbReducer";
 
 import crudTbBaseReducer from "../containers/Pages/modules/Logistique/parametrage/Base/reducers/crudTbBaseReducer";
@@ -27,7 +28,7 @@ export default function createReducer(injectedReducers = {}) {
     initval,
     authReducer,
     crudTbReducer,
-
+    crudComptabiliteReducer,
     crudLogisticReducer,
     ListesDeBase: crudTbBaseReducer,
     language: languageProviderReducer,

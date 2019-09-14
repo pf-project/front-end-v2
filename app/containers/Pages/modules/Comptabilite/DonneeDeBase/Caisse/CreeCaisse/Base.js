@@ -30,7 +30,6 @@ import {
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { fetchCategorie } from "../../../reducers/crudLogisticActions";
 import Grid from "@material-ui/core/Grid";
 
 class Base extends React.Component {
@@ -44,7 +43,7 @@ class Base extends React.Component {
       data,
       classes,
       handleBlur,
-      handleChangeCompteGeneral
+      handleChangeWithIntitialValue
     } = this.props;
 
     return (
@@ -152,13 +151,20 @@ class Base extends React.Component {
                 <TextValidator
                   className={classes.field}
                   onBlur={handleBlur}
-                  onChange={handleChangeCompteGeneral}
+                  onChange={handleChangeWithIntitialValue}
                   name="comptegeneral"
                   value={data.comptegeneral}
-                  validators={["required", "isNumber"]}
+                  validators={[
+                    "required",
+                    "isNumber",
+                    "minStringLength:5",
+                    "maxStringLength:8"
+                  ]}
                   errorMessages={[
                     "Ce champ est obligatoire",
-                    "Ce champ doit etre un nombre entier"
+                    "Ce champ doit etre un nombre entier",
+                    "min 5 chiffres",
+                    "max 8 chiffres"
                   ]}
                   label="Compte général "
                   id="#comptegeneral"

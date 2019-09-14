@@ -17,12 +17,10 @@ import { ValidatorForm } from "react-material-ui-form-validator";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { PageTitle, Notification } from "enl-components";
 import Grid from "@material-ui/core/Grid";
-// import {
-//   fetchItem,
-//   addItem,
-//   fetchSuggestions,
-//   closeNotifAction
-// } from "../../../reducers/crudLogisticActions";
+import {
+  addItem,
+  closeNotifAction
+} from "../../../reducers/crudComptabiliteActions";
 import Base from "./Base";
 import Initiale from "./Initiale";
 
@@ -124,6 +122,9 @@ class CreerCaisse extends React.Component {
   };
 
   handleSubmitBase = () => {
+    const { data } = this.state;
+    // console.log(data);
+    this.props.addCaisse(data, "donneedebase/caisse");
     this.handleNext();
   };
 
@@ -132,13 +133,20 @@ class CreerCaisse extends React.Component {
     this.setState({ data: { ...this.state.data, [name]: value } });
   };
 
-  handleChangeCompteGeneral = event => {
+  handleChangeWithIntitialValue = event => {
     const { value, name } = event.target;
     switch (name) {
       case "comptegeneral":
         if (value.length > 3 && value.length < 9) {
           this.setState({ data: { ...this.state.data, [name]: value } });
         }
+        break;
+
+      case "code":
+        if (value.length > 2) {
+          this.setState({ data: { ...this.state.data, [name]: value } });
+        }
+        break;
     }
   };
 
@@ -153,6 +161,7 @@ class CreerCaisse extends React.Component {
           length++;
         }
         this.setState({ data: { ...this.state.data, [name]: value } });
+        break;
       }
     }
   };
@@ -172,6 +181,7 @@ class CreerCaisse extends React.Component {
           <Initiale
             handleChange={this.handleChange}
             handleSubmitInitial={this.handleSubmitInitial}
+            handleChangeWithIntitialValue={this.handleChangeWithIntitialValue}
             classes={classes}
             data={this.state.data}
           />
@@ -180,7 +190,7 @@ class CreerCaisse extends React.Component {
         return (
           <Base
             handleBlur={this.handleBlur}
-            handleChangeCompteGeneral={this.handleChangeCompteGeneral}
+            handleChangeWithIntitialValue={this.handleChangeWithIntitialValue}
             handleChange={this.handleChange}
             handleSubmitBase={this.handleSubmitBase}
             handleBack={this.handleBack}
@@ -205,12 +215,8 @@ class CreerCaisse extends React.Component {
     this.setState({
       activeStep: 0,
 
-      data: {}
+      data: { code: "CS-", comptegeneral: "5161", statu: "Ouvert" }
     });
-  };
-
-  fetchCategorie = () => {
-    // this.props.fetchCategorie(this.state.data.categorie);
   };
 
   getSubmitter = () => {
@@ -321,17 +327,15 @@ class CreerCaisse extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  closeNotif: () => dispatch(closeNotifAction())
+  closeNotif: () => dispatch(closeNotifAction()),
+  addCaisse: bindActionCreators(addItem, dispatch)
 });
-
+const reducer = "crudComptabiliteReducer";
 const mapStateToProps = state => ({
-  notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
-  loading: state.get("crudLogisticReducer").get("loading"),
-  designations: state.get("crudLogisticReducer").get("suggestions"),
-  categorie: state.get("crudLogisticReducer").get("item")
+  notifMsg: state.get(reducer).get("notifMsg"),
+  loading: state.get(reducer).get("loading")
 });
 
-// //const reducer = "initval";
 const CreerCaisseReduxed = connect(
   mapStateToProps,
   mapDispatchToProps
