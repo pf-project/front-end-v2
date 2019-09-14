@@ -449,7 +449,12 @@ class ListesDeBase extends React.Component {
           >
             <center>
               <div style={this.getModalStyle()} className={classes.paper}>
-                <CircularProgress disableShrink /> Veuillez patienter ...
+                <CircularProgress
+                  size={100}
+                  thickness={1.2}
+                  className={classes.buttonProgress}
+                />{" "}
+                <div className={classes.encours}>En cours de chargement</div>
               </div>
             </center>
           </Modal>
