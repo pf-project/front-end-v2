@@ -107,7 +107,7 @@ const styles = theme => ({
   }
 });
 
-class CreerCaisse extends React.Component {
+class CreerCompteGeneral extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -120,7 +120,9 @@ class CreerCaisse extends React.Component {
   handleSubmitInitial = () => {
     this.handleNext();
   };
-
+  componentWillMount() {
+    console.log("g'ezrgekaprlogjaer,m");
+  }
   handleSubmitBase = () => {
     const { data } = this.state;
     // console.log(data);
@@ -280,11 +282,10 @@ class CreerCaisse extends React.Component {
           {/* </Grid> */}
         </>
       );
-
     return (
       <div>
         <PageTitle
-          title="Créer Caisse"
+          title="Créer Article"
           pathname="/Comptabilité/Données de base/Caisses/Créer Caisse"
           elements={elements}
           withBackOption={true}
@@ -336,9 +337,9 @@ const mapStateToProps = state => ({
   loading: state.get(reducer).get("loading")
 });
 
-const CreerCaisseReduxed = connect(
+const CreerCompteGeneralReduxed = connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreerCaisse);
+)(CreerCompteGeneral);
 
-export default withStyles(styles)(CreerCaisseReduxed);
+export default withStyles(styles)(CreerCompteGeneralReduxed);

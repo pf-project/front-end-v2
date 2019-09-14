@@ -78,7 +78,7 @@ class CreerCompteBancaire extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeStep: 1,
+      activeStep: 0,
       steps: ["Données initiales", "Données de base", "Comptes intermédiares"],
       data: {
         code: "BNQ-"

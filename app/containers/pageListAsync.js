@@ -199,6 +199,15 @@ export const CreerCaisse = Loadable({
     ),
   loading: Loading
 });
+// // // // liste caisse :
+
+export const ListerCaisses = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Comptabilite/DonneeDeBase/Caisse/ListerCaisse/ListerCaisses"
+    ),
+  loading: Loading
+});
 
 // // // compte bancaire :
 // // // // index :
@@ -212,6 +221,35 @@ export const CreeCompteBancaire = Loadable({
   loader: () =>
     import(
       "./Pages/modules/Comptabilite/DonneeDeBase/CompteBancaire/CreeCompteBancaire/index"
+    ),
+  loading: Loading
+});
+
+// // // creer compte general :
+// // // // index :
+
+export const CompteGeneral = Loadable({
+  loader: () =>
+    import("./Pages/modules/Comptabilite/DonneeDeBase/ComptesGeneraux/index"),
+  loading: Loading
+});
+
+// // // // creer compte general :
+
+export const CreerCompteGeneral = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Comptabilite/DonneeDeBase/ComptesGeneraux/CreerCompteGeneral/CreerCompteGeneral"
+    ),
+  loading: Loading
+});
+
+// // // // liste compte general :
+
+export const ListerCompteGeneral = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Comptabilite/DonneeDeBase/ComptesGeneraux/ListerCompteGeneral/ListerCompteGeneral"
     ),
   loading: Loading
 });
