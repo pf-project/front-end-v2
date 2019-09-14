@@ -155,8 +155,23 @@ class GererArticle extends React.Component {
   };
 
   addCoordonneBancaire = coordonne => {
-    let data = { ...this.state.data };
-    data.coord_bancaire.push(coordonne);
+    let data = {
+      ...this.state.data
+    };
+    if (data.coord_bancaire.length === 0) {
+      data.coord_bancaire.push({
+        id_compte: 1,
+        ...coordonne
+      });
+    } else {
+      let id_compte =
+        data.coord_bancaire[data.coord_bancaire.length - 1].id_compte + 1;
+      data.coord_bancaire.push({
+        ...coordonne,
+        id_compte
+      });
+    }
+
     this.setState({ data });
   };
 

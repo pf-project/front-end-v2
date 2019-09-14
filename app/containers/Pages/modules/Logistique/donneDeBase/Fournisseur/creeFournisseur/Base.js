@@ -24,7 +24,6 @@ export default function Base({
   handleSubmit
 }) {
   const initialState = {
-    id_compte: "",
     nom: "",
     fonction: "",
     email: "",
@@ -327,8 +326,16 @@ export default function Base({
                     onChange={handleContactsChange}
                     name="tel"
                     className={classes.field}
-                    validators={["required", "maxStringLength:30"]}
-                    errorMessages={["champ obligatoire", "maximum 30 char"]}
+                    validators={[
+                      "required",
+                      "maxStringLength:30",
+                      "matchRegexp:\\+[0-9]"
+                    ]}
+                    errorMessages={[
+                      "champ obligatoire",
+                      "maximum 30 char",
+                      "tel invalide ex : +212123456678"
+                    ]}
                     value={contacts.tel}
                     label="Téléphone"
                   />

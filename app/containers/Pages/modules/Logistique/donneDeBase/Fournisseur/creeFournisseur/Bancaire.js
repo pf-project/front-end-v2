@@ -24,7 +24,6 @@ export default function Bancaire({
   handleSubmit
 }) {
   const initialState = {
-    id_compte: "",
     pays: "",
     banque: "",
     cle_RIB: "",
@@ -40,7 +39,7 @@ export default function Bancaire({
   const [selectedRows, setSelectedRows] = useState([]);
 
   const addCopyCoordonne = idx => {
-    setCoordonnes({ ...data.coord_bancaire[idx], IBAN: "", id_compte: "" });
+    setCoordonnes({ ...data.coord_bancaire[idx], IBAN: "" });
     setSelectedRows([]);
   };
 
@@ -128,6 +127,7 @@ export default function Bancaire({
           id="addCoordonne"
           onSubmit={addCoordonne}
           autoComplete="off"
+          instantValidate={false}
         >
           <Grid item xs={12}>
             <Grid container direction="row">
