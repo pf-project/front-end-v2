@@ -52,7 +52,7 @@ export default function Initial({ handleChange, classes, data }) {
           className={classes.initialeFields}
           onChange={handleChange}
           name="pays"
-          label="Utilité *"
+          label="Pays *"
           validators={["required"]}
           errorMessages={["Ce Champ est Obligatoire"]}
         >
@@ -65,7 +65,7 @@ export default function Initial({ handleChange, classes, data }) {
           className={classes.initialeFields}
           onChange={handleChange}
           name="banque"
-          label="Utilité *"
+          label="Banque*"
           validators={["required"]}
           errorMessages={["Ce Champ est Obligatoire"]}
         >

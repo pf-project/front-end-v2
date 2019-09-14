@@ -86,8 +86,8 @@ module.exports = [
         // link: "/app/Comptabilite/Données-de-base/Caisse"
       },
       {
-        key: "Comptes généraux",
-        name: "Comptes généraux",
+        key: "Compte général",
+        name: "Compte général",
         link: "/app/Comptabilite/Données-de-base/comptes-généraux"
       }
     ]

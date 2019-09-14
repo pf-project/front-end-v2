@@ -36,7 +36,7 @@ export default function Initiale({
           validators={["minStringLength:4", "maxStringLength:25"]}
           errorMessages={["Ce champ est obligatoire", "maximum 25 char"]}
           value={data.code}
-          label="Code de caisse *"
+          label="Code de compte *"
         />
       </FormGroup>
       <FormGroup>
