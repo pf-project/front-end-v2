@@ -27,7 +27,9 @@ import {
   Unites,
   GererFournisseur,
   Caisse,
-  CreerCaisse
+  CreerCaisse,
+  CompteBancaire,
+  CreeCompteBancaire
 } from "../pageListAsync";
 
 class Application extends React.Component {
@@ -145,19 +147,21 @@ class Application extends React.Component {
             path="/app/Comptabilite/Données-de-base/caisse/ajouter-caisse"
             component={CreerCaisse}
           />
-          {/* <Route
-            path="/app/logistique/Données-de-base/Fournisseur/Gererfournisseur"
-            component={GererFournisseur}
-          />
-
-          <Route
-            path="/app/logistique/Données-de-base/Fournisseur/lister-fournisseur"
-            component={ListerFournisseur}
-          /> */}
 
           <Route
             path="/app/comptabilité/Données-de-base/caisse"
             component={Caisse}
+          />
+
+          {/* ****** compte bancaire */}
+          <Route
+            path="/app/comptabilité/Données-de-base/Compte-bancaire/ajouter-compte-bancaire"
+            component={CreeCompteBancaire}
+          />
+
+          <Route
+            path="/app/comptabilité/Données-de-base/Compte-bancaire"
+            component={CompteBancaire}
           />
 
           {/* parent page : */}

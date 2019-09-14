@@ -200,6 +200,22 @@ export const CreerCaisse = Loadable({
   loading: Loading
 });
 
+// // // compte bancaire :
+// // // // index :
+export const CompteBancaire = Loadable({
+  loader: () =>
+    import("./Pages/modules/Comptabilite/DonneeDeBase/CompteBancaire/index"),
+  loading: Loading
+});
+// // // // creer compte bancaire :
+export const CreeCompteBancaire = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Comptabilite/DonneeDeBase/CompteBancaire/CreeCompteBancaire/index"
+    ),
+  loading: Loading
+});
+
 // User auth
 export const Login = Loadable({
   loader: () => import("./Pages/Users/Login"),
