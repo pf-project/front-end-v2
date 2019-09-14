@@ -20,10 +20,11 @@ import Grid from "@material-ui/core/Grid";
 import {
   addItem,
   closeNotifAction
-} from "../../../reducers/crudComptabiliteActions";
+} from "../../../../Logistique/reducers/crudLogisticActions";
+import Initial from "./Initial";
 import Base from "./Base";
-import Initiale from "./Initiale";
-
+// import Bancaire from "./Bancaire";
+// import Comptable from "./Comptable";
 const styles = theme => ({
   root: {
     width: "90%",
@@ -39,11 +40,15 @@ const styles = theme => ({
   field: {
     width: "90%"
   },
+  Fullfield: {
+    width: "95%"
+  },
   initialeFields: {
     width: "60%"
   },
   grid: {
-    flexGrow: 1
+    flexGrow: 1,
+    marginTop: theme.spacing(1)
   },
   checkBoxMarginTop: {
     marginTop: "20px"
@@ -66,103 +71,96 @@ const styles = theme => ({
           ? darken(theme.palette.primary.light, 0.2)
           : darken(theme.palette.primary.dark, 0.2)
     }
-  },
-  // buttons: {
-  //   marginTop: "30px"
-  // },
-
-  pageTitle: {
-    padding: theme.spacing(1),
-    paddingBottom: theme.spacing(3),
-    marginBottom: theme.spacing(1),
-    // width: "80",
-    // display: "flex",
-    // alignItems: "flex-end",
-    position: "sticky",
-    [theme.breakpoints.up("sm")]: {
-      display: "flex",
-      alignItems: "flex-end"
-    },
-    zIndex: theme.zIndex.drawer + 10,
-    // alignItems: "center",
-    // marginBottom: theme.spacing(10),
-    // [theme.breakpoints.up("sm")]: {
-    //   // display: "flex",
-    //   alignItems: "flex-end"
-    // },
-    "& h4": {
-      fontWeight: 700,
-      fontSize: 24,
-      paddingLeft: 10,
-      paddingRight: theme.spacing(1),
-      // textTransform: "capitalize",
-      color:
-        theme.palette.type === "dark"
-          ? theme.palette.secondary.light
-          : theme.palette.primary.dark,
-      [theme.breakpoints.down("md")]: {
-        marginBottom: theme.spacing(3)
-      }
-    }
   }
 });
 
-class CreerCaisse extends React.Component {
+class CreerCompteBancaire extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       activeStep: 0,
-      steps: ["Données initiales", "Données de base"],
-      data: { code: "CS-", comptegeneral: "5161", statu: "Ouvert" }
+      steps: ["Données initiales", "Données de base", "Comptes intermédiares"],
+      data: {
+        code: "BNQ-"
+      }
     };
   }
 
-  handleSubmitInitial = () => {
-    this.handleNext();
+  addContact = contact => {
+    let data = { ...this.state.data };
+    data.contacts.push(contact);
+    this.setState({ data });
   };
 
-  handleSubmitBase = () => {
-    const { data } = this.state;
-    // console.log(data);
-    this.props.addCaisse(data, "donneedebase/caisse");
-    this.handleNext();
+  removeContact = indexs => {
+    let data = { ...this.state.data };
+    let new_contacts = data.contacts;
+    data.contacts = new_contacts.filter((_, idx) => !indexs.includes(idx));
+
+    this.setState({ data });
+  };
+
+  removeCoordonne = indexs => {
+    let data = { ...this.state.data };
+    let new_coord_bancaire = data.coord_bancaire;
+
+    data.coord_bancaire = new_coord_bancaire.filter(
+      (_, idx) => !indexs.includes(idx)
+    );
+    this.setState({ data });
+  };
+
+  addCoordonneBancaire = coordonne => {
+    let data = {
+      ...this.state.data
+    };
+    if (data.coord_bancaire.length === 0) {
+      data.coord_bancaire.push({
+        id_compte: 1,
+        ...coordonne
+      });
+    } else {
+      let id_compte =
+        data.coord_bancaire[data.coord_bancaire.length - 1].id_compte + 1;
+      data.coord_bancaire.push({
+        ...coordonne,
+        id_compte
+      });
+    }
+
+    this.setState({ data });
   };
 
   handleChange = event => {
     const { value, name } = event.target;
-    this.setState({ data: { ...this.state.data, [name]: value } });
-  };
-
-  handleChangeWithIntitialValue = event => {
-    const { value, name } = event.target;
+    let data = { ...this.state.data };
     switch (name) {
-      case "comptegeneral":
-        if (value.length > 3 && value.length < 9) {
-          this.setState({ data: { ...this.state.data, [name]: value } });
-        }
+      case "pays":
+        if (value === "Maroc") data.retenu_a_la_source = false;
+        else delete data.retenu_a_la_source;
+        data[name] = value;
+        this.setState({ data });
         break;
-
-      case "code":
-        if (value.length > 2) {
-          this.setState({ data: { ...this.state.data, [name]: value } });
-        }
+      case "retenu_a_la_source":
+        data.retenu_a_la_source = !data.retenu_a_la_source;
+        this.setState({ data });
         break;
-    }
-  };
-
-  handleBlur = event => {
-    let { value, name } = event.target;
-    switch (name) {
-      case "comptegeneral": {
-        let length = value.length;
-
-        while (8 - length) {
-          value += "0";
-          length++;
+      case "condition_paiement":
+        if (value === "Immédiat") delete data.nombre_jours;
+        data[name] = value;
+        this.setState({ data });
+        break;
+      case "honoraire":
+        if (data.honoraire) {
+          delete data.status_honoraire;
+          delete data.taux_tva;
         }
+        data.honoraire = !data.honoraire;
+        this.setState({ data });
+        break;
+      default:
         this.setState({ data: { ...this.state.data, [name]: value } });
         break;
-      }
     }
   };
 
@@ -174,30 +172,47 @@ class CreerCaisse extends React.Component {
           <CircularProgress size={24} className={classes.buttonProgress} />
         </center>
       );
-
     switch (stepIndex) {
       case 0:
         return (
-          <Initiale
-            handleChange={this.handleChange}
-            handleSubmitInitial={this.handleSubmitInitial}
-            handleChangeWithIntitialValue={this.handleChangeWithIntitialValue}
-            classes={classes}
+          <Initial
             data={this.state.data}
+            handleSubmit={this.handleSubmit}
+            classes={classes}
+            handleChange={this.handleChange}
           />
         );
       case 1:
         return (
           <Base
-            handleBlur={this.handleBlur}
-            handleChangeWithIntitialValue={this.handleChangeWithIntitialValue}
-            handleChange={this.handleChange}
-            handleSubmitBase={this.handleSubmitBase}
-            handleBack={this.handleBack}
-            classes={classes}
             data={this.state.data}
+            handleSubmit={this.handleSubmit}
+            classes={classes}
+            handleChange={this.handleChange}
+            addContact={this.addContact}
+            removeContact={this.removeContact}
           />
         );
+      // case 2:
+      //   return (
+      //     <Bancaire
+      //       data={this.state.data}
+      //       handleSubmit={this.handleSubmit}
+      //       classes={classes}
+      //       handleChange={this.handleChange}
+      //       addCoordonneBancaire={this.addCoordonneBancaire}
+      //       removeCoordonne={this.removeCoordonne}
+      //     />
+      //   );
+      // default:
+      //   return (
+      //     <Comptable
+      //       data={this.state.data}
+      //       classes={classes}
+      //       handleChange={this.handleChange}
+      //       handleSubmit={this.handleSubmit}
+      //     />
+      //   );
     }
   };
 
@@ -215,28 +230,20 @@ class CreerCaisse extends React.Component {
     this.setState({
       activeStep: 0,
 
-      data: { code: "CS-", comptegeneral: "5161", statu: "Ouvert" }
+      data: { contacts: [], coord_bancaire: [], honoraire: false }
     });
   };
 
-  getSubmitter = () => {
-    switch (this.state.activeStep) {
-      case 0:
-        return this.handleSubmitInitial;
-        break;
-      case 1:
-        return this.handleSubmitBase;
-        break;
-
-      default:
-        break;
-    }
+  handleSubmit = () => {
+    const { data } = this.state;
+    if (this.state.activeStep == 3)
+      this.props.addCompteBancaire(data, "compte-bancaire");
+    this.handleNext();
   };
 
   render() {
     const { classes, closeNotif, notifMsg } = this.props;
     const { activeStep } = this.state;
-    const submitter = this.getSubmitter();
     const elements =
       this.state.activeStep === this.state.steps.length ? (
         <>
@@ -245,14 +252,13 @@ class CreerCaisse extends React.Component {
             color="primary"
             onClick={this.handleReset}
           >
-            Création d'une nouvelle caisse
+            Crééer un autre Compte bancaire
           </Button>
         </>
       ) : (
         <>
           {/* <Grid item sm={2} lg={2}> */}
           <Button
-            // onClick={submitter}
             className={classes.button}
             variant="contained"
             color="primary"
@@ -270,7 +276,7 @@ class CreerCaisse extends React.Component {
             variant="contained"
             color="primary"
             type="submit"
-            form="addCaisse"
+            form="addCompteBancaire"
           >
             {this.state.activeStep === this.state.steps.length - 1
               ? "Sauvegarder"
@@ -284,8 +290,8 @@ class CreerCaisse extends React.Component {
     return (
       <div>
         <PageTitle
-          title="Créer Caisse"
-          pathname="/Comptabilité/Données de base/Caisses/Créer Caisse"
+          title="Ajouter compte bancaire"
+          pathname="/Comptabilité/Données de base/Compte bancaire/Ajouter compte bancaire"
           elements={elements}
           withBackOption={true}
         />
@@ -306,9 +312,8 @@ class CreerCaisse extends React.Component {
                 <div>
                   <Typography className={classes.instructions}>
                     <ValidatorForm
-                      id="addCaisse"
-                      // ref={r => (this.form = r)}
-                      onSubmit={submitter}
+                      id="addCompteBancaire"
+                      onSubmit={this.handleSubmit}
                       autoComplete="off"
                     >
                       {this.getStepContent(this.state.activeStep)}
@@ -328,17 +333,20 @@ class CreerCaisse extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   closeNotif: () => dispatch(closeNotifAction()),
-  addCaisse: bindActionCreators(addItem, dispatch)
-});
-const reducer = "crudComptabiliteReducer";
-const mapStateToProps = state => ({
-  notifMsg: state.get(reducer).get("notifMsg"),
-  loading: state.get(reducer).get("loading")
+  addCompteBancaire: bindActionCreators(addItem, dispatch)
 });
 
-const CreerCaisseReduxed = connect(
+const mapStateToProps = state => {
+  return {
+    notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
+    loading: state.get("crudLogisticReducer").get("loading")
+  };
+};
+
+// // //const reducer = "initval";
+const CreerCompteBancaireReduxed = connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreerCaisse);
+)(CreerCompteBancaire);
 
-export default withStyles(styles)(CreerCaisseReduxed);
+export default withStyles(styles)(CreerCompteBancaireReduxed);
