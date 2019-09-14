@@ -4,12 +4,14 @@ import { MenuChooser, PageTitle } from "enl-components";
 const index = () => {
   const images = [
     {
-      url: "/app/Comptabilite/Données-de-base/caisse/ajouter-caisse",
+      url:
+        "/app/Comptabilite/Données-de-base/comptes-généraux/ajouter-compte-gérénal",
       title: "Ajouter",
       width: "33%"
     },
     {
-      url: "/app/Comptabilite/Données-de-base/article/lister-caisse",
+      url:
+        "/app/Comptabilite/Données-de-base/comptes-généraux/lister-comptes-généraux",
       title: "Liste",
       width: "33%"
     }
@@ -23,7 +25,7 @@ const index = () => {
     <>
       <PageTitle
         title="Caisse"
-        pathname="/Comptabilité/Données de base/Caisse"
+        pathname="/ Comptabilité/Données de base/Comptes généraux"
       />{" "}
       <MenuChooser images={images} />
     </>

@@ -77,7 +77,12 @@ module.exports = [
       {
         key: "Caisse",
         name: "Caisse",
-        link: "/app/comptabilité/Données-de-base/Caisse"
+        link: "/app/Comptabilite/Données-de-base/Caisse"
+      },
+      {
+        key: "Comptes généraux",
+        name: "Comptes généraux",
+        link: "/app/Comptabilite/Données-de-base/comptes-généraux"
       }
     ]
   }

@@ -5,7 +5,7 @@ import { PageTitle } from "enl-components";
 import { injectIntl, intlShape } from "react-intl";
 import Caisses from "./types/Caisses";
 
-class ListerCaisses extends Component {
+class ListerCompteGerenal extends Component {
   render() {
     // const title = brand.name + " - Table";
     // const description = brand.desc;
@@ -26,8 +26,8 @@ class ListerCaisses extends Component {
   }
 }
 
-ListerCaisses.propTypes = {
+ListerCompteGerenal.propTypes = {
   intl: intlShape.isRequired
 };
 
-export default injectIntl(ListerCaisses);
+export default injectIntl(ListerCompteGerenal);

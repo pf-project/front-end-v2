@@ -210,6 +210,35 @@ export const ListerCaisses = Loadable({
   loading: Loading
 });
 
+// // // creer compte general :
+// // // // index :
+
+export const CompteGeneral = Loadable({
+  loader: () =>
+    import("./Pages/modules/Comptabilite/DonneeDeBase/ComptesGeneraux/index"),
+  loading: Loading
+});
+
+// // // // creer compte general :
+
+export const CreerCompteGeneral = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Comptabilite/DonneeDeBase/ComptesGeneraux/CreerCompteGeneral/CreerCompteGeneral"
+    ),
+  loading: Loading
+});
+
+// // // // liste compte general :
+
+export const ListerCompteGeneral = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Comptabilite/DonneeDeBase/ComptesGeneraux/ListerCompteGeneral/ListerCompteGeneral"
+    ),
+  loading: Loading
+});
+
 // User auth
 export const Login = Loadable({
   loader: () => import("./Pages/Users/Login"),
