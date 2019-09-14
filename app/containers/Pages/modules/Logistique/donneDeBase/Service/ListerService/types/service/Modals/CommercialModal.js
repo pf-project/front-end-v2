@@ -45,7 +45,7 @@ export default function CommercialModal({ value }) {
       <Grid container className={classes.root} xs={12} spacing={2}>
         <Grid item xs={4}>
           <Typography variant="subtitle1" gutterBottom>
-            {"Code d'article : "}
+            {"Code de service : "}
             {value.code}
           </Typography>
         </Grid>
@@ -57,7 +57,7 @@ export default function CommercialModal({ value }) {
         </Grid>
         <Grid item xs={4}>
           <Typography variant="subtitle1" gutterBottom>
-            {"Catégorie d'article : "}
+            {"Catégorie de service : "}
             {value.categorie}
           </Typography>
         </Grid>

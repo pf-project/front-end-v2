@@ -124,9 +124,9 @@ class More extends React.Component {
   }
 }
 
-const reducer = "crudTbArticlesReducer";
+const reducer = "crudLogisticReducer";
 const mapStateToProps = state => ({
-  dataTable: state.get(reducer).get("dataTable")
+  dataTable: state.get(reducer).get("item")
   // messageNotif: state.get(reducer).get("notifMsg")
 });
 

@@ -36,7 +36,7 @@ module.exports = [
         name: " Configuration : Service",
         link: "/app/logistique/paramétrage/Configuration-Service"
       },
-      
+
       {
         key: " Configuration de base",
         name: " Configuration de base",
@@ -61,6 +61,23 @@ module.exports = [
         key: "Fournisseur",
         name: "Fournisseur",
         link: "/app/logistique/Données-de-base/Fournisseur"
+      }
+    ]
+  },
+  {
+    key: "comptabilite",
+    name: "Comptabilité",
+    icon: "notes",
+    child: [
+      {
+        key: "Données de base",
+        name: "Données de base",
+        title: true
+      },
+      {
+        key: "Caisse",
+        name: "Caisse",
+        link: "/app/comptabilité/Données-de-base/Caisse"
       }
     ]
   }

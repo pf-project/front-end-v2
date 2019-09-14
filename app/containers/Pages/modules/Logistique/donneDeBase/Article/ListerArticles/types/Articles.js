@@ -9,10 +9,10 @@ import { connect } from "react-redux";
 import Columns from "./article/Columns";
 import Options from "./article/Options";
 import {
-  fetch,
-  fetchAction,
-  closeNotifAction
-} from "../reducers/crudTbActions";
+  closeNotifAction,
+  fetchItem
+} from "../../../../reducers/crudLogisticActions";
+
 import { Notification } from "enl-components";
 
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
@@ -31,6 +31,12 @@ const styles = theme => ({
         }
       }
     }
+  },
+  progress: {
+    marginTop: "5em"
+  },
+  encours: {
+    marginTop: "1em"
   }
 });
 
@@ -50,7 +56,7 @@ class Articles extends React.Component {
   state = {};
 
   componentWillMount() {
-    this.props.fetchdata();
+    this.props.fetchdata("find", "article", true);
   }
   render() {
     const {
@@ -62,9 +68,9 @@ class Articles extends React.Component {
     } = this.props;
     let articles = [];
     if (dataTable)
-      dataTable.toArray().map(element => {
-        let article = element.toObject();
+      dataTable.map(article => {
         articles.push([
+          // article.id,
           article.code,
           article.designation,
           article.categorie,
@@ -81,7 +87,14 @@ class Articles extends React.Component {
 
         {loading ? (
           <center>
-            <CircularProgress size={24} className={classes.buttonProgress} />
+            <div className={classes.progress}>
+              <CircularProgress
+                size={100}
+                thickness={1.2}
+                className={classes.buttonProgress}
+              />{" "}
+              <div className={classes.encours}>En cours de chargement</div>
+            </div>
           </center>
         ) : (
           // <MuiThemeProvider theme={this.getMuiTheme()}>
@@ -108,15 +121,15 @@ Articles.propTypes = {
   messageNotif: PropTypes.string.isRequired
 };
 
-const reducer = "crudTbArticlesReducer";
+const reducer = "crudLogisticReducer";
 const mapStateToProps = state => ({
-  dataTable: state.get(reducer).get("dataTable"),
+  dataTable: state.get(reducer).get("item"),
   loading: state.get(reducer).get("loading"),
   messageNotif: state.get(reducer).get("notifMsg")
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchdata: bindActionCreators(fetch, dispatch),
+  fetchdata: bindActionCreators(fetchItem, dispatch),
   closeNotif: bindActionCreators(closeNotifAction, dispatch)
 });
 

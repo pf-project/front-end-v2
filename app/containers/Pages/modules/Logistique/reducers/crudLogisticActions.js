@@ -73,6 +73,26 @@ export const updateItem = (payload, branch) => ({
   branch
 });
 
+// delete
+
+export const deleteItemFailure = (payload, branch) => ({
+  type: types.DELETE_ITEM_FAILURE,
+  payload,
+  branch
+});
+
+export const deleteItemSuccess = (payload, branch) => ({
+  type: types.DELETE_ITEM_SUCCESS,
+  payload,
+  branch
+});
+
+export const deleteItem = (payload, branch) => ({
+  type: types.DELETE_ITEM_REQUEST,
+  payload,
+  branch
+});
+
 // suggestions
 export const fetchSuggestions = branch => ({
   type: types.FETCH_ITEMS_FOR_SUGGESTION_REQUEST,

@@ -48,7 +48,7 @@ export default function BaseModal({ value }) {
       <Grid container className={classes.root} xs={12} spacing={2}>
         <Grid item xs={4}>
           <Typography variant="subtitle1" gutterBottom>
-            {"Code d'article : "}
+            {"Code de service : "}
             {value.code}
           </Typography>
         </Grid>
@@ -60,7 +60,7 @@ export default function BaseModal({ value }) {
         </Grid>
         <Grid item xs={4}>
           <Typography variant="subtitle1" gutterBottom>
-            {"Catégorie d'article : "}
+            {"Catégorie de service : "}
             {value.categorie}
           </Typography>
         </Grid>
@@ -109,7 +109,7 @@ export default function BaseModal({ value }) {
           </Grid>
         )}
       </Grid>
-      {value.caracteristiques.size && (
+      {value.caracteristiques && (
         <div>
           <div className={classes.rootTable}>
             <Grid item xs={6}>
@@ -125,17 +125,13 @@ export default function BaseModal({ value }) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {value.caracteristiques.toArray().map((row, i) => {
-                  let myRow;
-                  if (!(row === null)) {
-                    myRow = row.toObject();
-                    return [
-                      <TableRow key={i}>
-                        <TableCell>{myRow.name}</TableCell>
-                        <TableCell>{myRow.value}</TableCell>
-                      </TableRow>
-                    ];
-                  }
+                {value.caracteristiques.map((row, i) => {
+                  return [
+                    <TableRow key={i}>
+                      <TableCell>{row.name}</TableCell>
+                      <TableCell>{row.value}</TableCell>
+                    </TableRow>
+                  ];
                 })}
               </TableBody>
             </Table>

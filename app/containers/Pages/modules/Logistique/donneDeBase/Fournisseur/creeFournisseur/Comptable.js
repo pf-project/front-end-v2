@@ -116,12 +116,12 @@ export default function Comptable({
                 label="condition de paiement"
               >
                 <MenuItem value="Immédiat">Immédiat</MenuItem>
-                <MenuItem value="apres_N_jours">Après N jours</MenuItem>
+                <MenuItem value="Après N jours">Après N jours</MenuItem>
               </SelectValidator>
             </Grid>
 
             <Grid item xs={3}>
-              {data.condition_paiement === "apres_N_jours" && (
+              {data.condition_paiement === "Après N jours" && (
                 <TextValidator
                   onChange={handleChange}
                   name="nombre_jours"

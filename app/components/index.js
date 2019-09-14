@@ -30,3 +30,8 @@ export CrudTable from "./Tables/CrudTable";
 export AdvTable from "./Tables/AdvTable";
 export EmptyData from "./Tables/EmptyData";
 export SimpleTable from "./SimpleTable/index";
+
+// Loading
+export LoadingModal from "./LoadingModal/index";
+
+export ConfirmeDialog from "./ConfrimeDialog/index";

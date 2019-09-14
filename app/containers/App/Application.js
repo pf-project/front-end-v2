@@ -25,7 +25,9 @@ import {
   CoursDeChange,
   ListesDeBase,
   Unites,
-  GererFournisseur
+  GererFournisseur,
+  Caisse,
+  CreerCaisse
 } from "../pageListAsync";
 
 class Application extends React.Component {
@@ -136,6 +138,28 @@ class Application extends React.Component {
             path="/app/logistique/Données-de-base/Fournisseur"
             component={Fournisseur}
           />
+
+          {/* ****  Donnee de base :  */}
+          {/* ****** Caisse */}
+          <Route
+            path="/app/Comptabilite/Données-de-base/caisse/ajouter-caisse"
+            component={CreerCaisse}
+          />
+          {/* <Route
+            path="/app/logistique/Données-de-base/Fournisseur/Gererfournisseur"
+            component={GererFournisseur}
+          />
+
+          <Route
+            path="/app/logistique/Données-de-base/Fournisseur/lister-fournisseur"
+            component={ListerFournisseur}
+          /> */}
+
+          <Route
+            path="/app/comptabilité/Données-de-base/caisse"
+            component={Caisse}
+          />
+
           {/* parent page : */}
           <Route path="/app/pages/not-found" component={NotFound} />
           <Route path="/app/pages/error" component={Error} />

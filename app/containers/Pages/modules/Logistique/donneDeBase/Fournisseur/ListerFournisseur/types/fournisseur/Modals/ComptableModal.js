@@ -2,14 +2,8 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Typography from "@material-ui/core/Typography";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,16 +28,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function BaseModal({ value }) {
+export default function ComptableModal({ value }) {
   const [spacing, setSpacing] = React.useState(2);
   const classes = useStyles();
-  // console.log(value);
   return (
     <div>
       <Grid container className={classes.root} xs={12} spacing={2}>
         <Grid item xs={6}>
           <Typography variant="h5" color="primary" gutterBottom>
-            {"Information Fournisseur   "}
+            {"Données comptables  "}
           </Typography>
         </Grid>
       </Grid>
@@ -61,113 +54,127 @@ export default function BaseModal({ value }) {
           </Typography>
         </Grid>
       </Grid>
-
-      <Grid container className={classes.root} xs={12} spacing={2}>
-        <Grid item xs={4}>
-          <Typography variant="subtitle1" gutterBottom>
-            {"Groupe  fournisseur : "}
-            {value.group}
-          </Typography>
-        </Grid>
-        <Grid item xs={4}>
-          <Typography variant="subtitle1" gutterBottom>
-            {"Pays : "}
-            {value.pays}
-          </Typography>
-        </Grid>
-      </Grid>
-
-      <Grid container className={classes.root} xs={12} spacing={2}>
-        <Grid item xs={4}>
-          <Typography variant="subtitle1" gutterBottom>
-            {"Titre de civilité : "}
-            {value.civilite}
-          </Typography>
-        </Grid>
-        <Grid item xs={4}>
-          <Typography variant="subtitle1" gutterBottom>
-            {"Ville : "}
-            {value.ville}
-          </Typography>
-        </Grid>
-      </Grid>
-
-      <Grid container className={classes.root} xs={12} spacing={2}>
-        <Grid item xs={4}>
-          <Typography variant="subtitle1" gutterBottom>
-            {"Langue : "}
-            {value.langue}
-          </Typography>
-        </Grid>
-        <Grid item xs={4}>
-          <Typography variant="subtitle1" gutterBottom>
-            {"Code postal : "}
-            {value.code_postal}
-          </Typography>
-        </Grid>
-      </Grid>
-
-      <Grid container className={classes.root} xs={12} spacing={2}>
-        <Grid item xs={4}>
-          <Typography variant="subtitle1" gutterBottom>
-            {"Libellé  additionnel : "}
-            {value.libelle_additionnel}
-          </Typography>
-        </Grid>
-        <Grid item xs={4}>
-          <Typography variant="subtitle1" gutterBottom>
-            {"Adresse : "}
-            {value.adresse}
-          </Typography>
-        </Grid>
-      </Grid>
       <Grid container className={classes.root} xs={12} spacing={2}>
         <Grid item xs={6}>
           <Typography variant="h5" color="primary" gutterBottom>
-            {"Contact   "}
+            {"Informations comptables  "}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container className={classes.root} xs={12} spacing={2}>
+        <Grid item xs={4}>
+          <Typography variant="subtitle1" gutterBottom>
+            {"Compte fournisseur : "}
+            {value.compte}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container className={classes.root} xs={12} spacing={2}>
+        <Grid item xs={4}>
+          <Typography variant="subtitle1" gutterBottom>
+            {"Mode de paiement : "}
+            {value.mode_paiement}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container className={classes.root} xs={12} spacing={2}>
+        <Grid item xs={4}>
+          <Typography variant="subtitle1" gutterBottom>
+            {"Condition de paiement : "}
+            {value.condition_paiement}
+          </Typography>
+        </Grid>
+        {value.condition_paiement === "Après N jours" && (
+          <Grid item xs={4}>
+            <Typography variant="subtitle1" gutterBottom>
+              {"Désignation : "}
+              {value.nombre_jours}
+            </Typography>
+          </Grid>
+        )}
+      </Grid>
+      <Grid container className={classes.root} xs={12} spacing={2}>
+        <Grid item xs={4}>
+          <Typography variant="subtitle1" gutterBottom>
+            {"Devise : "}
+            {value.devise}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container className={classes.root} xs={12} spacing={2}>
+        <Grid item xs={2}>
+          <Typography variant="subtitle1" gutterBottom>
+            {"Honoraire : "}
+            {value.honoraire ? "Oui" : "Non"}
+          </Typography>
+        </Grid>
+        {value.honoraire && (
+          <>
+            <Grid item xs={7}>
+              <Typography variant="subtitle1" gutterBottom>
+                {"Status honoraire : "}
+                {value.status_honoraire}
+              </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <Typography variant="subtitle1" gutterBottom>
+                {"Taux de tva : "}
+                {value.taux_tva}
+              </Typography>
+            </Grid>
+          </>
+        )}
+      </Grid>
+      <Grid container className={classes.root} xs={12} spacing={2}>
+        <Grid item xs={2}>
+          <Typography variant="subtitle1" gutterBottom>
+            {"Honoraire : "}
+            {value.retenu_a_la_source ? "Oui" : "Non"}
           </Typography>
         </Grid>
       </Grid>
 
       <Grid container className={classes.root} xs={12} spacing={2}>
-        <Grid item xs={12}>
-          <Paper className={classes.root}>
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>ID</TableCell>
-                  <TableCell>Nom</TableCell>
-                  <TableCell>Fonction</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Tel</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {value.contacts &&
-                  value.contacts.map(data => {
-                    return (
-                      <TableRow key={data.id_compte}>
-                        <TableCell component="th" scope="row">
-                          {data.id_compte}
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                          {data.nom}
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                          {data.fonction}
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                          {data.email}
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                          {data.tel}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </Paper>
+        <Grid item xs={6}>
+          <Typography variant="h5" color="primary" gutterBottom>
+            {"Informations Fiscales  "}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container className={classes.root} xs={12} spacing={2}>
+        <Grid item xs={4}>
+          <Typography variant="subtitle1" gutterBottom>
+            {"Registre de commerce : "}
+            {value.regestre_commerce}
+          </Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Typography variant="subtitle1" gutterBottom>
+            {"CNSS : "}
+            {value.cnss}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container className={classes.root} xs={12} spacing={2}>
+        <Grid item xs={4}>
+          <Typography variant="subtitle1" gutterBottom>
+            {"Patente : "}
+            {value.patente}
+          </Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Typography variant="subtitle1" gutterBottom>
+            {"I.C.E : "}
+            {value.ice}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container className={classes.root} xs={12} spacing={2}>
+        <Grid item xs={4}>
+          <Typography variant="subtitle1" gutterBottom>
+            {"Identifiant Fiscale : "}
+            {value.identifiant_fiscale}
+          </Typography>
         </Grid>
       </Grid>
     </div>

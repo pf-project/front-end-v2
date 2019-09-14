@@ -14,9 +14,6 @@ import uiReducer from "./modules/uiReducer";
 import initval from "./modules/initFormReducer";
 import crudLogisticReducer from "../containers/Pages/modules/Logistique/reducers/crudLogisticReducer";
 import crudTbReducer from "../containers/Pages/modules/Administration/GestionUtilisateur/reducers/crudTbReducer";
-import crudTbArticlesReducer from "../containers/Pages/modules/Logistique/donneDeBase/Article/ListerArticles/reducers/crudTbReducer";
-import crudTbServicesReducer from "../containers/Pages/modules/Logistique/donneDeBase/Service/ListerService/reducers/crudTbReducer";
-import crudTbFournisseurReducer from "../containers/Pages/modules/Logistique/donneDeBase/Fournisseur/ListerFournisseur/reducers/crudTbReducer";
 
 import crudTbBaseReducer from "../containers/Pages/modules/Logistique/parametrage/Base/reducers/crudTbBaseReducer";
 
@@ -30,9 +27,7 @@ export default function createReducer(injectedReducers = {}) {
     initval,
     authReducer,
     crudTbReducer,
-    crudTbArticlesReducer,
-    crudTbServicesReducer,
-    crudTbFournisseurReducer,
+
     crudLogisticReducer,
     ListesDeBase: crudTbBaseReducer,
     language: languageProviderReducer,
