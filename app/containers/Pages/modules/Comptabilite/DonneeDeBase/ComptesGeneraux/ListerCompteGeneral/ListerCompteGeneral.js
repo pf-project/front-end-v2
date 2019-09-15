@@ -14,7 +14,7 @@ class ListerCompteGerenal extends Component {
       <div>
         <PageTitle
           title="Liste comptes généraux"
-          pathname="/Comptabilité/Données de base/Caisse/Liste comptes généraux"
+          pathname="/Comptabilité/Données de base/comptes généraux/Liste comptes généraux"
           withBackOption={true}
         />
         <div>

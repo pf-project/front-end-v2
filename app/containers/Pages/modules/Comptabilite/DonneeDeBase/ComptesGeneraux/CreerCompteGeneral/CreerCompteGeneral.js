@@ -359,8 +359,8 @@ class CreerCompteGeneral extends React.Component {
     return (
       <div>
         <PageTitle
-          title="Créer Article"
-          pathname="/Comptabilité/Données de base/Caisses/Créer Caisse"
+          title="Créer compte générale"
+          pathname="/Comptabilité/Données de base/Caisses/Créer compte générale"
           elements={elements}
           withBackOption={true}
         />
