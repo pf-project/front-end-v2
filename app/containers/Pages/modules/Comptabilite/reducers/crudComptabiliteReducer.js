@@ -15,7 +15,10 @@ import {
   COMPATIBILITE_CLEAR_LOGISTIC_STORE,
   COMPATIBILITE_DELETE_ITEM_FAILURE,
   COMPATIBILITE_DELETE_ITEM_SUCCESS,
-  CLEAR_COMPATIBILITE_STORE
+  CLEAR_COMPATIBILITE_STORE,
+  COMPATIBILITE_FETCH_UNITES_REQUEST,
+  COMPATIBILITE_FETCH_UNITES_FAILURE,
+  COMPATIBILITE_FETCH_UNITES_SUCCESS
 } from "./crudComptabiliteConstants";
 
 const initialState = {
@@ -53,6 +56,16 @@ export default function crudComptabiliteReducer(
         mutableState.set("item", action.payload).set("loading", false);
       });
     case COMPATIBILITE_FETCH_ITEM_FAILURE:
+      return state.withMutations(mutableState => {
+        mutableState
+          .set("notifMsg", "Erreur lors du chargement ...")
+          .set("loading", false);
+      });
+    case COMPATIBILITE_FETCH_UNITES_SUCCESS:
+      return state.withMutations(mutableState => {
+        mutableState.set(action.data, action.payload).set("loading", false);
+      });
+    case COMPATIBILITE_FETCH_UNITES_FAILURE:
       return state.withMutations(mutableState => {
         mutableState
           .set("notifMsg", "Erreur lors du chargement ...")

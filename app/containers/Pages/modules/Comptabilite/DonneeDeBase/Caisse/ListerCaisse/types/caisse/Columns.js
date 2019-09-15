@@ -187,7 +187,7 @@ export default [
   },
   {
     name: "Compte général",
-    label: "Statu",
+    label: "Compte général",
     options: {
       filter: false,
       sort: true

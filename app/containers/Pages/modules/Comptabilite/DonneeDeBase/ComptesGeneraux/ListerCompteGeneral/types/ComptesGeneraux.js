@@ -6,8 +6,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import MUIDataTable from "mui-datatables";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import Columns from "./caisse/Columns";
-import Options from "./caisse/Options";
+import Columns from "./comptesGeneraux/Columns";
+import Options from "./comptesGeneraux/Options";
 import {
   closeNotifAction,
   fetchItem
@@ -40,7 +40,7 @@ const styles = theme => ({
   }
 });
 
-class Caisses extends React.Component {
+class ComptesGeneraux extends React.Component {
   // getMuiTheme = () =>
   //   createMuiTheme({
   //     overrides: {
@@ -56,8 +56,9 @@ class Caisses extends React.Component {
   state = {};
 
   componentWillMount() {
-    this.props.fetchdata("find", "donneedebase/caisse", true);
+    this.props.fetchdata("find", "donneedebase/comptegeneral", true);
   }
+
   render() {
     const {
       classes,
@@ -66,18 +67,21 @@ class Caisses extends React.Component {
       messageNotif,
       loading
     } = this.props;
-    let caisses = [];
+    let comptesgeneraux = [];
     if (dataTable)
-      dataTable.map(caisse => {
-        caisses.push([
+      dataTable.map(comptegeneral => {
+        comptesgeneraux.push([
           // article.id,
-          caisse.code,
-          caisse.designation,
-          caisse.pays,
-          caisse.statu,
-          caisse.devise,
-          caisse.comptegeneral,
-          caisse.codeJournal
+          comptegeneral.compte,
+          comptegeneral.designation,
+          comptegeneral.comptepere === 0
+            ? String(comptegeneral.compte).slice(0, -1)
+            : comptegeneral.comptepere,
+          comptegeneral.classe,
+          comptegeneral.niveau,
+          comptegeneral.compteancien ? comptegeneral.compteancien : "---",
+          comptegeneral.classe > 5 ? "Compte de résultat" : "Compte de bilan",
+          comptegeneral.utilized === false ? "Non" : "Oui"
         ]);
       });
     return (
@@ -100,7 +104,7 @@ class Caisses extends React.Component {
           <MUIDataTable
             key={Math.random()}
             title=""
-            data={caisses}
+            data={comptesgeneraux}
             columns={Columns}
             options={Options}
             // fixedHeader={false}
@@ -113,7 +117,7 @@ class Caisses extends React.Component {
   }
 }
 
-Caisses.propTypes = {
+ComptesGeneraux.propTypes = {
   classes: PropTypes.object.isRequired,
   closeNotif: PropTypes.func.isRequired,
   messageNotif: PropTypes.string.isRequired
@@ -131,9 +135,9 @@ const mapDispatchToProps = dispatch => ({
   closeNotif: bindActionCreators(closeNotifAction, dispatch)
 });
 
-const CaissesMapped = connect(
+const ComptesGenerauxMapped = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Caisses);
+)(ComptesGeneraux);
 
-export default withStyles(styles)(CaissesMapped);
+export default withStyles(styles)(ComptesGenerauxMapped);

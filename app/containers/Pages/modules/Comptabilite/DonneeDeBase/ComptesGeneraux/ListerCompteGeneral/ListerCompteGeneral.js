@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import brand from "enl-api/dummy/brand";
 import { PageTitle } from "enl-components";
 import { injectIntl, intlShape } from "react-intl";
-import Caisses from "./types/Caisses";
+import ComptesGeneraux from "./types/ComptesGeneraux";
 
 class ListerCompteGerenal extends Component {
   render() {
@@ -13,13 +13,13 @@ class ListerCompteGerenal extends Component {
     return (
       <div>
         <PageTitle
-          title="Lister Caisse"
-          pathname="/Comptabilité/Données de base/Caisse/Lister Caisse"
+          title="Liste comptes généraux"
+          pathname="/Comptabilité/Données de base/Caisse/Liste comptes généraux"
           withBackOption={true}
         />
         <div>
           {" "}
-          <Caisses />{" "}
+          <ComptesGeneraux />{" "}
         </div>
       </div>
     );

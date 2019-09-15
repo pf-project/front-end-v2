@@ -67,14 +67,26 @@ class CustomToolbarSelect extends React.Component {
 
     return (
       <div className={classes.iconContainer}>
-        <Tooltip title="Supprimer">
-          <IconButton
-            className={classes.iconButton}
-            onClick={() => this.setState({ open: true })}
-          >
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
+        {false && (
+          <>
+            <Tooltip title="Supprimer">
+              <IconButton
+                className={classes.iconButton}
+                onClick={() => this.setState({ open: true })}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Modifier">
+              <IconButton
+                className={classes.iconButton}
+                onClick={() => this.setState({ open: true })}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          </>
+        )}
         <ConfirmeDialog
           open={open}
           handleDelete={this.delete}

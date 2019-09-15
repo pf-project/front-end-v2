@@ -13,8 +13,8 @@ class ListerCaisses extends Component {
     return (
       <div>
         <PageTitle
-          title="Lister Caisse"
-          pathname="/Comptabilité/Données de base/Caisse/Lister Caisse"
+          title="Liste Caisse"
+          pathname="/Comptabilité/Données de base/Caisse/Liste Caisse"
           withBackOption={true}
         />
         <div>

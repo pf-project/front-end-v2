@@ -11,8 +11,8 @@ class ListerService extends Component {
     return (
       <div>
         <PageTitle
-          title="Lister service"
-          pathname="/Logistique/Données de base/Service/lister-service"
+          title="Liste services"
+          pathname="/Logistique/Données de base/Service/liste services"
           withBackOption={true}
         />
         <div>

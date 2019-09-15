@@ -19,7 +19,8 @@ import { PageTitle, Notification } from "enl-components";
 import Grid from "@material-ui/core/Grid";
 import {
   addItem,
-  closeNotifAction
+  closeNotifAction,
+  fetchUnites
 } from "../../../reducers/crudComptabiliteActions";
 import Base from "./Base";
 import Initiale from "./Initiale";
@@ -113,39 +114,98 @@ class CreerCompteGeneral extends React.Component {
     this.state = {
       activeStep: 0,
       steps: ["Données initiales", "Données de base"],
-      data: { code: "CS-", comptegeneral: "5161", statu: "Ouvert" }
+      data: {
+        classe: "1",
+        rubrique: "11",
+        poste: "111",
+        comptepere: "1111",
+        compte: "1111",
+        typecompte: "Compte de bilan"
+      }
     };
   }
 
   handleSubmitInitial = () => {
     this.handleNext();
   };
-  componentWillMount() {
-    console.log("g'ezrgekaprlogjaer,m");
-  }
+
   handleSubmitBase = () => {
     const { data } = this.state;
     // console.log(data);
-    this.props.addCaisse(data, "donneedebase/caisse");
+
+    this.props.addCompteGeneral(data, "donneedebase/comptegeneral");
     this.handleNext();
   };
 
+  componentWillMount() {
+    this.props.fetchUnites(
+      "donneedebase/comptegeneral/findClasses",
+      "lesclasses",
+      true
+    );
+    this.props.fetchUnites(
+      "donneedebase/comptegeneral/findRubriquesByClasse/1",
+      "rubriques",
+      true
+    );
+    this.props.fetchUnites(
+      "donneedebase/comptegeneral/findPostesByRubrique/11",
+      "postes",
+      true
+    );
+
+    this.props.fetchUnites(
+      "donneedebase/comptegeneral/findComptesByPoste/111",
+      "comptes",
+      true
+    );
+  }
+
   handleChange = event => {
     const { value, name } = event.target;
+    const { data } = this.state;
+
+    switch (name) {
+      case "classe":
+        this.props.fetchUnites(
+          "donneedebase/comptegeneral/findRubriquesByClasse/" + value,
+          "rubriques",
+          true
+        );
+        parseInt(value) > 5
+          ? (data.typecompte = "Compte de résultat")
+          : (data.typecompte = "Compte de bilan");
+
+        this.setState({ data });
+        break;
+      case "rubrique":
+        this.props.fetchUnites(
+          "donneedebase/comptegeneral/findPostesByRubrique/" + value,
+          "postes",
+          true
+        );
+        break;
+      case "poste":
+        this.props.fetchUnites(
+          "donneedebase/comptegeneral/findComptesByPoste/" + value,
+          "comptes",
+          true
+        );
+        break;
+      case "comptepere":
+        data.compte = value;
+        this.setState({ data });
+
+        break;
+    }
     this.setState({ data: { ...this.state.data, [name]: value } });
   };
 
   handleChangeWithIntitialValue = event => {
     const { value, name } = event.target;
     switch (name) {
-      case "comptegeneral":
+      case "compte":
         if (value.length > 3 && value.length < 9) {
-          this.setState({ data: { ...this.state.data, [name]: value } });
-        }
-        break;
-
-      case "code":
-        if (value.length > 2) {
           this.setState({ data: { ...this.state.data, [name]: value } });
         }
         break;
@@ -154,15 +214,21 @@ class CreerCompteGeneral extends React.Component {
 
   handleBlur = event => {
     let { value, name } = event.target;
+    let level = 0;
     switch (name) {
-      case "comptegeneral": {
+      case "compte": {
         let length = value.length;
-
-        while (8 - length) {
-          value += "0";
-          length++;
+        if (length > 4) {
+          while (8 - length) {
+            value += "0";
+            length++;
+            level++;
+          }
+          this.setState({
+            data: { ...this.state.data, [name]: value, niveau: 8 - level }
+          });
         }
-        this.setState({ data: { ...this.state.data, [name]: value } });
+
         break;
       }
     }
@@ -170,12 +236,6 @@ class CreerCompteGeneral extends React.Component {
 
   getStepContent = stepIndex => {
     const { classes, loading } = this.props;
-    if (loading)
-      return (
-        <center>
-          <CircularProgress size={24} className={classes.buttonProgress} />
-        </center>
-      );
 
     switch (stepIndex) {
       case 0:
@@ -184,8 +244,14 @@ class CreerCompteGeneral extends React.Component {
             handleChange={this.handleChange}
             handleSubmitInitial={this.handleSubmitInitial}
             handleChangeWithIntitialValue={this.handleChangeWithIntitialValue}
+            handleBlur={this.handleBlur}
             classes={classes}
+            lesclasses={this.props.lesclasses}
+            rubriques={this.props.rubriques}
+            postes={this.props.postes}
+            comptes={this.props.comptes}
             data={this.state.data}
+            loading={loading}
           />
         );
       case 1:
@@ -197,6 +263,7 @@ class CreerCompteGeneral extends React.Component {
             handleSubmitBase={this.handleSubmitBase}
             handleBack={this.handleBack}
             classes={classes}
+            lesclasses={this.props.lesclasses}
             data={this.state.data}
           />
         );
@@ -217,7 +284,14 @@ class CreerCompteGeneral extends React.Component {
     this.setState({
       activeStep: 0,
 
-      data: { code: "CS-", comptegeneral: "5161", statu: "Ouvert" }
+      data: {
+        classe: "1",
+        rubrique: "11",
+        poste: "111",
+        comptepere: "1111",
+        compte: "1111",
+        typecompte: "Compte de bilan"
+      }
     });
   };
 
@@ -329,12 +403,17 @@ class CreerCompteGeneral extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   closeNotif: () => dispatch(closeNotifAction()),
-  addCaisse: bindActionCreators(addItem, dispatch)
+  addCompteGeneral: bindActionCreators(addItem, dispatch),
+  fetchUnites: bindActionCreators(fetchUnites, dispatch)
 });
 const reducer = "crudComptabiliteReducer";
 const mapStateToProps = state => ({
   notifMsg: state.get(reducer).get("notifMsg"),
-  loading: state.get(reducer).get("loading")
+  loading: state.get(reducer).get("loading"),
+  rubriques: state.get(reducer).get("rubriques"),
+  postes: state.get(reducer).get("postes"),
+  comptes: state.get(reducer).get("comptes"),
+  lesclasses: state.get(reducer).get("lesclasses")
 });
 
 const CreerCompteGeneralReduxed = connect(

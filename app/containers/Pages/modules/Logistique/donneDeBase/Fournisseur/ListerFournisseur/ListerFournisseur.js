@@ -14,8 +14,8 @@ class ListerFournisseur extends Component {
     return (
       <div>
         <PageTitle
-          title="Lister Fournisseur"
-          pathname="/Logistique/Données de base/Article/Lister Fournisseur"
+          title="Liste Fournisseurs"
+          pathname="/Logistique/Données de base/Article/Liste Fournisseurs"
           withBackOption={true}
         />
         <div>

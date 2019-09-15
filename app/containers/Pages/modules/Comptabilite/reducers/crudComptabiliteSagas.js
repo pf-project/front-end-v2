@@ -13,7 +13,9 @@ import {
   updateItemSuccess,
   updateItemFailure,
   deleteItemSuccess,
-  deleteItemFailure
+  deleteItemFailure,
+  fetchUnitesFailure,
+  fetchUnitesSuccess
 } from "./crudComptabiliteActions";
 
 import {
@@ -21,6 +23,7 @@ import {
   COMPATIBILITE_FETCH_ITEMS_FOR_SUGGESTION_REQUEST,
   COMPATIBILITE_ADD_ITEM_REQUEST,
   COMPATIBILITE_FETCH_ITEM_REQUEST,
+  COMPATIBILITE_FETCH_UNITES_REQUEST,
   COMPATIBILITE_DELETE_ITEM_REQUEST
 } from "./crudComptabiliteConstants";
 
@@ -72,6 +75,20 @@ function* fetchItemSaga({ branch, payload, withLoading }) {
   }
 }
 
+function* fetchUnitesSaga({ branch, data, withLoading }) {
+  try {
+    if (withLoading) yield put(startLoading());
+    const response = yield fetchAPI({
+      method: "GET",
+      url: `/api/comptabilite/${branch}`,
+      token: window.localStorage.getItem("token")
+    });
+    yield put(fetchUnitesSuccess(response, data));
+  } catch (error) {
+    yield put(fetchUnitesFailure(erreur));
+  }
+}
+
 function* updateItemSaga({ payload, branch }) {
   try {
     yield put(startLoading());
@@ -112,6 +129,7 @@ function* crudComptabiliteRootSaga() {
       fetchSuggestionsSaga
     ),
     takeEvery(COMPATIBILITE_FETCH_ITEM_REQUEST, fetchItemSaga),
+    takeEvery(COMPATIBILITE_FETCH_UNITES_REQUEST, fetchUnitesSaga),
     takeEvery(COMPATIBILITE_UPDATE_ITEM_REQUEST, updateItemSaga),
     takeEvery(COMPATIBILITE_DELETE_ITEM_REQUEST, deleteItemSaga),
     takeEvery(COMPATIBILITE_ADD_ITEM_REQUEST, addItemSaga)

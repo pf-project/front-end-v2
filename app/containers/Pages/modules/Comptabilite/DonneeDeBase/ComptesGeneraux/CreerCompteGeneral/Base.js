@@ -43,7 +43,8 @@ class Base extends React.Component {
       data,
       classes,
       handleBlur,
-      handleChangeWithIntitialValue
+      handleChangeWithIntitialValue,
+      lesclasses
     } = this.props;
 
     return (
@@ -60,10 +61,10 @@ class Base extends React.Component {
                     fullWidth: true
                   }}
                   onChange={handleChange}
-                  name="code"
-                  value={data.code}
-                  label="Code de caisse  *"
-                  id="#codearticle"
+                  name="compte"
+                  value={data.compte}
+                  label="Code général "
+                  id="#compte"
                 />
               </Grid>
               <Grid item xs={5}>
@@ -84,7 +85,7 @@ class Base extends React.Component {
         </Grid>
         <Toolbar className={classes.toolbar}>
           <div className={classes.title}>
-            <Typography variant="h6">Information Caisse</Typography>
+            <Typography variant="h6">Information Compte général</Typography>
           </div>
         </Toolbar>
         <Grid item>
@@ -93,96 +94,75 @@ class Base extends React.Component {
               <Grid item xs={6}>
                 <SelectValidator
                   className={classes.field}
-                  onChange={handleChange}
-                  name="pays"
-                  value={data.pays}
+                  InputProps={{
+                    // readOnly: true,
+                    fullWidth: true
+                  }}
+                  // onChange={handleChange}
+                  name="classe"
+                  value={data.classe}
                   validators={["required"]}
                   errorMessages={["Ce champ est obligatoire"]}
                   label="Pays "
                   id="#pays"
                 >
-                  <MenuItem value={"Maroc"}>Maroc</MenuItem>
+                  {lesclasses &&
+                    lesclasses.map(compte => (
+                      <MenuItem value={compte.compte}>
+                        {compte.compte + "." + compte.designation}
+                      </MenuItem>
+                    ))}
                 </SelectValidator>
               </Grid>
               <Grid item xs={6} direction="column">
+                <TextValidator
+                  className={classes.field}
+                  readOnly={true}
+                  value={data.comptepere}
+                  label="Compte père "
+                  id="#comptepere"
+                />
+              </Grid>
+            </Grid>
+
+            <Grid container direction="row">
+              <Grid item xs={6} />
+              <Grid item xs={6} direction="column">
+                <TextValidator
+                  className={classes.field}
+                  name="compteancien"
+                  onChange={handleChange}
+                  value={data.compteancien}
+                  label="Compte ancien "
+                  id="#compteancien"
+                />
+              </Grid>
+            </Grid>
+
+            <Grid container direction="row">
+              <Grid item xs={6}>
                 <FormControl
                   component="fieldset"
                   className={classes.formControl}
                 >
-                  <FormLabel component="legend">Statu</FormLabel>
+                  <FormLabel component="legend">Type de compte</FormLabel>
                   <RadioGroup
                     aria-label="statu"
-                    name="statu"
-                    value={data.statu}
-                    onChange={handleChange}
+                    name="typecompte"
+                    value={data.typecompte}
                   >
                     <FormControlLabel
-                      value="Ouvert"
+                      value="Compte de bilan"
                       control={<Radio />}
-                      label="Ouvert"
+                      label="Compte de bilan"
                     />
                     <FormControlLabel
-                      value="Bloqué"
+                      value="Compte de résultat"
                       control={<Radio />}
-                      label="Bloqué"
+                      label="Compte de résultat"
                     />
                   </RadioGroup>
                 </FormControl>
-              </Grid>
-            </Grid>
-            <Grid container direction="row">
-              <Grid item xs={6}>
-                <SelectValidator
-                  className={classes.field}
-                  onChange={handleChange}
-                  name="devise"
-                  value={data.devise}
-                  validators={["required"]}
-                  errorMessages={["Ce champ est obligatoire"]}
-                  label="Devise "
-                  id="#pays"
-                >
-                  <MenuItem value={"MAD"}>MAD</MenuItem>
-                </SelectValidator>
-              </Grid>
-            </Grid>
-            <Grid container direction="row">
-              <Grid item xs={6}>
-                <TextValidator
-                  className={classes.field}
-                  onBlur={handleBlur}
-                  onChange={handleChangeWithIntitialValue}
-                  name="comptegeneral"
-                  value={data.comptegeneral}
-                  validators={[
-                    "required",
-                    "isNumber",
-                    "minStringLength:5",
-                    "maxStringLength:8"
-                  ]}
-                  errorMessages={[
-                    "Ce champ est obligatoire",
-                    "Ce champ doit etre un nombre entier",
-                    "min 5 chiffres",
-                    "max 8 chiffres"
-                  ]}
-                  label="Compte général "
-                  id="#comptegeneral"
-                />
-              </Grid>
-            </Grid>
-            <Grid container direction="row">
-              <Grid item xs={6}>
-                <SelectValidator
-                  className={classes.field}
-                  onChange={handleChange}
-                  name="codeJournal"
-                  value={data.codeJournal}
-                  label="Code de journal : "
-                  id="#pays"
-                >
-                  <MenuItem value={"code 1"}>code 1</MenuItem>
-                </SelectValidator>
               </Grid>
             </Grid>
           </FormGroup>
