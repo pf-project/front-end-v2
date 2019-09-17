@@ -89,6 +89,16 @@ module.exports = [
         key: "Compte général",
         name: "Compte général",
         link: "/app/Comptabilite/Données-de-base/comptes-généraux"
+      },
+      {
+        key: "Comptabilié générale",
+        name: "Comptabilié générale",
+        title: true
+      },
+      {
+        key: "Ecriture comptable",
+        name: "Ecriture comptable",
+        link: "/app/comptabilité/comptablité-générale/écriture-journale"
       }
     ]
   }

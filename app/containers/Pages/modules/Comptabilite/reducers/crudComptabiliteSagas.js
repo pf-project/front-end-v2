@@ -3,8 +3,6 @@ import { fetchAPI } from "../../../../../serverActions";
 import {
   startLoading,
   stopLoading,
-  fetchSuggestionsFailure,
-  fetchSuggestionsSuccess,
   addItemFailure,
   addItemSuccess,
   fetchItem,
@@ -15,7 +13,9 @@ import {
   deleteItemSuccess,
   deleteItemFailure,
   fetchUnitesFailure,
-  fetchUnitesSuccess
+  fetchUnitesSuccess,
+  fetchDesignationFailure,
+  fetchDesignationSuccess
 } from "./crudComptabiliteActions";
 
 import {
@@ -24,7 +24,8 @@ import {
   COMPATIBILITE_ADD_ITEM_REQUEST,
   COMPATIBILITE_FETCH_ITEM_REQUEST,
   COMPATIBILITE_FETCH_UNITES_REQUEST,
-  COMPATIBILITE_DELETE_ITEM_REQUEST
+  COMPATIBILITE_DELETE_ITEM_REQUEST,
+  FETCH_DESIGNATION_REQUEST
 } from "./crudComptabiliteConstants";
 
 const erreur = "Erreur lors de l'action";
@@ -43,21 +44,6 @@ function* addItemSaga({ payload, branch }) {
   } catch (error) {
     yield put(stopLoading());
     yield put(addItemFailure(erreur));
-  }
-}
-function* fetchSuggestionsSaga({ branch }) {
-  try {
-    yield put(startLoading());
-
-    const data = yield fetchAPI({
-      method: "GET",
-      url: `/api/comptabilite/${branch}`,
-      token: window.localStorage.getItem("token")
-    });
-
-    yield put(fetchSuggestionsSuccess(data));
-  } catch (error) {
-    yield put(fetchSuggestionsFailure(erreur));
   }
 }
 
@@ -86,6 +72,20 @@ function* fetchUnitesSaga({ branch, data, withLoading }) {
     yield put(fetchUnitesSuccess(response, data));
   } catch (error) {
     yield put(fetchUnitesFailure(erreur));
+  }
+}
+
+function* fetchDesignationSaga({ branch }) {
+  try {
+    // if (withLoading) yield put(startLoading());
+    const response = yield fetchAPI({
+      method: "GET",
+      url: `/api/comptabilite/${branch}`,
+      token: window.localStorage.getItem("token")
+    });
+    yield put(fetchDesignationSuccess(response));
+  } catch (error) {
+    yield put(fetchDesignationFailure("Compte n'existe pas"));
   }
 }
 
@@ -124,12 +124,9 @@ function* deleteItemSaga({ payload, branch }) {
 
 function* crudComptabiliteRootSaga() {
   yield all([
-    takeEvery(
-      COMPATIBILITE_FETCH_ITEMS_FOR_SUGGESTION_REQUEST,
-      fetchSuggestionsSaga
-    ),
     takeEvery(COMPATIBILITE_FETCH_ITEM_REQUEST, fetchItemSaga),
     takeEvery(COMPATIBILITE_FETCH_UNITES_REQUEST, fetchUnitesSaga),
+    takeEvery(FETCH_DESIGNATION_REQUEST, fetchDesignationSaga),
     takeEvery(COMPATIBILITE_UPDATE_ITEM_REQUEST, updateItemSaga),
     takeEvery(COMPATIBILITE_DELETE_ITEM_REQUEST, deleteItemSaga),
     takeEvery(COMPATIBILITE_ADD_ITEM_REQUEST, addItemSaga)

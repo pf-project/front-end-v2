@@ -254,6 +254,37 @@ export const ListerCompteGeneral = Loadable({
   loading: Loading
 });
 
+// // comptabilite generale :
+// // // creer ecriture journale :
+// // // // index :
+
+export const EcritureJournale = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Comptabilite/ComptabiliteGeneral/EcritureComptable/index"
+    ),
+  loading: Loading
+});
+
+// // // // creer caisse :
+
+export const CreerEcritureJournale = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Comptabilite/ComptabiliteGeneral/EcritureComptable/CreerEcritureComptable/index"
+    ),
+  loading: Loading
+});
+// // // // liste caisse :
+
+export const ListerEcrituresJournales = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Comptabilite/DonneeDeBase/Caisse/ListerCaisse/ListerCaisses"
+    ),
+  loading: Loading
+});
+
 // User auth
 export const Login = Loadable({
   loader: () => import("./Pages/Users/Login"),

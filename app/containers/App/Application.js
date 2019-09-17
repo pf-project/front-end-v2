@@ -33,7 +33,9 @@ import {
   ListerCaisses,
   CompteGeneral,
   CreerCompteGeneral,
-  ListerCompteGeneral
+  ListerCompteGeneral,
+  EcritureJournale,
+  CreerEcritureJournale
 } from "../pageListAsync";
 
 class Application extends React.Component {
@@ -195,6 +197,18 @@ class Application extends React.Component {
           <Route
             path="/app/Comptabilite/Données-de-base/comptes-généraux"
             component={CompteGeneral}
+          />
+
+          {/* ****  Comptabilité générale :  */}
+          {/* ****** ecriture journale */}
+          <Route
+            path="/app/Comptabilite/Comptabilité-générale/Ecriture-comptable/créer-écriture-comptable"
+            component={CreerEcritureJournale}
+          />
+
+          <Route
+            path="/app/comptabilité/comptablité-générale/écriture-journale"
+            component={EcritureJournale}
           />
 
           {/* parent page : */}
