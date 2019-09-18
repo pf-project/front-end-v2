@@ -21,6 +21,7 @@ import {
   addItem,
   closeNotifAction
 } from "../../../reducers/crudComptabiliteActions";
+import { fetchUnites } from "../../../../Logistique/reducers/crudLogisticActions";
 import Base from "./Base";
 import Initiale from "./Initiale";
 
@@ -117,6 +118,18 @@ class CreerCaisse extends React.Component {
     };
   }
 
+  componentWillMount() {
+    this.props.fetchUnites(
+      "configurationdebase/unites/findDevises",
+      "devises",
+      true
+    );
+    this.props.fetchUnites(
+      "configurationdebase/listesdebase/findPays",
+      "pays",
+      true
+    );
+  }
   handleSubmitInitial = () => {
     this.handleNext();
   };
@@ -196,6 +209,8 @@ class CreerCaisse extends React.Component {
             handleBack={this.handleBack}
             classes={classes}
             data={this.state.data}
+            pays={this.props.pays}
+            devises={this.props.devises}
           />
         );
     }
@@ -328,12 +343,15 @@ class CreerCaisse extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   closeNotif: () => dispatch(closeNotifAction()),
-  addCaisse: bindActionCreators(addItem, dispatch)
+  addCaisse: bindActionCreators(addItem, dispatch),
+  fetchUnites: bindActionCreators(fetchUnites, dispatch)
 });
 const reducer = "crudComptabiliteReducer";
 const mapStateToProps = state => ({
   notifMsg: state.get(reducer).get("notifMsg"),
-  loading: state.get(reducer).get("loading")
+  loading: state.get(reducer).get("loading"),
+  devises: state.get("crudLogisticReducer").get("devises"),
+  pays: state.get("crudLogisticReducer").get("pays")
 });
 
 const CreerCaisseReduxed = connect(

@@ -43,9 +43,16 @@ class Base extends React.Component {
       data,
       classes,
       handleBlur,
-      handleChangeWithIntitialValue
+      handleChangeWithIntitialValue,
+      devises,
+      pays
     } = this.props;
-
+    const lesdevises = [];
+    devises.map(unite => {
+      if (lesdevises.filter(code => code === unite.code).length === 0) {
+        lesdevises.push(unite.code);
+      }
+    });
     return (
       <Grid container spacing={1} className={classes.grid} direction="column">
         {/* <ValidatorForm onSubmit={handleSubmitBase} autoComplete="off"> */}
@@ -101,7 +108,12 @@ class Base extends React.Component {
                   label="Pays "
                   id="#pays"
                 >
-                  <MenuItem value={"Maroc"}>Maroc</MenuItem>
+                  {pays &&
+                    pays.map(pay => (
+                      <MenuItem value={pay.designation}>
+                        {pay.designation}
+                      </MenuItem>
+                    ))}
                 </SelectValidator>
               </Grid>
               <Grid item xs={6} direction="column">
@@ -142,7 +154,10 @@ class Base extends React.Component {
                   label="Devise "
                   id="#pays"
                 >
-                  <MenuItem value={"MAD"}>MAD</MenuItem>
+                  {lesdevises &&
+                    lesdevises.map(devise => (
+                      <MenuItem value={devise}>{devise}</MenuItem>
+                    ))}
                 </SelectValidator>
               </Grid>
             </Grid>

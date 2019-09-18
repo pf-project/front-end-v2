@@ -8,13 +8,13 @@ const index = () => {
         "/app/Comptabilite/Comptabilité-générale/Ecriture-comptable/créer-écriture-comptable",
       title: "Ajouter",
       width: "33%"
-    },
-    {
-      url:
-        "/app/Comptabilite/Comptabilité-générale/Ecriture-comptable/liser-écritures-comptables",
-      title: "Liste",
-      width: "33%"
     }
+    // {
+    //   url:
+    //     "/app/Comptabilite/Comptabilité-générale/Ecriture-comptable/liser-écritures-comptables",
+    //   title: "Liste",
+    //   width: "33%"
+    // }
     // {
     //   url: "/app/Comptabilite/Données-de-base/article/GererCaisse",
     //   title: "Gerer",

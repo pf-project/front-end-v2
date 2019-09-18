@@ -134,18 +134,21 @@ class CreerCaisse extends React.Component {
       classe: "1",
       rubrique: "11",
       poste: "111",
-      comptepere: "1111",
+      comptepere: "1111.Capital social",
       comptegeneral: "",
+      designation: "",
       credit: 0,
       debit: 0,
       data: {
         dateComptable: "2019-01-01",
         lettrageManuel: "",
         libelleOperation: "",
-
+        reference: "",
+        journal: "",
         dataTable: []
       },
-      open: false
+      open: false,
+      errorMsg: ""
     };
   }
 
@@ -180,8 +183,27 @@ class CreerCaisse extends React.Component {
         this.setState({ [name]: value });
         break;
       case "comptepere":
-        this.setState({ [name]: value, comptegeneral: String(value) });
+        this.setState({
+          [name]: value,
+          comptegeneral: String(value).slice(0, 4),
+          designation: String(value).slice(5, String(value).length)
+        });
 
+        break;
+      case "comptegeneral":
+        if (value) {
+          this.props.fetchDesignation(
+            "donneedebase/comptegeneral/findDesignation/" + value
+          );
+
+          this.setState({
+            designation: this.props.designation
+          });
+        } else {
+          this.setState({
+            designation: ""
+          });
+        }
         break;
     }
     this.setState({
@@ -211,9 +233,6 @@ class CreerCaisse extends React.Component {
       "comptes",
       true
     );
-    this.props.fetchDesignation(
-      "donneedebase/comptegeneral/findDesignation/1112"
-    );
   }
 
   handleSelect = index => () => {
@@ -240,13 +259,13 @@ class CreerCaisse extends React.Component {
       credit: debiterCrediter === "Crédit" ? montant : "----"
     });
     this.setState({
-      data: { dataTable },
+      data: { ...this.state.data, dataTable },
       comptegeneral: "",
       designation: "",
       debiterCrediter: "Crédit",
       montant: ""
     });
-    this.calculDebitCredit();
+    this.calculDebitCredit(dataTable);
   };
 
   handleDelete = () => {
@@ -255,7 +274,7 @@ class CreerCaisse extends React.Component {
     let newData = [];
     newData = dataTable.filter((_, idx) => !selectedRows.includes(idx));
     this.setState({ data: { dataTable: newData }, selectedRows: [] });
-    this.calculDebitCredit();
+    this.calculDebitCredit(newData);
   };
 
   handleClickOpen = () => {
@@ -266,8 +285,7 @@ class CreerCaisse extends React.Component {
     this.setState({ open: false });
   };
 
-  calculDebitCredit = () => {
-    const { dataTable } = this.state;
+  calculDebitCredit = dataTable => {
     let credit = 0,
       debit = 0;
     dataTable.map(operation => {
@@ -302,6 +320,26 @@ class CreerCaisse extends React.Component {
       }
     });
   };
+
+  handleComptabiliseSubmit = () => {
+    const { credit, debit, data } = this.state;
+
+    // minimum two operation to comptabilise
+    if (data.dataTable.length < 2) {
+      this.setState({
+        errorMsg: "Il faut que il y a au moins deux opérations"
+      });
+    } else if (credit !== debit) {
+      this.setState({
+        errorMsg: "Total débit et total crédit ne sont pas égaux !"
+      });
+    } else {
+      this.props.addEcritureComptable(
+        data,
+        "comptabilitegenerale/ecriturecomptable"
+      );
+    }
+  };
   render() {
     const {
       classes,
@@ -324,7 +362,8 @@ class CreerCaisse extends React.Component {
       comptegeneral,
       designation,
       debiterCrediter,
-      montant
+      montant,
+      errorMsg
     } = this.state;
 
     const headers = [
@@ -353,8 +392,16 @@ class CreerCaisse extends React.Component {
     return (
       <>
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
+        <Notification
+          close={() => {
+            this.setState({ errorMsg: "" });
+            closeNotif();
+          }}
+          message={errorMsg}
+          branch=""
+        />
         <Grid container spacing={1} className={classes.grid} direction="column">
-          <ValidatorForm>
+          <ValidatorForm onSubmit={this.handleComptabiliseSubmit}>
             <PageTitle
               title="Créer une écriture comptable"
               pathname="/Comptabilite/Comptabilité générale/Écriture comptable/créer une écriture comptable"
@@ -529,7 +576,9 @@ class CreerCaisse extends React.Component {
                       >
                         {comptes &&
                           comptes.map(compte => (
-                            <MenuItem value={compte.compte}>
+                            <MenuItem
+                              value={compte.compte + "." + compte.designation}
+                            >
                               {compte.compte + "." + compte.designation}
                             </MenuItem>
                           ))}
@@ -549,7 +598,7 @@ class CreerCaisse extends React.Component {
         <Grid item xs={12}>
           <Toolbar className={classes.toolbar}>
             <div className={classes.title}>
-              <Typography variant="h6" />
+              <Typography variant="h6">Les opérations</Typography>
             </div>
           </Toolbar>
         </Grid>
@@ -587,8 +636,9 @@ class CreerCaisse extends React.Component {
                   name="designation"
                   validators={["required", "maxStringLength:40"]}
                   errorMessages={["champ obligatoire", "maximum 40 char"]}
-                  value={designation}
+                  value={this.props.loading ? "" : designation}
                   label="Désignation "
+                  inputProps={{ readOnly: true }}
                   id="#designation"
                 />
               </Grid>
@@ -667,7 +717,7 @@ class CreerCaisse extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   closeNotif: () => dispatch(closeNotifAction()),
-  addCaisse: bindActionCreators(addItem, dispatch),
+  addEcritureComptable: bindActionCreators(addItem, dispatch),
   fetchUnites: bindActionCreators(fetchUnites, dispatch),
   fetchDesignation: bindActionCreators(fetchDesignation, dispatch)
 });

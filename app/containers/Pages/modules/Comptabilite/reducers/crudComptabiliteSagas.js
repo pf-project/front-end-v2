@@ -77,14 +77,16 @@ function* fetchUnitesSaga({ branch, data, withLoading }) {
 
 function* fetchDesignationSaga({ branch }) {
   try {
-    // if (withLoading) yield put(startLoading());
+    yield put(startLoading());
     const response = yield fetchAPI({
       method: "GET",
       url: `/api/comptabilite/${branch}`,
       token: window.localStorage.getItem("token")
     });
     yield put(fetchDesignationSuccess(response));
+    yield put(stopLoading());
   } catch (error) {
+    yield put(startLoading());
     yield put(fetchDesignationFailure("Compte n'existe pas"));
   }
 }
