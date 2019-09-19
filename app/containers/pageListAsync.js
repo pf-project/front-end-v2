@@ -254,6 +254,16 @@ export const CreerCompteGeneral = Loadable({
   loading: Loading
 });
 
+// // // // gerer compte general :
+
+export const GererCompteGeneral = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Comptabilite/DonneeDeBase/ComptesGeneraux/GererCompteGeneral/index"
+    ),
+  loading: Loading
+});
+
 // // // // liste compte general :
 
 export const ListerCompteGeneral = Loadable({

@@ -36,7 +36,8 @@ import {
   ListerCompteGeneral,
   EcritureJournale,
   CreerEcritureJournale,
-  GererCaisse
+  GererCaisse,
+  GererCompteGeneral
 } from "../pageListAsync";
 
 class Application extends React.Component {
@@ -184,11 +185,11 @@ class Application extends React.Component {
             path="/app/Comptabilite/Données-de-base/comptes-généraux/lister-comptes-généraux"
             component={ListerCompteGeneral}
           />
-          {/* <Route
-            path="/app/logistique/Données-de-base/Fournisseur/Gererfournisseur"
-            component={GererFournisseur}
+          <Route
+            path="/app/Comptabilite/Données-de-base/comptes-généraux/gerer-compte-général"
+            component={GererCompteGeneral}
           />
-*/}
+
           <Route
             path="/app/Comptabilite/Données-de-base/comptes-généraux/ajouter-compte-gérénal"
             component={CreerCompteGeneral}

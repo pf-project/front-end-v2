@@ -133,7 +133,7 @@ function* deleteItemSaga({ payload, branch }) {
       token: window.localStorage.getItem("token")
     });
     yield put(deleteItemSuccess(payload));
-    yield put(fetchItem("find", branch, false));
+    yield put(fetchItem("find", branch, true));
   } catch (error) {
     yield put(deleteItemFailure(erreur));
   }
