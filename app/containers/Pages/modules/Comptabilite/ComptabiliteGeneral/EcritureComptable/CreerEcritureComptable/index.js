@@ -338,6 +338,7 @@ class CreerCaisse extends React.Component {
         data,
         "comptabilitegenerale/ecriturecomptable"
       );
+      this.handleReset();
     }
   };
   render() {

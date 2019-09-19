@@ -71,7 +71,7 @@ class ComptesGeneraux extends React.Component {
     if (dataTable)
       dataTable.map(comptegeneral => {
         comptesgeneraux.push([
-          // article.id,
+          comptegeneral.id,
           comptegeneral.compte,
           comptegeneral.designation,
           comptegeneral.comptepere === 0

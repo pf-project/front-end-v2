@@ -114,7 +114,7 @@ class CreerCaisse extends React.Component {
     this.state = {
       activeStep: 0,
       steps: ["Données initiales", "Données de base"],
-      data: { code: "CS-", comptegeneral: "5161", statu: "Ouvert" }
+      data: { code: "CS-", compte: "5161", statu: "Ouvert" }
     };
   }
 
@@ -149,7 +149,7 @@ class CreerCaisse extends React.Component {
   handleChangeWithIntitialValue = event => {
     const { value, name } = event.target;
     switch (name) {
-      case "comptegeneral":
+      case "compte":
         if (value.length > 3 && value.length < 9) {
           this.setState({ data: { ...this.state.data, [name]: value } });
         }
@@ -165,15 +165,22 @@ class CreerCaisse extends React.Component {
 
   handleBlur = event => {
     let { value, name } = event.target;
+    let level = 0;
     switch (name) {
-      case "comptegeneral": {
+      case "compte": {
         let length = value.length;
+        if (length > 4) {
+          while (8 - length) {
+            value += "0";
+            length++;
+            level++;
+          }
 
-        while (8 - length) {
-          value += "0";
-          length++;
+          this.setState({
+            data: { ...this.state.data, [name]: value, niveau: 8 - level }
+          });
         }
-        this.setState({ data: { ...this.state.data, [name]: value } });
+
         break;
       }
     }
@@ -230,7 +237,7 @@ class CreerCaisse extends React.Component {
     this.setState({
       activeStep: 0,
 
-      data: { code: "CS-", comptegeneral: "5161", statu: "Ouvert" }
+      data: { code: "CS-", compte: "5161", statu: "Ouvert" }
     });
   };
 

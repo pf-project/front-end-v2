@@ -35,7 +35,8 @@ import {
   CreerCompteGeneral,
   ListerCompteGeneral,
   EcritureJournale,
-  CreerEcritureJournale
+  CreerEcritureJournale,
+  GererCaisse
 } from "../pageListAsync";
 
 class Application extends React.Component {
@@ -153,6 +154,14 @@ class Application extends React.Component {
             path="/app/Comptabilite/Données-de-base/caisse/ajouter-caisse"
             component={CreerCaisse}
           />
+          <Route
+            path="/app/Comptabilite/Données-de-base/caisse/lister-caisse"
+            component={ListerCaisses}
+          />
+          <Route
+            path="/app/Comptabilite/Données-de-base/caisse/gerer-caisse"
+            component={GererCaisse}
+          />
 
           <Route
             path="/app/comptabilité/Données-de-base/caisse"
@@ -168,15 +177,6 @@ class Application extends React.Component {
           <Route
             path="/app/comptabilité/Données-de-base/Compte-bancaire"
             component={CompteBancaire}
-          />
-          <Route
-            path="/app/Comptabilite/Données-de-base/article/lister-caisse"
-            component={ListerCaisses}
-          />
-
-          <Route
-            path="/app/Comptabilite/Données-de-base/caisse"
-            component={Caisse}
           />
 
           {/* ****** Compte general */}

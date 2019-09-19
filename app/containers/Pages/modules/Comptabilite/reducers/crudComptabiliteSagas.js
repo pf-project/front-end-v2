@@ -15,7 +15,10 @@ import {
   fetchUnitesFailure,
   fetchUnitesSuccess,
   fetchDesignationFailure,
-  fetchDesignationSuccess
+  fetchDesignationSuccess,
+  fetchSuggestionsSuccess,
+  fetchSuggestionsFailure,
+  fetchSuggestions
 } from "./crudComptabiliteActions";
 
 import {
@@ -91,12 +94,28 @@ function* fetchDesignationSaga({ branch }) {
   }
 }
 
+function* fetchSuggestionsSaga({ branch }) {
+  try {
+    yield put(startLoading());
+
+    const data = yield fetchAPI({
+      method: "GET",
+      url: `/api/comptabilite/${branch}`,
+      token: window.localStorage.getItem("token")
+    });
+
+    yield put(fetchSuggestionsSuccess(data));
+  } catch (error) {
+    yield put(fetchSuggestionsFailure(erreur));
+  }
+}
+
 function* updateItemSaga({ payload, branch }) {
   try {
     yield put(startLoading());
-    yield fetchAPI({
+    const data = yield fetchAPI({
       method: "POST",
-      url: `/api/comptabilite/${branch}/update/${payload.code}`,
+      url: `/api/comptabilite/${branch}/update/${payload.id}`,
       token: window.localStorage.getItem("token"),
       body: payload
     });
@@ -126,6 +145,10 @@ function* deleteItemSaga({ payload, branch }) {
 
 function* crudComptabiliteRootSaga() {
   yield all([
+    takeEvery(
+      COMPATIBILITE_FETCH_ITEMS_FOR_SUGGESTION_REQUEST,
+      fetchSuggestionsSaga
+    ),
     takeEvery(COMPATIBILITE_FETCH_ITEM_REQUEST, fetchItemSaga),
     takeEvery(COMPATIBILITE_FETCH_UNITES_REQUEST, fetchUnitesSaga),
     takeEvery(FETCH_DESIGNATION_REQUEST, fetchDesignationSaga),

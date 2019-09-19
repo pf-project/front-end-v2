@@ -167,8 +167,8 @@ class Base extends React.Component {
                   className={classes.field}
                   onBlur={handleBlur}
                   onChange={handleChangeWithIntitialValue}
-                  name="comptegeneral"
-                  value={data.comptegeneral}
+                  name="compte"
+                  value={data.compte}
                   validators={[
                     "required",
                     "isNumber",
@@ -182,7 +182,7 @@ class Base extends React.Component {
                     "max 8 chiffres"
                   ]}
                   label="Compte général "
-                  id="#comptegeneral"
+                  id="#compte"
                 />
               </Grid>
             </Grid>

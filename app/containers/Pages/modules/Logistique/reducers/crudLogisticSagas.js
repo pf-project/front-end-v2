@@ -105,7 +105,6 @@ function* updateItemSaga({ payload, branch }) {
 
 function* deleteItemSaga({ payload, branch }) {
   try {
-    console.log("pre delete");
     yield fetchAPI({
       method: "DELETE",
       url: `/api/logistic/${branch}/archive/${payload}`,
@@ -114,7 +113,6 @@ function* deleteItemSaga({ payload, branch }) {
     yield put(deleteItemSuccess(payload));
     yield put(fetchItem("find", branch, false));
 
-    console.log("post delete");
   } catch (error) {
     yield put(deleteItemFailure(erreur));
   }

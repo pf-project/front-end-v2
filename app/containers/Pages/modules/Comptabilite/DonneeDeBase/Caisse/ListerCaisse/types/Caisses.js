@@ -70,13 +70,13 @@ class Caisses extends React.Component {
     if (dataTable)
       dataTable.map(caisse => {
         caisses.push([
-          // article.id,
+          caisse.id,
           caisse.code,
           caisse.designation,
           caisse.pays,
           caisse.statu,
           caisse.devise,
-          caisse.comptegeneral,
+          caisse.compte,
           caisse.codeJournal
         ]);
       });

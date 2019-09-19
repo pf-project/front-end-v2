@@ -56,8 +56,8 @@ class CustomToolbarSelect extends React.Component {
 
   delete = () => {
     this.props.selectedRows.data.map(row => {
-      const code = this.props.displayData[row.index].data[0];
-      this.props.deleteItem(code, "donneedebase/caisse");
+      const id = this.props.displayData[row.index].data[0];
+      this.props.deleteItem(id, "donneedebase/caisse");
     });
   };
 

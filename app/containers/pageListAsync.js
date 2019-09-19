@@ -199,6 +199,16 @@ export const CreerCaisse = Loadable({
     ),
   loading: Loading
 });
+
+// // // // gerer caisse :
+
+export const GererCaisse = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Comptabilite/DonneeDeBase/Caisse/GererCaisse/index"
+    ),
+  loading: Loading
+});
 // // // // liste caisse :
 
 export const ListerCaisses = Loadable({
