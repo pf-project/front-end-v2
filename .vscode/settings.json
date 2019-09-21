@@ -1,2 +1,8 @@
 {
+    "editor.formatOnSave": true,
+    "tslint.autoFixOnSave": true,
+    "workbench.activityBar.visible": true,
+    "[javascript]": {
+        "editor.formatOnSave": true
+    }
 }
