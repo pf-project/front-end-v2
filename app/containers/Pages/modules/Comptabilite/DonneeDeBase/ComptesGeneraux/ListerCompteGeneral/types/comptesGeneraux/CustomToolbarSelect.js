@@ -33,7 +33,8 @@ const defaultToolbarSelectStyles = {
 
 class CustomToolbarSelect extends React.Component {
   state = {
-    open: false
+    open: false,
+    error: ""
   };
   handleClickInverseSelection = () => {
     const nextSelectedRows = this.props.displayData.reduce(
@@ -56,8 +57,15 @@ class CustomToolbarSelect extends React.Component {
 
   delete = () => {
     this.props.selectedRows.data.map(row => {
-      const code = this.props.displayData[row.index].data[0];
-      this.props.deleteItem(code, "donneedebase/caisse");
+      const id = this.props.displayData[row.index].data[0];
+      const utiliser = this.props.displayData[row.index].data[8];
+      const classe = this.props.displayData[row.index].data[5];
+      if (classe >= 5 && utiliser === "Non") {
+        this.props.deleteItem(id, "donneedebase/comptegeneral");
+      } else {
+        this.setState({ error: "vous ne pouvez pas supprimer ce compte" });
+      }
+      //
     });
   };
 
@@ -67,26 +75,25 @@ class CustomToolbarSelect extends React.Component {
 
     return (
       <div className={classes.iconContainer}>
-        {false && (
-          <>
-            <Tooltip title="Supprimer">
-              <IconButton
-                className={classes.iconButton}
-                onClick={() => this.setState({ open: true })}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Modifier">
-              <IconButton
-                className={classes.iconButton}
-                onClick={() => this.setState({ open: true })}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Tooltip>
-          </>
-        )}
+        <>
+          <Tooltip title="Supprimer">
+            <IconButton
+              className={classes.iconButton}
+              onClick={() => this.setState({ open: true })}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+        </>
+        <Notification
+          close={() => {
+            this.setState({ error: "" });
+            closeNotif();
+          }}
+          message={this.state.error}
+          branch=""
+        />
+
         <ConfirmeDialog
           open={open}
           handleDelete={this.delete}

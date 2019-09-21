@@ -34,6 +34,25 @@ export const fetchItem = (payload, branch, withLoading) => ({
   withLoading
 });
 
+export const fetchUnites = (branch, data, withLoading) => ({
+  type: types.LOGISTIC_FETCH_UNITES_REQUEST,
+  branch,
+  data,
+  withLoading
+});
+
+export const fetchUnitesSuccess = (payload, data) => ({
+  type: types.LOGISTIC_FETCH_UNITES_SUCCESS,
+  payload,
+  data
+});
+
+export const fetchUnitesFailure = (payload, data) => ({
+  type: types.LOGISTIC_FETCH_UNITES_FAILURE,
+  payload,
+  data
+});
+
 // add Item
 export const addItemFailure = (payload, branch) => ({
   type: types.ADD_ITEM_FAILURE,

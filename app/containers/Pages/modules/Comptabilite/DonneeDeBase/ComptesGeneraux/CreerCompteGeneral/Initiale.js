@@ -23,7 +23,8 @@ export default function Initiale({
   lesclasses,
   comptes,
   postes,
-  loading
+  loading,
+  gerer
 }) {
   return (
     <Grid
@@ -34,100 +35,104 @@ export default function Initiale({
       justify="center"
     >
       {/* <ValidatorForm onSubmit={handleSubmitInitial} autoComplete="off"> */}
-      <FormGroup>
-        <Grid item xs={6}>
-          <SelectValidator
-            className={classes.field}
-            onChange={handleChange}
-            disabled={loading}
-            name="classe"
-            value={data.classe}
-            validators={["required"]}
-            errorMessages={["Ce champ est obligatoire"]}
-            label="Classe "
-            id="#classe"
-          >
-            {lesclasses &&
-              lesclasses.map(compte => (
-                <MenuItem value={compte.compte}>
-                  {compte.compte + "." + compte.designation}
-                </MenuItem>
-              ))}
-          </SelectValidator>
-        </Grid>
-      </FormGroup>
-      <FormGroup>
-        <Grid item xs={6}>
-          <SelectValidator
-            className={classes.field}
-            onChange={handleChange}
-            disabled={loading}
-            name="rubrique"
-            value={data.rubrique}
-            validators={["required"]}
-            errorMessages={["Ce champ est obligatoire"]}
-            label="Rubrique "
-            id="#rubrique"
-          >
-            {rubriques &&
-              rubriques.map(compte => (
-                <MenuItem value={compte.compte}>
-                  {compte.compte + "." + compte.designation}
-                </MenuItem>
-              ))}
-          </SelectValidator>
-        </Grid>
-      </FormGroup>
-      <FormGroup>
-        <Grid item xs={6}>
-          <SelectValidator
-            className={classes.field}
-            onChange={handleChange}
-            disabled={loading}
-            name="poste"
-            value={data.poste}
-            validators={["required"]}
-            errorMessages={["Ce champ est obligatoire"]}
-            label="Poste "
-            id="#poste"
-          >
-            {postes &&
-              postes.map(compte => (
-                <MenuItem value={compte.compte}>
-                  {compte.compte + "." + compte.designation}
-                </MenuItem>
-              ))}
-          </SelectValidator>
-        </Grid>
-      </FormGroup>
-      <FormGroup>
-        <Grid item xs={6}>
-          <SelectValidator
-            className={classes.field}
-            onChange={handleChange}
-            disabled={loading}
-            name="comptepere"
-            value={data.comptepere}
-            validators={["required"]}
-            errorMessages={["Ce champ est obligatoire"]}
-            label="Compte pere "
-            id="#comptepere"
-          >
-            {comptes &&
-              comptes.map(compte => (
-                <MenuItem value={compte.compte}>
-                  {compte.compte + "." + compte.designation}
-                </MenuItem>
-              ))}
-          </SelectValidator>
-        </Grid>
-      </FormGroup>
+      {!gerer && (
+        <>
+          <FormGroup>
+            <Grid item xs={6}>
+              <SelectValidator
+                className={classes.field}
+                onChange={handleChange}
+                disabled={loading}
+                name="classe"
+                value={data.classe}
+                validators={["required"]}
+                errorMessages={["Ce champ est obligatoire"]}
+                label="Classe "
+                id="#classe"
+              >
+                {lesclasses &&
+                  lesclasses.map(compte => (
+                    <MenuItem value={compte.compte}>
+                      {compte.compte + "." + compte.designation}
+                    </MenuItem>
+                  ))}
+              </SelectValidator>
+            </Grid>
+          </FormGroup>
+          <FormGroup>
+            <Grid item xs={6}>
+              <SelectValidator
+                className={classes.field}
+                onChange={handleChange}
+                disabled={loading}
+                name="rubrique"
+                value={data.rubrique}
+                validators={["required"]}
+                errorMessages={["Ce champ est obligatoire"]}
+                label="Rubrique "
+                id="#rubrique"
+              >
+                {rubriques &&
+                  rubriques.map(compte => (
+                    <MenuItem value={compte.compte}>
+                      {compte.compte + "." + compte.designation}
+                    </MenuItem>
+                  ))}
+              </SelectValidator>
+            </Grid>
+          </FormGroup>
+          <FormGroup>
+            <Grid item xs={6}>
+              <SelectValidator
+                className={classes.field}
+                onChange={handleChange}
+                disabled={loading}
+                name="poste"
+                value={data.poste}
+                validators={["required"]}
+                errorMessages={["Ce champ est obligatoire"]}
+                label="Poste "
+                id="#poste"
+              >
+                {postes &&
+                  postes.map(compte => (
+                    <MenuItem value={compte.compte}>
+                      {compte.compte + "." + compte.designation}
+                    </MenuItem>
+                  ))}
+              </SelectValidator>
+            </Grid>
+          </FormGroup>
+          <FormGroup>
+            <Grid item xs={6}>
+              <SelectValidator
+                className={classes.field}
+                onChange={handleChange}
+                disabled={loading}
+                name="comptepere"
+                value={data.comptepere}
+                validators={["required"]}
+                errorMessages={["Ce champ est obligatoire"]}
+                label="Compte pere "
+                id="#comptepere"
+              >
+                {comptes &&
+                  comptes.map(compte => (
+                    <MenuItem value={compte.compte}>
+                      {compte.compte + "." + compte.designation}
+                    </MenuItem>
+                  ))}
+              </SelectValidator>
+            </Grid>
+          </FormGroup>
+        </>
+      )}
       <FormGroup>
         <Grid item xs={6}>
           <TextValidator
             className={classes.field}
             onBlur={handleBlur}
-            disabled={loading}
+            disabled={loading || gerer}
             onChange={handleChangeWithIntitialValue}
             name="compte"
             value={data.compte}

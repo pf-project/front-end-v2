@@ -9,6 +9,7 @@ import {
   COMPATIBILITE_FETCH_ITEMS_FOR_SUGGESTION_SUCCESS,
   COMPATIBILITE_FETCH_ITEMS_FOR_SUGGESTION_FAILURE,
   COMPATIBILITE_FETCH_ITEM_SUCCESS,
+  COMPATIBILITE_FETCH_ITEM_REQUEST,
   COMPATIBILITE_FETCH_ITEM_FAILURE,
   COMPATIBILITE_UPDATE_ITEM_FAILURE,
   COMPATIBILITE_UPDATE_ITEM_SUCCESS,
@@ -18,13 +19,16 @@ import {
   CLEAR_COMPATIBILITE_STORE,
   COMPATIBILITE_FETCH_UNITES_REQUEST,
   COMPATIBILITE_FETCH_UNITES_FAILURE,
-  COMPATIBILITE_FETCH_UNITES_SUCCESS
+  COMPATIBILITE_FETCH_UNITES_SUCCESS,
+  FETCH_DESIGNATION_SUCCESS,
+  FETCH_DESIGNATION_FAILURE
 } from "./crudComptabiliteConstants";
 
 const initialState = {
   notifMsg: "",
   loading: false,
   suggestions: List([]),
+  designation: "",
   // categorie: Map({}),
   // articlesForSuggestion: Map({}),
   item: null
@@ -60,6 +64,14 @@ export default function crudComptabiliteReducer(
         mutableState
           .set("notifMsg", "Erreur lors du chargement ...")
           .set("loading", false);
+      });
+    case FETCH_DESIGNATION_SUCCESS:
+      return state.withMutations(mutableState => {
+        mutableState.set("designation", action.payload.message);
+      });
+    case FETCH_DESIGNATION_FAILURE:
+      return state.withMutations(mutableState => {
+        mutableState.set("notifMsg", "Compte n'existe pas");
       });
     case COMPATIBILITE_FETCH_UNITES_SUCCESS:
       return state.withMutations(mutableState => {

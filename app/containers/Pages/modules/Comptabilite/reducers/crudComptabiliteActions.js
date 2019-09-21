@@ -53,6 +53,21 @@ export const fetchUnitesFailure = (payload, data) => ({
   data
 });
 
+export const fetchDesignation = branch => ({
+  type: types.FETCH_DESIGNATION_REQUEST,
+  branch
+});
+
+export const fetchDesignationSuccess = payload => ({
+  type: types.FETCH_DESIGNATION_SUCCESS,
+  payload
+});
+
+export const fetchDesignationFailure = (payload, data) => ({
+  type: types.FETCH_DESIGNATION_FAILURE,
+  payload
+});
+
 // add Item
 export const addItemFailure = (payload, branch) => ({
   type: types.COMPATIBILITE_ADD_ITEM_FAILURE,

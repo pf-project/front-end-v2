@@ -33,7 +33,11 @@ import {
   ListerCaisses,
   CompteGeneral,
   CreerCompteGeneral,
-  ListerCompteGeneral
+  ListerCompteGeneral,
+  EcritureJournale,
+  CreerEcritureJournale,
+  GererCaisse,
+  GererCompteGeneral
 } from "../pageListAsync";
 
 class Application extends React.Component {
@@ -151,6 +155,14 @@ class Application extends React.Component {
             path="/app/Comptabilite/Données-de-base/caisse/ajouter-caisse"
             component={CreerCaisse}
           />
+          <Route
+            path="/app/Comptabilite/Données-de-base/caisse/lister-caisse"
+            component={ListerCaisses}
+          />
+          <Route
+            path="/app/Comptabilite/Données-de-base/caisse/gerer-caisse"
+            component={GererCaisse}
+          />
 
           <Route
             path="/app/comptabilité/Données-de-base/caisse"
@@ -167,26 +179,17 @@ class Application extends React.Component {
             path="/app/comptabilité/Données-de-base/Compte-bancaire"
             component={CompteBancaire}
           />
-          <Route
-            path="/app/Comptabilite/Données-de-base/article/lister-caisse"
-            component={ListerCaisses}
-          />
-
-          <Route
-            path="/app/Comptabilite/Données-de-base/caisse"
-            component={Caisse}
-          />
 
           {/* ****** Compte general */}
           <Route
             path="/app/Comptabilite/Données-de-base/comptes-généraux/lister-comptes-généraux"
             component={ListerCompteGeneral}
           />
-          {/* <Route
-            path="/app/logistique/Données-de-base/Fournisseur/Gererfournisseur"
-            component={GererFournisseur}
+          <Route
+            path="/app/Comptabilite/Données-de-base/comptes-généraux/gerer-compte-général"
+            component={GererCompteGeneral}
           />
-*/}
+
           <Route
             path="/app/Comptabilite/Données-de-base/comptes-généraux/ajouter-compte-gérénal"
             component={CreerCompteGeneral}
@@ -195,6 +198,18 @@ class Application extends React.Component {
           <Route
             path="/app/Comptabilite/Données-de-base/comptes-généraux"
             component={CompteGeneral}
+          />
+
+          {/* ****  Comptabilité générale :  */}
+          {/* ****** ecriture journale */}
+          <Route
+            path="/app/Comptabilite/Comptabilité-générale/Ecriture-comptable/créer-écriture-comptable"
+            component={CreerEcritureJournale}
+          />
+
+          <Route
+            path="/app/comptabilité/comptablité-générale/écriture-journale"
+            component={EcritureJournale}
           />
 
           {/* parent page : */}

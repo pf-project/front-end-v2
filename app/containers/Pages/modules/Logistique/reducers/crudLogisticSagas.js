@@ -12,7 +12,9 @@ import {
   updateItemSuccess,
   updateItemFailure,
   deleteItemSuccess,
-  deleteItemFailure
+  deleteItemFailure,
+  fetchUnitesSuccess,
+  fetchUnitesFailure
 } from "./crudLogisticActions";
 
 import {
@@ -20,7 +22,8 @@ import {
   FETCH_ITEMS_FOR_SUGGESTION_REQUEST,
   ADD_ITEM_REQUEST,
   FETCH_ITEM_REQUEST,
-  DELETE_ITEM_REQUEST
+  DELETE_ITEM_REQUEST,
+  LOGISTIC_FETCH_UNITES_REQUEST
 } from "./crudLogisticConstants";
 
 const erreur = "Erreur lors de l'action";
@@ -39,6 +42,20 @@ function* addItemSaga({ payload, branch }) {
   } catch (error) {
     // yield put(stopLoading());
     yield put(addItemFailure(erreur));
+  }
+}
+
+function* fetchUnitesSaga({ branch, data, withLoading }) {
+  try {
+    if (withLoading) yield put(startLoading());
+    const response = yield fetchAPI({
+      method: "GET",
+      url: `/api/logistic/${branch}`,
+      token: window.localStorage.getItem("token")
+    });
+    yield put(fetchUnitesSuccess(response, data));
+  } catch (error) {
+    yield put(fetchUnitesFailure(erreur));
   }
 }
 function* fetchSuggestionsSaga({ branch }) {
@@ -88,7 +105,6 @@ function* updateItemSaga({ payload, branch }) {
 
 function* deleteItemSaga({ payload, branch }) {
   try {
-    console.log("pre delete");
     yield fetchAPI({
       method: "DELETE",
       url: `/api/logistic/${branch}/archive/${payload}`,
@@ -97,7 +113,6 @@ function* deleteItemSaga({ payload, branch }) {
     yield put(deleteItemSuccess(payload));
     yield put(fetchItem("find", branch, false));
 
-    console.log("post delete");
   } catch (error) {
     yield put(deleteItemFailure(erreur));
   }
@@ -110,6 +125,8 @@ function* deleteItemSaga({ payload, branch }) {
 function* crudLogisticRootSaga() {
   yield all([
     takeEvery(FETCH_ITEMS_FOR_SUGGESTION_REQUEST, fetchSuggestionsSaga),
+
+    takeEvery(LOGISTIC_FETCH_UNITES_REQUEST, fetchUnitesSaga),
     takeEvery(FETCH_ITEM_REQUEST, fetchItemSaga),
     takeEvery(UPDATE_ITEM_REQUEST, updateItemSaga),
     takeEvery(DELETE_ITEM_REQUEST, deleteItemSaga),

@@ -1,5 +1,14 @@
 export default [
   {
+    name: "id",
+    label: "id",
+    options: {
+      filter: false,
+      sort: false,
+      display: false
+    }
+  },
+  {
     name: "Compte général",
     label: "Compte général",
     options: {

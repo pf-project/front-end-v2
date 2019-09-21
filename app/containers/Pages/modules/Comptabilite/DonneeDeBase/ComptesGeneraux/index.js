@@ -14,17 +14,18 @@ const index = () => {
         "/app/Comptabilite/Données-de-base/comptes-généraux/lister-comptes-généraux",
       title: "Liste",
       width: "33%"
+    },
+    {
+      url:
+        "/app/Comptabilite/Données-de-base/comptes-généraux/gerer-compte-général",
+      title: "Gerer",
+      width: "33%"
     }
-    // {
-    //   url: "/app/Comptabilite/Données-de-base/article/GererCaisse",
-    //   title: "Gerer",
-    //   width: "33%"
-    // }
   ];
   return (
     <>
       <PageTitle
-        title="Caisse"
+        title="Comptes généraux"
         pathname="/ Comptabilité/Données de base/Comptes généraux"
       />{" "}
       <MenuChooser images={images} />

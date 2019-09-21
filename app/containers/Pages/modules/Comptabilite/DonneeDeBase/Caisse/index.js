@@ -9,15 +9,15 @@ const index = () => {
       width: "33%"
     },
     {
-      url: "/app/Comptabilite/Données-de-base/article/lister-caisse",
+      url: "/app/Comptabilite/Données-de-base/caisse/lister-caisse",
       title: "Liste",
       width: "33%"
+    },
+    {
+      url: "/app/Comptabilite/Données-de-base/caisse/gerer-caisse",
+      title: "Gerer",
+      width: "33%"
     }
-    // {
-    //   url: "/app/Comptabilite/Données-de-base/article/GererCaisse",
-    //   title: "Gerer",
-    //   width: "33%"
-    // }
   ];
   return (
     <>

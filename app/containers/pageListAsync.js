@@ -199,6 +199,16 @@ export const CreerCaisse = Loadable({
     ),
   loading: Loading
 });
+
+// // // // gerer caisse :
+
+export const GererCaisse = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Comptabilite/DonneeDeBase/Caisse/GererCaisse/index"
+    ),
+  loading: Loading
+});
 // // // // liste caisse :
 
 export const ListerCaisses = Loadable({
@@ -244,12 +254,53 @@ export const CreerCompteGeneral = Loadable({
   loading: Loading
 });
 
+// // // // gerer compte general :
+
+export const GererCompteGeneral = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Comptabilite/DonneeDeBase/ComptesGeneraux/GererCompteGeneral/index"
+    ),
+  loading: Loading
+});
+
 // // // // liste compte general :
 
 export const ListerCompteGeneral = Loadable({
   loader: () =>
     import(
       "./Pages/modules/Comptabilite/DonneeDeBase/ComptesGeneraux/ListerCompteGeneral/ListerCompteGeneral"
+    ),
+  loading: Loading
+});
+
+// // comptabilite generale :
+// // // creer ecriture journale :
+// // // // index :
+
+export const EcritureJournale = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Comptabilite/ComptabiliteGeneral/EcritureComptable/index"
+    ),
+  loading: Loading
+});
+
+// // // // creer caisse :
+
+export const CreerEcritureJournale = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Comptabilite/ComptabiliteGeneral/EcritureComptable/CreerEcritureComptable/index"
+    ),
+  loading: Loading
+});
+// // // // liste caisse :
+
+export const ListerEcrituresJournales = Loadable({
+  loader: () =>
+    import(
+      "./Pages/modules/Comptabilite/DonneeDeBase/Caisse/ListerCaisse/ListerCaisses"
     ),
   loading: Loading
 });

@@ -21,6 +21,7 @@ import {
   addItem,
   closeNotifAction
 } from "../../../reducers/crudComptabiliteActions";
+import { fetchUnites } from "../../../../Logistique/reducers/crudLogisticActions";
 import Base from "./Base";
 import Initiale from "./Initiale";
 
@@ -113,10 +114,22 @@ class CreerCaisse extends React.Component {
     this.state = {
       activeStep: 0,
       steps: ["Données initiales", "Données de base"],
-      data: { code: "CS-", comptegeneral: "5161", statu: "Ouvert" }
+      data: { code: "CS-", compte: "5161", statu: "Ouvert" }
     };
   }
 
+  componentWillMount() {
+    this.props.fetchUnites(
+      "configurationdebase/unites/findDevises",
+      "devises",
+      true
+    );
+    this.props.fetchUnites(
+      "configurationdebase/listesdebase/findPays",
+      "pays",
+      true
+    );
+  }
   handleSubmitInitial = () => {
     this.handleNext();
   };
@@ -136,7 +149,7 @@ class CreerCaisse extends React.Component {
   handleChangeWithIntitialValue = event => {
     const { value, name } = event.target;
     switch (name) {
-      case "comptegeneral":
+      case "compte":
         if (value.length > 3 && value.length < 9) {
           this.setState({ data: { ...this.state.data, [name]: value } });
         }
@@ -152,15 +165,22 @@ class CreerCaisse extends React.Component {
 
   handleBlur = event => {
     let { value, name } = event.target;
+    let level = 0;
     switch (name) {
-      case "comptegeneral": {
+      case "compte": {
         let length = value.length;
+        if (length > 4) {
+          while (8 - length) {
+            value += "0";
+            length++;
+            level++;
+          }
 
-        while (8 - length) {
-          value += "0";
-          length++;
+          this.setState({
+            data: { ...this.state.data, [name]: value, niveau: 8 - level }
+          });
         }
-        this.setState({ data: { ...this.state.data, [name]: value } });
+
         break;
       }
     }
@@ -196,6 +216,8 @@ class CreerCaisse extends React.Component {
             handleBack={this.handleBack}
             classes={classes}
             data={this.state.data}
+            pays={this.props.pays}
+            devises={this.props.devises}
           />
         );
     }
@@ -215,7 +237,7 @@ class CreerCaisse extends React.Component {
     this.setState({
       activeStep: 0,
 
-      data: { code: "CS-", comptegeneral: "5161", statu: "Ouvert" }
+      data: { code: "CS-", compte: "5161", statu: "Ouvert" }
     });
   };
 
@@ -328,12 +350,15 @@ class CreerCaisse extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   closeNotif: () => dispatch(closeNotifAction()),
-  addCaisse: bindActionCreators(addItem, dispatch)
+  addCaisse: bindActionCreators(addItem, dispatch),
+  fetchUnites: bindActionCreators(fetchUnites, dispatch)
 });
 const reducer = "crudComptabiliteReducer";
 const mapStateToProps = state => ({
   notifMsg: state.get(reducer).get("notifMsg"),
-  loading: state.get(reducer).get("loading")
+  loading: state.get(reducer).get("loading"),
+  devises: state.get("crudLogisticReducer").get("devises"),
+  pays: state.get("crudLogisticReducer").get("pays")
 });
 
 const CreerCaisseReduxed = connect(

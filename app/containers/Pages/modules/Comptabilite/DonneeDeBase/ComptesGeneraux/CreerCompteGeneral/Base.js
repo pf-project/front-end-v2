@@ -103,7 +103,7 @@ class Base extends React.Component {
                   value={data.classe}
                   validators={["required"]}
                   errorMessages={["Ce champ est obligatoire"]}
-                  label="Pays "
+                  label="Classe "
                   id="#pays"
                 >
                   {lesclasses &&

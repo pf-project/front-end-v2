@@ -145,6 +145,15 @@ const MoreWithModal = withStyles(null)(MoreMapped);
 
 export default [
   {
+    name: "id",
+    label: "id",
+    options: {
+      filter: false,
+      sort: false,
+      display: false
+    }
+  },
+  {
     name: "code",
     label: "Code",
     options: {

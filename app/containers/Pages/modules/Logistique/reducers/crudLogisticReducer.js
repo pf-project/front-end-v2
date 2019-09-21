@@ -14,7 +14,9 @@ import {
   UPDATE_ITEM_SUCCESS,
   CLEARE_LOGISTIC_STORE,
   DELETE_ITEM_FAILURE,
-  DELETE_ITEM_SUCCESS
+  DELETE_ITEM_SUCCESS,
+  LOGISTIC_FETCH_UNITES_SUCCESS,
+  LOGISTIC_FETCH_UNITES_FAILURE
 } from "./crudLogisticConstants";
 
 const initialState = {
@@ -57,6 +59,16 @@ export default function crudLogisticReducer(
           .set("notifMsg", "Erreur lors du chargement ...")
           .set("loading", false);
       });
+    case LOGISTIC_FETCH_UNITES_SUCCESS:
+      return state.withMutations(mutableState => {
+        mutableState.set(action.data, action.payload).set("loading", false);
+      });
+    case LOGISTIC_FETCH_UNITES_FAILURE:
+      return state.withMutations(mutableState => {
+        mutableState
+          .set("notifMsg", "Erreur lors du chargement ...")
+          .set("loading", false);
+      });
     case FETCH_ITEMS_FOR_SUGGESTION_SUCCESS:
       return state.withMutations(mutableState => {
         mutableState.set("suggestions", action.payload).set("loading", false);
@@ -67,6 +79,7 @@ export default function crudLogisticReducer(
           .set("notifMsg", "Erreur lors du chargement ...")
           .set("loading", false);
       });
+
     case ADD_ITEM_FAILURE:
       return state.withMutations(mutableState => {
         mutableState

@@ -3,8 +3,6 @@ import { fetchAPI } from "../../../../../serverActions";
 import {
   startLoading,
   stopLoading,
-  fetchSuggestionsFailure,
-  fetchSuggestionsSuccess,
   addItemFailure,
   addItemSuccess,
   fetchItem,
@@ -15,7 +13,12 @@ import {
   deleteItemSuccess,
   deleteItemFailure,
   fetchUnitesFailure,
-  fetchUnitesSuccess
+  fetchUnitesSuccess,
+  fetchDesignationFailure,
+  fetchDesignationSuccess,
+  fetchSuggestionsSuccess,
+  fetchSuggestionsFailure,
+  fetchSuggestions
 } from "./crudComptabiliteActions";
 
 import {
@@ -24,7 +27,8 @@ import {
   COMPATIBILITE_ADD_ITEM_REQUEST,
   COMPATIBILITE_FETCH_ITEM_REQUEST,
   COMPATIBILITE_FETCH_UNITES_REQUEST,
-  COMPATIBILITE_DELETE_ITEM_REQUEST
+  COMPATIBILITE_DELETE_ITEM_REQUEST,
+  FETCH_DESIGNATION_REQUEST
 } from "./crudComptabiliteConstants";
 
 const erreur = "Erreur lors de l'action";
@@ -43,21 +47,6 @@ function* addItemSaga({ payload, branch }) {
   } catch (error) {
     yield put(stopLoading());
     yield put(addItemFailure(erreur));
-  }
-}
-function* fetchSuggestionsSaga({ branch }) {
-  try {
-    yield put(startLoading());
-
-    const data = yield fetchAPI({
-      method: "GET",
-      url: `/api/comptabilite/${branch}`,
-      token: window.localStorage.getItem("token")
-    });
-
-    yield put(fetchSuggestionsSuccess(data));
-  } catch (error) {
-    yield put(fetchSuggestionsFailure(erreur));
   }
 }
 
@@ -89,12 +78,44 @@ function* fetchUnitesSaga({ branch, data, withLoading }) {
   }
 }
 
+function* fetchDesignationSaga({ branch }) {
+  try {
+    yield put(startLoading());
+    const response = yield fetchAPI({
+      method: "GET",
+      url: `/api/comptabilite/${branch}`,
+      token: window.localStorage.getItem("token")
+    });
+    yield put(fetchDesignationSuccess(response));
+    yield put(stopLoading());
+  } catch (error) {
+    yield put(startLoading());
+    yield put(fetchDesignationFailure("Compte n'existe pas"));
+  }
+}
+
+function* fetchSuggestionsSaga({ branch }) {
+  try {
+    yield put(startLoading());
+
+    const data = yield fetchAPI({
+      method: "GET",
+      url: `/api/comptabilite/${branch}`,
+      token: window.localStorage.getItem("token")
+    });
+
+    yield put(fetchSuggestionsSuccess(data));
+  } catch (error) {
+    yield put(fetchSuggestionsFailure(erreur));
+  }
+}
+
 function* updateItemSaga({ payload, branch }) {
   try {
     yield put(startLoading());
-    yield fetchAPI({
+    const data = yield fetchAPI({
       method: "POST",
-      url: `/api/comptabilite/${branch}/update/${payload.code}`,
+      url: `/api/comptabilite/${branch}/update/${payload.id}`,
       token: window.localStorage.getItem("token"),
       body: payload
     });
@@ -112,7 +133,7 @@ function* deleteItemSaga({ payload, branch }) {
       token: window.localStorage.getItem("token")
     });
     yield put(deleteItemSuccess(payload));
-    yield put(fetchItem("find", branch, false));
+    yield put(fetchItem("find", branch, true));
   } catch (error) {
     yield put(deleteItemFailure(erreur));
   }
@@ -130,6 +151,7 @@ function* crudComptabiliteRootSaga() {
     ),
     takeEvery(COMPATIBILITE_FETCH_ITEM_REQUEST, fetchItemSaga),
     takeEvery(COMPATIBILITE_FETCH_UNITES_REQUEST, fetchUnitesSaga),
+    takeEvery(FETCH_DESIGNATION_REQUEST, fetchDesignationSaga),
     takeEvery(COMPATIBILITE_UPDATE_ITEM_REQUEST, updateItemSaga),
     takeEvery(COMPATIBILITE_DELETE_ITEM_REQUEST, deleteItemSaga),
     takeEvery(COMPATIBILITE_ADD_ITEM_REQUEST, addItemSaga)
