@@ -20,7 +20,7 @@ import Grid from "@material-ui/core/Grid";
 import {
   addItem,
   closeNotifAction
-} from "../../../../Logistique/reducers/crudLogisticActions";
+} from "../../../reducers/crudComptabiliteActions";
 import Initial from "./Initial";
 import Base from "./Base";
 // import Bancaire from "./Bancaire";
@@ -81,7 +81,10 @@ class CreerCompteBancaire extends React.Component {
       activeStep: 0,
       steps: ["Données initiales", "Données de base", "Comptes intermédiares"],
       data: {
-        code: "BNQ-"
+        code: "BNQ-",
+        compte_general_standard: "5141",
+        avec_compte_special: false,
+        generer_des_comptes_intermidieres: false
       }
     };
   }
@@ -135,6 +138,15 @@ class CreerCompteBancaire extends React.Component {
     const { value, name } = event.target;
     let data = { ...this.state.data };
     switch (name) {
+      case "generer_des_comptes_intermidieres":
+        data.generer_des_comptes_intermidieres = !data.generer_des_comptes_intermidieres;
+        this.setState({ data });
+        break;
+      case "avec_compte_special":
+        if (data.avec_compte_special) delete data.compte_general_special;
+        data.avec_compte_special = !data.avec_compte_special;
+        this.setState({ data });
+        break;
       case "pays":
         if (value === "Maroc") data.retenu_a_la_source = false;
         else delete data.retenu_a_la_source;
@@ -235,9 +247,9 @@ class CreerCompteBancaire extends React.Component {
   };
 
   handleSubmit = () => {
-    const { data } = this.state;
-    if (this.state.activeStep == 3)
-      this.props.addCompteBancaire(data, "compte-bancaire");
+    const { data, activeStep } = this.state;
+    if (activeStep == 1) console.log(data);
+    if (activeStep == 2) this.props.addCompteBancaire(data, "compte-bancaire");
     this.handleNext();
   };
 
