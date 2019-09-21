@@ -27,7 +27,7 @@ export default function Initiale({
       direction="column"
       justify="center"
     >
-      {/* <ValidatorForm onSubmit={handleSubmitInitial} autoComplete="off"> */}
+      {/* <ValidatorForm onSubmit={handleSubmitInitial} autoComplete="off"> */}{" "}
       <FormGroup>
         <TextValidator
           onChange={handleChangeWithIntitialValue}
@@ -38,7 +38,7 @@ export default function Initiale({
           value={data.code}
           label="Code de caisse *"
         />
-      </FormGroup>
+      </FormGroup>{" "}
       <FormGroup>
         <TextValidator
           onChange={handleChange}
@@ -49,7 +49,7 @@ export default function Initiale({
           value={data.designation}
           label="Designation *"
         />
-      </FormGroup>
+      </FormGroup>{" "}
     </Grid>
   );
 }
