@@ -134,15 +134,15 @@ export default function Base({
               </Grid>
               <Grid item xs={6}>
                 {/* <FormControl> */}
-                <SelectValidator
+                <TextValidator
                   className={classes.field}
-                  value={data.agence}
                   onChange={handleChange}
                   name="agence"
-                  label="Agence"
-                >
-                  <MenuItem value={"agence"}>liste agences</MenuItem>
-                </SelectValidator>
+                  validators={["required", "maxStringLength:25"]}
+                  errorMessages={["champ obligatoire", "maximum 25 char"]}
+                  value={data.agence}
+                  label="Agence *"
+                />
                 {/* </FormControl> */}
               </Grid>
             </Grid>
