@@ -30,10 +30,10 @@ export default function Initiale({
       {/* <ValidatorForm onSubmit={handleSubmitInitial} autoComplete="off"> */}{" "}
       <FormGroup>
         <TextValidator
-          onChange={handleChangeWithIntitialValue}
+          onChange={handleChange}
           className={classes.initialeFields}
           name="code"
-          validators={["minStringLength:4", "maxStringLength:25"]}
+          validators={["required", "maxStringLength:25"]}
           errorMessages={["Ce champ est obligatoire", "maximum 25 char"]}
           value={data.code}
           label="Code de caisse *"

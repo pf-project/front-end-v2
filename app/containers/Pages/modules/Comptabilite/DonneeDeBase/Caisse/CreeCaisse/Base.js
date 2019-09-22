@@ -28,183 +28,167 @@ import {
   SelectValidator
 } from "react-material-ui-form-validator";
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import Grid from "@material-ui/core/Grid";
 
-class Base extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const {
-      handleChange,
-      data,
-      classes,
-      handleBlur,
-      handleChangeWithIntitialValue,
-      devises,
-      pays
-    } = this.props;
-    const lesdevises = [];
-    devises.map(unite => {
-      if (lesdevises.filter(code => code === unite.code).length === 0) {
-        lesdevises.push(unite.code);
-      }
-    });
-    return (
-      <Grid container spacing={1} className={classes.grid} direction="column">
-        {/* <ValidatorForm onSubmit={handleSubmitBase} autoComplete="off"> */}
-        <Grid item xs={12}>
-          <FormGroup>
-            <Grid container>
-              <Grid item xs={5}>
-                <TextValidator
-                  className={classes.field}
-                  InputProps={{
-                    readOnly: true,
-                    fullWidth: true
-                  }}
-                  onChange={handleChange}
-                  name="code"
-                  value={data.code}
-                  label="Code de caisse  *"
-                  id="#codearticle"
-                />
-              </Grid>
-              <Grid item xs={5}>
-                <TextValidator
-                  // fullWidth={true}
-                  className={classes.field}
-                  onChange={handleChange}
-                  name="designation"
-                  validators={["required", "maxStringLength:25"]}
-                  errorMessages={["champ obligatoire", "maximum 25 char"]}
-                  value={data.designation}
-                  label="Désignation *"
-                  id="#designation"
-                />
-              </Grid>
+const Base = ({
+  handleChange,
+  data,
+  classes,
+  handleBlur,
+  handleChangeWithIntitialValue,
+  devises,
+  pays
+}) => {
+  return (
+    <Grid container spacing={1} className={classes.grid} direction="column">
+      {/* <ValidatorForm onSubmit={handleSubmitBase} autoComplete="off"> */}
+      <Grid item xs={12}>
+        <FormGroup>
+          <Grid container>
+            <Grid item xs={5}>
+              <TextValidator
+                className={classes.field}
+                InputProps={{
+                  readOnly: true,
+                  fullWidth: true
+                }}
+                onChange={handleChange}
+                name="code"
+                value={data.code}
+                label="Code de caisse  *"
+                id="#codearticle"
+              />
             </Grid>
-          </FormGroup>
-        </Grid>
-        <Toolbar className={classes.toolbar}>
-          <div className={classes.title}>
-            <Typography variant="h6">Information Caisse</Typography>
-          </div>
-        </Toolbar>
-        <Grid item>
-          <FormGroup>
-            <Grid container direction="row">
-              <Grid item xs={6}>
-                <SelectValidator
-                  className={classes.field}
-                  onChange={handleChange}
-                  name="pays"
-                  value={data.pays}
-                  validators={["required"]}
-                  errorMessages={["Ce champ est obligatoire"]}
-                  label="Pays "
-                  id="#pays"
-                >
-                  {pays &&
-                    pays.map(pay => (
-                      <MenuItem value={pay.designation}>
-                        {pay.designation}
-                      </MenuItem>
-                    ))}
-                </SelectValidator>
-              </Grid>
-              <Grid item xs={6} direction="column">
-                <FormControl
-                  component="fieldset"
-                  className={classes.formControl}
-                >
-                  <FormLabel component="legend">Statu</FormLabel>
-                  <RadioGroup
-                    aria-label="statu"
-                    name="statu"
-                    value={data.statu}
-                    onChange={handleChange}
-                  >
-                    <FormControlLabel
-                      value="Ouvert"
-                      control={<Radio />}
-                      label="Ouvert"
-                    />
-                    <FormControlLabel
-                      value="Bloqué"
-                      control={<Radio />}
-                      label="Bloqué"
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </Grid>
+            <Grid item xs={5}>
+              <TextValidator
+                // fullWidth={true}
+                className={classes.field}
+                onChange={handleChange}
+                name="designation"
+                validators={["required", "maxStringLength:25"]}
+                errorMessages={["champ obligatoire", "maximum 25 char"]}
+                value={data.designation}
+                label="Désignation *"
+                id="#designation"
+              />
             </Grid>
-            <Grid container direction="row">
-              <Grid item xs={6}>
-                <SelectValidator
-                  className={classes.field}
-                  onChange={handleChange}
-                  name="devise"
-                  value={data.devise}
-                  validators={["required"]}
-                  errorMessages={["Ce champ est obligatoire"]}
-                  label="Devise "
-                  id="#pays"
-                >
-                  {lesdevises &&
-                    lesdevises.map(devise => (
-                      <MenuItem value={devise}>{devise}</MenuItem>
-                    ))}
-                </SelectValidator>
-              </Grid>
-            </Grid>
-            <Grid container direction="row">
-              <Grid item xs={6}>
-                <TextValidator
-                  className={classes.field}
-                  onBlur={handleBlur}
-                  onChange={handleChangeWithIntitialValue}
-                  name="compte"
-                  value={data.compte}
-                  validators={[
-                    "required",
-                    "isNumber",
-                    "minStringLength:5",
-                    "maxStringLength:8"
-                  ]}
-                  errorMessages={[
-                    "Ce champ est obligatoire",
-                    "Ce champ doit etre un nombre entier",
-                    "min 5 chiffres",
-                    "max 8 chiffres"
-                  ]}
-                  label="Compte général "
-                  id="#compte"
-                />
-              </Grid>
-            </Grid>
-            <Grid container direction="row">
-              <Grid item xs={6}>
-                <SelectValidator
-                  className={classes.field}
-                  onChange={handleChange}
-                  name="codeJournal"
-                  value={data.codeJournal}
-                  label="Code de journal : "
-                  id="#pays"
-                >
-                  <MenuItem value={"code 1"}>code 1</MenuItem>
-                </SelectValidator>
-              </Grid>
-            </Grid>
-          </FormGroup>
-        </Grid>
+          </Grid>
+        </FormGroup>
       </Grid>
-    );
-  }
-}
+      <Toolbar className={classes.toolbar}>
+        <div className={classes.title}>
+          <Typography variant="h6">Information Caisse</Typography>
+        </div>
+      </Toolbar>
+      <Grid item>
+        <FormGroup>
+          <Grid container direction="row">
+            <Grid item xs={6}>
+              <SelectValidator
+                className={classes.field}
+                onChange={handleChange}
+                name="pays"
+                value={data.pays}
+                validators={["required"]}
+                errorMessages={["Ce champ est obligatoire"]}
+                label="Pays "
+                id="#pays"
+              >
+                {pays &&
+                  pays.map(pay => (
+                    <MenuItem value={pay.designation}>
+                      {pay.designation}
+                    </MenuItem>
+                  ))}
+              </SelectValidator>
+            </Grid>
+            <Grid item xs={6} direction="column">
+              <FormControl component="fieldset" className={classes.formControl}>
+                <FormLabel component="legend">Statu</FormLabel>
+                <RadioGroup
+                  aria-label="statu"
+                  name="statu"
+                  value={data.statu}
+                  onChange={handleChange}
+                >
+                  <FormControlLabel
+                    value="Ouvert"
+                    control={<Radio />}
+                    label="Ouvert"
+                  />
+                  <FormControlLabel
+                    value="Bloqué"
+                    control={<Radio />}
+                    label="Bloqué"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid container direction="row">
+            <Grid item xs={6}>
+              <SelectValidator
+                className={classes.field}
+                onChange={handleChange}
+                name="devise"
+                value={data.devise}
+                validators={["required"]}
+                errorMessages={["Ce champ est obligatoire"]}
+                label="Devise "
+                id="#pays"
+              >
+                {devises &&
+                  devises.map(devise => (
+                    <MenuItem value={devise.code}>
+                      {devise.designation}
+                    </MenuItem>
+                  ))}
+              </SelectValidator>
+            </Grid>
+          </Grid>
+          <Grid container direction="row">
+            <Grid item xs={6}>
+              <TextValidator
+                className={classes.field}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                name="compte"
+                value={data.compte}
+                validators={[
+                  "required",
+                  "isNumber",
+                  "minStringLength:5",
+                  "maxStringLength:8"
+                ]}
+                errorMessages={[
+                  "Ce champ est obligatoire",
+                  "Ce champ doit etre un nombre entier",
+                  "min 5 chiffres",
+                  "max 8 chiffres"
+                ]}
+                label="Compte général "
+                id="#compte"
+              />
+            </Grid>
+          </Grid>
+          <Grid container direction="row">
+            <Grid item xs={6}>
+              <SelectValidator
+                className={classes.field}
+                onChange={handleChange}
+                name="codeJournal"
+                value={data.codeJournal}
+                label="Code de journal : "
+                id="#pays"
+              >
+                <MenuItem value={"code 1"}>code 1</MenuItem>
+              </SelectValidator>
+            </Grid>
+          </Grid>
+        </FormGroup>
+      </Grid>
+    </Grid>
+  );
+};
 
 export default Base;
