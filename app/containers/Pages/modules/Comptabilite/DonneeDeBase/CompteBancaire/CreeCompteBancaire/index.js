@@ -21,6 +21,8 @@ import {
   addItem,
   closeNotifAction
 } from "../../../reducers/crudComptabiliteActions";
+import { fetchUnites } from "../../../../Logistique/reducers/crudLogisticActions";
+
 import Initial from "./Initial";
 import Base from "./Base";
 // import Bancaire from "./Bancaire";
@@ -78,7 +80,7 @@ class CreerCompteBancaire extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeStep: 0,
+      activeStep: 1,
       steps: ["Données initiales", "Données de base", "Comptes intermédiares"],
       data: {
         code: "BNQ-",
@@ -150,6 +152,7 @@ class CreerCompteBancaire extends React.Component {
       case "pays":
         if (value === "Maroc") data.retenu_a_la_source = false;
         else delete data.retenu_a_la_source;
+        delete data.ville;
         data[name] = value;
         this.setState({ data });
         break;
@@ -177,7 +180,7 @@ class CreerCompteBancaire extends React.Component {
   };
 
   getStepContent = stepIndex => {
-    const { classes, loading } = this.props;
+    const { classes, loading, pays, banques, villes } = this.props;
     if (loading)
       return (
         <center>
@@ -192,6 +195,8 @@ class CreerCompteBancaire extends React.Component {
             handleSubmit={this.handleSubmit}
             classes={classes}
             handleChange={this.handleChange}
+            pays={pays}
+            banques={banques}
           />
         );
       case 1:
@@ -203,6 +208,9 @@ class CreerCompteBancaire extends React.Component {
             handleChange={this.handleChange}
             addContact={this.addContact}
             removeContact={this.removeContact}
+            pays={pays}
+            banques={banques}
+            villes={villes}
           />
         );
       // case 2:
@@ -246,6 +254,24 @@ class CreerCompteBancaire extends React.Component {
     });
   };
 
+  componentDidMount = () => {
+    this.props.fetchUnites(
+      "configurationdebase/listesdebase/findPays",
+      "pays",
+      true
+    );
+    this.props.fetchUnites(
+      "configurationdebase/listesdebase/findBanques",
+      "banques",
+      true
+    );
+    this.props.fetchUnites(
+      "configurationdebase/listesdebase/findVilles",
+      "villes",
+      true
+    );
+  };
+
   handleSubmit = () => {
     const { data, activeStep } = this.state;
     if (activeStep == 1) console.log(data);
@@ -254,7 +280,7 @@ class CreerCompteBancaire extends React.Component {
   };
 
   render() {
-    const { classes, closeNotif, notifMsg } = this.props;
+    const { classes, closeNotif, notifMsg, pays } = this.props;
     const { activeStep } = this.state;
     const elements =
       this.state.activeStep === this.state.steps.length ? (
@@ -345,13 +371,17 @@ class CreerCompteBancaire extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   closeNotif: () => dispatch(closeNotifAction()),
-  addCompteBancaire: bindActionCreators(addItem, dispatch)
+  addCompteBancaire: bindActionCreators(addItem, dispatch),
+  fetchUnites: bindActionCreators(fetchUnites, dispatch)
 });
 
 const mapStateToProps = state => {
   return {
     notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
-    loading: state.get("crudLogisticReducer").get("loading")
+    loading: state.get("crudLogisticReducer").get("loading"),
+    pays: state.get("crudLogisticReducer").get("pays"),
+    banques: state.get("crudLogisticReducer").get("banques"),
+    villes: state.get("crudLogisticReducer").get("villes")
   };
 };
 

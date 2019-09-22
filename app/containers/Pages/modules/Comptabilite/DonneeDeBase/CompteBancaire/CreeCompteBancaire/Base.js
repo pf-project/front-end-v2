@@ -19,20 +19,10 @@ export default function Base({
   handleChange,
   data,
   classes,
-  addContact,
-  removeContact,
-  handleSubmit
+  pays,
+  villes,
+  banques
 }) {
-  //   const initialState = {
-  //     nom: "",
-  //     fonction: "",
-  //     email: "",
-  //     tel: ""
-  //   };
-  //   const [contacts, setContacts] = useState(initialState);
-  //   const [clearContactsFileds, setClearContactsFileds] = useState(true);
-  //   const [selectedRows, setSelectedRows] = useState([]);
-
   return (
     <div>
       <Grid container spacing={1} className={classes.grid} direction="column">
@@ -79,18 +69,22 @@ export default function Base({
             <Grid container direction="row">
               <Grid item xs={6} direction="column">
                 <SelectValidator
-                  className={classes.field}
                   value={data.pays}
+                  className={classes.field}
                   onChange={handleChange}
                   name="pays"
-                  label="Pays"
+                  label="Pays *"
+                  validators={["required"]}
+                  errorMessages={["Ce Champ est Obligatoire"]}
                 >
-                  <MenuItem value={"Maroc"}>Maroc</MenuItem>
-                  <MenuItem value={"Canada"}>Canada</MenuItem>
-                  <MenuItem value={"Australie"}>Australie</MenuItem>
-                  <MenuItem value={"Qatar"}>Qatar</MenuItem>
-                  <MenuItem value={"Italie"}>Italie</MenuItem>
-                </SelectValidator>
+                  {pays &&
+                    pays.length > 0 &&
+                    pays.map(element => (
+                      <MenuItem value={element.code}>
+                        {element.designation}
+                      </MenuItem>
+                    ))}
+                </SelectValidator>{" "}
               </Grid>
               <Grid item xs={6}>
                 <SelectValidator
@@ -102,7 +96,13 @@ export default function Base({
                   validators={["required"]}
                   errorMessages={["Ce Champ est Obligatoire"]}
                 >
-                  <MenuItem value="banque">List banques</MenuItem>
+                  {banques &&
+                    banques.length > 0 &&
+                    banques.map(element => (
+                      <MenuItem value={element.code}>
+                        {element.designation}
+                      </MenuItem>
+                    ))}
                 </SelectValidator>
               </Grid>
             </Grid>
@@ -120,9 +120,15 @@ export default function Base({
                   name="ville"
                   label="Ville"
                 >
-                  <MenuItem value={"marakesh"}>marakesh</MenuItem>
-                  <MenuItem value={"casa"}>casa</MenuItem>
-                  <MenuItem value={"Tanger"}>Tanger</MenuItem>
+                  {villes &&
+                    villes.length > 0 &&
+                    villes.map(element => {
+                      return element.pays === data.pays ? (
+                        <MenuItem value={element.code}>
+                          {element.designation}
+                        </MenuItem>
+                      ) : null;
+                    })}
                 </SelectValidator>
                 {/* </FormControl> */}
               </Grid>

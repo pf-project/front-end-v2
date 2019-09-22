@@ -13,7 +13,13 @@ import {
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 
-export default function Initial({ handleChange, classes, data }) {
+export default function Initial({
+  handleChange,
+  classes,
+  data,
+  pays,
+  banques
+}) {
   return (
     <Grid
       container
@@ -56,7 +62,11 @@ export default function Initial({ handleChange, classes, data }) {
           validators={["required"]}
           errorMessages={["Ce Champ est Obligatoire"]}
         >
-          <MenuItem value="pays">List pays</MenuItem>
+          {pays &&
+            pays.length > 0 &&
+            pays.map(element => (
+              <MenuItem value={element.code}>{element.designation}</MenuItem>
+            ))}
         </SelectValidator>
       </FormGroup>
       <FormGroup>
@@ -69,7 +79,11 @@ export default function Initial({ handleChange, classes, data }) {
           validators={["required"]}
           errorMessages={["Ce Champ est Obligatoire"]}
         >
-          <MenuItem value="banque">List banques</MenuItem>
+          {banques &&
+            banques.length > 0 &&
+            banques.map(element => (
+              <MenuItem value={element.code}>{element.designation}</MenuItem>
+            ))}
         </SelectValidator>
       </FormGroup>
     </Grid>

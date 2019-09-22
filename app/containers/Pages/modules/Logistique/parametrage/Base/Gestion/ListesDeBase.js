@@ -182,9 +182,10 @@ class ListesDeBase extends React.Component {
 
   getPaysFromId = id => {
     const { pays } = this.state;
+    console.log(pays);
     const data = pays.filter(pay => pay.id === id);
     if (data[0]) {
-      return data[0].designation;
+      return data[0].code;
     }
     return "";
   };
@@ -295,7 +296,7 @@ class ListesDeBase extends React.Component {
           id: this.getId(villes),
           code,
           designation,
-          pay: this.getPaysFromId(pay)
+          pays: this.getPaysFromId(pay)
         });
         this.setState({ villes });
         break;
