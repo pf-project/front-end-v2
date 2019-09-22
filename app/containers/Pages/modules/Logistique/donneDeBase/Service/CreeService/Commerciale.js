@@ -18,9 +18,10 @@ export default function Commerciale({
   handleChange,
   data,
   onLeavingMarge,
-  handleFixPrecisionValeurs,
+  temps,
   classes,
-  handle_price_leaving
+  handle_price_leaving,
+  devise
 }) {
   return (
     <>
@@ -123,9 +124,13 @@ export default function Commerciale({
                     validators={["required"]}
                     errorMessages={["Ce champ est obligatoire"]}
                   >
-                    <MenuItem value={"MAD"}>MAD</MenuItem>
-                    <MenuItem value={"EUR"}>EUR</MenuItem>
-                    <MenuItem value={"USD"}>USD</MenuItem>
+                    {devise &&
+                      devise.length > 0 &&
+                      devise.map(element => (
+                        <MenuItem value={element.code}>
+                          {element.designation}
+                        </MenuItem>
+                      ))}
                   </SelectValidator>
                 </FormGroup>
               </Grid>
@@ -141,11 +146,18 @@ export default function Commerciale({
                     validators={["required"]}
                     errorMessages={["Ce champ est obligatoire "]}
                   >
-                    <MenuItem value={"5"}>5</MenuItem>
+                    {temps &&
+                      temps.length > 0 &&
+                      temps.map(element => (
+                        <MenuItem value={element.code}>
+                          {element.designation}
+                        </MenuItem>
+                      ))}
+                    {/* <MenuItem value={"5"}>5</MenuItem>
                     <MenuItem value={"10"}>10</MenuItem>
                     <MenuItem value={"25"}>25</MenuItem>
                     <MenuItem value={"50"}>50</MenuItem>
-                    <MenuItem value={"100"}>100</MenuItem>
+                    <MenuItem value={"100"}>100</MenuItem> */}
                   </SelectValidator>
                 </FormGroup>
               </Grid>
@@ -331,9 +343,13 @@ export default function Commerciale({
                     validators={["required"]}
                     errorMessages={["Ce champ est obligatoire"]}
                   >
-                    <MenuItem value={"MAD"}>MAD</MenuItem>
-                    <MenuItem value={"EUR"}>EUR</MenuItem>
-                    <MenuItem value={"USD"}>USD</MenuItem>
+                    {devise &&
+                      devise.length > 0 &&
+                      devise.map(element => (
+                        <MenuItem value={element.code}>
+                          {element.designation}
+                        </MenuItem>
+                      ))}
                   </SelectValidator>
                 </FormGroup>
               </Grid>
@@ -346,24 +362,16 @@ export default function Commerciale({
                       className={classes.field}
                       name="unite_vente"
                       label="Unité de vente *"
-                      validators={[
-                        "required",
-                        "isNumber",
-                        "isPositive",
-                        "maxNumber:999999"
-                      ]}
-                      errorMessages={[
-                        "Ce champ est obligatoire",
-                        "Ce champ doit étre un nombre",
-                        "Ce champ doit étre un nombre positive",
-                        "maximum 6 taille du nombre"
-                      ]}
+                      validators={["required"]}
+                      errorMessages={["Ce champ est obligatoire"]}
                     >
-                      <MenuItem value={"5"}>5</MenuItem>
-                      <MenuItem value={"10"}>10</MenuItem>
-                      <MenuItem value={"25"}>25</MenuItem>
-                      <MenuItem value={"50"}>50</MenuItem>
-                      <MenuItem value={"100"}>100</MenuItem>
+                      {temps &&
+                        temps.length > 0 &&
+                        temps.map(element => (
+                          <MenuItem value={element.code}>
+                            {element.designation}
+                          </MenuItem>
+                        ))}
                     </SelectValidator>
                   </FormControl>
                 </FormGroup>

@@ -21,7 +21,8 @@ import {
   closeNotifAction,
   fetchItem,
   updateItem,
-  fetchSuggestions
+  fetchSuggestions,
+  fetchUnites
 } from "../../../reducers/crudLogisticActions";
 const styles = theme => ({
   root: {
@@ -142,7 +143,10 @@ class GererService extends React.Component {
   }
 
   componentWillMount = () => {
-    this.props.fetchServicesForSuggestion("service/getCodesAndDesignations");
+    const { fetchServicesForSuggestion, fetchUnites } = this.props;
+    fetchServicesForSuggestion("service/getCodesAndDesignations");
+    fetchUnites("configurationdebase/unites/findDurees", "temps", true);
+    fetchUnites("configurationdebase/unites/findDevises", "devise", true);
   };
 
   changeStep = (event, activeStep) => {
@@ -459,7 +463,9 @@ class GererService extends React.Component {
   getStepContent = stepIndex => {
     const classes = this.props.classes;
     const { codes, designations } = this.props.servicesForSuggestion;
-    if (this.props.loading)
+    const {temps,
+      devise , loading} = this.props ;
+    if (loading)
       return (
         <center>
           <CircularProgress size={24} className={classes.buttonProgress} />
@@ -514,6 +520,8 @@ class GererService extends React.Component {
             handleSubmitCommerciale={this.handleSubmitCommerciale}
             handleBack={this.handleBack}
             classes={classes}
+            temps={temps}
+            devise={devise}
           />
         );
     }
@@ -677,7 +685,8 @@ const mapDispatchToProps = dispatch => ({
   fetchServicesForSuggestion: bindActionCreators(fetchSuggestions, dispatch),
   fetchService: bindActionCreators(fetchItem, dispatch),
   updateService: bindActionCreators(updateItem, dispatch),
-  closeNotif: () => dispatch(closeNotifAction())
+  closeNotif: () => dispatch(closeNotifAction()),
+  fetchUnites: bindActionCreators(fetchUnites, dispatch)
 });
 
 const mapStateToProps = state => {
@@ -685,7 +694,9 @@ const mapStateToProps = state => {
     notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
     loading: state.get("crudLogisticReducer").get("loading"),
     serviceInfo: state.get("crudLogisticReducer").get("item"),
-    servicesForSuggestion: state.get("crudLogisticReducer").get("suggestions")
+    servicesForSuggestion: state.get("crudLogisticReducer").get("suggestions"),
+    temps: state.get("crudLogisticReducer").get("temps"),
+    devise: state.get("crudLogisticReducer").get("devise")
   };
 };
 

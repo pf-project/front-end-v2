@@ -21,7 +21,8 @@ import {
   fetchItem,
   addItem,
   fetchSuggestions,
-  closeNotifAction
+  closeNotifAction,
+  fetchUnites
 } from "../../../reducers/crudLogisticActions";
 import Commerciale from "./Commerciale";
 import Base from "./Base";
@@ -404,7 +405,8 @@ class CreerService extends React.Component {
       loading,
       categorie,
       fetchCategorie,
-      designations
+      temps,
+      devise
     } = this.props;
     if (loading)
       return (
@@ -452,6 +454,8 @@ class CreerService extends React.Component {
             handleSubmitCommerciale={this.handleSubmitCommerciale}
             handleBack={this.handleBack}
             classes={classes}
+            temps={temps}
+            devise={devise}
           />
         );
     }
@@ -523,7 +527,10 @@ class CreerService extends React.Component {
   };
 
   componentWillMount() {
-    this.props.fetchCategorieDesignation("categorie/service/find");
+    const { fetchUnites, fetchCategorieDesignation } = this.props;
+    fetchUnites("configurationdebase/unites/findDurees", "temps", true);
+    fetchUnites("configurationdebase/unites/findDevises", "devise", true);
+    fetchCategorieDesignation("categorie/service/find");
   }
 
   getSubmitter = () => {
@@ -640,14 +647,17 @@ const mapDispatchToProps = dispatch => ({
   fetchCategorieDesignation: bindActionCreators(fetchSuggestions, dispatch),
   fetchCategorie: bindActionCreators(fetchItem, dispatch),
   closeNotif: () => dispatch(closeNotifAction()),
-  addService: bindActionCreators(addItem, dispatch)
+  addService: bindActionCreators(addItem, dispatch),
+  fetchUnites: bindActionCreators(fetchUnites, dispatch)
 });
 
 const mapStateToProps = state => ({
   notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
   loading: state.get("crudLogisticReducer").get("loading"),
   designations: state.get("crudLogisticReducer").get("suggestions"),
-  categorie: state.get("crudLogisticReducer").get("item")
+  categorie: state.get("crudLogisticReducer").get("item"),
+  temps: state.get("crudLogisticReducer").get("temps"),
+  devise: state.get("crudLogisticReducer").get("devise")
 });
 
 // //const reducer = "initval";
