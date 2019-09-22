@@ -23,6 +23,13 @@ const styles = theme => ({
     marginTop: theme.spacing(1),
     marginLeft: theme.spacing(30)
   },
+  elementsLeft: {
+    position: "absolute",
+    left: theme.spacing(1),
+    // top: theme.spacing(1),
+    marginTop: theme.spacing(1),
+    marginRight: theme.spacing(30)
+  },
   button: {
     marginLeft: theme.spacing(1)
   },
@@ -83,8 +90,17 @@ const PageTitle = ({
 
   return (
     <Card small className={classes.pageTitle}>
-      <Grid container>
-        <Grid xs={6}>
+      <Grid container spacing={2}>
+        {withBackOption && (
+          <Grid xs={1}>
+            <div className={classes.elementsLeft}>
+              <Button onClick={handleOpen} className={classes.button}>
+                <i class="material-icons">keyboard_backspace</i>
+              </Button>
+            </div>
+          </Grid>
+        )}
+        <Grid xs={7}>
           <Dialog
             fullScreen={fullScreen}
             open={open}
@@ -108,6 +124,7 @@ const PageTitle = ({
               </Button>
             </DialogActions>
           </Dialog>
+
           <Typography component="h4" variant="h4">
             {title}
           </Typography>
@@ -119,21 +136,8 @@ const PageTitle = ({
             }}
           />
         </Grid>
-        <Grid xs={6}>
-          <div className={classes.elements}>
-            {elements}
-            {withBackOption && (
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={handleOpen}
-                className={classes.button}
-              >
-                {" "}
-                Quitter
-              </Button>
-            )}
-          </div>
+        <Grid>
+          <div className={classes.elements}>{elements}</div>
         </Grid>
       </Grid>
     </Card>
