@@ -21,7 +21,8 @@ import {
   fetchItem,
   addItem,
   fetchSuggestions,
-  closeNotifAction
+  closeNotifAction,
+  fetchUnites
 } from "../../../reducers/crudLogisticActions";
 import Commerciale from "./Commerciale";
 import Stockage from "./Stockage";
@@ -293,10 +294,18 @@ class CreerArticle extends React.Component {
           data
         });
         break;
+      case "type_unite_achat":
+        data = { ...this.state.data };
+        if (!data.type_unite_vente) data.type_unite_vente = value;
+        data.type_unite_achat = value;
+        delete data.unite_achat;
+        this.setState({
+          data
+        });
+        break;
       case "unite_achat":
         data = { ...this.state.data };
-        if (data.utilite === "MRCH" && !data.unite_vente)
-          data.unite_vente = value;
+        if (!data.unite_vente) data.unite_vente = value;
         data.unite_achat = value;
         this.setState({
           data
@@ -366,6 +375,14 @@ class CreerArticle extends React.Component {
           data
         });
         break;
+      case "type_unite_vente":
+        data = { ...this.state.data };
+        delete data.unite_vente;
+        data.type_unite_vente = value;
+        this.setState({
+          data
+        });
+        break;
       case "utilite":
         data = { ...this.state.data };
         switch (value) {
@@ -378,6 +395,7 @@ class CreerArticle extends React.Component {
               (data.prix_achat_TTC = ""),
               (data.prix_vente_HT = ""),
               (data.prix_vente_TTC = "");
+            data.type_unite_vente = "";
             break;
           case "CONS":
             delete data.marge,
@@ -386,6 +404,7 @@ class CreerArticle extends React.Component {
               delete data.taux_tva_vente,
               delete data.prix_vente_HT,
               delete data.prix_vente_TTC;
+            delete data.type_unite_vente;
             break;
         }
 
@@ -407,7 +426,11 @@ class CreerArticle extends React.Component {
       loading,
       categorie,
       fetchCategorie,
-      designations
+      designations,
+      poids,
+      langueur,
+      devise,
+      volume
     } = this.props;
     if (loading)
       return (
@@ -453,6 +476,8 @@ class CreerArticle extends React.Component {
             handleSubmitStockage={this.handleSubmitStockage}
             handleBack={this.handleBack}
             classes={classes}
+            poids={poids}
+            langueur={langueur}
           />
         );
       default:
@@ -466,6 +491,10 @@ class CreerArticle extends React.Component {
             handleSubmitCommerciale={this.handleSubmitCommerciale}
             handleBack={this.handleBack}
             classes={classes}
+            devise={devise}
+            poids={poids}
+            langueur={langueur}
+            volume={volume}
           />
         );
     }
@@ -537,7 +566,13 @@ class CreerArticle extends React.Component {
   };
 
   componentWillMount() {
-    this.props.fetchCategorieDesignation("categorie/article/find");
+    const { fetchUnites, fetchCategorieDesignation } = this.props;
+
+    fetchUnites("configurationdebase/unites/finVolumes", "volume", true);
+    fetchUnites("configurationdebase/unites/findPoids", "poids", true);
+    fetchUnites("configurationdebase/unites/findDevises", "devise", true);
+    fetchUnites("configurationdebase/unites/findLongueurs", "langueur", true);
+    fetchCategorieDesignation("categorie/article/find");
   }
 
   getSubmitter = () => {
@@ -654,6 +689,7 @@ class CreerArticle extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   fetchCategorieDesignation: bindActionCreators(fetchSuggestions, dispatch),
+  fetchUnites: bindActionCreators(fetchUnites, dispatch),
   fetchCategorie: bindActionCreators(fetchItem, dispatch),
   closeNotif: () => dispatch(closeNotifAction()),
   addArticle: bindActionCreators(addItem, dispatch)
@@ -663,7 +699,11 @@ const mapStateToProps = state => ({
   notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
   loading: state.get("crudLogisticReducer").get("loading"),
   designations: state.get("crudLogisticReducer").get("suggestions"),
-  categorie: state.get("crudLogisticReducer").get("item")
+  categorie: state.get("crudLogisticReducer").get("item"),
+  poids: state.get("crudLogisticReducer").get("poids"),
+  langueur: state.get("crudLogisticReducer").get("langueur"),
+  devise: state.get("crudLogisticReducer").get("devise"),
+  volume: state.get("crudLogisticReducer").get("volume")
 });
 
 // //const reducer = "initval";

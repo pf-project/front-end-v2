@@ -167,6 +167,23 @@ class CreerCaisse extends React.Component {
     });
   };
 
+  componentWillReceiveProps(nextProps) {
+    const { designation } = nextProps;
+    if (designation) {
+      this.setState({
+        designation
+      });
+    }
+  }
+
+  handleOnBlur = () => {
+    const { fetchDesignation } = this.props;
+    const { comptegeneral } = this.state.data;
+    fetchDesignation(
+      "donneedebase/comptegeneral/findDesignation/" + comptegeneral
+    );
+  };
+
   handleChange = event => {
     const { value, name } = event.target;
     const { data } = this.state;
@@ -207,9 +224,9 @@ class CreerCaisse extends React.Component {
         break;
       case "comptegeneral":
         if (value) {
-          this.props.fetchDesignation(
-            "donneedebase/comptegeneral/findDesignation/" + value
-          );
+          // this.props.fetchDesignation(
+          //   "donneedebase/comptegeneral/findDesignation/" + value
+          // );
 
           this.setState({
             designation: this.props.designation,
@@ -632,8 +649,10 @@ class CreerCaisse extends React.Component {
               <Grid item xs={2}>
                 <TextValidator
                   onChange={this.handleChange}
+                  onBlur={this.handleOnBlur}
                   name="comptegeneral"
-                  style={{ width: "80%" }}
+                  type="number"
+                  // style={{ width: "80%" }}
                   value={comptegeneral}
                   validators={["required", "maxStringLength:8"]}
                   errorMessages={["champ obligatoire", "maximum 8 chiffres"]}

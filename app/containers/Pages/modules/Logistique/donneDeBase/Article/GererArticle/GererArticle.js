@@ -22,7 +22,8 @@ import {
   closeNotifAction,
   fetchItem,
   updateItem,
-  fetchSuggestions
+  fetchSuggestions,
+  fetchUnites
 } from "../../../reducers/crudLogisticActions";
 const styles = theme => ({
   root: {
@@ -144,7 +145,12 @@ class GererArticle extends React.Component {
   }
 
   componentWillMount = () => {
-    this.props.fetchArticlesForSuggestion("article/getCodesAndDesignations");
+    const { fetchUnites, fetchArticlesForSuggestion } = this.props;
+    fetchUnites("configurationdebase/unites/finVolumes", "volume", true);
+    fetchUnites("configurationdebase/unites/findPoids", "poids", true);
+    fetchUnites("configurationdebase/unites/findDevises", "devise", true);
+    fetchUnites("configurationdebase/unites/findLongueurs", "langueur", true);
+    fetchArticlesForSuggestion("article/getCodesAndDesignations");
   };
 
   changeStep = (event, activeStep) => {
@@ -295,10 +301,18 @@ class GererArticle extends React.Component {
           data
         });
         break;
+      case "type_unite_achat":
+        data = { ...this.state.data };
+        if (!data.type_unite_vente) data.type_unite_vente = value;
+        data.type_unite_achat = value;
+        delete data.unite_achat;
+        this.setState({
+          data
+        });
+        break;
       case "unite_achat":
         data = { ...this.state.data };
-        if (data.utilite === "MRCH" && !data.unite_vente)
-          data.unite_vente = value;
+        if (!data.unite_vente) data.unite_vente = value;
         data.unite_achat = value;
         this.setState({
           data
@@ -368,6 +382,14 @@ class GererArticle extends React.Component {
           data
         });
         break;
+      case "type_unite_vente":
+        data = { ...this.state.data };
+        delete data.unite_vente;
+        data.type_unite_vente = value;
+        this.setState({
+          data
+        });
+        break;
       case "utilite":
         data = { ...this.state.data };
         switch (value) {
@@ -380,6 +402,7 @@ class GererArticle extends React.Component {
               (data.prix_achat_TTC = ""),
               (data.prix_vente_HT = ""),
               (data.prix_vente_TTC = "");
+            data.type_unite_vente = "";
             break;
           case "CONS":
             delete data.marge,
@@ -388,6 +411,7 @@ class GererArticle extends React.Component {
               delete data.taux_tva_vente,
               delete data.prix_vente_HT,
               delete data.prix_vente_TTC;
+            delete data.type_unite_vente;
             break;
         }
 
@@ -442,7 +466,8 @@ class GererArticle extends React.Component {
   getStepContent = stepIndex => {
     const classes = this.props.classes;
     const { codes, designations } = this.props.articlesForSuggestion;
-    if (this.props.loading)
+    const { poids, langueur, devise, volume, loading } = this.props;
+    if (loading)
       return (
         <center>
           <CircularProgress size={24} className={classes.buttonProgress} />
@@ -494,6 +519,8 @@ class GererArticle extends React.Component {
             handleSubmitStockage={this.handleSubmitStockage}
             handleBack={this.handleBack}
             classes={classes}
+            poids={poids}
+            langueur={langueur}
           />
         );
       default:
@@ -507,6 +534,10 @@ class GererArticle extends React.Component {
             handleSubmitCommerciale={this.handleSubmitCommerciale}
             handleBack={this.handleBack}
             classes={classes}
+            devise={devise}
+            poids={poids}
+            langueur={langueur}
+            volume={volume}
           />
         );
     }
@@ -669,6 +700,7 @@ class GererArticle extends React.Component {
 const mapDispatchToProps = dispatch => ({
   fetchArticlesForSuggestion: bindActionCreators(fetchSuggestions, dispatch),
   fetchArticle: bindActionCreators(fetchItem, dispatch),
+  fetchUnites: bindActionCreators(fetchUnites, dispatch),
   updateArticle: bindActionCreators(updateItem, dispatch),
   closeNotif: () => dispatch(closeNotifAction())
 });
@@ -678,7 +710,11 @@ const mapStateToProps = state => {
     notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
     loading: state.get("crudLogisticReducer").get("loading"),
     articleInfo: state.get("crudLogisticReducer").get("item"),
-    articlesForSuggestion: state.get("crudLogisticReducer").get("suggestions")
+    articlesForSuggestion: state.get("crudLogisticReducer").get("suggestions"),
+    poids: state.get("crudLogisticReducer").get("poids"),
+    langueur: state.get("crudLogisticReducer").get("langueur"),
+    devise: state.get("crudLogisticReducer").get("devise"),
+    volume: state.get("crudLogisticReducer").get("volume")
   };
 };
 

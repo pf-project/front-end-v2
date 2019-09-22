@@ -20,8 +20,42 @@ export default function Commerciale({
   onLeavingMarge,
   handleFixPrecisionValeurs,
   classes,
-  handle_price_leaving
+  handle_price_leaving,
+  devise,
+  poids,
+  langueur,
+  volume
 }) {
+  let unites_achat = [];
+  let unites_vente = [];
+  switch (data.type_unite_achat) {
+    case "v":
+      unites_achat = volume;
+
+      break;
+    case "p":
+      unites_achat = poids;
+      break;
+    case "l":
+      unites_achat = langueur;
+      break;
+  }
+
+  if (!data.type_unite_vente) unites_vente = unites_achat;
+  else
+    switch (data.type_unite_vente) {
+      case "v":
+        unites_vente = volume;
+
+        break;
+      case "p":
+        unites_vente = poids;
+        break;
+      case "l":
+        unites_vente = langueur;
+        break;
+    }
+
   return (
     <>
       {/* <ValidatorForm autoComplete="off" onSubmit={handleSubmit}> */}
@@ -121,34 +155,53 @@ export default function Commerciale({
                 validators={["required"]}
                 errorMessages={["Ce champ est obligatoire"]}
               >
-                <MenuItem value={"MAD"}>MAD</MenuItem>
-                <MenuItem value={"EUR"}>EUR</MenuItem>
-                <MenuItem value={"USD"}>USD</MenuItem>
+                {devise &&
+                  devise.length > 0 &&
+                  devise.map(element => (
+                    <MenuItem value={element.code}>
+                      {element.designation}
+                    </MenuItem>
+                  ))}
               </SelectValidator>
             </FormGroup>
           </Grid>
-          <Grid item xs={4}>
-            <FormGroup>
-              <SelectValidator
-                className={classes.field}
-                value={data.unite_achat}
-                onChange={handleChange}
-                name="unite_achat"
-                label="Unité  d'achat *"
-                // style={{ minWidth: 300 }}
-                validators={["required"]}
-                errorMessages={["Ce champ est obligatoire "]}
-              >
-                <MenuItem value={"5"}>5</MenuItem>
-                <MenuItem value={"10"}>10</MenuItem>
-                <MenuItem value={"25"}>25</MenuItem>
-                <MenuItem value={"50"}>50</MenuItem>
-                <MenuItem value={"100"}>100</MenuItem>
-              </SelectValidator>
-            </FormGroup>
+          {/* <FormGroup> */}
+          <Grid item xs={2}>
+            <SelectValidator
+              className={classes.field}
+              value={data.type_unite_achat}
+              onChange={handleChange}
+              name="type_unite_achat"
+              label="Type d'unité"
+            >
+              <MenuItem value={"v"}>Volume</MenuItem>
+              <MenuItem value={"p"}>Poids</MenuItem>
+              <MenuItem value={"l"}>Longueur</MenuItem>
+            </SelectValidator>
           </Grid>
+          <Grid item xs={2}>
+            <SelectValidator
+              className={classes.field}
+              value={data.unite_achat}
+              onChange={handleChange}
+              name="unite_achat"
+              label="Unité  d'achat *"
+              // style={{ minWidth: 300 }}
+              validators={["required"]}
+              errorMessages={["Ce champ est obligatoire "]}
+            >
+              {unites_achat.length > 0 &&
+                unites_achat.map(element => (
+                  <MenuItem value={element.code}>
+                    {element.designation}
+                  </MenuItem>
+                ))}
+            </SelectValidator>
+          </Grid>
+          {/* </FormGroup> */}
         </Grid>
       </Grid>
+
       <Grid item xs={12}>
         <Grid container direction="row">
           <Grid item xs={6}>
@@ -228,7 +281,7 @@ export default function Commerciale({
           </Grid>
         </Grid>
       </Grid>
-
+      {/* data.utilite === "MRCH" */}
       {data.utilite === "MRCH" && (
         <div>
           <Toolbar className={classes.toolbar}>
@@ -344,56 +397,59 @@ export default function Commerciale({
                   />
                 </FormGroup>
               </Grid>
-
               <Grid item xs={2}>
                 <FormGroup>
                   <SelectValidator
                     value={data.devise_vente}
                     onChange={handleChange}
                     className={classes.field}
-                    defaultValue=" "
                     name="devise_vente"
                     label="Devise *"
                     validators={["required"]}
                     errorMessages={["Ce champ est obligatoire"]}
                   >
-                    <MenuItem value={"MAD"}>MAD</MenuItem>
-                    <MenuItem value={"EUR"}>EUR</MenuItem>
-                    <MenuItem value={"USD"}>USD</MenuItem>
+                    {devise &&
+                      devise.length > 0 &&
+                      devise.map(element => (
+                        <MenuItem value={element.code}>
+                          {element.designation}
+                        </MenuItem>
+                      ))}
                   </SelectValidator>
                 </FormGroup>
               </Grid>
-              <Grid item xs={4}>
-                <FormGroup>
-                  <FormControl>
-                    <SelectValidator
-                      value={data.unite_vente}
-                      onChange={handleChange}
-                      className={classes.field}
-                      name="unite_vente"
-                      label="Unité de vente *"
-                      validators={[
-                        "required",
-                        "isNumber",
-                        "isPositive",
-                        "maxNumber:999999"
-                      ]}
-                      errorMessages={[
-                        "Ce champ est obligatoire",
-                        "Ce champ doit étre un nombre",
-                        "Ce champ doit étre un nombre positive",
-                        "maximum 6 taille du nombre"
-                      ]}
-                    >
-                      <MenuItem value={"5"}>5</MenuItem>
-                      <MenuItem value={"10"}>10</MenuItem>
-                      <MenuItem value={"25"}>25</MenuItem>
-                      <MenuItem value={"50"}>50</MenuItem>
-                      <MenuItem value={"100"}>100</MenuItem>
-                    </SelectValidator>
-                  </FormControl>
-                </FormGroup>
+              <Grid item xs={2}>
+                <SelectValidator
+                  className={classes.field}
+                  value={data.type_unite_vente}
+                  onChange={handleChange}
+                  name="type_unite_vente"
+                  label="Type d'unité"
+                >
+                  <MenuItem value={"v"}>Volume</MenuItem>
+                  <MenuItem value={"p"}>Poids</MenuItem>
+                  <MenuItem value={"l"}>Longueur</MenuItem>
+                </SelectValidator>
               </Grid>
+              <Grid item xs={2}>
+                <SelectValidator
+                  className={classes.field}
+                  value={data.unite_vente}
+                  onChange={handleChange}
+                  name="unite_vente"
+                  label="Unité  de vente *"
+                  // style={{ minWidth: 300 }}
+                  validators={["required"]}
+                  errorMessages={["Ce champ est obligatoire "]}
+                >
+                  {unites_vente.length > 0 &&
+                    unites_vente.map(element => (
+                      <MenuItem value={element.code}>
+                        {element.designation}
+                      </MenuItem>
+                    ))}
+                </SelectValidator>
+              </Grid>{" "}
             </Grid>
           </Grid>
           <Grid item xs={12}>

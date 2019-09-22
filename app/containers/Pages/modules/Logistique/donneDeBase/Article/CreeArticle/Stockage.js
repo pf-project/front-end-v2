@@ -33,7 +33,9 @@ export default function Stockage({
   handleChange,
   data,
   handleFixPrecisionValeurs,
-  classes
+  classes,
+  poids,
+  langueur
 }) {
   let dimensionValidator = {
     validators: [],
@@ -56,6 +58,7 @@ export default function Stockage({
     dimensionValidator.validators = [];
     dimensionValidator.errors = [];
   }
+  console.log(langueur);
   return (
     <div>
       <Grid container spacing={1} className={classes.grid} direction="column">
@@ -186,14 +189,14 @@ export default function Stockage({
                   onChange={handleChange}
                   name="unite_poid"
                   label="Unité"
-                  validators={["maxNumber:100"]}
-                  errorMessages={["taille maximale est 100"]}
                 >
-                  <MenuItem value={"5"}>5</MenuItem>
-                  <MenuItem value={"10"}>10</MenuItem>
-                  <MenuItem value={"25"}>25</MenuItem>
-                  <MenuItem value={"50"}>50</MenuItem>
-                  <MenuItem value={"100"}>100</MenuItem>
+                  {poids &&
+                    poids.length > 0 &&
+                    poids.map(element => (
+                      <MenuItem value={element.code}>
+                        {element.designation}
+                      </MenuItem>
+                    ))}
                 </SelectValidator>
                 {/* </FormControl> */}
               </Grid>
@@ -253,14 +256,14 @@ export default function Stockage({
                   className={classes.field}
                   name="unite_dim"
                   label="Unité"
-                  validators={["maxNumber:100"]}
-                  errorMessages={["taille maximale est 100"]}
                 >
-                  <MenuItem value={"5"}>5</MenuItem>
-                  <MenuItem value={"10"}>10</MenuItem>
-                  <MenuItem value={"25"}>25</MenuItem>
-                  <MenuItem value={"50"}>50</MenuItem>
-                  <MenuItem value={"100"}>100</MenuItem>
+                  {langueur &&
+                    langueur.length > 0 &&
+                    langueur.map(element => (
+                      <MenuItem value={element.code}>
+                        {element.designation}
+                      </MenuItem>
+                    ))}
                 </SelectValidator>
                 {/* </FormControl> */}
               </Grid>
