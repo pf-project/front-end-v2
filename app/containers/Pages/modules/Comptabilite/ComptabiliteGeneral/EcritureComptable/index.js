@@ -1,11 +1,12 @@
 import React from "react";
-import { MenuChooser, PageTitle } from "enl-components";
+import {
+  MenuChooser,
+  PageTitle
+} from "enl-components";
 
 const index = () => {
-  const images = [
-    {
-      url:
-        "/app/Comptabilite/Comptabilité-générale/Ecriture-comptable/créer-écriture-comptable",
+  const images = [{
+      url: "/app/Comptabilite/Comptabilité-générale/Ecriture-comptable/créer-écriture-comptable",
       title: "Ajouter",
       width: "33%"
     }
@@ -21,14 +22,19 @@ const index = () => {
     //   width: "33%"
     // }
   ];
-  return (
-    <>
-      <PageTitle
-        title="Ecriture comptable"
-        pathname="/ Comptabilité/Comptabilité générale/Ecriture comptable"
-      />{" "}
-      <MenuChooser images={images} />
-    </>
+  return ( <
+    >
+    <
+    PageTitle title = "Ecriture comptable"
+    pathname = "/ Comptabilité/Comptabilité générale/Ecriture comptable" /
+    > {
+      " "
+    } <
+    MenuChooser images = {
+      images
+    }
+    /> <
+    />
   );
 };
 

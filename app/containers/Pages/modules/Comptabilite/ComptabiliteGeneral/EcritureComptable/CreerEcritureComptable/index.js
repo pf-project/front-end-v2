@@ -42,6 +42,14 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { makeStyles } from "@material-ui/core/styles";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Paper from "@material-ui/core/Paper";
+import { grey } from "@material-ui/core/colors";
+
+import IconButton from "@material-ui/core/IconButton";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 const styles = theme => ({
   root: {
@@ -148,9 +156,16 @@ class CreerCaisse extends React.Component {
         dataTable: []
       },
       open: false,
-      errorMsg: ""
+      errorMsg: "",
+      showButton: false
     };
   }
+
+  handleFocus = () => {
+    this.setState({
+      showButton: true
+    });
+  };
 
   handleChange = event => {
     const { value, name } = event.target;
@@ -197,7 +212,8 @@ class CreerCaisse extends React.Component {
           );
 
           this.setState({
-            designation: this.props.designation
+            designation: this.props.designation,
+            showButton: true
           });
         } else {
           this.setState({
@@ -321,6 +337,10 @@ class CreerCaisse extends React.Component {
     });
   };
 
+  handleClickAway = () => {
+    this.setState({ showButton: false });
+  };
+
   handleComptabiliseSubmit = () => {
     const { credit, debit, data } = this.state;
 
@@ -364,7 +384,8 @@ class CreerCaisse extends React.Component {
       designation,
       debiterCrediter,
       montant,
-      errorMsg
+      errorMsg,
+      showButton
     } = this.state;
 
     const headers = [
@@ -499,8 +520,10 @@ class CreerCaisse extends React.Component {
               aria-describedby="alert-dialog-description"
               fullWidth
             >
+              {" "}
               <DialogTitle id="alert-dialog-title">
-                {"Choisir le compte général"}
+                {" "}
+                Choisir un compte général
               </DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
@@ -607,17 +630,6 @@ class CreerCaisse extends React.Component {
           <Grid container>
             <Grid container>
               <Grid item xs={2}>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={this.handleClickOpen}
-                >
-                  Choisir le compte général
-                </Button>
-              </Grid>
-            </Grid>
-            <Grid container>
-              <Grid item xs={3}>
                 <TextValidator
                   onChange={this.handleChange}
                   name="comptegeneral"
@@ -627,9 +639,29 @@ class CreerCaisse extends React.Component {
                   errorMessages={["champ obligatoire", "maximum 8 chiffres"]}
                   label="Code général "
                   id="#comptegeneral"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        {showButton && (
+                          <IconButton
+                            edge="start"
+                            aria-label="toggle password visibility"
+                            //onClick={handleClickShowPassword}
+                            //onMouseDown={handleMouseDownPassword}
+                          >
+                            <ShowButton
+                              handleClickOpen={this.handleClickOpen}
+                              handleClickAway={this.handleClickAway}
+                            />
+                          </IconButton>
+                        )}
+                      </InputAdornment>
+                    )
+                  }}
                 />
               </Grid>
-              <Grid item xs={3}>
+
+              <Grid item xs={4}>
                 <TextValidator
                   style={{ width: "80%" }}
                   // className={classes.field}
@@ -739,3 +771,39 @@ const CreerCaisseReduxed = connect(
 )(CreerCaisse);
 
 export default withStyles(styles)(CreerCaisseReduxed);
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    position: "relative"
+  },
+  paper: {
+    position: "absolute",
+    top: 36,
+    right: 0,
+    left: 0
+  },
+  fake: {
+    backgroundColor: grey[200],
+    height: theme.spacing(1),
+    margin: theme.spacing(2),
+    // Selects every two elements among any group of siblings.
+    "&:nth-child(2n)": {
+      marginRight: theme.spacing(3)
+    }
+  }
+}));
+function ShowButton({ handleClickAway, handleClickOpen }) {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      <ClickAwayListener onClickAway={handleClickAway}>
+        <div>
+          <Button onClick={handleClickOpen}>
+            <i class="material-icons">list_alt</i>
+          </Button>
+        </div>
+      </ClickAwayListener>
+    </div>
+  );
+}
