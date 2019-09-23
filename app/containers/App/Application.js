@@ -1,7 +1,7 @@
-import React from "react";
-import { PropTypes } from "prop-types";
-import { Switch, Route } from "react-router-dom";
-import Dashboard from "../Templates/Dashboard";
+import React from 'react';
+import { PropTypes } from 'prop-types';
+import { Switch, Route } from 'react-router-dom';
+import Dashboard from '../Templates/Dashboard';
 import {
   GestionUtilisateur,
   CategorieArticle,
@@ -39,7 +39,7 @@ import {
   GererCaisse,
   GererCompteGeneral,
   GrandLivre
-} from "../pageListAsync";
+} from '../pageListAsync';
 
 class Application extends React.Component {
   render() {

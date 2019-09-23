@@ -1,5 +1,5 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import {
@@ -30,19 +30,13 @@ import {
 } from "react-material-ui-form-validator";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { PageTitle, Notification, SimpleTable } from "enl-components";
-import {
-  addItem,
-  closeNotifAction,
-  fetchUnites,
-  fetchDesignation
-} from "../../../reducers/crudComptabiliteActions";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { makeStyles } from "@material-ui/core/styles";
+
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Paper from "@material-ui/core/Paper";
 import { grey } from "@material-ui/core/colors";
@@ -50,6 +44,12 @@ import { grey } from "@material-ui/core/colors";
 import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import {
+  addItem,
+  closeNotifAction,
+  fetchUnites,
+  fetchDesignation
+} from "../../../reducers/crudComptabiliteActions";
 
 const styles = theme => ({
   root: {
@@ -244,6 +244,7 @@ class CreerCaisse extends React.Component {
       [name]: value
     });
   };
+
   componentWillMount() {
     this.props.fetchUnites(
       "donneedebase/comptegeneral/findClasses",
@@ -319,8 +320,8 @@ class CreerCaisse extends React.Component {
   };
 
   calculDebitCredit = dataTable => {
-    let credit = 0,
-      debit = 0;
+    let credit = 0;
+    let debit = 0;
     dataTable.map(operation => {
       switch (operation.debiterCrediter) {
         case "Crédit":
@@ -333,6 +334,7 @@ class CreerCaisse extends React.Component {
     });
     this.setState({ credit, debit });
   };
+
   handleReset = () => {
     this.setState({
       selectedRows: [],
@@ -378,6 +380,7 @@ class CreerCaisse extends React.Component {
       this.handleReset();
     }
   };
+
   render() {
     const {
       classes,
@@ -429,7 +432,13 @@ class CreerCaisse extends React.Component {
       </>
     );
     return (
-      <>
+      <div>
+        <PageTitle
+          title="Créer une écriture comptable"
+          pathname="/Comptabilite/Comptabilité générale/Écriture comptable/créer une écriture comptable"
+          elements={elements}
+          withBackOption
+        />
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
         <Notification
           close={() => {
@@ -439,330 +448,330 @@ class CreerCaisse extends React.Component {
           message={errorMsg}
           branch=""
         />
-        <Grid container spacing={1} className={classes.grid} direction="column">
-          <ValidatorForm onSubmit={this.handleComptabiliseSubmit}>
-            <PageTitle
-              title="Créer une écriture comptable"
-              pathname="/Comptabilite/Comptabilité générale/Écriture comptable/créer une écriture comptable"
-              elements={elements}
-              withBackOption={true}
-            />
+        <div className={classes.root}>
+          <Grid
+            container
+            spacing={1}
+            className={classes.grid}
+            direction="column"
+          >
+            <ValidatorForm onSubmit={this.handleComptabiliseSubmit}>
+              <Grid item xs={12}>
+                <FormGroup>
+                  <Grid container>
+                    <Grid item xs={5}>
+                      <SelectValidator
+                        onChange={this.handleChange}
+                        className={classes.field}
+                        value={data.journal}
+                        name="journal"
+                        validators={["required"]}
+                        errorMessages={["champ obligatoire"]}
+                        label="Journal *:"
+                      >
+                        <MenuItem value="Ventes">Ventes</MenuItem>
 
-            <Grid item xs={12}>
-              <FormGroup>
-                <Grid container>
-                  <Grid item xs={5}>
-                    <SelectValidator
-                      onChange={this.handleChange}
-                      className={classes.field}
-                      value={data.journal}
-                      name="journal"
-                      validators={["required"]}
-                      errorMessages={["champ obligatoire"]}
-                      label="Journal *:"
-                    >
-                      <MenuItem value="Ventes">Ventes</MenuItem>
+                        <MenuItem value="Achats">Achats</MenuItem>
 
-                      <MenuItem value="Achats">Achats</MenuItem>
+                        <MenuItem value="Opérations diverses">
+                          Opérations diverses
+                        </MenuItem>
 
-                      <MenuItem value="Opérations diverses">
-                        Opérations diverses
-                      </MenuItem>
+                        <MenuItem value="Trésorerie">Trésorerie</MenuItem>
+                      </SelectValidator>
+                    </Grid>
+                    <Grid item xs={5}>
+                      <TextValidator
+                        // fullWidth={true}
+                        className={classes.field}
+                        onChange={this.handleChange}
+                        name="refenrece"
+                        validators={["required"]}
+                        errorMessages={["champ obligatoire"]}
+                        value={data.refenrece}
+                        label="Référence *:"
+                        id="#refenrece"
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid container>
+                    <Grid item xs={5}>
+                      <TextValidator
+                        // fullWidth={true}
+                        className={classes.field}
+                        onChange={this.handleChange}
+                        name="dateComptable"
+                        value={data.dateComptable}
+                        type="date"
+                        label="Date comptable : "
+                        id="#dateComptable"
+                      />
+                    </Grid>
+                    <Grid item xs={5}>
+                      <TextValidator
+                        // fullWidth={true}
+                        className={classes.field}
+                        onChange={this.handleChange}
+                        name="lettrageManuel"
+                        value={data.lettrageManuel}
+                        label="Lettrage manuel "
+                        id="#lettrageManuel"
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid container>
+                    <Grid item xs={5}>
+                      <TextValidator
+                        onChange={this.handleChange}
+                        className={classes.field}
+                        value={data.libelleOperation}
+                        name="libelleOperation"
+                        validators={["required"]}
+                        errorMessages={["champ obligatoire"]}
+                        label="Libellé d'opération* :"
+                      />
+                    </Grid>
+                  </Grid>
+                </FormGroup>
+              </Grid>
+            </ValidatorForm>
 
-                      <MenuItem value="Trésorerie">Trésorerie</MenuItem>
-                    </SelectValidator>
-                  </Grid>
-                  <Grid item xs={5}>
-                    <TextValidator
-                      // fullWidth={true}
-                      className={classes.field}
-                      onChange={this.handleChange}
-                      name="refenrece"
-                      validators={["required"]}
-                      errorMessages={["champ obligatoire"]}
-                      value={data.refenrece}
-                      label="Référence *:"
-                      id="#refenrece"
-                    />
-                  </Grid>
-                </Grid>
-                <Grid container>
-                  <Grid item xs={5}>
-                    <TextValidator
-                      // fullWidth={true}
-                      className={classes.field}
-                      onChange={this.handleChange}
-                      name="dateComptable"
-                      value={data.dateComptable}
-                      type="date"
-                      label="Date comptable : "
-                      id="#dateComptable"
-                    />
-                  </Grid>
-                  <Grid item xs={5}>
-                    <TextValidator
-                      // fullWidth={true}
-                      className={classes.field}
-                      onChange={this.handleChange}
-                      name="lettrageManuel"
-                      value={data.lettrageManuel}
-                      label="Lettrage manuel "
-                      id="#lettrageManuel"
-                    />
-                  </Grid>
-                </Grid>
-                <Grid container>
-                  <Grid item xs={5}>
-                    <TextValidator
-                      onChange={this.handleChange}
-                      className={classes.field}
-                      value={data.libelleOperation}
-                      name="libelleOperation"
-                      validators={["required"]}
-                      errorMessages={["champ obligatoire"]}
-                      label="Libellé d'opération* :"
-                    />
-                  </Grid>
-                </Grid>
-              </FormGroup>
-            </Grid>
-          </ValidatorForm>
-
-          {/* choisir compte general dialog */}
-          <ValidatorForm>
-            <Dialog
-              open={open}
-              onClose={this.handleClose}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-              fullWidth
-            >
-              {" "}
-              <DialogTitle id="alert-dialog-title">
+            {/* choisir compte general dialog */}
+            <ValidatorForm>
+              <Dialog
+                open={open}
+                onClose={this.handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                fullWidth
+              >
                 {" "}
-                Choisir un compte général
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                  <FormGroup>
-                    <Grid item xs={10}>
-                      <SelectValidator
-                        className={classes.field}
-                        onChange={this.handleChange}
-                        disabled={loading}
-                        name="classe"
-                        value={classe}
-                        id="#classe"
-                        label="Classe"
-                      >
-                        {lesclasses &&
-                          lesclasses.map(compte => (
-                            <MenuItem value={compte.compte}>
-                              {compte.compte + "." + compte.designation}
-                            </MenuItem>
-                          ))}
-                      </SelectValidator>
-                    </Grid>
-                  </FormGroup>
-                  <FormGroup>
-                    <Grid item xs={10}>
-                      <SelectValidator
-                        className={classes.field}
-                        onChange={this.handleChange}
-                        disabled={loading}
-                        name="rubrique"
-                        value={rubrique}
-                        id="#rubrique"
-                        label="Rubrique"
-                      >
-                        {rubriques &&
-                          rubriques.map(compte => (
-                            <MenuItem value={compte.compte}>
-                              {compte.compte + "." + compte.designation}
-                            </MenuItem>
-                          ))}
-                      </SelectValidator>
-                    </Grid>
-                  </FormGroup>
-                  <FormGroup>
-                    <Grid item xs={10}>
-                      <SelectValidator
-                        className={classes.field}
-                        onChange={this.handleChange}
-                        disabled={loading}
-                        name="poste"
-                        value={poste}
-                        id="#poste"
-                        label="Poste"
-                      >
-                        {postes &&
-                          postes.map(compte => (
-                            <MenuItem value={compte.compte}>
-                              {compte.compte + "." + compte.designation}
-                            </MenuItem>
-                          ))}
-                      </SelectValidator>
-                    </Grid>
-                  </FormGroup>
-                  <FormGroup>
-                    <Grid item xs={10}>
-                      <SelectValidator
-                        className={classes.field}
-                        onChange={this.handleChange}
-                        disabled={loading}
-                        name="comptepere"
-                        value={comptepere}
-                        id="#comptepere"
-                        label="Compte général"
-                      >
-                        {comptes &&
-                          comptes.map(compte => (
-                            <MenuItem
-                              value={compte.compte + "." + compte.designation}
-                            >
-                              {compte.compte + "." + compte.designation}
-                            </MenuItem>
-                          ))}
-                      </SelectValidator>
-                    </Grid>
-                  </FormGroup>
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={this.handleClose} color="primary" autoFocus>
-                  Fermer
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </ValidatorForm>
-        </Grid>
-        <Grid item xs={12}>
-          <Toolbar className={classes.toolbar}>
-            <div className={classes.title}>
-              <Typography variant="h6">Les opérations</Typography>
-            </div>
-          </Toolbar>
-        </Grid>
-        <ValidatorForm onSubmit={this.handleAdd}>
-          <Grid container>
-            <Grid container>
-              <Grid item xs={2}>
-                <TextValidator
-                  onChange={this.handleChange}
-                  onBlur={this.handleOnBlur}
-                  name="comptegeneral"
-                  type="number"
-                  // style={{ width: "80%" }}
-                  value={comptegeneral}
-                  validators={["required", "maxStringLength:8"]}
-                  errorMessages={["champ obligatoire", "maximum 8 chiffres"]}
-                  label="Code général "
-                  id="#comptegeneral"
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        {showButton && (
-                          <IconButton
-                            edge="start"
-                            aria-label="toggle password visibility"
-                            //onClick={handleClickShowPassword}
-                            //onMouseDown={handleMouseDownPassword}
-                          >
-                            <ShowButton
-                              handleClickOpen={this.handleClickOpen}
-                              handleClickAway={this.handleClickAway}
-                            />
-                          </IconButton>
-                        )}
-                      </InputAdornment>
-                    )
-                  }}
-                />
-              </Grid>
-
-              <Grid item xs={4}>
-                <TextValidator
-                  style={{ width: "80%" }}
-                  // className={classes.field}
-                  onChange={this.handleChange}
-                  name="designation"
-                  validators={["required", "maxStringLength:40"]}
-                  errorMessages={["champ obligatoire", "maximum 40 char"]}
-                  value={this.props.loading ? "" : designation}
-                  label="Désignation "
-                  inputProps={{ readOnly: true }}
-                  id="#designation"
-                />
-              </Grid>
-              <Grid item xs={3}>
-                <SelectValidator
-                  onChange={this.handleChange}
-                  name="debiterCrediter"
-                  style={{ width: "80%" }}
-                  value={debiterCrediter}
-                  validators={["required"]}
-                  errorMessages={["champ obligatoire"]}
-                  label="Débiter/Créditer "
-                  id="#debiterCrediter"
-                >
-                  <MenuItem value="Débit">Débit</MenuItem>
-                  <MenuItem value="Crédit">Crédit</MenuItem>
-                </SelectValidator>
-              </Grid>
-              <Grid item xs={3}>
-                <TextValidator
-                  style={{ width: "80%" }}
-                  // className={classes.field}
-                  onChange={this.handleChange}
-                  name="montant"
-                  validators={["required", "isFloat"]}
-                  errorMessages={[
-                    "champ obligatoire",
-                    "champ doit étre un nombre"
-                  ]}
-                  value={montant}
-                  label="Montant"
-                  id="#montant"
-                />
-              </Grid>
-            </Grid>
-            <Grid container style={{ marginTop: 15 }}>
-              <Grid item xs={1}>
-                <Button type="submit" variant="contained" color="primary">
-                  Ajouter{" "}
-                </Button>
-              </Grid>
-              <Grid item xs={1}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  disabled={selectedRows.length == 0}
-                  onClick={this.handleDelete}
-                >
-                  Supprimer{" "}
-                </Button>
-              </Grid>
-              <Grid item xs={7} />
-              <Grid item xs={3}>
-                <Typography variant="h6" component="h2">
-                  Total débit : {this.state.debit + " DH"}
-                </Typography>
-
-                <Typography variant="h6" component="h2">
-                  Total crédit : {this.state.credit + " DH"}
-                </Typography>
-              </Grid>
-            </Grid>
+                <DialogTitle id="alert-dialog-title">
+                  {" "}
+                  Choisir un compte général
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    <FormGroup>
+                      <Grid item xs={10}>
+                        <SelectValidator
+                          className={classes.field}
+                          onChange={this.handleChange}
+                          disabled={loading}
+                          name="classe"
+                          value={classe}
+                          id="#classe"
+                          label="Classe"
+                        >
+                          {lesclasses &&
+                            lesclasses.map(compte => (
+                              <MenuItem value={compte.compte}>
+                                {compte.compte + "." + compte.designation}
+                              </MenuItem>
+                            ))}
+                        </SelectValidator>
+                      </Grid>
+                    </FormGroup>
+                    <FormGroup>
+                      <Grid item xs={10}>
+                        <SelectValidator
+                          className={classes.field}
+                          onChange={this.handleChange}
+                          disabled={loading}
+                          name="rubrique"
+                          value={rubrique}
+                          id="#rubrique"
+                          label="Rubrique"
+                        >
+                          {rubriques &&
+                            rubriques.map(compte => (
+                              <MenuItem value={compte.compte}>
+                                {compte.compte + "." + compte.designation}
+                              </MenuItem>
+                            ))}
+                        </SelectValidator>
+                      </Grid>
+                    </FormGroup>
+                    <FormGroup>
+                      <Grid item xs={10}>
+                        <SelectValidator
+                          className={classes.field}
+                          onChange={this.handleChange}
+                          disabled={loading}
+                          name="poste"
+                          value={poste}
+                          id="#poste"
+                          label="Poste"
+                        >
+                          {postes &&
+                            postes.map(compte => (
+                              <MenuItem value={compte.compte}>
+                                {compte.compte + "." + compte.designation}
+                              </MenuItem>
+                            ))}
+                        </SelectValidator>
+                      </Grid>
+                    </FormGroup>
+                    <FormGroup>
+                      <Grid item xs={10}>
+                        <SelectValidator
+                          className={classes.field}
+                          onChange={this.handleChange}
+                          disabled={loading}
+                          name="comptepere"
+                          value={comptepere}
+                          id="#comptepere"
+                          label="Compte général"
+                        >
+                          {comptes &&
+                            comptes.map(compte => (
+                              <MenuItem
+                                value={compte.compte + "." + compte.designation}
+                              >
+                                {compte.compte + "." + compte.designation}
+                              </MenuItem>
+                            ))}
+                        </SelectValidator>
+                      </Grid>
+                    </FormGroup>
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={this.handleClose} color="primary" autoFocus>
+                    Fermer
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </ValidatorForm>
           </Grid>
-        </ValidatorForm>
+          <Grid item xs={12}>
+            <Toolbar className={classes.toolbar}>
+              <div className={classes.title}>
+                <Typography variant="h6">Les opérations</Typography>
+              </div>
+            </Toolbar>
+          </Grid>
+          <ValidatorForm onSubmit={this.handleAdd}>
+            <Grid container>
+              <Grid container>
+                <Grid item xs={2}>
+                  <TextValidator
+                    onChange={this.handleChange}
+                    onBlur={this.handleOnBlur}
+                    name="comptegeneral"
+                    type="number"
+                    // style={{ width: "80%" }}
+                    value={comptegeneral}
+                    validators={["required", "maxStringLength:8"]}
+                    errorMessages={["champ obligatoire", "maximum 8 chiffres"]}
+                    label="Code général "
+                    id="#comptegeneral"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          {showButton && (
+                            <IconButton
+                              edge="start"
+                              aria-label="toggle password visibility"
+                              // onClick={handleClickShowPassword}
+                              // onMouseDown={handleMouseDownPassword}
+                            >
+                              <ShowButton
+                                handleClickOpen={this.handleClickOpen}
+                                handleClickAway={this.handleClickAway}
+                              />
+                            </IconButton>
+                          )}
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+                </Grid>
 
-        <SimpleTable
-          data={data.dataTable}
-          selectedRows={selectedRows}
-          handleSelect={this.handleSelect}
-          headers={headers}
-        />
-      </>
+                <Grid item xs={4}>
+                  <TextValidator
+                    style={{ width: "80%" }}
+                    // className={classes.field}
+                    onChange={this.handleChange}
+                    name="designation"
+                    validators={["required", "maxStringLength:40"]}
+                    errorMessages={["champ obligatoire", "maximum 40 char"]}
+                    value={this.props.loading ? "" : designation}
+                    label="Désignation "
+                    inputProps={{ readOnly: true }}
+                    id="#designation"
+                  />
+                </Grid>
+                <Grid item xs={3}>
+                  <SelectValidator
+                    onChange={this.handleChange}
+                    name="debiterCrediter"
+                    style={{ width: "80%" }}
+                    value={debiterCrediter}
+                    validators={["required"]}
+                    errorMessages={["champ obligatoire"]}
+                    label="Débiter/Créditer "
+                    id="#debiterCrediter"
+                  >
+                    <MenuItem value="Débit">Débit</MenuItem>
+                    <MenuItem value="Crédit">Crédit</MenuItem>
+                  </SelectValidator>
+                </Grid>
+                <Grid item xs={3}>
+                  <TextValidator
+                    style={{ width: "80%" }}
+                    // className={classes.field}
+                    onChange={this.handleChange}
+                    name="montant"
+                    validators={["required", "isFloat"]}
+                    errorMessages={[
+                      "champ obligatoire",
+                      "champ doit étre un nombre"
+                    ]}
+                    value={montant}
+                    label="Montant"
+                    id="#montant"
+                  />
+                </Grid>
+              </Grid>
+              <Grid container style={{ marginTop: 15 }}>
+                <Grid item xs={1}>
+                  <Button type="submit" variant="contained" color="primary">
+                    Ajouter{" "}
+                  </Button>
+                </Grid>
+                <Grid item xs={1}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    disabled={selectedRows.length == 0}
+                    onClick={this.handleDelete}
+                  >
+                    Supprimer{" "}
+                  </Button>
+                </Grid>
+                <Grid item xs={7} />
+                <Grid item xs={3}>
+                  <Typography variant="h6" component="h2">
+                    Total débit : {this.state.debit + " DH"}
+                  </Typography>
+
+                  <Typography variant="h6" component="h2">
+                    Total crédit : {this.state.credit + " DH"}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+          </ValidatorForm>
+
+          <SimpleTable
+            data={data.dataTable}
+            selectedRows={selectedRows}
+            handleSelect={this.handleSelect}
+            headers={headers}
+          />
+        </div>
+      </div>
     );
   }
 }
@@ -819,7 +828,7 @@ function ShowButton({ handleClickAway, handleClickOpen }) {
       <ClickAwayListener onClickAway={handleClickAway}>
         <div>
           <Button onClick={handleClickOpen}>
-            <i class="material-icons">list_alt</i>
+            <i className="material-icons">list_alt</i>
           </Button>
         </div>
       </ClickAwayListener>

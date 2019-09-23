@@ -1,12 +1,11 @@
-import Loadable from "react-loadable";
-import Loading from "enl-components/Loading";
+import Loadable from 'react-loadable';
+import Loading from 'enl-components/Loading';
 
 // Gestion Utilisateur
 export const GestionUtilisateur = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Administration/GestionUtilisateur/GestionUtilisateur"
-    ),
+  loader: () => import(
+    './Pages/modules/Administration/GestionUtilisateur/GestionUtilisateur'
+  ),
   loading: Loading
 });
 
@@ -16,18 +15,16 @@ export const GestionUtilisateur = Loadable({
 // // // // index :
 
 export const CategorieArticle = Loadable({
-  loader: () =>
-    import("./Pages/modules/Logistique/parametrage/CategorieArticle/index"),
+  loader: () => import('./Pages/modules/Logistique/parametrage/CategorieArticle/index'),
   loading: Loading
 });
 
 // // // // Create Categorie
 
 export const CreerArticleCategorie = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Logistique/parametrage/CategorieArticle/CreeCategorie/CreeCategorie"
-    ),
+  loader: () => import(
+    './Pages/modules/Logistique/parametrage/CategorieArticle/CreeCategorie/CreeCategorie'
+  ),
   loading: Loading
 });
 
@@ -35,147 +32,132 @@ export const CreerArticleCategorie = Loadable({
 // // // // index :
 
 export const CategorieService = Loadable({
-  loader: () =>
-    import("./Pages/modules/Logistique/parametrage/CategorieService/index"),
+  loader: () => import('./Pages/modules/Logistique/parametrage/CategorieService/index'),
   loading: Loading
 });
 
 // // // // Create Categorie
 
 export const CreerServiceCategorie = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Logistique/parametrage/CategorieService/CreeCategorie/CreeCategorie"
-    ),
+  loader: () => import(
+    './Pages/modules/Logistique/parametrage/CategorieService/CreeCategorie/CreeCategorie'
+  ),
   loading: Loading
 });
 
 // // // Configuration de base :
 // // // // index :
 export const Base = Loadable({
-  loader: () => import("./Pages/modules/Logistique/parametrage/Base/index"),
+  loader: () => import('./Pages/modules/Logistique/parametrage/Base/index'),
   loading: Loading
 });
 
 // // // cours de charges
 export const CoursDeChange = Loadable({
-  loader: () =>
-    import("./Pages/modules/Logistique/parametrage/Base/Gestion/CoursDeChange"),
+  loader: () => import('./Pages/modules/Logistique/parametrage/Base/Gestion/CoursDeChange'),
   loading: Loading
 });
 
 // // // // listes de base
 export const ListesDeBase = Loadable({
-  loader: () =>
-    import("./Pages/modules/Logistique/parametrage/Base/Gestion/ListesDeBase"),
+  loader: () => import('./Pages/modules/Logistique/parametrage/Base/Gestion/ListesDeBase'),
   loading: Loading
 });
 
 // // // // unites
 export const Unites = Loadable({
-  loader: () =>
-    import("./Pages/modules/Logistique/parametrage/Base/Gestion/Unites"),
+  loader: () => import('./Pages/modules/Logistique/parametrage/Base/Gestion/Unites'),
   loading: Loading
 });
 
-//// Donnee de base :
+// // Donnee de base :
 // // // Article
 // // // // index :
 export const Article = Loadable({
-  loader: () => import("./Pages/modules/Logistique/donneDeBase/Article/index"),
+  loader: () => import('./Pages/modules/Logistique/donneDeBase/Article/index'),
   loading: Loading
 });
 
 // // // // Create Article
 export const CreerArticle = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Logistique/donneDeBase/Article/CreeArticle/CreerArticle"
-    ),
+  loader: () => import(
+    './Pages/modules/Logistique/donneDeBase/Article/CreeArticle/CreerArticle'
+  ),
   loading: Loading
 });
 
 // // // // Gerer Article
 export const GererArticle = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Logistique/donneDeBase/Article/GererArticle/GererArticle"
-    ),
+  loader: () => import(
+    './Pages/modules/Logistique/donneDeBase/Article/GererArticle/GererArticle'
+  ),
   loading: Loading
 });
 
 // // // // List Article
 export const ListerArticles = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Logistique/donneDeBase/Article/ListerArticles/ListerArticles"
-    ),
+  loader: () => import(
+    './Pages/modules/Logistique/donneDeBase/Article/ListerArticles/ListerArticles'
+  ),
   loading: Loading
 });
 
 // // // Service
 // // // // index :
 export const Service = Loadable({
-  loader: () => import("./Pages/modules/Logistique/donneDeBase/Service/index"),
+  loader: () => import('./Pages/modules/Logistique/donneDeBase/Service/index'),
   loading: Loading
 });
 
 // // // // Create Service
 export const CreerService = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Logistique/donneDeBase/Service/CreeService/CreerService"
-    ),
+  loader: () => import(
+    './Pages/modules/Logistique/donneDeBase/Service/CreeService/CreerService'
+  ),
   loading: Loading
 });
 
 // // // // Gerer Service
 export const GererService = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Logistique/donneDeBase/Service/GererService/GererService"
-    ),
+  loader: () => import(
+    './Pages/modules/Logistique/donneDeBase/Service/GererService/GererService'
+  ),
   loading: Loading
 });
 
 // // // // List Service
 export const ListerService = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Logistique/donneDeBase/Service/ListerService/ListerService"
-    ),
+  loader: () => import(
+    './Pages/modules/Logistique/donneDeBase/Service/ListerService/ListerService'
+  ),
   loading: Loading
 });
 // // // Fournisseur
 //  // // // index :
 export const CreerFournisseur = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Logistique/donneDeBase/Fournisseur/creeFournisseur/index"
-    ),
+  loader: () => import(
+    './Pages/modules/Logistique/donneDeBase/Fournisseur/creeFournisseur/index'
+  ),
   loading: Loading
 });
 
 export const GererFournisseur = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Logistique/donneDeBase/Fournisseur/GererFournisseur/index"
-    ),
+  loader: () => import(
+    './Pages/modules/Logistique/donneDeBase/Fournisseur/GererFournisseur/index'
+  ),
   loading: Loading
 });
 
 // // // // List Article
 export const ListerFournisseur = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Logistique/donneDeBase/Fournisseur/ListerFournisseur/ListerFournisseur"
-    ),
+  loader: () => import(
+    './Pages/modules/Logistique/donneDeBase/Fournisseur/ListerFournisseur/ListerFournisseur'
+  ),
   loading: Loading
 });
 
 export const Fournisseur = Loadable({
-  loader: () =>
-    import("./Pages/modules/Logistique/donneDeBase/Fournisseur/index"),
+  loader: () => import('./Pages/modules/Logistique/donneDeBase/Fournisseur/index'),
   loading: Loading
 });
 
@@ -185,53 +167,47 @@ export const Fournisseur = Loadable({
 // // // // index :
 
 export const Caisse = Loadable({
-  loader: () =>
-    import("./Pages/modules/Comptabilite/DonneeDeBase/Caisse/index"),
+  loader: () => import('./Pages/modules/Comptabilite/DonneeDeBase/Caisse/index'),
   loading: Loading
 });
 
 // // // // creer caisse :
 
 export const CreerCaisse = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Comptabilite/DonneeDeBase/Caisse/CreeCaisse/CreerCaisse"
-    ),
+  loader: () => import(
+    './Pages/modules/Comptabilite/DonneeDeBase/Caisse/CreeCaisse/CreerCaisse'
+  ),
   loading: Loading
 });
 
 // // // // gerer caisse :
 
 export const GererCaisse = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Comptabilite/DonneeDeBase/Caisse/GererCaisse/index"
-    ),
+  loader: () => import(
+    './Pages/modules/Comptabilite/DonneeDeBase/Caisse/GererCaisse/index'
+  ),
   loading: Loading
 });
 // // // // liste caisse :
 
 export const ListerCaisses = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Comptabilite/DonneeDeBase/Caisse/ListerCaisse/ListerCaisses"
-    ),
+  loader: () => import(
+    './Pages/modules/Comptabilite/DonneeDeBase/Caisse/ListerCaisse/ListerCaisses'
+  ),
   loading: Loading
 });
 
 // // // compte bancaire :
 // // // // index :
 export const CompteBancaire = Loadable({
-  loader: () =>
-    import("./Pages/modules/Comptabilite/DonneeDeBase/CompteBancaire/index"),
+  loader: () => import('./Pages/modules/Comptabilite/DonneeDeBase/CompteBancaire/index'),
   loading: Loading
 });
 // // // // creer compte bancaire :
 export const CreeCompteBancaire = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Comptabilite/DonneeDeBase/CompteBancaire/CreeCompteBancaire/index"
-    ),
+  loader: () => import(
+    './Pages/modules/Comptabilite/DonneeDeBase/CompteBancaire/CreeCompteBancaire/index'
+  ),
   loading: Loading
 });
 
@@ -239,38 +215,34 @@ export const CreeCompteBancaire = Loadable({
 // // // // index :
 
 export const CompteGeneral = Loadable({
-  loader: () =>
-    import("./Pages/modules/Comptabilite/DonneeDeBase/ComptesGeneraux/index"),
+  loader: () => import('./Pages/modules/Comptabilite/DonneeDeBase/ComptesGeneraux/index'),
   loading: Loading
 });
 
 // // // // creer compte general :
 
 export const CreerCompteGeneral = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Comptabilite/DonneeDeBase/ComptesGeneraux/CreerCompteGeneral/CreerCompteGeneral"
-    ),
+  loader: () => import(
+    './Pages/modules/Comptabilite/DonneeDeBase/ComptesGeneraux/CreerCompteGeneral/CreerCompteGeneral'
+  ),
   loading: Loading
 });
 
 // // // // gerer compte general :
 
 export const GererCompteGeneral = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Comptabilite/DonneeDeBase/ComptesGeneraux/GererCompteGeneral/index"
-    ),
+  loader: () => import(
+    './Pages/modules/Comptabilite/DonneeDeBase/ComptesGeneraux/GererCompteGeneral/index'
+  ),
   loading: Loading
 });
 
 // // // // liste compte general :
 
 export const ListerCompteGeneral = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Comptabilite/DonneeDeBase/ComptesGeneraux/ListerCompteGeneral/ListerCompteGeneral"
-    ),
+  loader: () => import(
+    './Pages/modules/Comptabilite/DonneeDeBase/ComptesGeneraux/ListerCompteGeneral/ListerCompteGeneral'
+  ),
   loading: Loading
 });
 
@@ -279,79 +251,75 @@ export const ListerCompteGeneral = Loadable({
 // // // // index :
 
 export const EcritureJournale = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Comptabilite/ComptabiliteGeneral/EcritureComptable/index"
-    ),
+  loader: () => import(
+    './Pages/modules/Comptabilite/ComptabiliteGeneral/EcritureComptable/index'
+  ),
   loading: Loading
 });
 
 // // // // creer caisse :
 
 export const CreerEcritureJournale = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Comptabilite/ComptabiliteGeneral/EcritureComptable/CreerEcritureComptable/index"
-    ),
+  loader: () => import(
+    './Pages/modules/Comptabilite/ComptabiliteGeneral/EcritureComptable/CreerEcritureComptable/index'
+  ),
   loading: Loading
 });
 // // // // liste caisse :
 
 export const ListerEcrituresJournales = Loadable({
-  loader: () =>
-    import(
-      "./Pages/modules/Comptabilite/DonneeDeBase/Caisse/ListerCaisse/ListerCaisses"
-    ),
+  loader: () => import(
+    './Pages/modules/Comptabilite/DonneeDeBase/Caisse/ListerCaisse/ListerCaisses'
+  ),
   loading: Loading
 });
 
 // // // Grand Livre
 export const GrandLivre = Loadable({
-  loader: () =>
-    import("./Pages/modules/Comptabilite/ComptabiliteGeneral/GrandLivre/index"),
+  loader: () => import('./Pages/modules/Comptabilite/ComptabiliteGeneral/GrandLivre/index'),
   loading: Loading
 });
 
 // User auth
 export const Login = Loadable({
-  loader: () => import("./Pages/Users/Login"),
+  loader: () => import('./Pages/Users/Login'),
   loading: Loading
 });
 
 export const ResetPassword = Loadable({
-  loader: () => import("./Pages/Users/ResetPassword"),
+  loader: () => import('./Pages/Users/ResetPassword'),
   loading: Loading
 });
 export const ComingSoon = Loadable({
-  loader: () => import("./Pages/ComingSoon"),
+  loader: () => import('./Pages/ComingSoon'),
   loading: Loading
 });
 
 export const FirstLogin = Loadable({
-  loader: () => import("./Pages/First-Login"),
+  loader: () => import('./Pages/First-Login'),
   loading: Loading
 });
 export const BlankPage = Loadable({
-  loader: () => import("./Pages/BlankPage"),
+  loader: () => import('./Pages/BlankPage'),
   loading: Loading
 });
 export const NotFound = Loadable({
-  loader: () => import("./NotFound/NotFound"),
+  loader: () => import('./NotFound/NotFound'),
   loading: Loading
 });
 export const Error = Loadable({
-  loader: () => import("./Pages/Error"),
+  loader: () => import('./Pages/Error'),
   loading: Loading
 });
 export const Maintenance = Loadable({
-  loader: () => import("./Pages/Maintenance"),
+  loader: () => import('./Pages/Maintenance'),
   loading: Loading
 });
 export const Parent = Loadable({
-  loader: () => import("./Parent"),
+  loader: () => import('./Parent'),
   loading: Loading
 });
 export const NotFoundDedicated = Loadable({
-  loader: () => import("./Pages/Standalone/NotFoundDedicated"),
+  loader: () => import('./Pages/Standalone/NotFoundDedicated'),
   loading: Loading
 });
