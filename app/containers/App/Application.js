@@ -37,7 +37,8 @@ import {
   EcritureJournale,
   CreerEcritureJournale,
   GererCaisse,
-  GererCompteGeneral
+  GererCompteGeneral,
+  GrandLivre
 } from "../pageListAsync";
 
 class Application extends React.Component {
@@ -211,7 +212,11 @@ class Application extends React.Component {
             path="/app/comptabilité/comptablité-générale/écriture-journale"
             component={EcritureJournale}
           />
-
+          {/* ****** grand Livre */}
+          <Route
+            path="/app/comptabilité/comptablité-générale/grand-livre"
+            component={GrandLivre}
+          />
           {/* parent page : */}
           <Route path="/app/pages/not-found" component={NotFound} />
           <Route path="/app/pages/error" component={Error} />

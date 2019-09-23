@@ -288,8 +288,8 @@ class CreerCaisse extends React.Component {
       designation,
       debiterCrediter,
       montant,
-      debit: debiterCrediter === "Crédit" ? "----" : montant,
-      credit: debiterCrediter === "Crédit" ? montant : "----"
+      debit: debiterCrediter === "Crédit" ? 0 : montant,
+      credit: debiterCrediter === "Crédit" ? montant : 0
     });
     this.setState({
       data: { ...this.state.data, dataTable },

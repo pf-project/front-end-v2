@@ -99,6 +99,11 @@ module.exports = [
         key: "Ecriture comptable",
         name: "Ecriture comptable",
         link: "/app/comptabilité/comptablité-générale/écriture-journale"
+      },
+      {
+        key: "Grand livre",
+        name: "Grand livre",
+        link: "/app/comptabilité/comptablité-générale/grand-livre"
       }
     ]
   }

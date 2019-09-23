@@ -23,7 +23,8 @@ export default function SimpleTable({
   data,
   handleSelect,
   selectedRows,
-  headers
+  headers,
+  allows_select
 }) {
   const classes = useStyles();
   const keys = data.length > 0 ? Object.keys(data[0]) : [];
@@ -40,7 +41,7 @@ export default function SimpleTable({
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell />
+            {allows_select && <TableCell />}
             {!headers &&
               keys.map((key, idx) => (
                 <TableCell key={idx + 1}>{key}</TableCell>
@@ -64,9 +65,11 @@ export default function SimpleTable({
                 selected={selected}
               >
                 {" "}
-                <TableCell component="th" scope="row">
-                  <Checkbox checked={selected} padding="checkbox" />
-                </TableCell>{" "}
+                {allows_select && (
+                  <TableCell component="th" scope="row">
+                    <Checkbox checked={selected} padding="checkbox" />
+                  </TableCell>
+                )}
                 {renderRow(row)}
               </TableRow>
             );
@@ -79,5 +82,7 @@ export default function SimpleTable({
 
 SimpleTable.defaultProps = {
   data: [],
-  selectedRows: []
+  selectedRows: [],
+  allows_select: true,
+  handleSelect: () => {}
 };

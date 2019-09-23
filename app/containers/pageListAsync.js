@@ -305,6 +305,13 @@ export const ListerEcrituresJournales = Loadable({
   loading: Loading
 });
 
+// // // Grand Livre
+export const GrandLivre = Loadable({
+  loader: () =>
+    import("./Pages/modules/Comptabilite/ComptabiliteGeneral/GrandLivre/index"),
+  loading: Loading
+});
+
 // User auth
 export const Login = Loadable({
   loader: () => import("./Pages/Users/Login"),
