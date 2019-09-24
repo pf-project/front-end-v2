@@ -22,12 +22,28 @@ import {
   updateItem,
   fetchSuggestions
 } from "../../../reducers/crudLogisticActions";
+import Tooltip from "@material-ui/core/Tooltip";
+import { Undo } from "@material-ui/icons";
+import SaveIcon from "@material-ui/icons/Save";
 const styles = theme => ({
   root: {
     width: "90%",
 
     margin: "2em",
     minHeight: 500
+  },
+  done: {
+    backgroundColor: "#4db6ac",
+    "&:hover": {
+      backgroundColor: "#009688"
+    }
+  },
+  cancel: {
+    marginRight: "1em",
+    backgroundColor: "#e57373",
+    "&:hover": {
+      backgroundColor: "#f44336"
+    }
   },
   backButton: {
     marginRight: "1em"
@@ -337,31 +353,37 @@ class GererArticle extends React.Component {
   render() {
     const { activeStep, errorMsg } = this.state;
     const { classes, closeNotif, notifMsg } = this.props;
+
     const elements = (
       <>
         {/* <Grid item sm={2} lg={2}> */}
-        <Button
-          className={classes.button}
-          color="primary"
-          onClick={this.handleCancel}
-          className={classes.backButton}
-        >
-          Annuler
-        </Button>
+        <Tooltip title="Annuler">
+          <Button
+            className={classes.cancel}
+            variant="contained"
+            color="primary"
+            onClick={this.handleCancel}
+          >
+            <Undo />
+          </Button>
+        </Tooltip>
         {/* </Grid> */}
         {/* <Grid item sm={2} lg={2}> */}
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="primary"
-          type="submit"
-          form="addfourni"
-        >
-          Sauvegarder
-        </Button>
+        <Tooltip title="Sauvegarder">
+          <Button
+            className={classes.done}
+            variant="contained"
+            color="primary"
+            type="submit"
+            form="addfourni"
+          >
+            <SaveIcon />
+          </Button>
+        </Tooltip>
         {/* </Grid> */}
       </>
     );
+
     return (
       <div>
         <PageTitle

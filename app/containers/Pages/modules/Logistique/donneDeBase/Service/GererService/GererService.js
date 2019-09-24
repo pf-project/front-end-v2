@@ -24,6 +24,9 @@ import {
   fetchSuggestions,
   fetchUnites
 } from "../../../reducers/crudLogisticActions";
+import Tooltip from "@material-ui/core/Tooltip";
+import { Undo } from "@material-ui/icons";
+import SaveIcon from "@material-ui/icons/Save";
 const styles = theme => ({
   root: {
     width: "90%",
@@ -33,6 +36,19 @@ const styles = theme => ({
   },
   backButton: {
     marginRight: "1em"
+  },
+  done: {
+    backgroundColor: "#4db6ac",
+    "&:hover": {
+      backgroundColor: "#009688"
+    }
+  },
+  cancel: {
+    marginRight: "1em",
+    backgroundColor: "#e57373",
+    "&:hover": {
+      backgroundColor: "#f44336"
+    }
   },
   instructions: {
     marginTop: "1em",
@@ -463,8 +479,7 @@ class GererService extends React.Component {
   getStepContent = stepIndex => {
     const classes = this.props.classes;
     const { codes, designations } = this.props.servicesForSuggestion;
-    const {temps,
-      devise , loading} = this.props ;
+    const { temps, devise, loading } = this.props;
     if (loading)
       return (
         <center>
@@ -592,31 +607,33 @@ class GererService extends React.Component {
   render() {
     const { activeStep, errorMsg } = this.state;
     const { classes, closeNotif, notifMsg } = this.props;
+
     const elements = (
       <>
         {/* <Grid item sm={2} lg={2}> */}
-        <Button
-          // onClick={submitter}
-          className={classes.button}
-          // variant="contained"
-          color="primary"
-          // disabled={activeStep === 0}
-          onClick={this.handleCancel}
-          className={classes.backButton}
-        >
-          Annuler
-        </Button>
+        <Tooltip title="Annuler">
+          <Button
+            className={classes.cancel}
+            variant="contained"
+            color="primary"
+            onClick={this.handleCancel}
+          >
+            <Undo />
+          </Button>
+        </Tooltip>
         {/* </Grid> */}
         {/* <Grid item sm={2} lg={2}> */}
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="primary"
-          type="submit"
-          form="gererService"
-        >
-          Sauvegarder
-        </Button>
+        <Tooltip title="Sauvegarder">
+          <Button
+            className={classes.done}
+            variant="contained"
+            color="primary"
+            type="submit"
+            form="gererService"
+          >
+            <SaveIcon />
+          </Button>
+        </Tooltip>
         {/* </Grid> */}
       </>
     );
