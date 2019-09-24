@@ -8,6 +8,12 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { FormGroup } from "@material-ui/core/";
 import { SimpleTable } from "enl-components";
+import Tooltip from "@material-ui/core/Tooltip";
+import SaveIcon from "@material-ui/icons/Save";
+
+import AddIcon from "@material-ui/icons/Add";
+import DeleteIcon from "@material-ui/icons/Delete";
+import FilterNone from "@material-ui/icons/FilterNone";
 
 import {
   ValidatorForm,
@@ -348,7 +354,45 @@ export default function Base({
       <Grid container spacing={1} className={classes.grid} direction="column">
         <Grid item xs={12}>
           <Grid container direction="row">
-            <Grid it xs={3}>
+            <Grid item xs={3} md={1}>
+              <Tooltip title="Ajouter">
+                <Button
+                  type="submit"
+                  form="addContact"
+                  variant="contained"
+                  color="primary"
+                >
+                  <AddIcon />
+                </Button>
+              </Tooltip>
+            </Grid>
+            <Grid item xs={3} md={1}>
+              <Tooltip title="Supprimer">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  disabled={selectedRows.length == 0}
+                  onClick={handleDelete}
+                  className={classes.cancel}
+                >
+                  <DeleteIcon />
+                </Button>
+              </Tooltip>
+            </Grid>
+            <Grid item xs={3} md={1}>
+              <Tooltip title="Créer une copie">
+                <Button
+                  variant="contained"
+                  className={classes.copy}
+                  color="primary"
+                  disabled={!(selectedRows.length === 1)}
+                  onClick={() => addCopyContact(selectedRows[0])}
+                >
+                  <FilterNone />
+                </Button>
+              </Tooltip>
+            </Grid>
+            <Grid item>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -361,36 +405,6 @@ export default function Base({
                 }
                 label="Ajouter un autre"
               />{" "}
-            </Grid>
-            <Grid item xs={3}>
-              <Button
-                type="submit"
-                form="addContact"
-                variant="contained"
-                color="primary"
-              >
-                Ajouter{" "}
-              </Button>
-            </Grid>
-            <Grid item xs={3}>
-              <Button
-                variant="contained"
-                color="primary"
-                disabled={selectedRows.length == 0}
-                onClick={handleDelete}
-              >
-                Supprimer{" "}
-              </Button>
-            </Grid>
-            <Grid item xs={3}>
-              <Button
-                variant="contained"
-                color="primary"
-                disabled={!(selectedRows.length === 1)}
-                onClick={() => addCopyContact(selectedRows[0])}
-              >
-                Créer une copie{" "}
-              </Button>
             </Grid>
           </Grid>
         </Grid>

@@ -14,6 +14,12 @@ import {
   TextValidator,
   SelectValidator
 } from "react-material-ui-form-validator";
+import Tooltip from "@material-ui/core/Tooltip";
+import SaveIcon from "@material-ui/icons/Save";
+
+import AddIcon from "@material-ui/icons/Add";
+import DeleteIcon from "@material-ui/icons/Delete";
+import FilterNone from "@material-ui/icons/FilterNone";
 
 export default function Bancaire({
   handleChange,
@@ -271,7 +277,45 @@ export default function Bancaire({
       <Grid container spacing={1} className={classes.grid} direction="column">
         <Grid item xs={12} className={classes.grid}>
           <Grid container direction="row">
-            <Grid item xs={3}>
+            <Grid item xs={3} md={1}>
+              <Tooltip title="Ajouter">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  form="addCoordonne"
+                >
+                  <AddIcon />
+                </Button>
+              </Tooltip>
+            </Grid>
+            <Grid item xs={3} md={1}>
+              <Tooltip title="Supprimer">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  disabled={selectedRows.length == 0}
+                  onClick={handleDelete}
+                  className={classes.cancel}
+                >
+                  <DeleteIcon />
+                </Button>
+              </Tooltip>
+            </Grid>
+            <Grid item xs={3} md={1}>
+              <Tooltip title="Créer une copie">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.copy}
+                  disabled={!(selectedRows.length === 1)}
+                  onClick={() => addCopyCoordonne(selectedRows[0])}
+                >
+                  <FilterNone />
+                </Button>
+              </Tooltip>
+            </Grid>
+            <Grid item>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -284,36 +328,6 @@ export default function Bancaire({
                 }
                 label="Ajouter un autre"
               />
-            </Grid>
-            <Grid item xs={3}>
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                form="addCoordonne"
-              >
-                Ajouter{" "}
-              </Button>
-            </Grid>
-            <Grid item xs={3}>
-              <Button
-                variant="contained"
-                color="primary"
-                disabled={selectedRows.length == 0}
-                onClick={handleDelete}
-              >
-                Supprimer{" "}
-              </Button>
-            </Grid>
-            <Grid item xs={3}>
-              <Button
-                variant="contained"
-                color="primary"
-                disabled={!(selectedRows.length === 1)}
-                onClick={() => addCopyCoordonne(selectedRows[0])}
-              >
-                Créer une copie{" "}
-              </Button>
             </Grid>
           </Grid>
         </Grid>

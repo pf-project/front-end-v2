@@ -28,6 +28,11 @@ import Commerciale from "./Commerciale";
 import Base from "./Base";
 import Initiale from "./Initiale";
 
+import KeyboardArrowLeftSharp from "@material-ui/icons/KeyboardArrowLeftSharp";
+import KeyboardArrowRightSharp from "@material-ui/icons/KeyboardArrowRightSharp";
+import SaveIcon from "@material-ui/icons/Save";
+import Tooltip from "@material-ui/core/Tooltip";
+
 const styles = theme => ({
   root: {
     width: "90%",
@@ -42,6 +47,12 @@ const styles = theme => ({
   },
   field: {
     width: "90%"
+  },
+  done: {
+    backgroundColor: "#4db6ac",
+    "&:hover": {
+      backgroundColor: "#009688"
+    }
   },
   initialeFields: {
     width: "60%"
@@ -566,37 +577,47 @@ class CreerService extends React.Component {
           </Button>
         </>
       ) : (
-        <>
-          {/* <Grid item sm={2} lg={2}> */}
+        <Tooltip
+          title={
+            this.state.activeStep === this.state.steps.length - 1
+              ? "Sauvegarder"
+              : "Suivant"
+          }
+        >
           <Button
-            // onClick={submitter}
-            className={classes.button}
-            variant="contained"
-            color="primary"
-            disabled={activeStep === 0}
-            onClick={this.handleBack}
-            className={classes.backButton}
-          >
-            Précedent
-          </Button>
-          {/* </Grid> */}
-          {/* <Grid item sm={2} lg={2}> */}
-
-          <Button
-            className={classes.button}
+            className={
+              this.state.activeStep === this.state.steps.length - 1
+                ? classes.done
+                : classes.button
+            }
             variant="contained"
             color="primary"
             type="submit"
             form="addService"
           >
-            {this.state.activeStep === this.state.steps.length - 1
-              ? "Sauvegarder"
-              : "Suivant"}
+            {this.state.activeStep === this.state.steps.length - 1 ? (
+              <SaveIcon />
+            ) : (
+              <KeyboardArrowRightSharp />
+            )}
           </Button>
-
-          {/* </Grid> */}
-        </>
+        </Tooltip>
       );
+    const precedent = (
+      <Tooltip title="Precedent">
+        <Button
+          // onClick={submitter}
+          // className={classes.button}
+          variant="outlined"
+          color="primary"
+          disabled={activeStep === 0}
+          onClick={this.handleBack}
+          className={classes.backButton}
+        >
+          <KeyboardArrowLeftSharp />
+        </Button>
+      </Tooltip>
+    );
 
     return (
       <div>
@@ -605,6 +626,8 @@ class CreerService extends React.Component {
           pathname="/Logistique/Données de base/Service/Créer Service"
           elements={elements}
           withBackOption={true}
+          precedent={precedent}
+          leftElements={activeStep !== this.state.steps.length}
         />
 
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
