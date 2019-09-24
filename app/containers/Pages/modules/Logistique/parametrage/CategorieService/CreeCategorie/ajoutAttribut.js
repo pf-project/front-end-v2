@@ -11,13 +11,15 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
-import Table from "@material-ui/core/Table";
+import Grid from "@material-ui/core/Grid";
 import TableBody from "@material-ui/core/TableBody";
 import TableHead from "@material-ui/core/TableHead";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import CancelIcon from "@material-ui/icons/Cancel";
-import Fab from "@material-ui/core/Fab";
+import Done from "@material-ui/icons/Done";
+import AddIcon from "@material-ui/icons/Add";
+import Tooltip from "@material-ui/core/Tooltip";
 
 // const useStyles = makeStyles(theme => ({
 //   typography: {
@@ -135,19 +137,22 @@ export default function AjoutAttribut({
         />
       </TableCell>
       <TableCell>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={showPopover}
-          aria-describedby={id}
-        >
-          Ajouter
-        </Button>
+        <Tooltip title="Ajouter">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={showPopover}
+            aria-describedby={id}
+          >
+            <AddIcon />
+          </Button>
+        </Tooltip>
         <Popover
           id={id}
           open={open}
           anchorEl={anchorEl}
           onClose={handleClose}
+          style={{ minWidth: 400 }}
           anchorOrigin={{
             vertical: "top",
             horizontal: "center"
@@ -165,28 +170,35 @@ export default function AjoutAttribut({
                 </TableRow>
               </TableHead>
               <TableBody> */}
-            <div>
-              {Elementexists && (
-                <Button
-                  color="primary"
-                  variant="outlined"
-                  size="small"
-                  className={classes.margin}
-                  onClick={valider}
-                >
-                  Valider
-                </Button>
-              )}
-
-              <Button
-                onClick={annuler}
-                variant="outlined"
-                size="small"
-                className={classes.margin}
-              >
-                Annuler
-              </Button>
-            </div>
+            <Grid container style={{ minWidth: 300 }}>
+              <Grid xs={3}>
+                {Elementexists && (
+                  <Tooltip title="Valider">
+                    <Button
+                      color="primary"
+                      variant="outlined"
+                      size="small"
+                      className={classes.margin}
+                      onClick={valider}
+                    >
+                      <Done />
+                    </Button>
+                  </Tooltip>
+                )}
+              </Grid>
+              <Grid xs={3}>
+                <Tooltip title="Annuler">
+                  <Button
+                    onClick={annuler}
+                    variant="outlined"
+                    size="small"
+                    className={classes.margin}
+                  >
+                    <CancelIcon />
+                  </Button>
+                </Tooltip>
+              </Grid>
+            </Grid>
             {[...Array(nbrValues).keys()].map(index => (
               // <TableRow>
               //   <TableCell>
@@ -220,21 +232,25 @@ export default function AjoutAttribut({
               )}
             </div>
             <div>
-              <IconButton
-                onClick={incrimentNbrValues}
-                color="primary"
-                className={classes.button}
-                disabled={!item.type || item.type === ""}
-              >
-                +
-              </IconButton>
-              <IconButton
-                onClick={dicrimentNbrValues}
-                color="primary"
-                className={classes.button}
-              >
-                -
-              </IconButton>
+              <Tooltip title="Ajouter">
+                <IconButton
+                  onClick={incrimentNbrValues}
+                  color="primary"
+                  className={classes.button}
+                  disabled={!item.type || item.type === ""}
+                >
+                  +
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Supprimer">
+                <IconButton
+                  onClick={dicrimentNbrValues}
+                  color="primary"
+                  className={classes.button}
+                >
+                  -
+                </IconButton>
+              </Tooltip>
               <p />
               {(!item.type || item.type === "") && (
                 <span>Veuillez choisir le type d'attribut </span>

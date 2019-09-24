@@ -28,6 +28,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Modal from "@material-ui/core/Modal";
+import Tooltip from "@material-ui/core/Tooltip";
+import SaveIcon from "@material-ui/icons/Save";
+
+import AddIcon from "@material-ui/icons/Add";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 import {
   fetchAction,
@@ -49,6 +54,20 @@ const styles = theme => ({
   },
   backButton: {
     marginRight: "1em"
+  },
+  done: {
+    backgroundColor: "#4db6ac",
+    "&:hover": {
+      backgroundColor: "#009688"
+    }
+  },
+  cancel: {
+    marginRight: "1em",
+    color: "white",
+    backgroundColor: "#e57373",
+    "&:hover": {
+      backgroundColor: "#f44336"
+    }
   },
   instructions: {
     marginTop: "1em",
@@ -466,17 +485,17 @@ class Unites extends React.Component {
     });
 
     const elements = (
-      <>
+      <Tooltip title="Sauvegarder">
         <Button
-          className={classes.button}
+          className={classes.done}
           variant="contained"
           color="primary"
           onClick={this.updateListesDeBase}
           form="ListesDeBase"
         >
-          Sauvegarder
+          <SaveIcon />
         </Button>
-      </>
+      </Tooltip>
     );
     return (
       <div>
@@ -488,7 +507,7 @@ class Unites extends React.Component {
         />
 
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
-        <ValidatorForm onSubmit={this.handleAdd}>
+        <ValidatorForm onSubmit={this.handleAdd} className={classes.root}>
           <Modal
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"
@@ -592,20 +611,25 @@ class Unites extends React.Component {
               </Grid>
             </Grid>
             <Grid container style={{ marginTop: 15 }}>
-              <Grid item md={1}>
-                <Button type="submit" variant="contained" color="primary">
-                  Ajouter{" "}
-                </Button>
+              <Grid item xs={2} md={1}>
+                <Tooltip title="Ajouter">
+                  <Button type="submit" variant="contained" color="primary">
+                    <AddIcon />
+                  </Button>
+                </Tooltip>
               </Grid>
-              <Grid item md={1}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  disabled={selectedRows.length == 0}
-                  onClick={this.handleDelete}
-                >
-                  Supprimer{" "}
-                </Button>
+              <Grid item xs={2} md={1}>
+                <Tooltip title="Supprimer">
+                  <Button
+                    className={classes.cancel}
+                    variant="contained"
+                    color="primary"
+                    disabled={selectedRows.length == 0}
+                    onClick={this.handleDelete}
+                  >
+                    <DeleteIcon />
+                  </Button>
+                </Tooltip>
               </Grid>
             </Grid>
           </Grid>

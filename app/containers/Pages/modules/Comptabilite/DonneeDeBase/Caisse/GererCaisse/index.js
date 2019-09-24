@@ -22,7 +22,10 @@ import {
   fetchSuggestions,
   cleareStore
 } from "../../../reducers/crudComptabiliteActions";
+import { Undo } from "@material-ui/icons";
+import SaveIcon from "@material-ui/icons/Save";
 import { fetchUnites } from "../../../../Logistique/reducers/crudLogisticActions";
+import Tooltip from "@material-ui/core/Tooltip";
 const styles = theme => ({
   root: {
     width: "90%",
@@ -69,6 +72,20 @@ const styles = theme => ({
   button: {
     marginLeft: theme.spacing(1)
   },
+  done: {
+    backgroundColor: "#4db6ac",
+    "&:hover": {
+      backgroundColor: "#009688"
+    }
+  },
+  cancel: {
+    marginRight: "1em",
+    backgroundColor: "#e57373",
+    "&:hover": {
+      backgroundColor: "#f44336"
+    }
+  },
+
   submitdiv: {
     // marginLeft: "30%",
     // position: "absolute",
@@ -295,25 +312,29 @@ class GererArticle extends React.Component {
     const elements = (
       <>
         {/* <Grid item sm={2} lg={2}> */}
-        <Button
-          className={classes.button}
-          color="primary"
-          onClick={this.handleCancel}
-          className={classes.backButton}
-        >
-          Annuler
-        </Button>
+        <Tooltip title="Annuler">
+          <Button
+            className={classes.cancel}
+            onClick={this.handleCancel}
+            variant="contained"
+            color="primary"
+          >
+            <Undo />
+          </Button>
+        </Tooltip>
         {/* </Grid> */}
         {/* <Grid item sm={2} lg={2}> */}
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="primary"
-          onClick={this.handleSubmit}
-          form="updateCaisse"
-        >
-          Sauvegarder
-        </Button>
+        <Tooltip title="Sauvegarder">
+          <Button
+            className={classes.done}
+            variant="contained"
+            color="primary"
+            onClick={this.handleSubmit}
+            form="updateCaisse"
+          >
+            <SaveIcon />
+          </Button>
+        </Tooltip>
         {/* </Grid> */}
       </>
     );

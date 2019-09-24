@@ -19,8 +19,8 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { Notification } from "enl-components";
 import { PageTitle } from "enl-components";
-// import fetchApi from "../../../utils/fetchApi";
-// import SnackBar from "../../../utils/SnackBar";
+import Tooltip from "@material-ui/core/Tooltip";
+import SaveIcon from "@material-ui/icons/Save";
 
 import {
   ValidatorForm,
@@ -32,6 +32,7 @@ import {
   addItem,
   closeNotifAction
 } from "../../../reducers/crudLogisticActions";
+import { Undo, Add } from "@material-ui/icons";
 // import Initiale from "./Initiale";
 // import Base from "./Base";
 // import Stockage from "./Stockage";
@@ -52,6 +53,20 @@ const styles = theme => ({
   },
   button: {
     marginLeft: theme.spacing(1)
+  },
+  done: {
+    backgroundColor: "#4db6ac",
+    "&:hover": {
+      backgroundColor: "#009688"
+    }
+  },
+  cancel: {
+    marginRight: "1em",
+    color: "white",
+    backgroundColor: "#e57373",
+    "&:hover": {
+      backgroundColor: "#f44336"
+    }
   },
   submitdiv: {
     // marginLeft: "30%",
@@ -229,34 +244,38 @@ const CreerCategorie = ({
   let form;
   let elements = (
     <>
-      <Button
-        disabled={loading}
-        color="primary"
-        variant="contained"
-        type="submit"
-        form="addCategorie"
-        // className={classes.button}
-      >
-        {loading && (
-          <CircularProgress size={24} className={classes.buttonProgress} />
-        )}{" "}
-        Sauvgarder{" "}
-      </Button>
-      <Button
-        // className={classes.button}
-        onClick={() => {
-          setData({
-            groupe: "",
-            code: "",
-            designation: "",
-            articlesMetaData: []
-          });
-          setNbrAttributes(0);
-          form.resetValidations();
-        }}
-      >
-        Vider Les Champs{" "}
-      </Button>
+      <Tooltip title="Vider Les Champs">
+        <Button
+          className={classes.cancel}
+          onClick={() => {
+            setData({
+              groupe: "",
+              code: "",
+              designation: "",
+              articlesMetaData: []
+            });
+            setNbrAttributes(0);
+            form.resetValidations();
+          }}
+        >
+          <Undo />
+        </Button>
+      </Tooltip>
+      <Tooltip title="Sauvegarder">
+        <Button
+          disabled={loading}
+          color="primary"
+          variant="contained"
+          type="submit"
+          form="addCategorie"
+          className={classes.done}
+        >
+          {loading && (
+            <CircularProgress size={24} className={classes.buttonProgress} />
+          )}{" "}
+          <SaveIcon />
+        </Button>
+      </Tooltip>
     </>
   );
   return (
@@ -450,22 +469,26 @@ const CreerCategorie = ({
                     removeAllValues={removeAllValues}
                   />
                 ))}
-                <IconButton
-                  color="primary"
-                  className={classes.button}
-                  // aria-label="Upload picture"
-                  // component="span"
-                  onClick={incrimentNbrAttributes}
-                >
-                  +
-                </IconButton>
-                <IconButton
-                  onClick={dicrimentNbrAttributes}
-                  color="primary"
-                  className={classes.button}
-                >
-                  -
-                </IconButton>
+                <Tooltip title="Ajouter">
+                  <IconButton
+                    color="primary"
+                    className={classes.button}
+                    // aria-label="Upload picture"
+                    // component="span"
+                    onClick={incrimentNbrAttributes}
+                  >
+                    +
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Supprimer">
+                  <IconButton
+                    onClick={dicrimentNbrAttributes}
+                    color="primary"
+                    className={classes.button}
+                  >
+                    -
+                  </IconButton>
+                </Tooltip>
               </TableBody>
             </Table>
           </ValidatorForm>

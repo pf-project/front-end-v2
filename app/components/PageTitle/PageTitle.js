@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import {
   Card,
+  Box,
   Button,
   Grid,
   Dialog,
@@ -14,7 +15,8 @@ import {
 } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import { BreadCrumb } from "enl-components";
-
+import Close from "@material-ui/icons/Close";
+import Tooltip from "@material-ui/core/Tooltip";
 const styles = theme => ({
   elements: {
     position: "absolute",
@@ -69,7 +71,9 @@ const PageTitle = ({
   title,
   pathname,
   elements,
-  cleareStore
+  precedent,
+  leftElements,
+  rightElements
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -90,17 +94,13 @@ const PageTitle = ({
 
   return (
     <Card small className={classes.pageTitle}>
-      <Grid container spacing={2}>
-        {withBackOption && (
-          <Grid xs={1}>
-            <div className={classes.elementsLeft}>
-              <Button onClick={handleOpen} className={classes.button}>
-                <i class="material-icons">keyboard_backspace</i>
-              </Button>
-            </div>
+      <Grid container spacing={1}>
+        {leftElements && (
+          <Grid md={1} xs={2}>
+            <div className={classes.elementsLeft}>{precedent}</div>
           </Grid>
         )}
-        <Grid xs={7}>
+        <Grid>
           <Dialog
             fullScreen={fullScreen}
             open={open}
@@ -128,16 +128,32 @@ const PageTitle = ({
           <Typography component="h4" variant="h4">
             {title}
           </Typography>
-          <BreadCrumb
-            separator=" / "
-            theme="light"
-            location={{
-              pathname
-            }}
-          />
+          <Box component="BreadCrumb" display={{ xs: "none", md: "inline" }}>
+            <BreadCrumb
+              separator=" / "
+              theme="light"
+              location={{
+                pathname
+              }}
+            />
+          </Box>
         </Grid>
         <Grid>
-          <div className={classes.elements}>{elements}</div>
+          <div className={classes.elements}>
+            {elements}
+            {withBackOption && (
+              <Tooltip title="Quitter">
+                <Button
+                  onClick={handleOpen}
+                  className={classes.button}
+                  variant="contained"
+                >
+                  {/* <i class="material-icons">keyboard_backspace</i> */}
+                  <Close />
+                </Button>
+              </Tooltip>
+            )}
+          </div>
         </Grid>
       </Grid>
     </Card>
