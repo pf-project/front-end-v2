@@ -50,6 +50,9 @@ import {
   fetchUnites,
   fetchDesignation
 } from "../../../reducers/crudComptabiliteActions";
+import { Undo } from "@material-ui/icons";
+import SaveIcon from "@material-ui/icons/Save";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const styles = theme => ({
   root: {
@@ -58,6 +61,19 @@ const styles = theme => ({
   },
   backButton: {
     marginRight: "1em"
+  },
+  done: {
+    backgroundColor: "#4db6ac",
+    "&:hover": {
+      backgroundColor: "#009688"
+    }
+  },
+  cancel: {
+    marginRight: "1em",
+    backgroundColor: "#e57373",
+    "&:hover": {
+      backgroundColor: "#f44336"
+    }
   },
   instructions: {
     marginTop: "1em",
@@ -416,21 +432,35 @@ class CreerCaisse extends React.Component {
       "Débit",
       "Crédit"
     ];
+
     const elements = (
       <>
-        <Button
-          variant="contained"
-          color="primary"
-          type="submit"
-          form="comptabiliser"
-          disabled={loading}
-          className={classes.backButton}
-        >
-          Comptabiliser
-        </Button>
-        <Button variant="contained" color="primary" onClick={this.handleReset}>
-          Vider
-        </Button>
+        {/* <Grid item sm={2} lg={2}> */}
+        <Tooltip title="Vider">
+          <Button
+            className={classes.cancel}
+            onClick={this.handleReset}
+            variant="contained"
+            color="primary"
+          >
+            <Undo />
+          </Button>
+        </Tooltip>
+        {/* </Grid> */}
+        {/* <Grid item sm={2} lg={2}> */}
+        <Tooltip title="Sauvegarder">
+          <Button
+            className={classes.done}
+            variant="contained"
+            color="primary"
+            type="submit"
+            onClick={this.handleSubmit}
+            form="comptabiliser"
+          >
+            <SaveIcon />
+          </Button>
+        </Tooltip>
+        {/* </Grid> */}
       </>
     );
     return (
