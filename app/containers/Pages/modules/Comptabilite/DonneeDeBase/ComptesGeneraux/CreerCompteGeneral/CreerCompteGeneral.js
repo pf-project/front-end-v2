@@ -24,11 +24,22 @@ import {
 } from "../../../reducers/crudComptabiliteActions";
 import Base from "./Base";
 import Initiale from "./Initiale";
+import KeyboardArrowLeftSharp from "@material-ui/icons/KeyboardArrowLeftSharp";
+import KeyboardArrowRightSharp from "@material-ui/icons/KeyboardArrowRightSharp";
+import SaveIcon from "@material-ui/icons/Save";
+import FiberNew from "@material-ui/icons/FiberNew";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const styles = theme => ({
   root: {
     width: "90%",
     margin: "2em"
+  },
+  done: {
+    backgroundColor: "#4db6ac",
+    "&:hover": {
+      backgroundColor: "#009688"
+    }
   },
   backButton: {
     marginRight: "1em"
@@ -315,54 +326,73 @@ class CreerCompteGeneral extends React.Component {
     const submitter = this.getSubmitter();
     const elements =
       this.state.activeStep === this.state.steps.length ? (
-        <>
+        <Tooltip
+          title="
+            Créer un nouveau compte générale"
+        >
           <Button
             variant="contained"
+            className={classes.done}
             color="primary"
             onClick={this.handleReset}
           >
-            Création d'une nouvelle caisse
+            <FiberNew />
           </Button>
-        </>
+        </Tooltip>
       ) : (
         <>
           {/* <Grid item sm={2} lg={2}> */}
-          <Button
-            // onClick={submitter}
-            className={classes.button}
-            variant="contained"
-            color="primary"
-            disabled={activeStep === 0}
-            onClick={this.handleBack}
-            className={classes.backButton}
+          <Tooltip
+            title={
+              this.state.activeStep === this.state.steps.length - 1
+                ? "Sauvegarder"
+                : "Suivant"
+            }
           >
-            Précedent
-          </Button>
-          {/* </Grid> */}
-          {/* <Grid item sm={2} lg={2}> */}
-
-          <Button
-            className={classes.button}
-            variant="contained"
-            color="primary"
-            type="submit"
-            form="addCaisse"
-          >
-            {this.state.activeStep === this.state.steps.length - 1
-              ? "Sauvegarder"
-              : "Suivant"}
-          </Button>
-
-          {/* </Grid> */}
+            <Button
+              className={
+                this.state.activeStep === this.state.steps.length - 1
+                  ? classes.done
+                  : classes.button
+              }
+              variant="contained"
+              color="primary"
+              type="submit"
+              form="addCompteGeneral"
+            >
+              {this.state.activeStep === this.state.steps.length - 1 ? (
+                <SaveIcon />
+              ) : (
+                <KeyboardArrowRightSharp />
+              )}
+            </Button>
+          </Tooltip>
         </>
       );
+    const precedent = (
+      <Tooltip title="Precedent">
+        <Button
+          // onClick={submitter}
+          // className={classes.button}
+          variant="outlined"
+          color="primary"
+          disabled={activeStep === 0}
+          onClick={this.handleBack}
+          className={classes.backButton}
+        >
+          <KeyboardArrowLeftSharp />
+        </Button>
+      </Tooltip>
+    );
     return (
       <div>
         <PageTitle
-          title="Créer compte générale"
-          pathname="/Comptabilité/Données de base/comptes généraux/Créer compte générale"
+          title="Créer compte général"
+          pathname="/Comptabilité/Données de base/comptes généraux/Créer compte général"
           elements={elements}
           withBackOption={true}
+          precedent={precedent}
+          leftElements={activeStep !== this.state.steps.length}
         />
 
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
@@ -381,7 +411,7 @@ class CreerCompteGeneral extends React.Component {
                 <div>
                   <Typography className={classes.instructions}>
                     <ValidatorForm
-                      id="addCaisse"
+                      id="addCompteGeneral"
                       // ref={r => (this.form = r)}
                       onSubmit={submitter}
                       autoComplete="off"

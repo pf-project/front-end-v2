@@ -25,12 +25,22 @@ import { fetchUnites } from "../../../../Logistique/reducers/crudLogisticActions
 
 import Initial from "./Initial";
 import Base from "./Base";
+import KeyboardArrowLeftSharp from "@material-ui/icons/KeyboardArrowLeftSharp";
+import KeyboardArrowRightSharp from "@material-ui/icons/KeyboardArrowRightSharp";
+import SaveIcon from "@material-ui/icons/Save";
+import Tooltip from "@material-ui/core/Tooltip";
 // import Bancaire from "./Bancaire";
 // import Comptable from "./Comptable";
 const styles = theme => ({
   root: {
     width: "90%",
     margin: "2em"
+  },
+  done: {
+    backgroundColor: "#4db6ac",
+    "&:hover": {
+      backgroundColor: "#009688"
+    }
   },
   backButton: {
     marginRight: "1em"
@@ -296,34 +306,49 @@ class CreerCompteBancaire extends React.Component {
       ) : (
         <>
           {/* <Grid item sm={2} lg={2}> */}
-          <Button
-            className={classes.button}
-            variant="contained"
-            color="primary"
-            disabled={activeStep === 0}
-            onClick={this.handleBack}
-            className={classes.backButton}
+          <Tooltip
+            title={
+              this.state.activeStep === this.state.steps.length - 1
+                ? "Sauvegarder"
+                : "Suivant"
+            }
           >
-            Précedent
-          </Button>
-          {/* </Grid> */}
-          {/* <Grid item sm={2} lg={2}> */}
-
-          <Button
-            className={classes.button}
-            variant="contained"
-            color="primary"
-            type="submit"
-            form="addCompteBancaire"
-          >
-            {this.state.activeStep === this.state.steps.length - 1
-              ? "Sauvegarder"
-              : "Suivant"}
-          </Button>
-
-          {/* </Grid> */}
+            <Button
+              className={
+                this.state.activeStep === this.state.steps.length - 1
+                  ? classes.done
+                  : classes.button
+              }
+              variant="contained"
+              color="primary"
+              type="submit"
+              form="addCompteBancaire"
+            >
+              {this.state.activeStep === this.state.steps.length - 1 ? (
+                <SaveIcon />
+              ) : (
+                <KeyboardArrowRightSharp />
+              )}
+            </Button>
+          </Tooltip>
         </>
       );
+
+    const precedent = (
+      <Tooltip title="Precedent">
+        <Button
+          // onClick={submitter}
+          // className={classes.button}
+          variant="outlined"
+          color="primary"
+          disabled={activeStep === 0}
+          onClick={this.handleBack}
+          className={classes.backButton}
+        >
+          <KeyboardArrowLeftSharp />
+        </Button>
+      </Tooltip>
+    );
 
     return (
       <div>
@@ -332,6 +357,8 @@ class CreerCompteBancaire extends React.Component {
           pathname="/Comptabilité/Données de base/Compte bancaire/Ajouter compte bancaire"
           elements={elements}
           withBackOption={true}
+          precedent={precedent}
+          leftElements={activeStep !== this.state.steps.length}
         />
 
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
