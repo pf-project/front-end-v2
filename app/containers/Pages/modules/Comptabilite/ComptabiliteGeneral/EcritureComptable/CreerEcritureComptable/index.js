@@ -422,6 +422,7 @@ class CreerCaisse extends React.Component {
           variant="contained"
           color="primary"
           type="submit"
+          form="comptabiliser"
           className={classes.backButton}
         >
           Comptabiliser
@@ -455,7 +456,10 @@ class CreerCaisse extends React.Component {
             className={classes.grid}
             direction="column"
           >
-            <ValidatorForm onSubmit={this.handleComptabiliseSubmit}>
+            <ValidatorForm
+              id="comptabiliser"
+              onSubmit={this.handleComptabiliseSubmit}
+            >
               <Grid item xs={12}>
                 <FormGroup>
                   <Grid container>
