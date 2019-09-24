@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Grid, Card, Typography, Box, Divider } from "@material-ui/core";
 
-const LivreElement = ({ ecritureData, classes, serchByLettrage }) => {
+const LivreElement = ({ ecritureData, classes, findSimilarLettrage }) => {
   const {
     dataTable,
     dateComptable,
@@ -29,7 +29,7 @@ const LivreElement = ({ ecritureData, classes, serchByLettrage }) => {
           </Grid>
           <Grid item sm={2}>
             <Typography
-              onClick={serchByLettrage(lettrageManuel)}
+              onClick={findSimilarLettrage(lettrageManuel)}
               component="div"
             >
               <Link>
