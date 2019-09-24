@@ -349,7 +349,7 @@ class CreerCaisse extends React.Component {
         dateComptable: "2019-01-01",
         lettrageManuel: "",
         libelleOperation: "",
-        refenrece: "",
+        reference: "",
         journal: "",
         dataTable: []
       }
@@ -423,6 +423,7 @@ class CreerCaisse extends React.Component {
           color="primary"
           type="submit"
           form="comptabiliser"
+          disabled={loading}
           className={classes.backButton}
         >
           Comptabiliser
@@ -489,12 +490,12 @@ class CreerCaisse extends React.Component {
                         // fullWidth={true}
                         className={classes.field}
                         onChange={this.handleChange}
-                        name="refenrece"
+                        name="reference"
                         validators={["required"]}
                         errorMessages={["champ obligatoire"]}
-                        value={data.refenrece}
+                        value={data.reference}
                         label="Référence *:"
-                        id="#refenrece"
+                        id="#reference"
                       />
                     </Grid>
                   </Grid>
