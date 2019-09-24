@@ -10,11 +10,12 @@ import {
   TextValidator,
   SelectValidator
 } from "react-material-ui-form-validator";
-import { Container, Grid, Card, MenuItem, Toolbar } from "@material-ui/core";
+import { Divider, Grid, Card, MenuItem, Toolbar } from "@material-ui/core";
 import {
   closeNotifAction,
   fetchItem
 } from "../../reducers/crudComptabiliteActions";
+import LivreElement from "./LivreElement";
 
 const styles = theme => ({
   root: {
@@ -63,19 +64,13 @@ const styles = theme => ({
   //   marginTop: "30px"
   // },
 
-  pageTitle: {
+  LivreElement: {
     padding: theme.spacing(1),
-    paddingBottom: theme.spacing(3),
     marginBottom: theme.spacing(1),
     // width: "80",
     // display: "flex",
     // alignItems: "flex-end",
-    position: "sticky",
-    [theme.breakpoints.up("sm")]: {
-      display: "flex",
-      alignItems: "flex-end"
-    },
-    zIndex: theme.zIndex.drawer + 10,
+
     // alignItems: "center",
     // marginBottom: theme.spacing(10),
     // [theme.breakpoints.up("sm")]: {
@@ -130,49 +125,10 @@ class GrandLivre extends Component {
     const dataTable = [];
     const { ecritures_comptable } = this.props;
     if (ecritures_comptable) {
-      ecritures_comptable.map(ecriture =>
-        ecriture.dataTable.map(element => {
-          const { journal, dateComptable, libelleOperation } = ecriture;
-          const {
-            comptegeneral,
-            designation,
-            montant,
-            debit,
-            credit
-          } = element;
-
-          // check if element witj same compte comptable already exists
-          const index = dataTable.findIndex(
-            element => element.comptegeneral === comptegeneral
-          );
-          if (journal === value || value === "Complet") {
-            if (index > -1) {
-              const existingElement = { ...dataTable[index] };
-              existingElement.montant =
-                parseInt(existingElement.montant) + parseInt(montant);
-              existingElement.debit =
-                parseInt(existingElement.debit) + parseInt(debit);
-              existingElement.credit =
-                parseInt(existingElement.credit) + parseInt(credit);
-              dataTable[index] = existingElement;
-            } else {
-              dataTable.push({
-                comptegeneral,
-                designation,
-                dateComptable,
-                journal,
-
-                libelleOperation,
-                debit,
-                credit,
-                montant
-              });
-            }
-          }
-
-          dataTable.sort(this.compare);
-        })
-      );
+      ecritures_comptable.map(ecriture => {
+        if (ecriture.journal === value || value === "Complet")
+          dataTable.push(ecriture);
+      });
 
       this.setState({ [name]: value, dataTable });
     }
@@ -182,57 +138,24 @@ class GrandLivre extends Component {
     const dataTable = [];
     const { ecritures_comptable } = nextProps;
     if (ecritures_comptable) {
-      ecritures_comptable.map(ecriture =>
-        ecriture.dataTable.map(element => {
-          const { journal, dateComptable, libelleOperation } = ecriture;
-          const {
-            comptegeneral,
-            designation,
-            montant,
-            debit,
-            credit
-          } = element;
-          // check if element witj same compte comptable already exists
-          const index = dataTable.findIndex(
-            element => element.comptegeneral === comptegeneral
-          );
-          // if (journal === value || value === "Complet")
-          if (index > -1) {
-            const existingElement = { ...dataTable[index] };
-            existingElement.montant =
-              parseInt(existingElement.montant) + parseInt(montant);
-            existingElement.debit =
-              parseInt(existingElement.debit) + parseInt(debit);
-            existingElement.credit =
-              parseInt(existingElement.credit) + parseInt(credit);
-            existingElement.libelleOperation =
-              existingElement.libelleOperation +
-              "    <  >  " +
-              libelleOperation;
-            dataTable[index] = existingElement;
-          } else {
-            dataTable.push({
-              comptegeneral,
-              designation,
-              dateComptable,
-              journal,
-
-              libelleOperation,
-              debit,
-              credit,
-              montant
-            });
-          }
-        })
-      );
+      ecritures_comptable.map(ecriture => dataTable.push(ecriture));
     }
     dataTable.sort(this.compare);
     this.setState({ dataTable });
   };
 
+  serchByLettrage = lettrage => () => {
+    const { dataTable } = this.state;
+    let newDataTable = dataTable.filter(
+      element => element.lettrageManuel === lettrage
+    );
+
+    this.setState({ dataTable: newDataTable });
+  };
+
   render() {
-    const { classes, closeNotif, notifMsg, ecritures_comptable } = this.props;
-    const { dataTable, journal } = this.state;
+    const { classes, closeNotif, notifMsg } = this.props;
+    const { journal, dataTable } = this.state;
     return (
       <div>
         <PageTitle
@@ -243,13 +166,13 @@ class GrandLivre extends Component {
 
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
         <div className={classes.root}>
-          <Card small className="mb-4">
-            <Grid
-              container
-              //   spacing={1}
-              className={classes.grid}
-              direction="column"
-            >
+          <Grid
+            container
+            //   spacing={1}
+            className={classes.grid}
+            direction="column"
+          >
+            <Card className={classes.LivreElement}>
               <ValidatorForm>
                 <SelectValidator
                   onChange={this.handleChange}
@@ -271,17 +194,22 @@ class GrandLivre extends Component {
                   <MenuItem value="Trésorerie">Trésorerie</MenuItem>
                 </SelectValidator>
               </ValidatorForm>
-              {ecritures_comptable && (
-                <SimpleTable
-                  data={dataTable}
-                  // selectedRows={selectedRows}
-                  // handleSelect={this.handleSelect}
-                  // headers={headers}
-                  allows_select={false}
-                />
-              )}
-            </Grid>
-          </Card>
+            </Card>
+          </Grid>
+          <Toolbar className={classes.toolbar}>
+            List d'écritures comptable :
+          </Toolbar>
+          {dataTable &&
+            dataTable.map(element => (
+              <>
+                {" "}
+                <LivreElement
+                  serchByLettrage={this.serchByLettrage}
+                  ecritureData={element}
+                  classes={classes}
+                />{" "}
+              </>
+            ))}
         </div>
       </div>
     );
