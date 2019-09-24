@@ -123,14 +123,20 @@ class GrandLivre extends Component {
     const { name, value } = event.target;
 
     const dataTable = [];
-    const { ecritures_comptable } = this.props;
-    if (ecritures_comptable) {
-      ecritures_comptable.map(ecriture => {
-        if (ecriture.journal === value || value === "Complet")
-          dataTable.push(ecriture);
-      });
-
-      this.setState({ [name]: value, dataTable });
+    switch (name) {
+      case "journal":
+        const { ecritures_comptable } = this.props;
+        if (ecritures_comptable) {
+          ecritures_comptable.map(ecriture => {
+            if (ecriture.journal === value || value === "Complet")
+              dataTable.push(ecriture);
+          });
+          this.setState({ [name]: value, dataTable });
+        }
+        break;
+      case "Lettrage":
+        this.setState({ [name]: value });
+        break;
     }
   };
 
@@ -144,18 +150,21 @@ class GrandLivre extends Component {
     this.setState({ dataTable });
   };
 
-  serchByLettrage = lettrage => () => {
+  findSimilarLettrage = lettrage => () => {
     const { dataTable } = this.state;
-    let newDataTable = dataTable.filter(
-      element => element.lettrageManuel === lettrage
-    );
+    let newDataTable;
+    if (lettrage === "") newDataTable = [...dataTable];
+    else
+      newDataTable = dataTable.filter(
+        element => element.lettrageManuel === lettrage
+      );
 
     this.setState({ dataTable: newDataTable });
   };
 
   render() {
     const { classes, closeNotif, notifMsg } = this.props;
-    const { journal, dataTable } = this.state;
+    const { journal, dataTable, Lettrage } = this.state;
     return (
       <div>
         <PageTitle
@@ -174,25 +183,39 @@ class GrandLivre extends Component {
           >
             <Card className={classes.LivreElement}>
               <ValidatorForm>
-                <SelectValidator
-                  onChange={this.handleChange}
-                  className={classes.field}
-                  value={journal}
-                  name="journal"
-                  validators={["required"]}
-                  errorMessages={["champ obligatoire"]}
-                  label="Journal *:"
-                >
-                  <MenuItem value="Complet">Complet</MenuItem>
-                  <MenuItem value="Ventes">Ventes</MenuItem>
+                <Grid container direction="row">
+                  <Grid item sm={6}>
+                    <SelectValidator
+                      onChange={this.handleChange}
+                      className={classes.field}
+                      value={journal}
+                      name="journal"
+                      validators={["required"]}
+                      errorMessages={["champ obligatoire"]}
+                      label="Journal "
+                    >
+                      <MenuItem value="Complet">Complet</MenuItem>
+                      <MenuItem value="Ventes">Ventes</MenuItem>
 
-                  <MenuItem value="Achats">Achats</MenuItem>
-                  <MenuItem value="Opérations diverses">
-                    Opérations diverses
-                  </MenuItem>
+                      <MenuItem value="Achats">Achats</MenuItem>
+                      <MenuItem value="Opérations diverses">
+                        Opérations diverses
+                      </MenuItem>
 
-                  <MenuItem value="Trésorerie">Trésorerie</MenuItem>
-                </SelectValidator>
+                      <MenuItem value="Trésorerie">Trésorerie</MenuItem>
+                    </SelectValidator>
+                  </Grid>
+                  <Grid item sm={6}>
+                    <TextValidator
+                      name="Lettrage"
+                      onChange={this.handleChange}
+                      value={Lettrage}
+                      onBlur={this.findSimilarLettrage(Lettrage)}
+                      label="Lettrage"
+                      className={classes.field}
+                    />
+                  </Grid>
+                </Grid>
               </ValidatorForm>
             </Card>
           </Grid>
@@ -204,7 +227,7 @@ class GrandLivre extends Component {
               <>
                 {" "}
                 <LivreElement
-                  serchByLettrage={this.serchByLettrage}
+                  findSimilarLettrage={this.findSimilarLettrage}
                   ecritureData={element}
                   classes={classes}
                 />{" "}
