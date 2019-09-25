@@ -1,5 +1,7 @@
-import { fork, put, takeEvery, all } from "redux-saga/effects";
-import { fetchAPI } from "../../../../../serverActions";
+import {
+  fork, put, takeEvery, all
+} from 'redux-saga/effects';
+import { fetchAPI } from '../../../../../serverActions';
 import {
   startLoading,
   stopLoading,
@@ -19,7 +21,7 @@ import {
   fetchSuggestionsSuccess,
   fetchSuggestionsFailure,
   fetchSuggestions
-} from "./crudComptabiliteActions";
+} from './crudComptabiliteActions';
 
 import {
   COMPATIBILITE_UPDATE_ITEM_REQUEST,
@@ -29,7 +31,7 @@ import {
   COMPATIBILITE_FETCH_UNITES_REQUEST,
   COMPATIBILITE_DELETE_ITEM_REQUEST,
   FETCH_DESIGNATION_REQUEST
-} from "./crudComptabiliteConstants";
+} from './crudComptabiliteConstants';
 
 const erreur = "Erreur lors de l'action";
 
@@ -37,9 +39,9 @@ function* addItemSaga({ payload, branch }) {
   try {
     yield put(startLoading());
     const data = yield fetchAPI({
-      method: "POST",
+      method: 'POST',
       url: `/api/comptabilite/${branch}/create`,
-      token: window.localStorage.getItem("token"),
+      token: window.localStorage.getItem('token'),
       body: payload
     });
     yield put(addItemSuccess());
@@ -54,9 +56,9 @@ function* fetchItemSaga({ branch, payload, withLoading }) {
   try {
     if (withLoading) yield put(startLoading());
     const data = yield fetchAPI({
-      method: "GET",
+      method: 'GET',
       url: `/api/comptabilite/${branch}/${payload}`,
-      token: window.localStorage.getItem("token")
+      token: window.localStorage.getItem('token')
     });
     yield put(fetchItemSuccess(data));
     if (withLoading) yield put(stopLoading());
@@ -70,9 +72,9 @@ function* fetchUnitesSaga({ branch, data, withLoading }) {
   try {
     if (withLoading) yield put(startLoading());
     const response = yield fetchAPI({
-      method: "GET",
+      method: 'GET',
       url: `/api/comptabilite/${branch}`,
-      token: window.localStorage.getItem("token")
+      token: window.localStorage.getItem('token')
     });
     yield put(fetchUnitesSuccess(response, data));
     if (withLoading) yield put(stopLoading());
@@ -86,9 +88,9 @@ function* fetchDesignationSaga({ branch }) {
   try {
     yield put(startLoading());
     const response = yield fetchAPI({
-      method: "GET",
+      method: 'GET',
       url: `/api/comptabilite/${branch}`,
-      token: window.localStorage.getItem("token")
+      token: window.localStorage.getItem('token')
     });
     yield put(fetchDesignationSuccess(response));
     yield put(stopLoading());
@@ -103,9 +105,9 @@ function* fetchSuggestionsSaga({ branch }) {
     yield put(startLoading());
 
     const data = yield fetchAPI({
-      method: "GET",
+      method: 'GET',
       url: `/api/comptabilite/${branch}`,
-      token: window.localStorage.getItem("token")
+      token: window.localStorage.getItem('token')
     });
 
     yield put(fetchSuggestionsSuccess(data));
@@ -120,9 +122,9 @@ function* updateItemSaga({ payload, branch }) {
   try {
     yield put(startLoading());
     const data = yield fetchAPI({
-      method: "POST",
+      method: 'POST',
       url: `/api/comptabilite/${branch}/update/${payload.id}`,
-      token: window.localStorage.getItem("token"),
+      token: window.localStorage.getItem('token'),
       body: payload
     });
     yield put(updateItemSuccess());
@@ -136,12 +138,12 @@ function* updateItemSaga({ payload, branch }) {
 function* deleteItemSaga({ payload, branch }) {
   try {
     yield fetchAPI({
-      method: "DELETE",
+      method: 'DELETE',
       url: `/api/comptabilite/${branch}/archive/${payload}`,
-      token: window.localStorage.getItem("token")
+      token: window.localStorage.getItem('token')
     });
     yield put(deleteItemSuccess(payload));
-    yield put(fetchItem("find", branch, true));
+    yield put(fetchItem('find', branch, true));
   } catch (error) {
     yield put(deleteItemFailure(erreur));
   }

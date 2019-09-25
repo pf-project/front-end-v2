@@ -44,17 +44,17 @@ import { grey } from "@material-ui/core/colors";
 import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import { Undo, Done, Close } from "@material-ui/icons";
+import SaveIcon from "@material-ui/icons/Save";
+import Tooltip from "@material-ui/core/Tooltip";
+import AddIcon from "@material-ui/icons/Add";
+import DeleteIcon from "@material-ui/icons/Delete";
 import {
   addItem,
   closeNotifAction,
   fetchUnites,
   fetchDesignation
 } from "../../../reducers/crudComptabiliteActions";
-import { Undo, Done, Close } from "@material-ui/icons";
-import SaveIcon from "@material-ui/icons/Save";
-import Tooltip from "@material-ui/core/Tooltip";
-import AddIcon from "@material-ui/icons/Add";
-import DeleteIcon from "@material-ui/icons/Delete";
 
 const styles = theme => ({
   root: {
@@ -208,10 +208,11 @@ class CreerCaisse extends React.Component {
   handleOnBlur = () => {
     const { fetchDesignation } = this.props;
     const { comptegeneral } = this.state.data;
-    if (comptegeneral)
+    if (comptegeneral) {
       fetchDesignation(
         "donneedebase/comptegeneral/findDesignation/" + comptegeneral
       );
+    }
     // this.setState({ showButton: false });
   };
 
@@ -304,8 +305,6 @@ class CreerCaisse extends React.Component {
         rowIndex: -1,
         comptegeneral: "",
         designation: "",
-        debit: "",
-        credit: "",
         debiterCrediter: "Crédit",
         montant: ""
       });
@@ -326,8 +325,6 @@ class CreerCaisse extends React.Component {
       rowIndex: index,
       comptegeneral: data.comptegeneral + "",
       designation: data.designation,
-      debit: data.debit,
-      credit: data.credit,
       debiterCrediter: data.debiterCrediter,
       montant: data.montant
     });
@@ -342,26 +339,21 @@ class CreerCaisse extends React.Component {
       montant,
       debiterCrediter
     } = this.state;
-    const existedCompte = dataTable.filter(
-      item => item.comptegeneral === parseInt(comptegeneral)
-    );
-    if (!existedCompte.length) {
-      dataTable[rowIndex] = {
-        comptegeneral,
-        designation,
-        montant,
-        debiterCrediter,
-        debit: debiterCrediter === "Crédit" ? 0 : montant,
-        credit: debiterCrediter === "Crédit" ? montant : 0
-      };
-      this.setState({ data: { ...this.setState.data, dataTable } });
-      this.calculDebitCredit(dataTable);
-    } else {
-      this.setState({
-        errorMsg:
-          "Vous pouvez pas utiliser le même compte en débit et en crédit"
-      });
-    }
+
+    dataTable[rowIndex] = {
+      comptegeneral,
+      designation,
+      montant,
+      debiterCrediter,
+      debit: debiterCrediter === "Crédit" ? 0 : montant,
+      credit: debiterCrediter === "Crédit" ? montant : 0
+    };
+    this.setState({
+      ...this.state,
+      selectedRows: [],
+      data: { ...this.state.data, dataTable }
+    });
+    this.calculDebitCredit(dataTable);
   };
 
   handleAdd = () => {
@@ -401,7 +393,10 @@ class CreerCaisse extends React.Component {
     const { dataTable } = this.state.data;
     let newData = [];
     newData = dataTable.filter((_, idx) => !selectedRows.includes(idx));
-    this.setState({ data: { dataTable: newData }, selectedRows: [] });
+    this.setState({
+      data: { ...this.setState.data, dataTable: newData },
+      selectedRows: []
+    });
     this.calculDebitCredit(newData);
   };
 
