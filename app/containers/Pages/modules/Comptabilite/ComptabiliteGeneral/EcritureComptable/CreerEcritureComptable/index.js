@@ -50,9 +50,11 @@ import {
   fetchUnites,
   fetchDesignation
 } from "../../../reducers/crudComptabiliteActions";
-import { Undo } from "@material-ui/icons";
+import { Undo, Done, Close } from "@material-ui/icons";
 import SaveIcon from "@material-ui/icons/Save";
 import Tooltip from "@material-ui/core/Tooltip";
+import AddIcon from "@material-ui/icons/Add";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const styles = theme => ({
   root: {
@@ -63,8 +65,10 @@ const styles = theme => ({
     marginRight: "1em"
   },
   done: {
+    color: "white",
     backgroundColor: "#4db6ac",
     "&:hover": {
+      color: "white",
       backgroundColor: "#009688"
     }
   },
@@ -73,6 +77,13 @@ const styles = theme => ({
     backgroundColor: "#e57373",
     "&:hover": {
       backgroundColor: "#f44336"
+    }
+  },
+  fermer: {
+    marginRight: "1em",
+    color: "#e57373",
+    "&:hover": {
+      color: "#f44336"
     }
   },
   instructions: {
@@ -173,7 +184,9 @@ class CreerCaisse extends React.Component {
       },
       open: false,
       errorMsg: "",
-      showButton: false
+      showButton: false,
+      editing: false,
+      rowIndex: -1
     };
   }
 
@@ -195,9 +208,11 @@ class CreerCaisse extends React.Component {
   handleOnBlur = () => {
     const { fetchDesignation } = this.props;
     const { comptegeneral } = this.state.data;
-    fetchDesignation(
-      "donneedebase/comptegeneral/findDesignation/" + comptegeneral
-    );
+    if (comptegeneral)
+      fetchDesignation(
+        "donneedebase/comptegeneral/findDesignation/" + comptegeneral
+      );
+    // this.setState({ showButton: false });
   };
 
   handleChange = event => {
@@ -232,21 +247,14 @@ class CreerCaisse extends React.Component {
         break;
       case "comptepere":
         this.setState({
-          [name]: value,
-          comptegeneral: String(value).slice(0, 4),
-          designation: String(value).slice(5, String(value).length)
+          [name]: value
         });
 
         break;
       case "comptegeneral":
         if (value) {
-          // this.props.fetchDesignation(
-          //   "donneedebase/comptegeneral/findDesignation/" + value
-          // );
-
           this.setState({
-            designation: this.props.designation,
-            showButton: true
+            designation: this.props.designation
           });
         } else {
           this.setState({
@@ -290,32 +298,102 @@ class CreerCaisse extends React.Component {
     if (selectedRows.includes(index)) {
       const newSelectedRows = [...selectedRows];
       newSelectedRows.splice(newSelectedRows.indexOf(index), 1);
-      this.setState({ selectedRows: newSelectedRows });
+      this.setState({
+        selectedRows: newSelectedRows,
+        editing: false,
+        rowIndex: -1,
+        comptegeneral: "",
+        designation: "",
+        debit: "",
+        credit: "",
+        debiterCrediter: "Crédit",
+        montant: ""
+      });
     } else {
-      this.setState({ selectedRows: [...selectedRows, index] });
+      this.handleEdit(index);
+      this.setState({
+        selectedRows: [index]
+      });
+    }
+  };
+
+  handleEdit = index => {
+    const { dataTable } = this.state.data;
+    const data = dataTable.filter((_, idx) => idx === index)[0];
+    this.setState({
+      ...this.state,
+      editing: true,
+      rowIndex: index,
+      comptegeneral: data.comptegeneral + "",
+      designation: data.designation,
+      debit: data.debit,
+      credit: data.credit,
+      debiterCrediter: data.debiterCrediter,
+      montant: data.montant
+    });
+  };
+
+  handleEditClick = () => {
+    const { dataTable } = this.state.data;
+    const {
+      rowIndex,
+      comptegeneral,
+      designation,
+      montant,
+      debiterCrediter
+    } = this.state;
+    const existedCompte = dataTable.filter(
+      item => item.comptegeneral === parseInt(comptegeneral)
+    );
+    if (!existedCompte.length) {
+      dataTable[rowIndex] = {
+        comptegeneral,
+        designation,
+        montant,
+        debiterCrediter,
+        debit: debiterCrediter === "Crédit" ? 0 : montant,
+        credit: debiterCrediter === "Crédit" ? montant : 0
+      };
+      this.setState({ data: { ...this.setState.data, dataTable } });
+      this.calculDebitCredit(dataTable);
+    } else {
+      this.setState({
+        errorMsg:
+          "Vous pouvez pas utiliser le même compte en débit et en crédit"
+      });
     }
   };
 
   handleAdd = () => {
     const { dataTable } = this.state.data;
     const { comptegeneral, designation, debiterCrediter, montant } = this.state;
+    const existedCompte = dataTable.filter(
+      item => item.comptegeneral === parseInt(comptegeneral)
+    );
 
-    dataTable.push({
-      comptegeneral: parseInt(comptegeneral),
-      designation,
-      debiterCrediter,
-      montant,
-      debit: debiterCrediter === "Crédit" ? 0 : montant,
-      credit: debiterCrediter === "Crédit" ? montant : 0
-    });
-    this.setState({
-      data: { ...this.state.data, dataTable },
-      comptegeneral: "",
-      designation: "",
-      debiterCrediter: "Crédit",
-      montant: ""
-    });
-    this.calculDebitCredit(dataTable);
+    if (!existedCompte.length) {
+      dataTable.push({
+        comptegeneral: parseInt(comptegeneral),
+        designation,
+        debiterCrediter,
+        montant,
+        debit: debiterCrediter === "Crédit" ? 0 : montant,
+        credit: debiterCrediter === "Crédit" ? montant : 0
+      });
+      this.setState({
+        data: { ...this.state.data, dataTable },
+        comptegeneral: "",
+        designation: "",
+        debiterCrediter: "Crédit",
+        montant: ""
+      });
+      this.calculDebitCredit(dataTable);
+    } else {
+      this.setState({
+        errorMsg:
+          "Vous pouvez pas utiliser le même compte en débit et en crédit"
+      });
+    }
   };
 
   handleDelete = () => {
@@ -333,6 +411,15 @@ class CreerCaisse extends React.Component {
 
   handleClose = () => {
     this.setState({ open: false });
+  };
+
+  handleValider = () => {
+    const { comptepere } = this.state;
+    this.setState({
+      comptegeneral: String(comptepere).slice(0, 4),
+      designation: String(comptepere).slice(5, String(comptepere).length)
+    });
+    this.handleClose();
   };
 
   calculDebitCredit = dataTable => {
@@ -421,7 +508,8 @@ class CreerCaisse extends React.Component {
       debiterCrediter,
       montant,
       errorMsg,
-      showButton
+      showButton,
+      editing
     } = this.state;
 
     const headers = [
@@ -448,7 +536,7 @@ class CreerCaisse extends React.Component {
         </Tooltip>
         {/* </Grid> */}
         {/* <Grid item sm={2} lg={2}> */}
-        <Tooltip title="Sauvegarder">
+        <Tooltip title="Comptabiliser">
           <Button
             className={classes.done}
             variant="contained"
@@ -672,9 +760,26 @@ class CreerCaisse extends React.Component {
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={this.handleClose} color="primary" autoFocus>
-                    Fermer
-                  </Button>
+                  <Tooltip title="Valider">
+                    <Button
+                      onClick={this.handleValider}
+                      color="primary"
+                      autoFocus
+                      className={classes.done}
+                    >
+                      <Done />
+                    </Button>
+                  </Tooltip>
+                  <Tooltip title="Fermer">
+                    <Button
+                      onClick={this.handleClose}
+                      className={classes.fermer}
+                      color="primary"
+                      autoFocus
+                    >
+                      <Close />
+                    </Button>
+                  </Tooltip>
                 </DialogActions>
               </Dialog>
             </ValidatorForm>
@@ -690,37 +795,42 @@ class CreerCaisse extends React.Component {
             <Grid container>
               <Grid container>
                 <Grid item xs={2}>
-                  <TextValidator
-                    onChange={this.handleChange}
-                    onBlur={this.handleOnBlur}
-                    name="comptegeneral"
-                    type="number"
-                    // style={{ width: "80%" }}
-                    value={comptegeneral}
-                    validators={["required", "maxStringLength:8"]}
-                    errorMessages={["champ obligatoire", "maximum 8 chiffres"]}
-                    label="Code général "
-                    id="#comptegeneral"
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          {showButton && (
-                            <IconButton
-                              edge="start"
-                              aria-label="toggle password visibility"
-                              // onClick={handleClickShowPassword}
-                              // onMouseDown={handleMouseDownPassword}
-                            >
-                              <ShowButton
-                                handleClickOpen={this.handleClickOpen}
-                                handleClickAway={this.handleClickAway}
-                              />
-                            </IconButton>
-                          )}
-                        </InputAdornment>
-                      )
-                    }}
-                  />
+                  <ClickAwayListener onClickAway={this.handleClickAway}>
+                    <TextValidator
+                      onChange={this.handleChange}
+                      onBlur={this.handleOnBlur}
+                      onFocus={this.handleFocus}
+                      name="comptegeneral"
+                      type="number"
+                      // style={{ width: "80%" }}
+                      value={comptegeneral}
+                      validators={["required", "maxStringLength:8"]}
+                      errorMessages={[
+                        "champ obligatoire",
+                        "maximum 8 chiffres"
+                      ]}
+                      label="Code général "
+                      id="#comptegeneral"
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            {showButton && (
+                              <IconButton
+                                edge="start"
+                                aria-label="toggle password visibility"
+                                // onClick={handleClickShowPassword}
+                                // onMouseDown={handleMouseDownPassword}
+                              >
+                                <Button onClick={this.handleClickOpen}>
+                                  <i className="material-icons">list_alt</i>
+                                </Button>
+                              </IconButton>
+                            )}
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+                  </ClickAwayListener>
                 </Grid>
 
                 <Grid item xs={4}>
@@ -729,8 +839,8 @@ class CreerCaisse extends React.Component {
                     // className={classes.field}
                     onChange={this.handleChange}
                     name="designation"
-                    validators={["required", "maxStringLength:40"]}
-                    errorMessages={["champ obligatoire", "maximum 40 char"]}
+                    validators={["required"]}
+                    errorMessages={["champ obligatoire"]}
                     value={this.props.loading ? "" : designation}
                     label="Désignation "
                     inputProps={{ readOnly: true }}
@@ -771,21 +881,40 @@ class CreerCaisse extends React.Component {
               </Grid>
               <Grid container style={{ marginTop: 15 }}>
                 <Grid item xs={1}>
-                  <Button type="submit" variant="contained" color="primary">
-                    Ajouter{" "}
-                  </Button>
+                  <Tooltip title="Ajouter">
+                    <Button type="submit" variant="contained" color="primary">
+                      <AddIcon />
+                    </Button>
+                  </Tooltip>
                 </Grid>
                 <Grid item xs={1}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    disabled={selectedRows.length == 0}
-                    onClick={this.handleDelete}
-                  >
-                    Supprimer{" "}
-                  </Button>
+                  <Tooltip title="Modifier">
+                    <Button
+                      onClick={this.handleEditClick}
+                      disabled={!editing}
+                      color="primary"
+                      autoFocus
+                      className={classes.done}
+                    >
+                      <Done />
+                    </Button>
+                  </Tooltip>
                 </Grid>
-                <Grid item xs={7} />
+                <Grid item xs={1}>
+                  <Tooltip title="Supprimer">
+                    <Button
+                      variant="contained"
+                      className={classes.cancel}
+                      color="primary"
+                      disabled={selectedRows.length == 0}
+                      onClick={this.handleDelete}
+                    >
+                      <DeleteIcon />
+                    </Button>
+                  </Tooltip>
+                </Grid>
+
+                <Grid item xs={6} />
                 <Grid item xs={3}>
                   <Typography variant="h6" component="h2">
                     Total débit : {this.state.debit + " DH"}
@@ -834,39 +963,3 @@ const CreerCaisseReduxed = connect(
 )(CreerCaisse);
 
 export default withStyles(styles)(CreerCaisseReduxed);
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    position: "relative"
-  },
-  paper: {
-    position: "absolute",
-    top: 36,
-    right: 0,
-    left: 0
-  },
-  fake: {
-    backgroundColor: grey[200],
-    height: theme.spacing(1),
-    margin: theme.spacing(2),
-    // Selects every two elements among any group of siblings.
-    "&:nth-child(2n)": {
-      marginRight: theme.spacing(3)
-    }
-  }
-}));
-function ShowButton({ handleClickAway, handleClickOpen }) {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.root}>
-      <ClickAwayListener onClickAway={handleClickAway}>
-        <div>
-          <Button onClick={handleClickOpen}>
-            <i className="material-icons">list_alt</i>
-          </Button>
-        </div>
-      </ClickAwayListener>
-    </div>
-  );
-}

@@ -59,7 +59,9 @@ function* fetchItemSaga({ branch, payload, withLoading }) {
       token: window.localStorage.getItem("token")
     });
     yield put(fetchItemSuccess(data));
+    if (withLoading) yield put(stopLoading());
   } catch (error) {
+    if (withLoading) yield put(stopLoading());
     yield put(fetchItemFailure(erreur));
   }
 }
@@ -73,7 +75,9 @@ function* fetchUnitesSaga({ branch, data, withLoading }) {
       token: window.localStorage.getItem("token")
     });
     yield put(fetchUnitesSuccess(response, data));
+    if (withLoading) yield put(stopLoading());
   } catch (error) {
+    if (withLoading) yield put(stopLoading());
     yield put(fetchUnitesFailure(erreur));
   }
 }
@@ -89,7 +93,7 @@ function* fetchDesignationSaga({ branch }) {
     yield put(fetchDesignationSuccess(response));
     yield put(stopLoading());
   } catch (error) {
-    yield put(startLoading());
+    yield put(stopLoading());
     yield put(fetchDesignationFailure("Compte n'existe pas"));
   }
 }
@@ -105,7 +109,9 @@ function* fetchSuggestionsSaga({ branch }) {
     });
 
     yield put(fetchSuggestionsSuccess(data));
+    yield put(stopLoading());
   } catch (error) {
+    yield put(stopLoading());
     yield put(fetchSuggestionsFailure(erreur));
   }
 }
@@ -120,7 +126,9 @@ function* updateItemSaga({ payload, branch }) {
       body: payload
     });
     yield put(updateItemSuccess());
+    yield put(stopLoading());
   } catch (error) {
+    yield put(stopLoading());
     yield put(updateItemFailure(erreur));
   }
 }
