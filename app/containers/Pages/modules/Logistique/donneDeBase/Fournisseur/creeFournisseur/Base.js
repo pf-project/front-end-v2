@@ -27,7 +27,10 @@ export default function Base({
   classes,
   addContact,
   removeContact,
-  handleSubmit
+  handleSubmit,
+  pays,
+  villes,
+  langues
 }) {
   const initialState = {
     nom: "",
@@ -162,11 +165,13 @@ export default function Base({
                     name="pays"
                     label="Pays"
                   >
-                    <MenuItem value={"Maroc"}>Maroc</MenuItem>
-                    <MenuItem value={"Canada"}>Canada</MenuItem>
-                    <MenuItem value={"Australie"}>Australie</MenuItem>
-                    <MenuItem value={"Qatar"}>Qatar</MenuItem>
-                    <MenuItem value={"Italie"}>Italie</MenuItem>
+                    {pays &&
+                      pays.length > 0 &&
+                      pays.map(element => (
+                        <MenuItem value={element.code}>
+                          {element.designation}
+                        </MenuItem>
+                      ))}
                   </SelectValidator>
                 </Grid>
               </Grid>
@@ -203,9 +208,17 @@ export default function Base({
                     name="ville"
                     label="Ville"
                   >
-                    <MenuItem value={"marakesh"}>marakesh</MenuItem>
-                    <MenuItem value={"casa"}>casa</MenuItem>
-                    <MenuItem value={"Tanger"}>Tanger</MenuItem>
+                    {villes &&
+                      villes.length > 0 &&
+                      villes.map(element => {
+                        if (element.pays === data.pays) {
+                          return (
+                            <MenuItem value={element.code}>
+                              {element.designation}
+                            </MenuItem>
+                          );
+                        }
+                      })}
                   </SelectValidator>
                   {/* </FormControl> */}
                 </Grid>
@@ -223,9 +236,13 @@ export default function Base({
                     name="langue"
                     label="Langue"
                   >
-                    <MenuItem value={"FR"}>français</MenuItem>
-                    <MenuItem value={"AR"}>Arabe</MenuItem>
-                    <MenuItem value={"AN"}>Anglais</MenuItem>
+                    {langues &&
+                      langues.length > 0 &&
+                      langues.map(element => (
+                        <MenuItem value={element.code}>
+                          {element.designation}
+                        </MenuItem>
+                      ))}
                   </SelectValidator>
                 </Grid>
                 <Grid item xs={6} direction="column">

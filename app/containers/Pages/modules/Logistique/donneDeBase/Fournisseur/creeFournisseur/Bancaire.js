@@ -27,7 +27,11 @@ export default function Bancaire({
   classes,
   addCoordonneBancaire,
   removeCoordonne,
-  handleSubmit
+  handleSubmit,
+  pays,
+  villes,
+  banques,
+  devises
 }) {
   const initialState = {
     pays: "",
@@ -154,11 +158,13 @@ export default function Bancaire({
                   name="pays"
                   label="Pays"
                 >
-                  <MenuItem value={"Maroc"}>Maroc</MenuItem>
-                  <MenuItem value={"Canada"}>Canada</MenuItem>
-                  <MenuItem value={"Australie"}>Australie</MenuItem>
-                  <MenuItem value={"Qatar"}>Qatar</MenuItem>
-                  <MenuItem value={"Italie"}>Italie</MenuItem>
+                  {pays &&
+                    pays.length > 0 &&
+                    pays.map(element => (
+                      <MenuItem value={element.code}>
+                        {element.designation}
+                      </MenuItem>
+                    ))}
                 </SelectValidator>
               </Grid>
             </Grid>
@@ -166,13 +172,21 @@ export default function Bancaire({
           <Grid item xs={12}>
             <Grid container direction="row">
               <Grid item xs={6}>
-                <TextValidator
+                <SelectValidator
+                  className={classes.field}
+                  value={coordonnes.banque}
                   onChange={handleCoordonnesChange}
                   name="banque"
-                  className={classes.field}
                   label="Banque"
-                  value={coordonnes.banque}
-                />
+                >
+                  {banques &&
+                    banques.length > 0 &&
+                    banques.map(element => (
+                      <MenuItem value={element.code}>
+                        {element.designation}
+                      </MenuItem>
+                    ))}
+                </SelectValidator>
               </Grid>
               <Grid item xs={6}>
                 <TextValidator
@@ -195,9 +209,17 @@ export default function Bancaire({
                   name="ville_agence"
                   label="Ville d'agence"
                 >
-                  <MenuItem value={"marakesh"}>marakesh</MenuItem>
-                  <MenuItem value={"casa"}>casa</MenuItem>
-                  <MenuItem value={"Tanger"}>Tanger</MenuItem>
+                  {villes &&
+                    villes.length > 0 &&
+                    villes.map(element => {
+                      if (element.pays === coordonnes.pays) {
+                        return (
+                          <MenuItem value={element.code}>
+                            {element.designation}
+                          </MenuItem>
+                        );
+                      }
+                    })}
                 </SelectValidator>
               </Grid>
               <Grid item xs={4}>
@@ -217,7 +239,13 @@ export default function Bancaire({
                   value={coordonnes.devise}
                   label="Devise"
                 >
-                  <MenuItem value="List_Devise">List de divise</MenuItem>
+                  {devises &&
+                    devises.length > 0 &&
+                    devises.map(element => (
+                      <MenuItem value={element.code}>
+                        {element.designation}
+                      </MenuItem>
+                    ))}
                 </SelectValidator>
               </Grid>
             </Grid>

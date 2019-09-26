@@ -19,7 +19,8 @@ import { PageTitle, Notification } from "enl-components";
 import Grid from "@material-ui/core/Grid";
 import {
   addItem,
-  closeNotifAction
+  closeNotifAction,
+  fetchUnites
 } from "../../../reducers/crudLogisticActions";
 import Initial from "./Initial";
 import Base from "./Base";
@@ -116,9 +117,33 @@ class CreerFournisseur extends React.Component {
         ice: "",
         patente: "",
         cnss: "",
-        regestre_commerce: ""
+        regestre_commerce: "",
+        taux_tva: ""
       }
     };
+  }
+
+  componentWillMount() {
+    const { fetchUnites } = this.props;
+
+    fetchUnites("configurationdebase/listesdebase/findPays", "pays", true);
+    fetchUnites("configurationdebase/listesdebase/findVilles", "villes", true);
+    fetchUnites(
+      "configurationdebase/listesdebase/findBanques",
+      "banques",
+      true
+    );
+    fetchUnites(
+      "configurationdebase/listesdebase/findLangues",
+      "langues",
+      true
+    );
+    fetchUnites(
+      "configurationdebase/listesdebase/findHonorire",
+      "honoraires",
+      true
+    );
+    fetchUnites("configurationdebase/unites/findDevises", "devises", true);
   }
 
   addContact = contact => {
@@ -169,6 +194,7 @@ class CreerFournisseur extends React.Component {
   handleChange = event => {
     const { value, name } = event.target;
     let data = { ...this.state.data };
+    const { honoraires } = this.props;
     switch (name) {
       case "pays":
         if (value === "Maroc") data.retenu_a_la_source = false;
@@ -193,6 +219,16 @@ class CreerFournisseur extends React.Component {
         data.honoraire = !data.honoraire;
         this.setState({ data });
         break;
+
+      case "status_honoraire":
+        const honoraire = honoraires.filter(
+          honoraire => honoraire.code === value
+        );
+        data.taux_tva = honoraire[0].tva;
+        data.status_honoraire = value;
+
+        this.setState({ data });
+        break;
       default:
         this.setState({ data: { ...this.state.data, [name]: value } });
         break;
@@ -200,7 +236,17 @@ class CreerFournisseur extends React.Component {
   };
 
   getStepContent = stepIndex => {
-    const { classes, loading } = this.props;
+    const {
+      classes,
+      loading,
+      devises,
+      pays,
+      villes,
+      langues,
+      banques,
+      honoraires
+    } = this.props;
+
     if (loading)
       return (
         <center>
@@ -226,6 +272,9 @@ class CreerFournisseur extends React.Component {
             handleChange={this.handleChange}
             addContact={this.addContact}
             removeContact={this.removeContact}
+            pays={pays}
+            villes={villes}
+            langues={langues}
           />
         );
       case 2:
@@ -237,6 +286,10 @@ class CreerFournisseur extends React.Component {
             handleChange={this.handleChange}
             addCoordonneBancaire={this.addCoordonneBancaire}
             removeCoordonne={this.removeCoordonne}
+            pays={pays}
+            villes={villes}
+            banques={banques}
+            devises={devises}
           />
         );
       default:
@@ -246,6 +299,8 @@ class CreerFournisseur extends React.Component {
             classes={classes}
             handleChange={this.handleChange}
             handleSubmit={this.handleSubmit}
+            devises={devises}
+            honoraires={honoraires}
           />
         );
     }
@@ -376,13 +431,20 @@ class CreerFournisseur extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   closeNotif: () => dispatch(closeNotifAction()),
-  addFournisseur: bindActionCreators(addItem, dispatch)
+  addFournisseur: bindActionCreators(addItem, dispatch),
+  fetchUnites: bindActionCreators(fetchUnites, dispatch)
 });
 
 const mapStateToProps = state => {
   return {
     notifMsg: state.get("crudLogisticReducer").get("notifMsg"),
-    loading: state.get("crudLogisticReducer").get("loading")
+    loading: state.get("crudLogisticReducer").get("loading"),
+    devises: state.get("crudLogisticReducer").get("devises"),
+    pays: state.get("crudLogisticReducer").get("pays"),
+    villes: state.get("crudLogisticReducer").get("villes"),
+    langues: state.get("crudLogisticReducer").get("langues"),
+    banques: state.get("crudLogisticReducer").get("banques"),
+    honoraires: state.get("crudLogisticReducer").get("honoraires")
   };
 };
 

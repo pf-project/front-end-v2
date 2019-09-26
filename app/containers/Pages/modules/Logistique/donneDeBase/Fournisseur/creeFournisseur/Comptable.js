@@ -19,7 +19,9 @@ export default function Comptable({
   handleChange,
   classes,
   loading,
-  handleSubmit
+  handleSubmit,
+  devises,
+  honoraires
 }) {
   if (loading) {
     return (
@@ -148,7 +150,13 @@ export default function Comptable({
                 value={data.devise}
                 label="Devise"
               >
-                <MenuItem value="List_Devise">List de divise</MenuItem>
+                {devises &&
+                  devises.length > 0 &&
+                  devises.map(element => (
+                    <MenuItem value={element.code}>
+                      {element.designation}
+                    </MenuItem>
+                  ))}
               </SelectValidator>
             </Grid>
           </Grid>
@@ -178,115 +186,19 @@ export default function Comptable({
                   value={data.status_honoraire}
                   label="status honoraire"
                 >
-                  <MenuItem value="Administrateur judiciaire,">
-                    Administrateur judiciaire,
-                  </MenuItem>
-                  <MenuItem value="Agent général d’assurance,">
-                    Agent général d’assurance,
-                  </MenuItem>
-                  <MenuItem value="Architecte (à noter l’existence d’un ordre professionnel),">
-                    Architecte (à noter l’existence d’un ordre professionnel),
-                  </MenuItem>
-                  <MenuItem value="Avocat (là encore, il y a un ordre professionnel),">
-                    Avocat (là encore, il y a un ordre professionnel),
-                  </MenuItem>
-                  <MenuItem value="Avocat au conseil d’Etat et à la Cour de Cassation (officier public),">
-                    Avocat au conseil d’Etat et à la Cour de Cassation (officier
-                    public),
-                  </MenuItem>
-                  <MenuItem value="Avoué auprès des cours d’appel (officier public / ministériel),">
-                    Avoué auprès des cours d’appel (officier public /
-                    ministériel),
-                  </MenuItem>
-                  <MenuItem value="Chiropracteur,">Chiropracteur,</MenuItem>
-                  <MenuItem value="Chirurgien-dentiste (à noter l’existence d’un ordre professionnel),">
-                    Chirurgien-dentiste (à noter l’existence d’un ordre
-                    professionnel),
-                  </MenuItem>
-                  <MenuItem value="Commissaire aux comptes,">
-                    Commissaire aux comptes,
-                  </MenuItem>
-                  <MenuItem value="Commissaire-priseur (officier public),">
-                    Commissaire-priseur (officier public),
-                  </MenuItem>
-                  <MenuItem value="Conseiller en investissements financiers,">
-                    Conseiller en investissements financiers,
-                  </MenuItem>
-                  <MenuItem value="Conseiller en propriété industrielle,">
-                    Conseiller en propriété industrielle,
-                  </MenuItem>
-                  <MenuItem value="Diététicien (selon le code de la santé),">
-                    Diététicien (selon le code de la santé),
-                  </MenuItem>
-                  <MenuItem value="Ergothérapeute (selon le code de la santé),">
-                    Ergothérapeute (selon le code de la santé),
-                  </MenuItem>
-                  <MenuItem value="Expert agricole ou foncier,">
-                    Expert agricole ou foncier,
-                  </MenuItem>
-                  <MenuItem value="Expert-comptable (ordre professionnel),">
-                    Expert-comptable (ordre professionnel),
-                  </MenuItem>
-                  <MenuItem value="Expert forestier,">
-                    Expert forestier,
-                  </MenuItem>
-                  <MenuItem value="Expert géomètre (ordre professionnel),">
-                    Expert géomètre (ordre professionnel),
-                  </MenuItem>
-                  <MenuItem value="Greffier auprès des tribunaux de commerce (officier ministériel),">
-                    Greffier auprès des tribunaux de commerce (officier
-                    ministériel),
-                  </MenuItem>
-                  <MenuItem value="Huissier de justice (officier ministériel),">
-                    Huissier de justice (officier ministériel),
-                  </MenuItem>
-                  <MenuItem value="Infirmier libéral (selon le code de la santé),">
-                    Infirmier libéral (selon le code de la santé),
-                  </MenuItem>
-                  <MenuItem value="Directeur de laboratoire d’analyses médicales (selon le code de la santé),">
-                    Directeur de laboratoire d’analyses médicales (selon le code
-                    de la santé),
-                  </MenuItem>
-                  <MenuItem value="Mandataire judiciaire,">
-                    Mandataire judiciaire,
-                  </MenuItem>
-                  <MenuItem value="Masseur-kinésithérapeute (selon le code de la santé ; existence d’un ordre professionnel),">
-                    Masseur-kinésithérapeute (selon le code de la santé ;
-                    existence d’un ordre professionnel),
-                  </MenuItem>
-                  <MenuItem value="Médecin (ordre professionnel),">
-                    Médecin (ordre professionnel),
-                  </MenuItem>
-                  <MenuItem value="Notaire (officier ministériel),">
-                    Notaire (officier ministériel),
-                  </MenuItem>
-                  <MenuItem value="Orthophoniste (selon le code de la santé),">
-                    Orthophoniste (selon le code de la santé),
-                  </MenuItem>
-                  <MenuItem value="Orthoptiste (selon le code de la santé),">
-                    Orthoptiste (selon le code de la santé),
-                  </MenuItem>
-                  <MenuItem value="Ostéopathe,">Ostéopathe,</MenuItem>
-                  <MenuItem value="Pédicure-podologue (selon le code de la santé),">
-                    Pédicure-podologue (selon le code de la santé),
-                  </MenuItem>
-                  <MenuItem value="Psychologue,">Psychologue,</MenuItem>
-                  <MenuItem value="Psychomotricien (selon le code de la santé),">
-                    Psychomotricien (selon le code de la santé),
-                  </MenuItem>
-                  <MenuItem value="Psychothérapeute,">
-                    Psychothérapeute,
-                  </MenuItem>
-                  <MenuItem value="Sage-femme,">Sage-femme,</MenuItem>
-                  <MenuItem value="Vétérinaire (ordre professionnel).">
-                    Vétérinaire (ordre professionnel).
-                  </MenuItem>
-                  <MenuItem value="Autres ....">Autres ....</MenuItem>
+                  {honoraires &&
+                    honoraires.length > 0 &&
+                    honoraires.map(element => (
+                      <MenuItem value={element.code}>
+                        {element.designation}
+                      </MenuItem>
+                    ))}
                 </SelectValidator>
               </Grid>
               <Grid item xs={4}>
                 <TextValidator
-                  onChange={handleChange}
+                  // onChange={handleChange}
+                  InputProps={{ readOnly: true }}
                   name="taux_tva"
                   className={classes.field}
                   validators={["required"]}
