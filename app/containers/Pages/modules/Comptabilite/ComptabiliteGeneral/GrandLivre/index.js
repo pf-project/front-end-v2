@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { PageTitle, Notification, SimpleTable } from "enl-components";
+import { PageTitle, Notification } from "enl-components";
 import { withStyles } from "@material-ui/core/styles";
 import { darken } from "@material-ui/core/styles/colorManipulator";
 import { bindActionCreators } from "redux";
@@ -10,7 +10,7 @@ import {
   TextValidator,
   SelectValidator
 } from "react-material-ui-form-validator";
-import { Divider, Grid, Card, MenuItem, Toolbar } from "@material-ui/core";
+import { Chip, Grid, Card, MenuItem, Toolbar } from "@material-ui/core";
 import {
   closeNotifAction,
   fetchItem
@@ -40,6 +40,9 @@ const styles = theme => ({
   },
   checkBoxMarginTop: {
     marginTop: "20px"
+  },
+  chip: {
+    margin: theme.spacing(0.5)
   },
   toolbar: {
     marginTop: "1em",
@@ -97,7 +100,7 @@ const styles = theme => ({
 class GrandLivre extends Component {
   constructor(props) {
     super(props);
-    this.state = { journal: "Complet" };
+    this.state = { filters: {} };
   }
 
   componentWillMount = () => {
@@ -109,35 +112,15 @@ class GrandLivre extends Component {
     );
   };
 
-  compare = (a, b) => {
-    if (a.comptegeneral < b.comptegeneral) {
-      return -1;
-    }
-    if (a.comptegeneral > b.comptegeneral) {
-      return 1;
-    }
-    return 0;
-  };
-
   handleChange = event => {
     const { name, value } = event.target;
+    this.setState({ filters: { ...this.state.filters, [name]: value } });
+  };
 
-    const dataTable = [];
-    switch (name) {
-      case "journal":
-        const { ecritures_comptable } = this.props;
-        if (ecritures_comptable) {
-          ecritures_comptable.map(ecriture => {
-            if (ecriture.journal === value || value === "Complet")
-              dataTable.push(ecriture);
-          });
-          this.setState({ [name]: value, dataTable });
-        }
-        break;
-      case "Lettrage":
-        this.setState({ [name]: value });
-        break;
-    }
+  deleteFromFilters = element => () => {
+    let { filters } = this.state;
+    delete filters[element];
+    this.setState({ filters });
   };
 
   componentWillReceiveProps = nextProps => {
@@ -146,25 +129,41 @@ class GrandLivre extends Component {
     if (ecritures_comptable) {
       ecritures_comptable.map(ecriture => dataTable.push(ecriture));
     }
-    dataTable.sort(this.compare);
+
     this.setState({ dataTable });
   };
 
   findSimilarLettrage = lettrage => () => {
-    const { dataTable } = this.state;
-    let newDataTable;
-    if (lettrage === "") newDataTable = [...dataTable];
-    else
-      newDataTable = dataTable.filter(
-        element => element.lettrageManuel === lettrage
-      );
-
-    this.setState({ dataTable: newDataTable });
+    const { filters } = this.state;
+    filters["lettrageManuel"] = lettrage;
+    this.setState({ filters });
   };
 
   render() {
-    const { classes, closeNotif, notifMsg } = this.props;
-    const { journal, dataTable, Lettrage } = this.state;
+    const { classes, closeNotif, notifMsg, ecritures_comptable } = this.props;
+    const { journal, Lettrage, filters } = this.state;
+    let dataTable;
+    if (ecritures_comptable)
+      dataTable = ecritures_comptable.filter(element => {
+        for (var key in filters) {
+          if (element[key] === undefined || element[key] != filters[key])
+            return false;
+        }
+        return true;
+      });
+
+    const appliyedFilter = [];
+    let keys = Object.keys(filters);
+    keys.map(element =>
+      appliyedFilter.push(
+        <Chip
+          label={element + ": " + filters[element]}
+          onDelete={this.deleteFromFilters(element)}
+          className={classes.chip}
+        />
+      )
+    );
+
     return (
       <div>
         <PageTitle
@@ -188,13 +187,12 @@ class GrandLivre extends Component {
                     <SelectValidator
                       onChange={this.handleChange}
                       className={classes.field}
-                      value={journal}
+                      value={filters.journal}
                       name="journal"
                       validators={["required"]}
                       errorMessages={["champ obligatoire"]}
                       label="Journal "
                     >
-                      <MenuItem value="Complet">Complet</MenuItem>
                       <MenuItem value="Ventes">Ventes</MenuItem>
 
                       <MenuItem value="Achats">Achats</MenuItem>
@@ -207,12 +205,12 @@ class GrandLivre extends Component {
                   </Grid>
                   <Grid item sm={6}>
                     <TextValidator
-                      name="Lettrage"
-                      onChange={this.handleChange}
-                      value={Lettrage}
-                      onBlur={this.findSimilarLettrage(Lettrage)}
-                      label="Lettrage"
+                      name="lettrageManuel"
+                      onBlur={this.handleChange}
+                      value={filters.lettrageManuel}
+                      label="Lettrage manuel"
                       className={classes.field}
+                      value={Lettrage}
                     />
                   </Grid>
                 </Grid>
@@ -220,7 +218,7 @@ class GrandLivre extends Component {
             </Card>
           </Grid>
           <Toolbar className={classes.toolbar}>
-            List d'écritures comptable :
+            filters :{appliyedFilter}
           </Toolbar>
           {dataTable &&
             dataTable.map(element => (

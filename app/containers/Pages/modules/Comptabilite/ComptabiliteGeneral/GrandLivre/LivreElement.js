@@ -7,7 +7,8 @@ const LivreElement = ({ ecritureData, classes, findSimilarLettrage }) => {
     dateComptable,
     lettrageManuel,
     libelleOperation,
-    reference
+    reference,
+    ecriture_comptable
   } = ecritureData;
   return (
     <Card small className={classes.LivreElement}>
@@ -16,7 +17,7 @@ const LivreElement = ({ ecritureData, classes, findSimilarLettrage }) => {
           <Grid item sm={2}>
             <Typography component="div">
               <Box textAlign="left" m={1}>
-                N° écriture
+                {ecriture_comptable}
               </Box>
             </Typography>
           </Grid>
