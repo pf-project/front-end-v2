@@ -645,6 +645,7 @@ class GererArticle extends React.Component {
             variant="contained"
             color="primary"
             type="submit"
+            form="gererArticle"
           >
             <SaveIcon />
           </Button>

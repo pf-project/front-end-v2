@@ -37,7 +37,7 @@ function* addItemSaga({ payload, branch }) {
       token: window.localStorage.getItem("token"),
       body: payload
     });
-    yield put(addItemSuccess());
+    yield put(addItemSuccess(payload.code, branch));
     // yield put(stopLoading());
   } catch (error) {
     // yield put(stopLoading());
@@ -97,7 +97,7 @@ function* updateItemSaga({ payload, branch }) {
       token: window.localStorage.getItem("token"),
       body: payload
     });
-    yield put(updateItemSuccess());
+    yield put(updateItemSuccess(payload.code, branch));
   } catch (error) {
     yield put(updateItemFailure(erreur));
   }
@@ -112,7 +112,6 @@ function* deleteItemSaga({ payload, branch }) {
     });
     yield put(deleteItemSuccess(payload));
     yield put(fetchItem("find", branch, false));
-
   } catch (error) {
     yield put(deleteItemFailure(erreur));
   }
