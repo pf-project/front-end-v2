@@ -32,6 +32,7 @@ import ArrowForward from "@material-ui/icons/ArrowForward";
 import SaveIcon from "@material-ui/icons/Save";
 import Tooltip from "@material-ui/core/Tooltip";
 import ArrowBack from "@material-ui/icons/ArrowBack";
+import FiberNew from "@material-ui/icons/FiberNew";
 
 const styles = theme => ({
   root: {
@@ -611,13 +612,19 @@ class CreerArticle extends React.Component {
     const elements =
       this.state.activeStep === this.state.steps.length ? (
         <>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.handleReset}
+          <Tooltip
+            title="
+            Crééer un autre Article"
           >
-            Crééer un autre Article
-          </Button>
+            <Button
+              variant="contained"
+              className={classes.done}
+              color="primary"
+              onClick={this.handleReset}
+            >
+              <FiberNew />
+            </Button>
+          </Tooltip>
         </>
       ) : (
         <Tooltip
