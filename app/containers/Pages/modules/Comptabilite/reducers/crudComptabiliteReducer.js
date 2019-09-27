@@ -51,8 +51,12 @@ export default function crudComptabiliteReducer(
       });
     case COMPATIBILITE_UPDATE_ITEM_SUCCESS:
       return state.withMutations(mutableState => {
+        const code = action.payload ? action.payload : "";
         mutableState
-          .set("notifMsg", "Bien mis à jour ...")
+          .set(
+            "notifMsg",
+            action.branch + " " + code + " est mis à jour avec succès"
+          )
           .set("loading", false);
       });
     case COMPATIBILITE_FETCH_ITEM_SUCCESS:
@@ -101,7 +105,10 @@ export default function crudComptabiliteReducer(
       });
     case COMPATIBILITE_ADD_ITEM_SUCCESS:
       return state.withMutations(mutableState => {
-        mutableState.set("notifMsg", "Bien Ajouter ...").set("loading", false);
+        const code = action.payload ? action.payload : "";
+        mutableState
+          .set("notifMsg", action.branch + " " + code + " est créé avec succès")
+          .set("loading", false);
       });
 
     // case DELETE_ITEM_SUCCESS:

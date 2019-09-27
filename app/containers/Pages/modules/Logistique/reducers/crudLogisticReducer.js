@@ -45,10 +45,11 @@ export default function crudLogisticReducer(
       });
     case UPDATE_ITEM_SUCCESS:
       return state.withMutations(mutableState => {
+        const code = action.payload ? action.payload : "";
         mutableState
           .set(
             "notifMsg",
-            action.branch + " " + action.payload + " est mis à jour avec succès"
+            action.branch + " " + code + " est mis à jour avec succès"
           )
           .set("loading", false);
       });
@@ -91,11 +92,9 @@ export default function crudLogisticReducer(
       });
     case ADD_ITEM_SUCCESS:
       return state.withMutations(mutableState => {
+        const code = action.payload ? action.payload : "";
         mutableState
-          .set(
-            "notifMsg",
-            action.branch + " " + action.payload + " est créé avec succès"
-          )
+          .set("notifMsg", action.branch + " " + code + " est créé avec succès")
           .set("loading", false);
       });
 
