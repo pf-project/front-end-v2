@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { RegisterForm, SelectLanguage } from "enl-components";
 import styles from "enl-components/Forms/user-jss";
 import brand from "enl-api/dummy/brand";
-import logo from "enl-images/logo.svg";
+import logo from "enl-images/tilda.svg";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import { FormattedMessage } from "react-intl";
 import { registerWithEmail } from "enl-redux/actions/authActions";

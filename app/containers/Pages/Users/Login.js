@@ -9,7 +9,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import { LoginForm, SelectLanguage } from "enl-components";
-import logo from "enl-images/logo.svg";
+import logo from "enl-images/tilda.svg";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import styles from "enl-components/Forms/user-jss";
 import { FormattedMessage } from "react-intl";

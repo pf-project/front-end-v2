@@ -20,7 +20,7 @@ import Icon from "@material-ui/core/Icon";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Ionicon from "react-ionicons";
 import brand from "enl-api/dummy/brand";
-import logo from "enl-images/logo.svg";
+import logo from "enl-images/tilda.svg";
 import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 import { closeMsgAction } from "enl-redux/actions/authActions";
 import { CheckboxRedux, TextFieldRedux } from "./ReduxFormMUI";

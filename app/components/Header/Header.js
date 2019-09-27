@@ -18,7 +18,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Slide from "@material-ui/core/Slide";
 import { NavLink, Link } from "react-router-dom";
 import brand from "enl-api/dummy/brand";
-import logo from "enl-images/logo.svg";
+import logo from "enl-images/tilda.svg";
 import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 import menuMessages from "enl-api/ui/menuMessages";
 import link from "enl-api/ui/link";

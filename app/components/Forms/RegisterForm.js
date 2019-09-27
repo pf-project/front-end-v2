@@ -1,55 +1,56 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
-import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { Field, reduxForm } from 'redux-form/immutable';
-import Button from '@material-ui/core/Button';
-import Hidden from '@material-ui/core/Hidden';
-import brand from 'enl-api/dummy/brand';
-import logo from 'enl-images/logo.svg';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import ArrowForward from '@material-ui/icons/ArrowForward';
-import Icon from '@material-ui/core/Icon';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Ionicon from 'react-ionicons';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import classNames from "classnames";
+import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { Field, reduxForm } from "redux-form/immutable";
+import Button from "@material-ui/core/Button";
+import Hidden from "@material-ui/core/Hidden";
+import brand from "enl-api/dummy/brand";
+import logo from "enl-images/tilda.svg";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import ArrowForward from "@material-ui/icons/ArrowForward";
+import Icon from "@material-ui/core/Icon";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Ionicon from "react-ionicons";
+import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 import {
   signInWithGithub,
   signInWithGoogle,
   signInWithTwitter,
   closeMsgAction
-} from 'enl-redux/actions/authActions';
-import { CheckboxRedux, TextFieldRedux } from './ReduxFormMUI';
-import MessagesForm from './MessagesForm';
-import messages from './messages';
-import styles from './user-jss';
+} from "enl-redux/actions/authActions";
+import { CheckboxRedux, TextFieldRedux } from "./ReduxFormMUI";
+import MessagesForm from "./MessagesForm";
+import messages from "./messages";
+import styles from "./user-jss";
 
 // validation functions
-const required = value => (value == null ? 'Required' : undefined);
-const email = value => (
+const required = value => (value == null ? "Required" : undefined);
+const email = value =>
   value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-    ? 'Invalid email'
-    : undefined
-);
+    ? "Invalid email"
+    : undefined;
 
 const passwordsMatch = (value, allValues) => {
-  if (value !== allValues.get('password')) {
-    return 'Passwords dont match';
+  if (value !== allValues.get("password")) {
+    return "Passwords dont match";
   }
   return undefined;
 };
 
-const LinkBtn = React.forwardRef(function LinkBtn(props, ref) { // eslint-disable-line
+const LinkBtn = React.forwardRef(function LinkBtn(props, ref) {
+  // eslint-disable-line
   return <NavLink to={props.to} {...props} innerRef={ref} />; // eslint-disable-line
 });
 
-class RegisterForm extends React.Component { // eslint-disable-line
+class RegisterForm extends React.Component {
+  // eslint-disable-line
   handleClickShowPassword = () => {
     const { showPassword } = this.state;
     this.setState({ showPassword: !showPassword });
@@ -88,24 +89,29 @@ class RegisterForm extends React.Component { // eslint-disable-line
             <FormattedMessage {...messages.register} />
           </Typography>
           <Hidden mdDown>
-            <Button size="small" className={classes.buttonLink} component={LinkBtn} to="/login">
-              <Icon className={classNames(classes.icon, classes.signArrow)}>arrow_forward</Icon>
+            <Button
+              size="small"
+              className={classes.buttonLink}
+              component={LinkBtn}
+              to="/login"
+            >
+              <Icon className={classNames(classes.icon, classes.signArrow)}>
+                arrow_forward
+              </Icon>
               <FormattedMessage {...messages.toAccount} />
             </Button>
           </Hidden>
         </div>
-        {
-          messagesAuth !== null || ''
-            ? (
-              <MessagesForm
-                variant="error"
-                className={classes.msgUser}
-                message={messagesAuth}
-                onClose={closeMsg}
-              />
-            )
-            : ''
-        }
+        {messagesAuth !== null || "" ? (
+          <MessagesForm
+            variant="error"
+            className={classes.msgUser}
+            message={messagesAuth}
+            onClose={closeMsg}
+          />
+        ) : (
+          ""
+        )}
         <section>
           <form onSubmit={handleSubmit}>
             <div>
@@ -153,7 +159,9 @@ class RegisterForm extends React.Component { // eslint-disable-line
                     name="passwordConfirm"
                     component={TextFieldRedux}
                     type="password"
-                    label={intl.formatMessage(messages.loginFieldRetypePassword)}
+                    label={intl.formatMessage(
+                      messages.loginFieldRetypePassword
+                    )}
                     required
                     validate={[required, passwordsMatch]}
                     className={classes.field}
@@ -162,16 +170,50 @@ class RegisterForm extends React.Component { // eslint-disable-line
               </Grid>
             </Grid>
             <div>
-              <FormControlLabel control={<Field name="checkbox" required component={CheckboxRedux} className={classes.agree} />} label={intl.formatMessage(messages.aggree)} />
-              <a href="/terms-conditions" target="_blank" className={classes.link}>
+              <FormControlLabel
+                control={
+                  <Field
+                    name="checkbox"
+                    required
+                    component={CheckboxRedux}
+                    className={classes.agree}
+                  />
+                }
+                label={intl.formatMessage(messages.aggree)}
+              />
+              <a
+                href="/terms-conditions"
+                target="_blank"
+                className={classes.link}
+              >
                 <FormattedMessage {...messages.terms} />
               </a>
             </div>
             <div className={classes.btnArea}>
-              <Button variant="contained" fullWidth disabled={loading} color="primary" type="submit">
-                {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+              <Button
+                variant="contained"
+                fullWidth
+                disabled={loading}
+                color="primary"
+                type="submit"
+              >
+                {loading && (
+                  <CircularProgress
+                    size={24}
+                    className={classes.buttonProgress}
+                  />
+                )}
                 <FormattedMessage {...messages.loginButtonContinue} />
-                {!loading && <ArrowForward className={classNames(classes.rightIcon, classes.iconSmall, classes.signArrow)} disabled={submitting || pristine} />}
+                {!loading && (
+                  <ArrowForward
+                    className={classNames(
+                      classes.rightIcon,
+                      classes.iconSmall,
+                      classes.signArrow
+                    )}
+                    disabled={submitting || pristine}
+                  />
+                )}
               </Button>
             </div>
           </form>
@@ -235,8 +277,8 @@ RegisterForm.defaultProps = {
 };
 
 const RegisterFormReduxed = reduxForm({
-  form: 'immutableExample',
-  enableReinitialize: true,
+  form: "immutableExample",
+  enableReinitialize: true
 })(RegisterForm);
 
 const mapDispatchToProps = {
@@ -246,11 +288,11 @@ const mapDispatchToProps = {
   closeMsg: closeMsgAction
 };
 
-const reducerAuth = 'authReducer';
+const reducerAuth = "authReducer";
 const mapStateToProps = state => ({
   messagesAuth: state.get(reducerAuth).message,
   loading: state.get(reducerAuth).loading,
-  ...state,
+  ...state
 });
 
 const RegisterFormMapped = connect(

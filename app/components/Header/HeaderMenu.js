@@ -8,7 +8,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import classNames from "classnames";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
-import logo from "enl-images/logo.svg";
+import logo from "enl-images/tilda.svg";
 import brand from "enl-api/dummy/brand";
 import Hidden from "@material-ui/core/Hidden";
 import Button from "@material-ui/core/Button";

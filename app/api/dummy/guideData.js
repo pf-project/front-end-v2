@@ -1,6 +1,6 @@
 const guideSteps = [
   {
-    title: "Bienvenu sur  Passiflora",
+    title: "Bienvenu sur Tilda",
     label: "Solution HRP .",
     imgPath: "/images/guide/guide1.jpg"
   },

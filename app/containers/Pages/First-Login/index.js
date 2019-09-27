@@ -11,7 +11,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Paper from "@material-ui/core/Paper";
 import brand from "enl-api/dummy/brand";
-import logo from "enl-images/logo.svg";
+import logo from "enl-images/tilda.svg";
 import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 import styles from "enl-components/Forms/user-jss";
 import messages from "./messages";
