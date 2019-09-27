@@ -24,8 +24,8 @@ import {
 } from "../../../reducers/crudComptabiliteActions";
 import Base from "./Base";
 import Initiale from "./Initiale";
-import KeyboardArrowLeftSharp from "@material-ui/icons/KeyboardArrowLeftSharp";
-import KeyboardArrowRightSharp from "@material-ui/icons/KeyboardArrowRightSharp";
+import ArrowBack from "@material-ui/icons/ArrowBack";
+import ArrowForward from "@material-ui/icons/ArrowForward";
 import SaveIcon from "@material-ui/icons/Save";
 import FiberNew from "@material-ui/icons/FiberNew";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -363,7 +363,7 @@ class CreerCompteGeneral extends React.Component {
               {this.state.activeStep === this.state.steps.length - 1 ? (
                 <SaveIcon />
               ) : (
-                <KeyboardArrowRightSharp />
+                <ArrowForward />
               )}
             </Button>
           </Tooltip>
@@ -380,7 +380,7 @@ class CreerCompteGeneral extends React.Component {
           onClick={this.handleBack}
           className={classes.backButton}
         >
-          <KeyboardArrowLeftSharp />
+          <ArrowBack />
         </Button>
       </Tooltip>
     );

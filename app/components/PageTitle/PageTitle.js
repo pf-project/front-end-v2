@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import { BreadCrumb } from "enl-components";
-import Close from "@material-ui/icons/Close";
+import ExitToApp from "@material-ui/icons/ExitToApp";
 import Tooltip from "@material-ui/core/Tooltip";
 const styles = theme => ({
   elements: {
@@ -149,7 +149,7 @@ const PageTitle = ({
                   variant="contained"
                 >
                   {/* <i class="material-icons">keyboard_backspace</i> */}
-                  <Close />
+                  <ExitToApp />
                 </Button>
               </Tooltip>
             )}

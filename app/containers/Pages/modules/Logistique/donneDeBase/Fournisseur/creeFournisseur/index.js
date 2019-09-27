@@ -26,8 +26,8 @@ import Initial from "./Initial";
 import Base from "./Base";
 import Bancaire from "./Bancaire";
 import Comptable from "./Comptable";
-import KeyboardArrowLeftSharp from "@material-ui/icons/KeyboardArrowLeftSharp";
-import KeyboardArrowRightSharp from "@material-ui/icons/KeyboardArrowRightSharp";
+import ArrowBack from "@material-ui/icons/ArrowBack";
+import ArrowForward from "@material-ui/icons/ArrowForward";
 import SaveIcon from "@material-ui/icons/Save";
 import Tooltip from "@material-ui/core/Tooltip";
 const styles = theme => ({
@@ -367,7 +367,7 @@ class CreerFournisseur extends React.Component {
             {this.state.activeStep === this.state.steps.length - 1 ? (
               <SaveIcon />
             ) : (
-              <KeyboardArrowRightSharp />
+              <ArrowForward />
             )}
           </Button>
         </Tooltip>
@@ -384,7 +384,7 @@ class CreerFournisseur extends React.Component {
           onClick={this.handleBack}
           className={classes.backButton}
         >
-          <KeyboardArrowLeftSharp />
+          <ArrowBack />
         </Button>
       </Tooltip>
     );
