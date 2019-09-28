@@ -8,14 +8,17 @@ const categoryWidth = 104;
 const listWidth = 188;
 
 const styles = theme => ({
-  bigSidebar: {
-    color: theme.palette.text.primary,
-    // padding: `${theme.spacing(1)}px 0`,
-    display: "flex",
-    marginTop: theme.spacing(1),
+  margin: {
     [theme.breakpoints.up("lg")]: {
       marginTop: theme.spacing(8)
     }
+  },
+  bigSidebar: {
+    color: theme.palette.text.primary,
+
+    // padding: `${theme.spacing(1)}px 0`,
+    display: "flex"
+    // marginTop: theme.spacing(1)
   },
 
   darker: {
@@ -45,11 +48,11 @@ const styles = theme => ({
   fixedWrap: {
     position: "fixed",
     overflow: "auto",
-    height: "100%",
+
     border: "1px solid rgba(255,255,255,0.3)",
 
     [theme.breakpoints.up("lg")]: {
-      height: "calc(100% - 64px)"
+      height: "calc(100% )"
     },
     "&::-webkit-scrollbar": {
       width: 8

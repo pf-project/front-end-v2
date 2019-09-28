@@ -163,7 +163,7 @@ class MainMenuBig extends React.Component {
       if (selectedMenu.length < 1) {
         return (
           <List dense className={classes.fixedWrap}>
-            <div>
+            <div className={classes.margin}>
               {currentMenu.length > 0 ? getChildMenu(currentMenu[0].child) : ""}
             </div>
           </List>
@@ -178,7 +178,8 @@ class MainMenuBig extends React.Component {
             menuLoaded && classes.menuLoaded
           )}
         >
-          {getChildMenu(selectedMenu)}
+          {" "}
+          <div className={classes.margin}>{getChildMenu(selectedMenu)}</div>
         </List>
       );
     };
@@ -187,13 +188,13 @@ class MainMenuBig extends React.Component {
       <aside className={classes.bigSidebar}>
         <nav className={classNames(classes.category)}>
           <div className={classNames(classes.fixedWrap, classes.darker)}>
-            {getMenus(dataMenu)}
+            <div className={classes.margin}>{getMenus(dataMenu)}</div>
           </div>
         </nav>
         <nav
           className={classNames(
             classes.listMenu,
-            // classes.darker,
+
             !drawerPaper && classes.drawerPaperClose
           )}
         >
