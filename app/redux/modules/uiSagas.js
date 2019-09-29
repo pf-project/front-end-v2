@@ -8,8 +8,8 @@ import {
 
 function* closeMenuAfterSomeSeconds({ isLoaded }) {
   try {
-    yield delay(1200);
-    yield put(closeMenuAction);
+    // yield delay(1200);
+    // yield put(closeMenuAction);
   } catch (error) {}
 }
 
