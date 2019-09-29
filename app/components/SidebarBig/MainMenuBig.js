@@ -21,6 +21,8 @@ const LinkBtn = React.forwardRef(function LinkBtn(props, ref) {
   return <NavLink to={props.to} {...props} innerRef={ref} />; // eslint-disable-line
 });
 
+let closeMenuTimeOut;
+
 class MainMenuBig extends React.Component {
   // eslint-disable-line
   state = { selectedMenu: [], menuLoaded: true };
@@ -185,7 +187,15 @@ class MainMenuBig extends React.Component {
     };
 
     return (
-      <aside className={classes.bigSidebar}>
+      <aside
+        className={classes.bigSidebar}
+        onMouseLeave={() => {
+          closeMenuTimeOut = setTimeout(() => this.props.closeDrawer(), 3000);
+        }}
+        onMouseOver={() => {
+          clearTimeout(closeMenuTimeOut);
+        }}
+      >
         <nav className={classNames(classes.category)}>
           <div className={classNames(classes.fixedWrap, classes.darker)}>
             <div className={classes.margin}>{getMenus(dataMenu)}</div>
