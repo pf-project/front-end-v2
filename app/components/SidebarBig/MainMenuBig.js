@@ -7,7 +7,8 @@ import { connect } from "react-redux";
 import List from "@material-ui/core/List";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import ListItem from "@material-ui/core/ListItem";
-// import Card from "@material-ui/core/Card";
+import logo from "enl-images/tilda.svg";
+import brand from "enl-api/dummy/brand";
 import ListItemText from "@material-ui/core/ListItemText";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import Icon from "@material-ui/core/Icon";
@@ -188,7 +189,16 @@ class MainMenuBig extends React.Component {
       <aside className={classes.bigSidebar}>
         <nav className={classNames(classes.category)}>
           <div className={classNames(classes.fixedWrap, classes.darker)}>
-            <div className={classes.margin}>{getMenus(dataMenu)}</div>
+            <div className={classes.margin}>
+              {/* <NavLink
+                to="/app"
+                className={classNames(classes.brand, classes.brandBar)}
+              >
+                <img src={logo} alt={brand.name} />
+                {brand.name}
+              </NavLink> */}
+              {getMenus(dataMenu)}
+            </div>
           </div>
         </nav>
         <nav
