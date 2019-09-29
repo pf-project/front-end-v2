@@ -195,7 +195,7 @@ class MainMenuBig extends React.Component {
       <aside
         className={classes.bigSidebar}
         onMouseLeave={() => {
-          closeMenuTimeOut = setTimeout(() => this.props.closeDrawer(), 3000);
+          closeMenuTimeOut = setTimeout(() => this.props.closeMenu(), 3000);
         }}
         onMouseOver={() => {
           clearTimeout(closeMenuTimeOut);
@@ -256,7 +256,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   openDrawer: () => dispatch(openMenuAction),
-  closeDrawer: () => dispatch(closeMenuAction)
+  closeDrawer: () => dispatch(toggleAction),
+  closeMenu: () => dispatch(closeMenuAction)
 });
 
 const MainMenuBigMapped = connect(
