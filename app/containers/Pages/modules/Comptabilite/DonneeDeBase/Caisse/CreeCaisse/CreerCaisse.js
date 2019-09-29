@@ -155,7 +155,10 @@ class CreerCaisse extends React.Component {
 
   handleChange = event => {
     const { value, name } = event.target;
-    this.setState({ data: { ...this.state.data, [name]: value } });
+    this.setState({
+      data: { ...this.state.data, [name]: value },
+      formChanged: true
+    });
   };
 
   // handleChangeWithIntitialValue = event => {
@@ -349,6 +352,7 @@ class CreerCaisse extends React.Component {
           withBackOption={true}
           precedent={precedent}
           leftElements={activeStep !== this.state.steps.length}
+          formChanged={this.state.formChanged}
         />
 
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />

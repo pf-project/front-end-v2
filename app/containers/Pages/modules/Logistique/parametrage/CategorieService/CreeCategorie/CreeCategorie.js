@@ -123,6 +123,7 @@ const CreerCategorie = ({
   // state :
   const [data, setData] = React.useState({ articlesMetaData: [] });
   const [nbrAttributes, setNbrAttributes] = React.useState(0);
+  const [formChanged, setFormChanged] = React.useState(false);
 
   // handle change :
   const handleChange = event => {
@@ -208,6 +209,7 @@ const CreerCategorie = ({
     }
     articlesMetaData[key] = item;
     setData({ ...data, articlesMetaData });
+    setFormChanged(true);
   };
 
   // incriment and sicriment nbrAttributes :
@@ -287,6 +289,7 @@ const CreerCategorie = ({
         pathname="/Logistique/Paramétrage/Configuration service/Ajouter catégorie"
         elements={elements}
         withBackOption={true}
+        formChanged={formChanged}
       />
       {/* </AppBar> */}
       <Card>

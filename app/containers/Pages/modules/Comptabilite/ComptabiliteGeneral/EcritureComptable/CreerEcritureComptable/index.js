@@ -266,7 +266,8 @@ class CreerCaisse extends React.Component {
     }
     this.setState({
       data: { ...this.state.data, [name]: value },
-      [name]: value
+      [name]: value,
+      formChanged: true
     });
   };
 
@@ -553,6 +554,7 @@ class CreerCaisse extends React.Component {
           pathname="/Comptabilite/Comptabilité générale/Écriture comptable/créer une écriture comptable"
           elements={elements}
           withBackOption
+          formChanged={this.state.formChanged}
         />
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
         <Notification

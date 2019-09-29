@@ -328,7 +328,10 @@ class GererArticle extends React.Component {
 
     //     break;
     // }
-    this.setState({ data: { ...this.state.data, [name]: value } });
+    this.setState({
+      data: { ...this.state.data, [name]: value },
+      formChanged: true
+    });
   };
 
   handleChangeWithIntitialValue = event => {
@@ -409,6 +412,7 @@ class GererArticle extends React.Component {
           pathname="/Comptabilite/Données de base/comptes généraux/Gérer compte général"
           elements={elements}
           withBackOption={true}
+          formChanged={this.state.formChanged}
         />
 
         <Card>
