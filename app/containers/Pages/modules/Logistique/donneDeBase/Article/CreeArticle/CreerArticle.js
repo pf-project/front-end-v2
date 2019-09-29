@@ -128,6 +128,7 @@ class CreerArticle extends React.Component {
     super(props);
     this.state = {
       activeStep: 0,
+      formChanged: false,
       steps: [
         "Données initiales",
         "Données de base",
@@ -426,9 +427,14 @@ class CreerArticle extends React.Component {
         break;
 
       default:
-        this.setState({ data: { ...this.state.data, [name]: value } });
+        this.setState({
+          data: { ...this.state.data, [name]: value }
+        });
         break;
     }
+    this.setState({
+      formChanged: true
+    });
   };
 
   getStepContent = stepIndex => {
@@ -656,8 +662,6 @@ class CreerArticle extends React.Component {
     const precedent = (
       <Tooltip title="Precedent">
         <Button
-          // onClick={submitter}
-          // className={classes.button}
           variant="outlined"
           color="primary"
           disabled={activeStep === 0}
@@ -678,6 +682,7 @@ class CreerArticle extends React.Component {
           withBackOption={true}
           precedent={precedent}
           leftElements={activeStep !== this.state.steps.length}
+          formChanged={this.state.formChanged}
         />
 
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />

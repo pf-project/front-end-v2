@@ -409,6 +409,9 @@ class CreerService extends React.Component {
         this.setState({ data: { ...this.state.data, [name]: value } });
         break;
     }
+    this.setState({
+      formChanged: true
+    });
   };
 
   getStepContent = stepIndex => {
@@ -635,6 +638,7 @@ class CreerService extends React.Component {
           withBackOption={true}
           precedent={precedent}
           leftElements={activeStep !== this.state.steps.length}
+          formChanged={this.state.formChanged}
         />
 
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />

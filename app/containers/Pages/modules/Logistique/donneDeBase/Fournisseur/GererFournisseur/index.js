@@ -234,6 +234,9 @@ class GererArticle extends React.Component {
         this.setState({ data: { ...this.state.data, [name]: value } });
         break;
     }
+    this.setState({
+      formChanged: true
+    });
   };
 
   handleSelect = filterByDesignations => value => () => {
@@ -391,6 +394,7 @@ class GererArticle extends React.Component {
           pathname="/Logistique/Données de base/Fournisseur/Gérer fournisseur"
           elements={elements}
           withBackOption={true}
+          formChanged={this.state.formChanged}
         />
 
         <Card>

@@ -423,7 +423,10 @@ class GererService extends React.Component {
         break;
 
       default:
-        this.setState({ data: { ...this.state.data, [name]: value } });
+        this.setState({
+          data: { ...this.state.data, [name]: value },
+          formChanged: true
+        });
         break;
     }
   };
@@ -644,6 +647,7 @@ class GererService extends React.Component {
           pathname="/Logistique/Données de base/Service/Gérer Service"
           elements={elements}
           withBackOption={true}
+          formChanged={this.state.formChanged}
         />
 
         <Card>

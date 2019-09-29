@@ -73,7 +73,8 @@ const PageTitle = ({
   elements,
   precedent,
   leftElements,
-  rightElements
+  rightElements,
+  formChanged
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -144,7 +145,7 @@ const PageTitle = ({
             {withBackOption && (
               <Tooltip title="Quitter">
                 <Button
-                  onClick={handleOpen}
+                  onClick={formChanged ? handleOpen : handleLeave}
                   className={classes.button}
                   variant="contained"
                 >
