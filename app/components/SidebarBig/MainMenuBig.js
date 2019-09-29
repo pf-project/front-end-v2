@@ -11,7 +11,11 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import Icon from "@material-ui/core/Icon";
-import { openMenuAction, toggleAction } from "enl-redux/actions/uiActions";
+import {
+  openMenuAction,
+  toggleAction,
+  closeMenuAction
+} from "enl-redux/actions/uiActions";
 import { injectIntl, intlShape, FormattedMessage } from "react-intl";
 import messages from "enl-api/ui/menuMessages";
 import styles from "./sidebarBig-jss";
@@ -242,7 +246,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   openDrawer: () => dispatch(openMenuAction),
-  closeDrawer: () => dispatch(toggleAction)
+  closeDrawer: () => dispatch(closeMenuAction)
 });
 
 const MainMenuBigMapped = connect(
