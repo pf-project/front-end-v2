@@ -114,7 +114,11 @@ class GrandLivre extends Component {
 
   handleChange = event => {
     const { name, value } = event.target;
-    this.setState({ filters: { ...this.state.filters, [name]: value } });
+
+    if (value === "") return false;
+    return this.setState({
+      filters: { ...this.state.filters, [name]: value }
+    });
   };
 
   deleteFromFilters = element => () => {
@@ -123,36 +127,55 @@ class GrandLivre extends Component {
     this.setState({ filters });
   };
 
-  componentWillReceiveProps = nextProps => {
-    const dataTable = [];
-    const { ecritures_comptable } = nextProps;
-    if (ecritures_comptable) {
-      ecritures_comptable.map(ecriture => dataTable.push(ecriture));
-    }
-
-    this.setState({ dataTable });
-  };
-
   findSimilarLettrage = lettrage => () => {
     const { filters } = this.state;
     filters["lettrageManuel"] = lettrage;
     this.setState({ filters });
   };
 
-  render() {
-    const { classes, closeNotif, notifMsg, ecritures_comptable } = this.props;
-    const { journal, Lettrage, filters } = this.state;
-    let dataTable;
-    if (ecritures_comptable)
-      dataTable = ecritures_comptable.filter(element => {
-        for (var key in filters) {
-          if (element[key] === undefined || element[key] != filters[key])
-            return false;
-        }
-        return true;
-      });
+  filterTable = ({ table, filters }) => {
+    let filtredTable = table.filter(element => {
+      for (var key in filters) {
+        let dateComptable;
+        let createdAt;
+        switch (key) {
+          case "dateCreationDebut":
+            createdAt = new Date(element.createdAt);
+            let dateCreationDebut = new Date(filters.dateCreationDebut);
+            if (createdAt.getTime() < dateCreationDebut.getTime()) return false;
+            break;
 
-    const appliyedFilter = [];
+          case "dateCreationFin":
+            createdAt = new Date(element.createdAt);
+            let dateCreationFin = new Date(filters.dateCreationFin);
+            if (createdAt.getTime() > dateCreationFin.getTime()) return false;
+            break;
+          case "dateComptableDebut":
+            dateComptable = new Date(element.dateComptable);
+            let dateComptableDebut = new Date(filters.dateComptableDebut);
+            if (dateComptable.getTime() < dateComptableDebut.getTime())
+              return false;
+            break;
+          case "dateComptableFin":
+            dateComptable = new Date(element.dateComptable);
+            let dateComptableFin = new Date(filters.dateComptableFin);
+            if (dateComptable.getTime() > dateComptableFin.getTime())
+              return false;
+            break;
+          default:
+            if (element[key] === undefined || element[key] != filters[key])
+              return false;
+            break;
+        }
+      }
+      return true;
+    });
+    return filtredTable;
+  };
+
+  getAppliyedFilter = filters => {
+    let appliyedFilter = [];
+    let { classes } = this.props;
     let keys = Object.keys(filters);
     keys.map(element =>
       appliyedFilter.push(
@@ -163,6 +186,25 @@ class GrandLivre extends Component {
         />
       )
     );
+    return appliyedFilter;
+  };
+
+  render() {
+    const { classes, closeNotif, notifMsg, ecritures_comptable } = this.props;
+    const { filters } = this.state;
+    const {
+      dateComptableDebut,
+      journal,
+      lettrageManuel,
+      dateComptableFin,
+      dateCreationFin,
+      dateCreationDebut
+    } = filters;
+    let dataTable;
+    if (ecritures_comptable)
+      dataTable = this.filterTable({ filters, table: ecritures_comptable });
+
+    const appliyedFilter = this.getAppliyedFilter(filters);
 
     return (
       <div>
@@ -187,7 +229,7 @@ class GrandLivre extends Component {
                     <SelectValidator
                       onChange={this.handleChange}
                       className={classes.field}
-                      value={filters.journal}
+                      value={journal}
                       name="journal"
                       validators={["required"]}
                       errorMessages={["champ obligatoire"]}
@@ -205,12 +247,71 @@ class GrandLivre extends Component {
                   </Grid>
                   <Grid item sm={6}>
                     <TextValidator
+                      InputLabelProps={{
+                        shrink: true
+                      }}
                       name="lettrageManuel"
                       onBlur={this.handleChange}
-                      value={filters.lettrageManuel}
+                      value={lettrageManuel}
                       label="Lettrage manuel"
                       className={classes.field}
-                      value={Lettrage}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container direction="row">
+                  <Grid item sm={6}>
+                    <TextValidator
+                      name="dateComptableDebut"
+                      onBlur={this.handleChange}
+                      value={dateComptableDebut}
+                      type="date"
+                      label="Date comptable debut"
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                      className={classes.field}
+                    />
+                  </Grid>
+                  <Grid item sm={6}>
+                    <TextValidator
+                      name="dateComptableFin"
+                      onBlur={this.handleChange}
+                      value={dateComptableFin}
+                      type="date"
+                      label="Date comptable fin"
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                      className={classes.field}
+                    />
+                  </Grid>
+                </Grid>
+
+                <Grid container direction="row">
+                  <Grid item sm={6}>
+                    <TextValidator
+                      name="dateCreationDebut"
+                      onBlur={this.handleChange}
+                      value={dateCreationDebut}
+                      type="date"
+                      label="Date création debut"
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                      className={classes.field}
+                    />
+                  </Grid>
+                  <Grid item sm={6}>
+                    <TextValidator
+                      name="dateCreationFin"
+                      onBlur={this.handleChange}
+                      value={dateCreationFin}
+                      type="date"
+                      label="Date création fin"
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                      className={classes.field}
                     />
                   </Grid>
                 </Grid>

@@ -41,6 +41,21 @@ const styles = theme => ({
       padding: `0 ${theme.spacing(1)}px`
     }
   },
+  brand: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
+    fontSize: 16,
+    margin: 0,
+    fontWeight: 500,
+    textDecoration: "none",
+    color: theme.palette.text.primary,
+    "& img": {
+      marginRight: 10,
+      width: 30
+    }
+  },
   icon: {},
   text: {},
   active: {},
