@@ -4,7 +4,8 @@ import { withStyles } from "@material-ui/core/styles";
 import { darken } from "@material-ui/core/styles/colorManipulator";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-
+import Tooltip from "@material-ui/core/Tooltip";
+import Button from "@material-ui/core/Button";
 import {
   ValidatorForm,
   TextValidator,
@@ -17,6 +18,13 @@ import {
 } from "../../reducers/crudComptabiliteActions";
 import LivreElement from "./LivreElement";
 
+import CreeEcrtitureComptable from "../EcritureComptable/CreerEcritureComptable/index";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import { Undo, Done, Close } from "@material-ui/icons";
 const styles = theme => ({
   root: {
     width: "90%",
@@ -63,23 +71,26 @@ const styles = theme => ({
           : darken(theme.palette.primary.dark, 0.2)
     }
   },
-  // buttons: {
-  //   marginTop: "30px"
-  // },
+  modal: {
+    position: "absolute",
+    // top: 1000,
+    // left: "10%",
+    overflow: "scroll",
+    height: "80%",
+    width: "80%",
+    display: "block"
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3)
+  },
 
   LivreElement: {
     padding: theme.spacing(1),
     marginBottom: theme.spacing(1),
-    // width: "80",
-    // display: "flex",
-    // alignItems: "flex-end",
 
-    // alignItems: "center",
-    // marginBottom: theme.spacing(10),
-    // [theme.breakpoints.up("sm")]: {
-    //   // display: "flex",
-    //   alignItems: "flex-end"
-    // },
     "& h4": {
       fontWeight: 700,
       fontSize: 24,
@@ -100,8 +111,16 @@ const styles = theme => ({
 class GrandLivre extends Component {
   constructor(props) {
     super(props);
-    this.state = { filters: {} };
+    this.state = { filters: {}, index: -1, open: false };
   }
+
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ index: -1, element: {}, open: false });
+  };
 
   componentWillMount = () => {
     const { fetch_ecritures_comptable } = this.props;
@@ -133,6 +152,16 @@ class GrandLivre extends Component {
     this.setState({ filters });
   };
 
+  handleSelect = ({ element, index }) => event => {
+    let prevIndex = this.state.index;
+    if (prevIndex === index) return this.setState({ index: -1, element: {} });
+    let reversedDataTable = element.dataTable.map(row => {
+      return { ...row, credit: row.debit, debit: row.credit };
+    });
+    element.dataTable = reversedDataTable;
+    this.setState({ index, element });
+  };
+
   filterTable = ({ table, filters }) => {
     let filtredTable = table.filter(element => {
       for (var key in filters) {
@@ -161,6 +190,12 @@ class GrandLivre extends Component {
             let dateComptableFin = new Date(filters.dateComptableFin);
             if (dateComptable.getTime() > dateComptableFin.getTime())
               return false;
+            break;
+          case "codeGenerale":
+            let found = element.dataTable.find(
+              row => row.comptegeneral === filters.codeGenerale
+            );
+            if (!Boolean(found)) return false;
             break;
           default:
             if (element[key] === undefined || element[key] != filters[key])
@@ -191,14 +226,15 @@ class GrandLivre extends Component {
 
   render() {
     const { classes, closeNotif, notifMsg, ecritures_comptable } = this.props;
-    const { filters } = this.state;
+    const { filters, index, open, element } = this.state;
     const {
       dateComptableDebut,
       journal,
       lettrageManuel,
       dateComptableFin,
       dateCreationFin,
-      dateCreationDebut
+      dateCreationDebut,
+      codeGenerale
     } = filters;
     let dataTable;
     if (ecritures_comptable)
@@ -206,12 +242,32 @@ class GrandLivre extends Component {
 
     const appliyedFilter = this.getAppliyedFilter(filters);
 
+    const elements = (
+      <>
+        <Tooltip
+          title="
+          Contre-passation"
+        >
+          <Button
+            disabled={index < 0}
+            variant="contained"
+            className={classes.done}
+            color="primary"
+            onClick={this.handleOpen}
+          >
+            <Undo />
+          </Button>
+        </Tooltip>
+      </>
+    );
+
     return (
       <div>
         <PageTitle
           title="Grand livre"
           pathname="/Comptabilité/Comptablité générale/Grand livre"
           withBackOption
+          elements={elements}
         />
 
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
@@ -222,6 +278,37 @@ class GrandLivre extends Component {
             className={classes.grid}
             direction="column"
           >
+            {" "}
+            <Dialog
+              open={open}
+              onClose={this.handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+              fullScreen
+            >
+              {" "}
+              <DialogActions>
+                <Tooltip title="Fermer">
+                  <Button
+                    onClick={this.handleClose}
+                    className={classes.fermer}
+                    color="primary"
+                    autoFocus
+                  >
+                    <Close />
+                  </Button>
+                </Tooltip>
+              </DialogActions>
+              <DialogTitle id="alert-dialog-title">
+                {" "}
+                Countre passer l'ecriture{" "}
+                {this.state.element && this.state.element.ecriture_comptable}
+              </DialogTitle>
+              <DialogContent>
+                <CreeEcrtitureComptable data={this.state.element} />
+                <DialogContentText id="alert-dialog-description" />
+              </DialogContent>
+            </Dialog>{" "}
             <Card className={classes.LivreElement}>
               <ValidatorForm>
                 <Grid container direction="row">
@@ -315,6 +402,18 @@ class GrandLivre extends Component {
                     />
                   </Grid>
                 </Grid>
+                <Grid container direction="row">
+                  <Grid item sm={6}>
+                    <TextValidator
+                      name="codeGenerale"
+                      onBlur={this.handleChange}
+                      value={codeGenerale}
+                      type="number"
+                      label="Compte général "
+                      className={classes.field}
+                    />
+                  </Grid>
+                </Grid>
               </ValidatorForm>
             </Card>
           </Grid>
@@ -322,13 +421,16 @@ class GrandLivre extends Component {
             filters :{appliyedFilter}
           </Toolbar>
           {dataTable &&
-            dataTable.map(element => (
+            dataTable.map((element, index) => (
               <>
                 {" "}
                 <LivreElement
+                  handleSelect={this.handleSelect}
                   findSimilarLettrage={this.findSimilarLettrage}
                   ecritureData={element}
                   classes={classes}
+                  index={index}
+                  selectedIndex={this.state.index}
                 />{" "}
               </>
             ))}

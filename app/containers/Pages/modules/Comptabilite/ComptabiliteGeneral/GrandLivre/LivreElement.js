@@ -1,7 +1,16 @@
 import React from "react";
 import { Link, Grid, Card, Typography, Box, Divider } from "@material-ui/core";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
-const LivreElement = ({ ecritureData, classes, findSimilarLettrage }) => {
+const LivreElement = ({
+  ecritureData,
+  classes,
+  findSimilarLettrage,
+  handleSelect,
+  index,
+  selectedIndex
+}) => {
   const {
     dataTable,
     dateComptable,
@@ -15,12 +24,21 @@ const LivreElement = ({ ecritureData, classes, findSimilarLettrage }) => {
       <Grid container spacing={2} direction="column">
         <Grid container direction="row">
           <Grid item sm={2}>
-            <Typography component="div">
-              <Box textAlign="left" m={1}>
-                {ecriture_comptable}
-              </Box>
-            </Typography>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  onChange={handleSelect({
+                    element: ecritureData,
+                    index
+                  })}
+                  checked={index === selectedIndex}
+                  value="checkedC"
+                />
+              }
+              label={ecriture_comptable}
+            />
           </Grid>
+
           <Grid item sm={8}>
             <Typography component="div">
               <Box textAlign="center" m={1}>

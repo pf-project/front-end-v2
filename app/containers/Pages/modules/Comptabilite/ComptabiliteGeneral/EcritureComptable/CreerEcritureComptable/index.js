@@ -197,12 +197,16 @@ class CreerCaisse extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    const { designation } = nextProps;
+    const { designation, data } = nextProps;
+    let state = {};
+
     if (designation) {
-      this.setState({
-        designation
-      });
+      state.designation = designation;
     }
+    if (data) {
+      state.data = data;
+    }
+    this.setState(state);
   }
 
   handleOnBlur = () => {
@@ -481,6 +485,10 @@ class CreerCaisse extends React.Component {
   };
 
   render() {
+    // let data;
+    // if (this.props.data) data = this.props.data;
+    // else data = this.state.data;
+
     const {
       classes,
       closeNotif,
@@ -854,6 +862,9 @@ class CreerCaisse extends React.Component {
                     errorMessages={["champ obligatoire"]}
                     label="Débiter/Créditer "
                     id="#debiterCrediter"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
                   >
                     <MenuItem value="Débit">Débit</MenuItem>
                     <MenuItem value="Crédit">Crédit</MenuItem>
@@ -870,6 +881,9 @@ class CreerCaisse extends React.Component {
                       "champ obligatoire",
                       "champ doit étre un nombre"
                     ]}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
                     value={montant}
                     label="Montant"
                     id="#montant"
