@@ -111,7 +111,11 @@ const styles = theme => ({
 class GrandLivre extends Component {
   constructor(props) {
     super(props);
-    this.state = { filters: {}, index: -1, open: false };
+    this.state = {
+      filters: { journal: "Grand Livre" },
+      index: -1,
+      open: false
+    };
   }
 
   handleOpen = () => {
@@ -197,6 +201,9 @@ class GrandLivre extends Component {
             );
             if (!Boolean(found)) return false;
             break;
+          case "journal":
+            if (filters["journal"] === "Grand Livre") break;
+            if (element["journal"] != filters["journal"]) return false;
           default:
             if (element[key] === undefined || element[key] != filters[key])
               return false;
@@ -322,6 +329,7 @@ class GrandLivre extends Component {
                       errorMessages={["champ obligatoire"]}
                       label="Journal "
                     >
+                      <MenuItem value="Grand Livre">Grand Livre</MenuItem>
                       <MenuItem value="Ventes">Ventes</MenuItem>
 
                       <MenuItem value="Achats">Achats</MenuItem>
