@@ -26,6 +26,7 @@ import { Undo } from "@material-ui/icons";
 import SaveIcon from "@material-ui/icons/Save";
 import { fetchUnites } from "../../../../Logistique/reducers/crudLogisticActions";
 import Tooltip from "@material-ui/core/Tooltip";
+import css from "enl-styles/Form.scss";
 const styles = theme => ({
   root: {
     width: "90%",
@@ -84,6 +85,9 @@ const styles = theme => ({
     "&:hover": {
       backgroundColor: "#f44336"
     }
+  },
+  btnArea: {
+    margin: 20
   },
 
   submitdiv: {
@@ -231,7 +235,16 @@ class GererArticle extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    const { caisseInfo } = nextProps;
+    const { caisseInfo, caisse } = nextProps;
+
+    if (caisse) {
+      this.setState({
+        data: { ...caisse },
+        activeStep: 1,
+        caisseChoisi: true,
+        panelEditing: true
+      });
+    }
     if (caisseInfo) {
       this.setState({
         data: { ...caisseInfo }
@@ -251,7 +264,6 @@ class GererArticle extends React.Component {
   handleSubmit = () => {
     if (this.state.caisseChoisi) {
       const { data } = this.state;
-      // console.log(data);
       this.props.updateCaisse(data, "donneedebase/caisse");
       this.setState({
         activeStep: 0,
@@ -310,7 +322,7 @@ class GererArticle extends React.Component {
   };
 
   render() {
-    const { activeStep, errorMsg } = this.state;
+    const { activeStep, errorMsg, panelEditing } = this.state;
     const { classes, closeNotif, notifMsg } = this.props;
     const elements = (
       <>
@@ -348,20 +360,24 @@ class GererArticle extends React.Component {
         onSubmit={this.handleSubmit}
         autoComplete="off"
       >
-        <PageTitle
-          title="Gérer Caisse"
-          pathname="/Comptabilite/Données de base/caisse/Gérer Caisse"
-          elements={elements}
-          withBackOption={true}
-          formChanged={this.state.formChanged}
-        />
+        {!panelEditing && (
+          <PageTitle
+            title="Gérer Caisse"
+            pathname="/Comptabilite/Données de base/caisse/Gérer Caisse"
+            elements={elements}
+            withBackOption={true}
+            formChanged={this.state.formChanged}
+          />
+        )}
 
         <Card>
-          <Notification
-            close={() => closeNotif()}
-            message={notifMsg}
-            branch=""
-          />
+          {!panelEditing && (
+            <Notification
+              close={() => closeNotif()}
+              message={notifMsg}
+              branch=""
+            />
+          )}
 
           <Notification
             close={() => {
@@ -397,6 +413,7 @@ class GererArticle extends React.Component {
             {/* <div>{this.getStepContent(this.state.activeStep)}</div> */}
           </div>
         </Card>
+        <div className={classes.btnArea}>{panelEditing && elements}</div>
       </ValidatorForm>
     );
   }

@@ -33,7 +33,7 @@ const styles = theme => ({
   floatingForm: {
     transition: "all 0.3s cubic-bezier(0.01, 0.65, 0.3, 0.9)",
     position: "fixed",
-    width: 500,
+    width: 800,
     right: 10,
     border: `1px solid ${theme.palette.primary.main}`,
     borderRadius: theme.rounded.medium,

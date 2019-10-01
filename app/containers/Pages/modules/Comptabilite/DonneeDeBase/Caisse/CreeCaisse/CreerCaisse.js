@@ -15,7 +15,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { ValidatorForm } from "react-material-ui-form-validator";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { PageTitle, Notification } from "enl-components";
+import { PageTitle, Notification, FloatingPanel } from "enl-components";
 import Grid from "@material-ui/core/Grid";
 import {
   addItem,
@@ -30,6 +30,8 @@ import ArrowForward from "@material-ui/icons/ArrowForward";
 import SaveIcon from "@material-ui/icons/Save";
 import Tooltip from "@material-ui/core/Tooltip";
 import FiberNew from "@material-ui/icons/FiberNew";
+import Edit from "@material-ui/icons/Edit";
+import GeererFromNotif from "../GererCaisse/index";
 
 const styles = theme => ({
   root: {
@@ -270,6 +272,13 @@ class CreerCaisse extends React.Component {
     }
   };
 
+  handleOpen = () => {
+    this.setState({ openForm: true });
+  };
+  handleClose = () => {
+    this.setState({ openForm: false });
+  };
+
   render() {
     const { classes, closeNotif, notifMsg } = this.props;
     const { activeStep } = this.state;
@@ -277,6 +286,7 @@ class CreerCaisse extends React.Component {
     const elements =
       this.state.activeStep === this.state.steps.length ? (
         <>
+          {" "}
           <Tooltip
             title="
             Créer une nouvelle caisse"
@@ -288,6 +298,16 @@ class CreerCaisse extends React.Component {
               onClick={this.handleReset}
             >
               <FiberNew />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Gerer cette caisse">
+            <Button
+              variant="contained"
+              // className={classes.done}
+              color="primary"
+              onClick={this.handleOpen}
+            >
+              <Edit />
             </Button>
           </Tooltip>
         </>
@@ -342,6 +362,7 @@ class CreerCaisse extends React.Component {
         </Button>
       </Tooltip>
     );
+    const { data } = this.state;
 
     return (
       <div>
@@ -353,9 +374,19 @@ class CreerCaisse extends React.Component {
           precedent={precedent}
           leftElements={activeStep !== this.state.steps.length}
           formChanged={this.state.formChanged}
+          form="addCaisse"
         />
 
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
+
+        <FloatingPanel
+          title={"Gerer caisse"}
+          openForm={this.state.openForm}
+          closeForm={this.handleClose}
+          branch=""
+        >
+          {this.state.openForm && <GeererFromNotif caisse={data} />}
+        </FloatingPanel>
 
         <Card small className="mb-4">
           <div className={classes.root}>
