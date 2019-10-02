@@ -39,6 +39,9 @@ const styles = theme => ({
       backgroundColor: "#009688"
     }
   },
+  btnArea: {
+    margin: 20
+  },
   cancel: {
     marginRight: "1em",
     backgroundColor: "#e57373",
@@ -192,7 +195,10 @@ class GererArticle extends React.Component {
     let route = filterByDesignations ? "findByDesignation" : "findByCompte";
     let url = `${route}/${value}`;
     this.props.fetchCompteGeneral(url, "donneedebase/comptegeneral", true);
-    this.setState({ activeStep: 1, compteGeneralChoisi: true });
+    this.setState({
+      activeStep: 1,
+      compteGeneralChoisi: true
+    });
   };
 
   handleReset = () => {
@@ -261,10 +267,18 @@ class GererArticle extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    const { compteGeneralInfo } = nextProps;
+    const { compteGeneralInfo, panelEditing } = nextProps;
+    console.log(panelEditing);
+
     if (compteGeneralInfo) {
+      if (panelEditing)
+        this.setState({
+          activeStep: 1,
+          compteGeneralChoisi: true
+        });
       this.setState({
-        data: { ...compteGeneralInfo }
+        data: { ...compteGeneralInfo },
+        panelEditing
       });
     }
   }
@@ -283,11 +297,13 @@ class GererArticle extends React.Component {
       const { data } = this.state;
       // console.log(data);
       this.props.updateCompteGeneral(data, "donneedebase/comptegeneral");
-      this.setState({
-        activeStep: 0,
-        compteGeneralChoisi: false,
-        data: {}
-      });
+      if (!this.props.panelEditing)
+        this.setState({
+          activeStep: 0,
+          compteGeneralChoisi: false,
+          data: {}
+        });
+      else this.props.closeForm();
     }
   };
 
@@ -295,39 +311,6 @@ class GererArticle extends React.Component {
     const { value, name } = event.target;
     const { data } = this.state;
 
-    // switch (name) {
-    //   case "classe":
-    //     this.props.fetchUnites(
-    //       "donneedebase/comptegeneral/findRubriquesByClasse/" + value,
-    //       "rubriques",
-    //       true
-    //     );
-    //     parseInt(value) > 5
-    //       ? (data.typecompte = "Compte de résultat")
-    //       : (data.typecompte = "Compte de bilan");
-
-    //     this.setState({ data });
-    //     break;
-    //   case "rubrique":
-    //     this.props.fetchUnites(
-    //       "donneedebase/comptegeneral/findPostesByRubrique/" + value,
-    //       "postes",
-    //       true
-    //     );
-    //     break;
-    //   case "poste":
-    //     this.props.fetchUnites(
-    //       "donneedebase/comptegeneral/findComptesByPoste/" + value,
-    //       "comptes",
-    //       true
-    //     );
-    //     break;
-    //   case "comptepere":
-    //     data.compte = value;
-    //     this.setState({ data });
-
-    //     break;
-    // }
     this.setState({
       data: { ...this.state.data, [name]: value },
       formChanged: true
@@ -370,7 +353,6 @@ class GererArticle extends React.Component {
   render() {
     const { activeStep, errorMsg } = this.state;
     const { classes, closeNotif, notifMsg } = this.props;
-
     const elements = (
       <>
         {/* <Grid item sm={2} lg={2}> */}
@@ -407,20 +389,23 @@ class GererArticle extends React.Component {
         onSubmit={this.handleSubmit}
         autoComplete="off"
       >
-        <PageTitle
-          title="Gérer Compte général"
-          pathname="/Comptabilite/Données de base/comptes généraux/Gérer compte général"
-          elements={elements}
-          withBackOption={true}
-          formChanged={this.state.formChanged}
-        />
-
-        <Card>
-          <Notification
-            close={() => closeNotif()}
-            message={notifMsg}
-            branch=""
+        {!this.state.panelEditing && (
+          <PageTitle
+            title="Gérer Compte général"
+            pathname="/Comptabilite/Données de base/comptes généraux/Gérer compte général"
+            elements={elements}
+            withBackOption={true}
+            formChanged={this.state.formChanged}
           />
+        )}
+        <Card>
+          {!this.props.panelEditing && (
+            <Notification
+              close={() => closeNotif()}
+              message={notifMsg}
+              branch=""
+            />
+          )}
 
           <Notification
             close={() => {
@@ -456,6 +441,9 @@ class GererArticle extends React.Component {
             {/* <div>{this.getStepContent(this.state.activeStep)}</div> */}
           </div>
         </Card>
+        <div className={classes.btnArea}>
+          {this.props.panelEditing && elements}
+        </div>
       </ValidatorForm>
     );
   }

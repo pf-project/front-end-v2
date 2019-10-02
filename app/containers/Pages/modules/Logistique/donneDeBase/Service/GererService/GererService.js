@@ -50,6 +50,9 @@ const styles = theme => ({
       backgroundColor: "#f44336"
     }
   },
+  btnArea: {
+    margin: 20
+  },
   instructions: {
     marginTop: "1em",
     marginBottom: "1em"
@@ -583,7 +586,16 @@ class GererService extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    const { serviceInfo } = nextProps;
+    const { serviceInfo, data } = nextProps;
+
+    if (data) {
+      this.setState({
+        data: { ...data },
+        activeStep: 1,
+        serviceChoisi: true,
+        panelEditing: true
+      });
+    }
 
     if (serviceInfo) {
       this.setState({
@@ -642,20 +654,24 @@ class GererService extends React.Component {
     );
     return (
       <div>
-        <PageTitle
-          title="Gérer Service"
-          pathname="/Logistique/Données de base/Service/Gérer Service"
-          elements={elements}
-          withBackOption={true}
-          formChanged={this.state.formChanged}
-        />
+        {!this.state.panelEditing && (
+          <PageTitle
+            title="Gérer Service"
+            pathname="/Logistique/Données de base/Service/Gérer Service"
+            elements={elements}
+            withBackOption={true}
+            formChanged={this.state.formChanged}
+          />
+        )}
 
         <Card>
-          <Notification
-            close={() => closeNotif()}
-            message={notifMsg}
-            branch=""
-          />
+          {!this.state.panelEditing && (
+            <Notification
+              close={() => closeNotif()}
+              message={notifMsg}
+              branch=""
+            />
+          )}
 
           <Notification
             close={() => {
@@ -698,6 +714,9 @@ class GererService extends React.Component {
             {/* <div>{this.getStepContent(this.state.activeStep)}</div> */}
           </div>
         </Card>
+        <div className={classes.btnArea}>
+          {this.state.panelEditing && elements}
+        </div>
       </div>
     );
   }

@@ -75,10 +75,11 @@ export const addItemFailure = (payload, branch) => ({
   branch
 });
 
-export const addItemSuccess = (payload, branch) => ({
+export const addItemSuccess = (payload, branch, data) => ({
   type: types.COMPATIBILITE_ADD_ITEM_SUCCESS,
   payload,
-  branch
+  branch,
+  data
 });
 
 export const addItem = (payload, branch) => ({

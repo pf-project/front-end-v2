@@ -15,7 +15,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { ValidatorForm } from "react-material-ui-form-validator";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { PageTitle, Notification } from "enl-components";
+import { PageTitle, Notification, FloatingPanel } from "enl-components";
 import Grid from "@material-ui/core/Grid";
 import {
   addItem,
@@ -29,6 +29,9 @@ import ArrowForward from "@material-ui/icons/ArrowForward";
 import SaveIcon from "@material-ui/icons/Save";
 import FiberNew from "@material-ui/icons/FiberNew";
 import Tooltip from "@material-ui/core/Tooltip";
+
+import Edit from "@material-ui/icons/Edit";
+import GererCompteGeneral from "../GererCompteGeneral/index";
 
 const styles = theme => ({
   root: {
@@ -322,6 +325,12 @@ class CreerCompteGeneral extends React.Component {
         break;
     }
   };
+  handleOpen = () => {
+    this.setState({ openForm: true });
+  };
+  handleClose = () => {
+    this.setState({ openForm: false });
+  };
 
   render() {
     const { classes, closeNotif, notifMsg } = this.props;
@@ -329,19 +338,31 @@ class CreerCompteGeneral extends React.Component {
     const submitter = this.getSubmitter();
     const elements =
       this.state.activeStep === this.state.steps.length ? (
-        <Tooltip
-          title="
+        <>
+          <Tooltip
+            title="
             Créer un nouveau compte générale"
-        >
-          <Button
-            variant="contained"
-            className={classes.done}
-            color="primary"
-            onClick={this.handleReset}
           >
-            <FiberNew />
-          </Button>
-        </Tooltip>
+            <Button
+              variant="contained"
+              className={classes.done}
+              color="primary"
+              onClick={this.handleReset}
+            >
+              <FiberNew />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Gerer ce compte">
+            <Button
+              variant="contained"
+              // className={classes.done}
+              color="primary"
+              onClick={this.handleOpen}
+            >
+              <Edit />
+            </Button>
+          </Tooltip>
+        </>
       ) : (
         <>
           {/* <Grid item sm={2} lg={2}> */}
@@ -400,6 +421,20 @@ class CreerCompteGeneral extends React.Component {
         />
 
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
+
+        <FloatingPanel
+          title={"Gerer compte général"}
+          openForm={this.state.openForm}
+          closeForm={this.handleClose}
+          branch=""
+        >
+          {this.state.openForm && (
+            <GererCompteGeneral
+              panelEditing={true}
+              closeForm={this.handleClose}
+            />
+          )}
+        </FloatingPanel>
 
         <Card small className="mb-4">
           <div className={classes.root}>

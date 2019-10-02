@@ -15,8 +15,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { ValidatorForm } from "react-material-ui-form-validator";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { PageTitle, Notification } from "enl-components";
-import Grid from "@material-ui/core/Grid";
+import { PageTitle, Notification, FloatingPanel } from "enl-components";
 import {
   fetchItem,
   addItem,
@@ -33,6 +32,8 @@ import SaveIcon from "@material-ui/icons/Save";
 import Tooltip from "@material-ui/core/Tooltip";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import FiberNew from "@material-ui/icons/FiberNew";
+import Edit from "@material-ui/icons/Edit";
+import GererArticle from "../GererArticle/GererArticle";
 
 const styles = theme => ({
   root: {
@@ -289,6 +290,12 @@ class CreerArticle extends React.Component {
       return parseFloat(prix_TTC / (1 + taux_tva)).toFixed(3);
     }
     return null;
+  };
+  handleOpen = () => {
+    this.setState({ openForm: true });
+  };
+  handleClose = () => {
+    this.setState({ openForm: false });
   };
 
   handleChange = event => {
@@ -631,6 +638,17 @@ class CreerArticle extends React.Component {
               <FiberNew />
             </Button>
           </Tooltip>
+
+          <Tooltip title="Gerer cette article">
+            <Button
+              variant="contained"
+              // className={classes.done}
+              color="primary"
+              onClick={this.handleOpen}
+            >
+              <Edit />
+            </Button>
+          </Tooltip>
         </>
       ) : (
         <Tooltip
@@ -686,6 +704,15 @@ class CreerArticle extends React.Component {
         />
 
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
+
+        <FloatingPanel
+          title={"Gerer caisse"}
+          openForm={this.state.openForm}
+          closeForm={this.handleClose}
+          branch=""
+        >
+          {this.state.openForm && <GererArticle data={this.state.data} />}
+        </FloatingPanel>
 
         <Card small className="mb-4">
           <div className={classes.root}>

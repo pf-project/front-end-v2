@@ -45,6 +45,9 @@ const styles = theme => ({
       backgroundColor: "#f44336"
     }
   },
+  btnArea: {
+    margin: 20
+  },
   backButton: {
     marginRight: "1em"
   },
@@ -335,7 +338,16 @@ class GererArticle extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    const { fournisseurInfo } = nextProps;
+    const { fournisseurInfo, data } = nextProps;
+
+    if (data) {
+      this.setState({
+        data: { ...data },
+        activeStep: 1,
+        fournisseurChoisi: true,
+        panelEditing: true
+      });
+    }
 
     if (fournisseurInfo) {
       this.setState({
@@ -389,13 +401,15 @@ class GererArticle extends React.Component {
 
     return (
       <div>
-        <PageTitle
-          title="Gérer fournisseur"
-          pathname="/Logistique/Données de base/Fournisseur/Gérer fournisseur"
-          elements={elements}
-          withBackOption={true}
-          formChanged={this.state.formChanged}
-        />
+        {!this.state.panelEditing && (
+          <PageTitle
+            title="Gérer fournisseur"
+            pathname="/Logistique/Données de base/Fournisseur/Gérer fournisseur"
+            elements={elements}
+            withBackOption={true}
+            formChanged={this.state.formChanged}
+          />
+        )}
 
         <Card>
           <Notification
@@ -404,14 +418,16 @@ class GererArticle extends React.Component {
             branch=""
           />
 
-          <Notification
-            close={() => {
-              this.setState({ errorMsg: "" });
-              closeNotif();
-            }}
-            message={errorMsg}
-            branch=""
-          />
+          {!this.state.panelEditing && (
+            <Notification
+              close={() => {
+                this.setState({ errorMsg: "" });
+                closeNotif();
+              }}
+              message={errorMsg}
+              branch=""
+            />
+          )}
           <div className={classes.root}>
             <AppBar color="default" position="static">
               <Tabs
@@ -438,6 +454,9 @@ class GererArticle extends React.Component {
             {/* <div>{this.getStepContent(this.state.activeStep)}</div> */}
           </div>
         </Card>
+        <div className={classes.btnArea}>
+          {this.state.panelEditing && elements}
+        </div>
       </div>
     );
   }

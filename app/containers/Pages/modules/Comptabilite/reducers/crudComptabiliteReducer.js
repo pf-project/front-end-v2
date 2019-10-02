@@ -108,7 +108,8 @@ export default function crudComptabiliteReducer(
         const code = action.payload ? action.payload : "";
         mutableState
           .set("notifMsg", action.branch + " " + code + " est créé avec succès")
-          .set("loading", false);
+          .set("loading", false)
+          .set("item", action.data);
       });
 
     // case DELETE_ITEM_SUCCESS:

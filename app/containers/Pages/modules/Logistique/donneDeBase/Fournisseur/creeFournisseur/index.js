@@ -15,7 +15,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { ValidatorForm } from "react-material-ui-form-validator";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { PageTitle, Notification } from "enl-components";
+import { PageTitle, Notification, FloatingPanel } from "enl-components";
 import Grid from "@material-ui/core/Grid";
 import {
   addItem,
@@ -31,6 +31,9 @@ import ArrowForward from "@material-ui/icons/ArrowForward";
 import SaveIcon from "@material-ui/icons/Save";
 import Tooltip from "@material-ui/core/Tooltip";
 import FiberNew from "@material-ui/icons/FiberNew";
+
+import Edit from "@material-ui/icons/Edit";
+import GererFournisseur from "../GererFournisseur/index";
 const styles = theme => ({
   root: {
     width: "90%",
@@ -190,6 +193,12 @@ class CreerFournisseur extends React.Component {
     }
 
     this.setState({ data });
+  };
+  handleOpen = () => {
+    this.setState({ openForm: true });
+  };
+  handleClose = () => {
+    this.setState({ openForm: false });
   };
 
   handleChange = event => {
@@ -354,6 +363,17 @@ class CreerFournisseur extends React.Component {
               <FiberNew />
             </Button>
           </Tooltip>
+
+          <Tooltip title="Gerer ce fournisseur">
+            <Button
+              variant="contained"
+              // className={classes.done}
+              color="primary"
+              onClick={this.handleOpen}
+            >
+              <Edit />
+            </Button>
+          </Tooltip>
         </>
       ) : (
         <Tooltip
@@ -412,6 +432,15 @@ class CreerFournisseur extends React.Component {
         />
 
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
+
+        <FloatingPanel
+          title={"Gerer caisse"}
+          openForm={this.state.openForm}
+          closeForm={this.handleClose}
+          branch=""
+        >
+          {this.state.openForm && <GererFournisseur data={this.state.data} />}
+        </FloatingPanel>
 
         <Card small className="mb-4">
           <div className={classes.root}>

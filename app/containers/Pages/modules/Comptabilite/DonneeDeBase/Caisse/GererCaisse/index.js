@@ -26,7 +26,6 @@ import { Undo } from "@material-ui/icons";
 import SaveIcon from "@material-ui/icons/Save";
 import { fetchUnites } from "../../../../Logistique/reducers/crudLogisticActions";
 import Tooltip from "@material-ui/core/Tooltip";
-import css from "enl-styles/Form.scss";
 const styles = theme => ({
   root: {
     width: "90%",
@@ -413,7 +412,9 @@ class GererArticle extends React.Component {
             {/* <div>{this.getStepContent(this.state.activeStep)}</div> */}
           </div>
         </Card>
-        <div className={classes.btnArea}>{panelEditing && elements}</div>
+        <div className={classes.btnArea}>
+          {this.state.panelEditing && elements}
+        </div>
       </ValidatorForm>
     );
   }

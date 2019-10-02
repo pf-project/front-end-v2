@@ -42,7 +42,7 @@ function* addItemSaga({ payload, branch }) {
       token: window.localStorage.getItem("token"),
       body: payload
     });
-    yield put(addItemSuccess(payload.code, branch.split("/")[1]));
+    yield put(addItemSuccess(payload.code, branch.split("/")[1], data));
     yield put(stopLoading());
   } catch (error) {
     yield put(stopLoading());
