@@ -22,7 +22,7 @@ const styles = theme => ({
     position: "absolute",
     right: theme.spacing(1),
     // top: theme.spacing(1),
-    marginTop: theme.spacing(1),
+    // marginTop: theme.spacing(1),
     marginLeft: theme.spacing(30)
   },
   elementsLeft: {
@@ -36,7 +36,7 @@ const styles = theme => ({
     marginLeft: theme.spacing(1)
   },
   pageTitle: {
-    padding: theme.spacing(1),
+    padding: theme.spacing(),
     paddingBottom: theme.spacing(3),
     marginBottom: theme.spacing(1),
 
@@ -159,6 +159,11 @@ const PageTitle = ({
       </Grid>
     </Card>
   );
+};
+
+PageTitle.defaultProps = {
+  title: "",
+  pathname: ""
 };
 
 export default withStyles(styles)(PageTitle);

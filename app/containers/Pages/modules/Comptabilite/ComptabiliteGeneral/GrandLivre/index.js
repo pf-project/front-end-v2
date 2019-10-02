@@ -17,14 +17,15 @@ import {
   fetchItem
 } from "../../reducers/crudComptabiliteActions";
 import LivreElement from "./LivreElement";
-
+import CircularProgress from "@material-ui/core/CircularProgress";
 import CreeEcrtitureComptable from "../EcritureComptable/CreerEcritureComptable/index";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { Undo, Done, Close } from "@material-ui/icons";
+import { Undo, Add, Close } from "@material-ui/icons";
+import { NavLink } from "react-router-dom";
 const styles = theme => ({
   root: {
     width: "90%",
@@ -86,7 +87,9 @@ const styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3)
   },
-
+  headerButton: {
+    marginLeft: theme.spacing(1)
+  },
   LivreElement: {
     padding: theme.spacing(1),
     marginBottom: theme.spacing(1),
@@ -160,10 +163,18 @@ class GrandLivre extends Component {
     let prevIndex = this.state.index;
     if (prevIndex === index) return this.setState({ index: -1, element: {} });
     let reversedDataTable = element.dataTable.map(row => {
-      return { ...row, credit: row.debit, debit: row.credit };
+      return {
+        ...row,
+        credit: row.debit,
+        debit: row.credit,
+        debiterCrediter: row.debiterCrediter === "Débit" ? "Crédit" : "Débit"
+      };
     });
-    element.dataTable = reversedDataTable;
-    this.setState({ index, element });
+    // element.dataTable = reversedDataTable;
+    this.setState({
+      index,
+      element: { ...element, dataTable: reversedDataTable }
+    });
   };
 
   filterTable = ({ table, filters }) => {
@@ -232,7 +243,14 @@ class GrandLivre extends Component {
   };
 
   render() {
-    const { classes, closeNotif, notifMsg, ecritures_comptable } = this.props;
+    const {
+      classes,
+      closeNotif,
+      notifMsg,
+      ecritures_comptable,
+      fetch_ecritures_comptable,
+      loading
+    } = this.props;
     const { filters, index, open, element } = this.state;
     const {
       dateComptableDebut,
@@ -258,13 +276,28 @@ class GrandLivre extends Component {
           <Button
             disabled={index < 0}
             variant="contained"
-            className={classes.done}
+            className={classes.headerButton}
             color="primary"
             onClick={this.handleOpen}
           >
             <Undo />
           </Button>
         </Tooltip>
+
+        <NavLink to="/app/Comptabilite/Comptabilité-générale/Ecriture-comptable/créer-écriture-comptable">
+          <Tooltip
+            title="
+          Ajouter une nouvelle écriture"
+          >
+            <Button
+              variant="contained"
+              className={classes.headerButton}
+              color="primary"
+            >
+              <Add />
+            </Button>
+          </Tooltip>
+        </NavLink>
       </>
     );
 
@@ -312,7 +345,11 @@ class GrandLivre extends Component {
                 {this.state.element && this.state.element.ecriture_comptable}
               </DialogTitle>
               <DialogContent>
-                <CreeEcrtitureComptable data={this.state.element} />
+                <CreeEcrtitureComptable
+                  onClose={this.handleClose}
+                  data={this.state.element}
+                  fetch_ecritures_comptable={fetch_ecritures_comptable}
+                />
                 <DialogContentText id="alert-dialog-description" />
               </DialogContent>
             </Dialog>{" "}
@@ -428,7 +465,15 @@ class GrandLivre extends Component {
           <Toolbar className={classes.toolbar}>
             filters :{appliyedFilter}
           </Toolbar>
-          {dataTable &&
+
+          {loading && (
+            <center>
+              <CircularProgress size={24} className={classes.buttonProgress} />
+            </center>
+          )}
+
+          {!loading &&
+            dataTable &&
             dataTable.map((element, index) => (
               <>
                 {" "}

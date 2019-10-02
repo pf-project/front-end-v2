@@ -465,6 +465,7 @@ class CreerCaisse extends React.Component {
 
   handleComptabiliseSubmit = () => {
     const { credit, debit, data } = this.state;
+    const { onClose, fetch_ecritures_comptable } = this.props;
 
     // minimum two operation to comptabilise
     if (data.dataTable.length < 2) {
@@ -480,6 +481,15 @@ class CreerCaisse extends React.Component {
         data,
         "comptabilitegenerale/ecriturecomptable"
       );
+
+      if (onClose) {
+        fetch_ecritures_comptable(
+          "find",
+          "comptabilitegenerale/ecriturecomptable",
+          true
+        );
+        onClose();
+      }
       this.handleReset();
     }
   };
@@ -516,6 +526,7 @@ class CreerCaisse extends React.Component {
       editing
     } = this.state;
 
+    console.log(data);
     const headers = [
       "Compte général",
       "Désignation de compte",
@@ -558,10 +569,14 @@ class CreerCaisse extends React.Component {
     return (
       <div>
         <PageTitle
-          title="Créer une écriture comptable"
-          pathname="/Comptabilite/Comptabilité générale/Écriture comptable/créer une écriture comptable"
+          title={Boolean(this.props.data) ? "" : "Créer une écriture comptable"}
+          pathname={
+            Boolean(this.props.data)
+              ? "/"
+              : "/Comptabilite/Comptabilité générale/Écriture comptable/créer une écriture comptable"
+          }
           elements={elements}
-          withBackOption
+          withBackOption={!Boolean(this.props.data)}
           formChanged={this.state.formChanged}
         />
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
