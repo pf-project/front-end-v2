@@ -526,7 +526,6 @@ class CreerCaisse extends React.Component {
       editing
     } = this.state;
 
-    console.log(data);
     const headers = [
       "Compte général",
       "Désignation de compte",
@@ -540,28 +539,30 @@ class CreerCaisse extends React.Component {
       <>
         {/* <Grid item sm={2} lg={2}> */}
         <Tooltip title="Vider">
-          <Button
-            className={classes.cancel}
+          <IconButton
+            // className={classes.cancel}
             onClick={this.handleReset}
             variant="contained"
             color="primary"
+            size="small"
           >
             <Undo />
-          </Button>
+          </IconButton>
         </Tooltip>
         {/* </Grid> */}
         {/* <Grid item sm={2} lg={2}> */}
         <Tooltip title="Comptabiliser">
-          <Button
-            className={classes.done}
+          <IconButton
+            // className={classes.done}
             variant="contained"
             color="primary"
             type="submit"
             onClick={this.handleSubmit}
             form="comptabiliser"
+            size="small"
           >
             <SaveIcon />
-          </Button>
+          </IconButton>
         </Tooltip>
         {/* </Grid> */}
       </>
@@ -599,10 +600,10 @@ class CreerCaisse extends React.Component {
               id="comptabiliser"
               onSubmit={this.handleComptabiliseSubmit}
             >
-              <Grid item xs={12}>
+              <Grid item xs={12} md={12}>
                 <FormGroup>
                   <Grid container>
-                    <Grid item xs={5}>
+                    <Grid item xs={12} md={5}>
                       <SelectValidator
                         onChange={this.handleChange}
                         className={classes.field}
@@ -623,7 +624,7 @@ class CreerCaisse extends React.Component {
                         <MenuItem value="Trésorerie">Trésorerie</MenuItem>
                       </SelectValidator>
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={12} md={5}>
                       <TextValidator
                         // fullWidth={true}
                         className={classes.field}
@@ -638,7 +639,7 @@ class CreerCaisse extends React.Component {
                     </Grid>
                   </Grid>
                   <Grid container>
-                    <Grid item xs={5}>
+                    <Grid item xs={12} md={5}>
                       <TextValidator
                         // fullWidth={true}
                         className={classes.field}
@@ -650,7 +651,7 @@ class CreerCaisse extends React.Component {
                         id="#dateComptable"
                       />
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={12} md={5}>
                       <TextValidator
                         // fullWidth={true}
                         className={classes.field}
@@ -663,7 +664,7 @@ class CreerCaisse extends React.Component {
                     </Grid>
                   </Grid>
                   <Grid container>
-                    <Grid item xs={5}>
+                    <Grid item xs={12} md={5}>
                       <TextValidator
                         onChange={this.handleChange}
                         className={classes.field}
@@ -781,24 +782,26 @@ class CreerCaisse extends React.Component {
                 </DialogContent>
                 <DialogActions>
                   <Tooltip title="Valider">
-                    <Button
+                    <IconButton
                       onClick={this.handleValider}
                       color="primary"
                       autoFocus
-                      className={classes.done}
+                      // className={classes.done}
+                      size="small"
                     >
                       <Done />
-                    </Button>
+                    </IconButton>
                   </Tooltip>
                   <Tooltip title="Fermer">
-                    <Button
+                    <IconButton
                       onClick={this.handleClose}
-                      className={classes.fermer}
+                      // className={classes.fermer}
                       color="primary"
                       autoFocus
+                      size="small"
                     >
                       <Close />
-                    </Button>
+                    </IconButton>
                   </Tooltip>
                 </DialogActions>
               </Dialog>
@@ -814,7 +817,7 @@ class CreerCaisse extends React.Component {
           <ValidatorForm onSubmit={this.handleAdd}>
             <Grid container>
               <Grid container>
-                <Grid item xs={2}>
+                <Grid item xs={12} md={2}>
                   <ClickAwayListener onClickAway={this.handleClickAway}>
                     <TextValidator
                       onChange={this.handleChange}
@@ -841,9 +844,12 @@ class CreerCaisse extends React.Component {
                                 // onClick={handleClickShowPassword}
                                 // onMouseDown={handleMouseDownPassword}
                               >
-                                <Button onClick={this.handleClickOpen}>
+                                <IconButton
+                                  onClick={this.handleClickOpen}
+                                  size="small"
+                                >
                                   <i className="material-icons">list_alt</i>
-                                </Button>
+                                </IconButton>
                               </IconButton>
                             )}
                           </InputAdornment>
@@ -853,7 +859,7 @@ class CreerCaisse extends React.Component {
                   </ClickAwayListener>
                 </Grid>
 
-                <Grid item xs={4}>
+                <Grid item xs={12} md={4}>
                   <TextValidator
                     style={{ width: "80%" }}
                     // className={classes.field}
@@ -867,7 +873,7 @@ class CreerCaisse extends React.Component {
                     id="#designation"
                   />
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={12} md={3}>
                   <SelectValidator
                     onChange={this.handleChange}
                     name="debiterCrediter"
@@ -885,7 +891,7 @@ class CreerCaisse extends React.Component {
                     <MenuItem value="Crédit">Crédit</MenuItem>
                   </SelectValidator>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={12} md={3}>
                   <TextValidator
                     style={{ width: "80%" }}
                     // className={classes.field}
@@ -908,40 +914,47 @@ class CreerCaisse extends React.Component {
               <Grid container style={{ marginTop: 15 }}>
                 <Grid item xs={1}>
                   <Tooltip title="Ajouter">
-                    <Button type="submit" variant="contained" color="primary">
+                    <IconButton
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                    >
                       <AddIcon />
-                    </Button>
+                    </IconButton>
                   </Tooltip>
                 </Grid>
                 <Grid item xs={1}>
                   <Tooltip title="Modifier">
-                    <Button
+                    <IconButton
                       onClick={this.handleEditClick}
                       disabled={!editing}
                       color="primary"
                       autoFocus
-                      className={classes.done}
+                      // className={classes.done}
+                      size="small"
                     >
                       <Done />
-                    </Button>
+                    </IconButton>
                   </Tooltip>
                 </Grid>
                 <Grid item xs={1}>
                   <Tooltip title="Supprimer">
-                    <Button
+                    <IconButton
                       variant="contained"
-                      className={classes.cancel}
+                      // className={classes.cancel}
                       color="primary"
                       disabled={selectedRows.length == 0}
                       onClick={this.handleDelete}
+                      size="small"
                     >
                       <DeleteIcon />
-                    </Button>
+                    </IconButton>
                   </Tooltip>
                 </Grid>
 
-                <Grid item xs={6} />
-                <Grid item xs={3}>
+                <Grid item md={6} />
+                <Grid item xs={12} md={3}>
                   <Typography variant="h6" component="h2">
                     Total débit : {this.state.debit + " DH"}
                   </Typography>

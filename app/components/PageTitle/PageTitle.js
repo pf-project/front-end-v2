@@ -5,6 +5,7 @@ import {
   Card,
   Box,
   Button,
+  IconButton,
   Grid,
   Dialog,
   DialogActions,
@@ -22,7 +23,7 @@ const styles = theme => ({
     position: "absolute",
     right: theme.spacing(1),
     // top: theme.spacing(1),
-    // marginTop: theme.spacing(1),
+    marginTop: theme.spacing(1),
     marginLeft: theme.spacing(30)
   },
   elementsLeft: {
@@ -126,10 +127,10 @@ const PageTitle = ({
             </DialogActions>
           </Dialog>
 
-          <Typography component="h4" variant="h4">
-            {title}
-          </Typography>
           <Box component="BreadCrumb" display={{ xs: "none", md: "inline" }}>
+            <Typography component="h4" variant="h4">
+              {title}
+            </Typography>
             <BreadCrumb
               separator=" / "
               theme="light"
@@ -138,20 +139,26 @@ const PageTitle = ({
               }}
             />
           </Box>
+          <Box component="Typography" display={{ xs: "inline", md: "none" }}>
+            <Typography component="subtitle1" variant="subtitle1">
+              {title}
+            </Typography>
+          </Box>
         </Grid>
         <Grid>
           <div className={classes.elements}>
             {elements}
             {withBackOption && (
               <Tooltip title="Quitter">
-                <Button
+                <IconButton
+                  size="small"
                   onClick={formChanged ? handleOpen : handleLeave}
                   className={classes.button}
                   variant="contained"
                 >
                   {/* <i class="material-icons">keyboard_backspace</i> */}
                   <ExitToApp />
-                </Button>
+                </IconButton>
               </Tooltip>
             )}
           </div>
