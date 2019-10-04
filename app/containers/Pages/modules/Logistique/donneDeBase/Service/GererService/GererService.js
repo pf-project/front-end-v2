@@ -162,10 +162,20 @@ class GererService extends React.Component {
   }
 
   componentWillMount = () => {
-    const { fetchServicesForSuggestion, fetchUnites } = this.props;
+    const {
+      fetchServicesForSuggestion,
+      fetchUnites,
+      panelEditing
+    } = this.props;
     fetchServicesForSuggestion("service/getCodesAndDesignations");
     fetchUnites("configurationdebase/unites/findDurees", "temps", true);
     fetchUnites("configurationdebase/unites/findDevises", "devise", true);
+    if (panelEditing)
+      this.setState({
+        activeStep: 1,
+        articleChoisi: true,
+        panelEditing
+      });
   };
 
   changeStep = (event, activeStep) => {
@@ -573,35 +583,26 @@ class GererService extends React.Component {
     if (this.state.serviceChoisi) {
       let service = this.state.data;
       this.props.updateService(service, "service");
-      this.setState({
-        activeStep: 0,
-        serviceChoisi: false,
-        data: {
-          caracteristiques: [],
-          controleexige: false,
-          gestionparlot: false
-        }
-      });
+      if (!this.state.panelEditing)
+        this.setState({
+          activeStep: 0,
+          serviceChoisi: false,
+          data: {
+            caracteristiques: [],
+            controleexige: false,
+            gestionparlot: false
+          }
+        });
+      else this.props.closeForm();
     }
   };
 
   componentWillReceiveProps(nextProps) {
-    const { serviceInfo, data } = nextProps;
-
-    if (data) {
-      this.setState({
-        data: { ...data },
-        activeStep: 1,
-        serviceChoisi: true,
-        panelEditing: true
-      });
-    }
+    const { serviceInfo } = nextProps;
 
     if (serviceInfo) {
       this.setState({
-        data: { ...serviceInfo.service },
-        categorie: serviceInfo.categorie
-        // caracteristiques_conditions
+        data: { ...serviceInfo }
       });
     }
   }

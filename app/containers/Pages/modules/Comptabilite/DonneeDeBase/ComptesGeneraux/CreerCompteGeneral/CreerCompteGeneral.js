@@ -20,7 +20,8 @@ import Grid from "@material-ui/core/Grid";
 import {
   addItem,
   closeNotifAction,
-  fetchUnites
+  fetchUnites,
+  fetchItem
 } from "../../../reducers/crudComptabiliteActions";
 import Base from "./Base";
 import Initiale from "./Initiale";
@@ -326,6 +327,9 @@ class CreerCompteGeneral extends React.Component {
     }
   };
   handleOpen = () => {
+    const { compte } = this.state.data;
+    let url = `findByCompte/${compte}`;
+    this.props.fetchCompteGeneral(url, "donneedebase/comptegeneral", true);
     this.setState({ openForm: true });
   };
   handleClose = () => {
@@ -432,6 +436,7 @@ class CreerCompteGeneral extends React.Component {
             <GererCompteGeneral
               panelEditing={true}
               closeForm={this.handleClose}
+              code={this.state.data.compte}
             />
           )}
         </FloatingPanel>
@@ -473,7 +478,8 @@ class CreerCompteGeneral extends React.Component {
 const mapDispatchToProps = dispatch => ({
   closeNotif: () => dispatch(closeNotifAction()),
   addCompteGeneral: bindActionCreators(addItem, dispatch),
-  fetchUnites: bindActionCreators(fetchUnites, dispatch)
+  fetchUnites: bindActionCreators(fetchUnites, dispatch),
+  fetchCompteGeneral: bindActionCreators(fetchItem, dispatch)
 });
 const reducer = "crudComptabiliteReducer";
 const mapStateToProps = state => ({

@@ -157,6 +157,9 @@ class CreerService extends React.Component {
   };
 
   handleOpen = () => {
+    const { code } = this.state.data;
+    let url = `findByCode/${code}`;
+    this.props.fetchService(url, "service", true);
     this.setState({ openForm: true });
   };
   handleClose = () => {
@@ -669,7 +672,13 @@ class CreerService extends React.Component {
           closeForm={this.handleClose}
           branch=""
         >
-          {this.state.openForm && <GererService data={this.state.data} />}
+          {this.state.openForm && (
+            <GererService
+              panelEditing={true}
+              closeForm={this.handleClose}
+              code={this.state.data.code}
+            />
+          )}
         </FloatingPanel>
 
         <Card small className="mb-4">
@@ -711,7 +720,8 @@ const mapDispatchToProps = dispatch => ({
   fetchCategorie: bindActionCreators(fetchItem, dispatch),
   closeNotif: () => dispatch(closeNotifAction()),
   addService: bindActionCreators(addItem, dispatch),
-  fetchUnites: bindActionCreators(fetchUnites, dispatch)
+  fetchUnites: bindActionCreators(fetchUnites, dispatch),
+  fetchService: bindActionCreators(fetchItem, dispatch)
 });
 
 const mapStateToProps = state => ({

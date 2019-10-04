@@ -164,6 +164,14 @@ class GererArticle extends React.Component {
     this.props.fetchCaisseForSuggestion(
       "donneedebase/caisse/getCodesAndDesignations"
     );
+
+    const { panelEditing } = this.props;
+    if (panelEditing)
+      this.setState({
+        activeStep: 1,
+        caisseChoisi: true,
+        panelEditing
+      });
   };
 
   changeStep = (event, activeStep) => {
@@ -234,16 +242,8 @@ class GererArticle extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    const { caisseInfo, caisse } = nextProps;
+    const { caisseInfo } = nextProps;
 
-    if (caisse) {
-      this.setState({
-        data: { ...caisse },
-        activeStep: 1,
-        caisseChoisi: true,
-        panelEditing: true
-      });
-    }
     if (caisseInfo) {
       this.setState({
         data: { ...caisseInfo }
@@ -264,11 +264,13 @@ class GererArticle extends React.Component {
     if (this.state.caisseChoisi) {
       const { data } = this.state;
       this.props.updateCaisse(data, "donneedebase/caisse");
-      this.setState({
-        activeStep: 0,
-        caisseChoisi: false,
-        data: {}
-      });
+      if (!this.state.panelEditing)
+        this.setState({
+          activeStep: 0,
+          caisseChoisi: false,
+          data: {}
+        });
+      else this.props.closeForm();
     }
   };
 

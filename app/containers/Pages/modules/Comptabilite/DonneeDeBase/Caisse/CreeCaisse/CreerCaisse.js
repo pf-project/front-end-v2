@@ -4,6 +4,8 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+
 import Typography from "@material-ui/core/Typography";
 import { Container, Card, Row } from "@material-ui/core/";
 import {
@@ -19,7 +21,8 @@ import { PageTitle, Notification, FloatingPanel } from "enl-components";
 import Grid from "@material-ui/core/Grid";
 import {
   addItem,
-  closeNotifAction
+  closeNotifAction,
+  fetchItem
 } from "../../../reducers/crudComptabiliteActions";
 import { fetchUnites } from "../../../../Logistique/reducers/crudLogisticActions";
 import Base from "./Base";
@@ -273,6 +276,9 @@ class CreerCaisse extends React.Component {
   };
 
   handleOpen = () => {
+    const { code } = this.state.data;
+    let url = `findByCode/${code}`;
+    this.props.fetchCompteGeneral(url, "donneedebase/caisse", true);
     this.setState({ openForm: true });
   };
   handleClose = () => {
@@ -385,7 +391,13 @@ class CreerCaisse extends React.Component {
           closeForm={this.handleClose}
           branch=""
         >
-          {this.state.openForm && <GeererFromNotif caisse={data} />}
+          {this.state.openForm && (
+            <GeererFromNotif
+              panelEditing={true}
+              closeForm={this.handleClose}
+              code={this.state.data.code}
+            />
+          )}
         </FloatingPanel>
 
         <Card small className="mb-4">
@@ -425,7 +437,8 @@ class CreerCaisse extends React.Component {
 const mapDispatchToProps = dispatch => ({
   closeNotif: () => dispatch(closeNotifAction()),
   addCaisse: bindActionCreators(addItem, dispatch),
-  fetchUnites: bindActionCreators(fetchUnites, dispatch)
+  fetchUnites: bindActionCreators(fetchUnites, dispatch),
+  fetchCompteGeneral: bindActionCreators(fetchItem, dispatch)
 });
 const reducer = "crudComptabiliteReducer";
 const mapStateToProps = state => ({

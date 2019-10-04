@@ -164,12 +164,23 @@ class GererArticle extends React.Component {
   }
 
   componentWillMount = () => {
-    const { fetchUnites, fetchArticlesForSuggestion } = this.props;
+    const {
+      fetchUnites,
+      fetchArticlesForSuggestion,
+      panelEditing
+    } = this.props;
     fetchUnites("configurationdebase/unites/finVolumes", "volume", true);
     fetchUnites("configurationdebase/unites/findPoids", "poids", true);
     fetchUnites("configurationdebase/unites/findDevises", "devise", true);
     fetchUnites("configurationdebase/unites/findLongueurs", "langueur", true);
     fetchArticlesForSuggestion("article/getCodesAndDesignations");
+
+    if (panelEditing)
+      this.setState({
+        activeStep: 1,
+        articleChoisi: true,
+        panelEditing
+      });
   };
 
   changeStep = (event, activeStep) => {
@@ -590,35 +601,26 @@ class GererArticle extends React.Component {
     if (this.state.articleChoisi) {
       let article = this.state.data;
       this.props.updateArticle(article, "article");
-      this.setState({
-        activeStep: 0,
-        articleChoisi: false,
-        data: {
-          caracteristiques: [],
-          controleexige: false,
-          gestionparlot: false
-        }
-      });
+      if (!this.state.panelEditing)
+        this.setState({
+          activeStep: 0,
+          articleChoisi: false,
+          data: {
+            caracteristiques: [],
+            controleexige: false,
+            gestionparlot: false
+          }
+        });
+      else this.props.closeForm();
     }
   };
 
   componentWillReceiveProps(nextProps) {
-    const { articleInfo, data } = nextProps;
-
-    if (data) {
-      this.setState({
-        data: { ...data },
-        activeStep: 1,
-        articleChoisi: true,
-        panelEditing: true
-      });
-    }
+    const { articleInfo } = nextProps;
 
     if (articleInfo) {
       this.setState({
-        data: { ...articleInfo.article },
-        categorie: articleInfo.categorie
-        // caracteristiques_conditions
+        data: { ...articleInfo }
       });
     }
   }

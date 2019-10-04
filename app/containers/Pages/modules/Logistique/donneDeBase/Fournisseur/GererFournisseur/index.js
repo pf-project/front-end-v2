@@ -195,9 +195,15 @@ class GererArticle extends React.Component {
   };
 
   componentWillMount = () => {
-    this.props.fetchFournisseurForSuggestion(
-      "fournisseur/getCodesAndDesignations"
-    );
+    const { fetchFournisseurForSuggestion, panelEditing } = this.props;
+    fetchFournisseurForSuggestion("fournisseur/getCodesAndDesignations");
+
+    if (panelEditing)
+      this.setState({
+        activeStep: 1,
+        fournisseurChoisi: true,
+        panelEditing
+      });
   };
 
   changeStep = (event, activeStep) => {
@@ -329,25 +335,19 @@ class GererArticle extends React.Component {
     if (this.state.fournisseurChoisi) {
       let fournisseur = this.state.data;
       this.props.updateFournisseur(fournisseur, "fournisseur");
-      this.setState({
-        activeStep: 0,
-        fournisseurChoisi: false,
-        data: {}
-      });
+
+      if (!this.state.panelEditing)
+        this.setState({
+          activeStep: 0,
+          fournisseurChoisi: false,
+          data: {}
+        });
+      else this.props.closeForm();
     }
   };
 
   componentWillReceiveProps(nextProps) {
-    const { fournisseurInfo, data } = nextProps;
-
-    if (data) {
-      this.setState({
-        data: { ...data },
-        activeStep: 1,
-        fournisseurChoisi: true,
-        panelEditing: true
-      });
-    }
+    const { fournisseurInfo } = nextProps;
 
     if (fournisseurInfo) {
       this.setState({

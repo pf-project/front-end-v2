@@ -292,6 +292,9 @@ class CreerArticle extends React.Component {
     return null;
   };
   handleOpen = () => {
+    const { code } = this.state.data;
+    let url = `findByCode/${code}`;
+    this.props.fetchArticle(url, "article", true);
     this.setState({ openForm: true });
   };
   handleClose = () => {
@@ -711,7 +714,13 @@ class CreerArticle extends React.Component {
           closeForm={this.handleClose}
           branch=""
         >
-          {this.state.openForm && <GererArticle data={this.state.data} />}
+          {this.state.openForm && (
+            <GererArticle
+              panelEditing={true}
+              closeForm={this.handleClose}
+              code={this.state.data.code}
+            />
+          )}
         </FloatingPanel>
 
         <Card small className="mb-4">
@@ -753,7 +762,8 @@ const mapDispatchToProps = dispatch => ({
   fetchUnites: bindActionCreators(fetchUnites, dispatch),
   fetchCategorie: bindActionCreators(fetchItem, dispatch),
   closeNotif: () => dispatch(closeNotifAction()),
-  addArticle: bindActionCreators(addItem, dispatch)
+  addArticle: bindActionCreators(addItem, dispatch),
+  fetchArticle: bindActionCreators(fetchItem, dispatch)
 });
 
 const mapStateToProps = state => ({

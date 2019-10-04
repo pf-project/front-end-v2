@@ -19,6 +19,7 @@ import { PageTitle, Notification, FloatingPanel } from "enl-components";
 import Grid from "@material-ui/core/Grid";
 import {
   addItem,
+  fetchItem,
   closeNotifAction,
   fetchUnites
 } from "../../../reducers/crudLogisticActions";
@@ -195,6 +196,9 @@ class CreerFournisseur extends React.Component {
     this.setState({ data });
   };
   handleOpen = () => {
+    const { code } = this.state.data;
+    let url = `findByCode/${code}`;
+    this.props.fetchFournisseur(url, "fournisseur", true);
     this.setState({ openForm: true });
   };
   handleClose = () => {
@@ -439,7 +443,13 @@ class CreerFournisseur extends React.Component {
           closeForm={this.handleClose}
           branch=""
         >
-          {this.state.openForm && <GererFournisseur data={this.state.data} />}
+          {this.state.openForm && (
+            <GererFournisseur
+              panelEditing={true}
+              closeForm={this.handleClose}
+              code={this.state.data.code}
+            />
+          )}
         </FloatingPanel>
 
         <Card small className="mb-4">
@@ -472,7 +482,8 @@ class CreerFournisseur extends React.Component {
 const mapDispatchToProps = dispatch => ({
   closeNotif: () => dispatch(closeNotifAction()),
   addFournisseur: bindActionCreators(addItem, dispatch),
-  fetchUnites: bindActionCreators(fetchUnites, dispatch)
+  fetchUnites: bindActionCreators(fetchUnites, dispatch),
+  fetchFournisseur: bindActionCreators(fetchItem, dispatch)
 });
 
 const mapStateToProps = state => {

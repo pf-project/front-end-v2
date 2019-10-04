@@ -160,6 +160,14 @@ class GererArticle extends React.Component {
     this.props.fetchCompteGeneralForSuggestion(
       "donneedebase/comptegeneral/getCodesAndDesignations"
     );
+
+    const { panelEditing } = this.props;
+    if (panelEditing)
+      this.setState({
+        activeStep: 1,
+        compteGeneralChoisi: true,
+        panelEditing
+      });
     // this.props.fetchUnites(
     //   "donneedebase/comptegeneral/findClasses",
     //   "lesclasses",
@@ -267,18 +275,11 @@ class GererArticle extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    const { compteGeneralInfo, panelEditing } = nextProps;
-    console.log(panelEditing);
+    const { compteGeneralInfo } = nextProps;
 
     if (compteGeneralInfo) {
-      if (panelEditing)
-        this.setState({
-          activeStep: 1,
-          compteGeneralChoisi: true
-        });
       this.setState({
-        data: { ...compteGeneralInfo },
-        panelEditing
+        data: { ...compteGeneralInfo }
       });
     }
   }
@@ -297,7 +298,7 @@ class GererArticle extends React.Component {
       const { data } = this.state;
       // console.log(data);
       this.props.updateCompteGeneral(data, "donneedebase/comptegeneral");
-      if (!this.props.panelEditing)
+      if (!this.state.panelEditing)
         this.setState({
           activeStep: 0,
           compteGeneralChoisi: false,
@@ -399,7 +400,7 @@ class GererArticle extends React.Component {
           />
         )}
         <Card>
-          {!this.props.panelEditing && (
+          {!this.state.panelEditing && (
             <Notification
               close={() => closeNotif()}
               message={notifMsg}
@@ -442,7 +443,7 @@ class GererArticle extends React.Component {
           </div>
         </Card>
         <div className={classes.btnArea}>
-          {this.props.panelEditing && elements}
+          {this.state.panelEditing && elements}
         </div>
       </ValidatorForm>
     );
