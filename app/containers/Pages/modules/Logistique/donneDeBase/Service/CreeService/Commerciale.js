@@ -29,7 +29,7 @@ export default function Commerciale({
       <Grid item xs={12}>
         <FormGroup>
           <Grid container>
-            <Grid item xs={4}>
+            <Grid item md={4} xs={12}>
               <TextValidator
                 className={classes.field}
                 InputProps={{
@@ -43,7 +43,7 @@ export default function Commerciale({
                 id="#codearticle"
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item md={4} xs={12}>
               <TextValidator
                 // fullWidth={true}
                 className={classes.field}
@@ -57,7 +57,7 @@ export default function Commerciale({
               />
             </Grid>
 
-            <Grid item xs={4}>
+            <Grid item md={4} xs={12}>
               <TextValidator
                 className={classes.field}
                 value={data.categorie}
@@ -84,7 +84,7 @@ export default function Commerciale({
           </Toolbar>
           <Grid item xs={12}>
             <Grid container direction="row">
-              <Grid item xs={6}>
+              <Grid item md={6} xs={12}>
                 <FormGroup>
                   <TextValidator
                     onChange={handleChange}
@@ -113,7 +113,7 @@ export default function Commerciale({
                 </FormGroup>
               </Grid>
 
-              <Grid item xs={2}>
+              <Grid item md={4} xs={12}>
                 <FormGroup>
                   <SelectValidator
                     value={data.devise_achat}
@@ -134,7 +134,7 @@ export default function Commerciale({
                   </SelectValidator>
                 </FormGroup>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item md={2} xs={12}>
                 <FormGroup>
                   <SelectValidator
                     className={classes.field}
@@ -165,7 +165,7 @@ export default function Commerciale({
           </Grid>
           <Grid item xs={12}>
             <Grid container direction="row">
-              <Grid item xs={6}>
+              <Grid item md={6} xs={12}>
                 <FormGroup>
                   <SelectValidator
                     value={data.taux_tva_achat}
@@ -184,7 +184,7 @@ export default function Commerciale({
                   </SelectValidator>
                 </FormGroup>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item md={6} xs={12}>
                 <TextValidator
                   onChange={handleChange}
                   className={classes.field}
@@ -223,7 +223,7 @@ export default function Commerciale({
           <Grid item xs={12}>
             <Grid container direction="row">
               {data.utilite === "FCTR" && (
-                <Grid item xs={2}>
+                <Grid item md={2} xs={12}>
                   <RadioGroup
                     name="marge"
                     className={classes.group}
@@ -246,7 +246,7 @@ export default function Commerciale({
               {data.marge && (
                 <>
                   {" "}
-                  <Grid item xs={2}>
+                  <Grid item md={2} xs={12}>
                     {" "}
                     <TextValidator
                       onChange={handleChange}
@@ -272,7 +272,7 @@ export default function Commerciale({
                       ]}
                     />
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item md={6} xs={12}>
                     <TextValidator
                       onChange={handleChange}
                       className={classes.field}
@@ -303,7 +303,7 @@ export default function Commerciale({
           </Grid>
           <Grid item xs={12}>
             <Grid container direction="row">
-              <Grid item xs={6}>
+              <Grid item md={6} xs={12}>
                 <FormGroup>
                   <TextValidator
                     onChange={handleChange}
@@ -331,7 +331,7 @@ export default function Commerciale({
                 </FormGroup>
               </Grid>
 
-              <Grid item xs={2}>
+              <Grid item md={2} xs={6}>
                 <FormGroup>
                   <SelectValidator
                     value={data.devise_vente}
@@ -353,7 +353,7 @@ export default function Commerciale({
                   </SelectValidator>
                 </FormGroup>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item md={4} xs={12}>
                 <FormGroup>
                   <FormControl>
                     <SelectValidator
@@ -380,7 +380,7 @@ export default function Commerciale({
           </Grid>
           <Grid item xs={12}>
             <Grid container direction="row">
-              <Grid item xs={6}>
+              <Grid item md={6} xs={12}>
                 <FormGroup>
                   <SelectValidator
                     value={data.taux_tva_vente}
@@ -400,7 +400,7 @@ export default function Commerciale({
                   </SelectValidator>
                 </FormGroup>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item md={6} xs={12}>
                 <TextValidator
                   onChange={handleChange}
                   className={classes.field}

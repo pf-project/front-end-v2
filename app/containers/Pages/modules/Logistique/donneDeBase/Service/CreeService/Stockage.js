@@ -63,7 +63,7 @@ export default function Stockage({
         <Grid item xs={12}>
           <FormGroup>
             <Grid container>
-              <Grid item xs={4}>
+              <Grid item md={4} xs={12}>
                 <TextValidator
                   className={classes.field}
                   InputProps={{
@@ -77,7 +77,7 @@ export default function Stockage({
                   id="#codearticle"
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item md={4} xs={12}>
                 <TextValidator
                   fullWidth={true}
                   className={classes.field}
@@ -91,7 +91,7 @@ export default function Stockage({
                 />
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item md={4} xs={12}>
                 <TextValidator
                   className={classes.field}
                   value={data.categorie}
@@ -117,7 +117,7 @@ export default function Stockage({
         <Grid item xs={12}>
           <FormGroup>
             <Grid container direction="row">
-              <Grid item xs={6}>
+              <Grid item md={6} xs={12}>
                 {/* <FormControl> */}
                 <SelectValidator
                   className={classes.field}
@@ -141,7 +141,7 @@ export default function Stockage({
                 </SelectValidator>
                 {/* </FormControl> */}
               </Grid>
-              <Grid item xs={6} direction="column">
+              <Grid item md={6} xs={12} direction="column">
                 <TextValidator
                   className={classes.field}
                   onChange={handleChange}
@@ -159,7 +159,7 @@ export default function Stockage({
         <Grid item xs={12}>
           <FormGroup>
             <Grid container>
-              <Grid item xs={6}>
+              <Grid item md={6} xs={12}>
                 <TextValidator
                   onChange={handleChange}
                   className={classes.field}
@@ -178,7 +178,7 @@ export default function Stockage({
                   ]}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item md={6} xs={12}>
                 {/* <FormControl> */}
                 <SelectValidator
                   className={classes.field}
@@ -203,7 +203,7 @@ export default function Stockage({
         <Grid item xs={12}>
           <FormGroup>
             <Grid container direction="row">
-              <Grid item xs={2}>
+              <Grid item md={2} xs={6}>
                 <TextValidator
                   onChange={handleChange}
                   onBlur={handleFixPrecisionValeurs(false)(3)}
@@ -217,7 +217,7 @@ export default function Stockage({
                   errorMessages={dimensionValidator.errors}
                 />
               </Grid>
-              <Grid item xs={2} direction="column">
+              <Grid item md={2} xs={6} direction="column">
                 <TextValidator
                   onChange={handleChange}
                   name="dimension_I"
@@ -231,7 +231,7 @@ export default function Stockage({
                   id="#i"
                 />
               </Grid>
-              <Grid item xs={2} direction="column">
+              <Grid item md={2} xs={6} direction="column">
                 <TextValidator
                   onChange={handleChange}
                   name="dimension_H"
@@ -245,7 +245,7 @@ export default function Stockage({
                   id="#h"
                 />
               </Grid>
-              <Grid item xs={6} direction="column">
+              <Grid item md={6} xs={12} direction="column">
                 {/* <FormControl> */}
                 <SelectValidator
                   value={data.unite_dim}
@@ -269,7 +269,7 @@ export default function Stockage({
         </Grid>
         <Grid item xs={12}>
           <Grid container direction="row">
-            <Grid item xs={4}>
+            <Grid item md={4} xs={12}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -282,7 +282,7 @@ export default function Stockage({
                 label="Contrôle qualité exigé"
               />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item md={2} xs={6}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -295,7 +295,7 @@ export default function Stockage({
                 label="Gestion par lot"
               />
             </Grid>{" "}
-            <Grid item xs={6}>
+            <Grid item md={6} xs={12}>
               {data.gestion_par_lot && (
                 <TextValidator
                   onChange={handleChange}

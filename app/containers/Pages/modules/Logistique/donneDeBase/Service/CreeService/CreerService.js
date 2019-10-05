@@ -4,6 +4,7 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { Container, Card, Row } from "@material-ui/core/";
 import {
@@ -53,9 +54,9 @@ const styles = theme => ({
     width: "90%"
   },
   done: {
-    backgroundColor: "#4db6ac",
+    color: "#4db6ac",
     "&:hover": {
-      backgroundColor: "#009688"
+      color: "#009688"
     }
   },
   initialeFields: {
@@ -589,25 +590,27 @@ class CreerService extends React.Component {
             title="
             Crééer un autre Service"
           >
-            <Button
+            <IconButton
               variant="contained"
               className={classes.done}
               color="primary"
               onClick={this.handleReset}
+              size="small"
             >
               <FiberNew />
-            </Button>
+            </IconButton>
           </Tooltip>
 
           <Tooltip title="Gerer cette article">
-            <Button
+            <IconButton
               variant="contained"
               // className={classes.done}
               color="primary"
               onClick={this.handleOpen}
+              size="small"
             >
               <Edit />
-            </Button>
+            </IconButton>
           </Tooltip>
         </>
       ) : (
@@ -618,7 +621,7 @@ class CreerService extends React.Component {
               : "Suivant"
           }
         >
-          <Button
+          <IconButton
             className={
               this.state.activeStep === this.state.steps.length - 1
                 ? classes.done
@@ -628,18 +631,19 @@ class CreerService extends React.Component {
             color="primary"
             type="submit"
             form="addService"
+            size="small"
           >
             {this.state.activeStep === this.state.steps.length - 1 ? (
               <SaveIcon />
             ) : (
               <ArrowForward />
             )}
-          </Button>
+          </IconButton>
         </Tooltip>
       );
     const precedent = (
       <Tooltip title="Precedent">
-        <Button
+        <IconButton
           // onClick={submitter}
           // className={classes.button}
           variant="outlined"
@@ -647,9 +651,10 @@ class CreerService extends React.Component {
           disabled={activeStep === 0}
           onClick={this.handleBack}
           className={classes.backButton}
+          size="small"
         >
           <ArrowBack />
-        </Button>
+        </IconButton>
       </Tooltip>
     );
 

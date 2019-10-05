@@ -66,7 +66,7 @@ class Base extends React.Component {
         <Grid item xs={12}>
           <FormGroup>
             <Grid container>
-              <Grid item xs={4}>
+              <Grid item md={4} xs={12}>
                 <TextValidator
                   className={classes.field}
                   InputProps={{
@@ -80,7 +80,7 @@ class Base extends React.Component {
                   id="#codearticle"
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item md={4} xs={12}>
                 <TextValidator
                   // fullWidth={true}
                   className={classes.field}
@@ -94,7 +94,7 @@ class Base extends React.Component {
                 />
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item md={4} xs={12}>
                 <TextValidator
                   className={classes.field}
                   value={data.categorie}
@@ -119,7 +119,7 @@ class Base extends React.Component {
         <Grid item>
           <FormGroup>
             <Grid container direction="row">
-              <Grid item xs={6}>
+              <Grid item md={6} xs={12}>
                 <TextValidator
                   className={classes.field}
                   onChange={handleChange}
@@ -129,7 +129,7 @@ class Base extends React.Component {
                   id="#ancienCode"
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item md={6} xs={12}>
                 <TextValidator
                   className={classes.field}
                   onChange={handleChange}
@@ -241,7 +241,7 @@ class Base extends React.Component {
                           <TableCell>
                             <FormControl style={{ minWidth: 250 }}>
                               <Grid container direction="row">
-                                <Grid item xs={6}>
+                                <Grid item md={6} xs={6}>
                                   <TextValidator
                                     className={classes.field}
                                     InputProps={{
@@ -265,7 +265,7 @@ class Base extends React.Component {
                                 </Grid>
                                 {metadata.valeurs &&
                                   metadata.valeurs.length > 0 && (
-                                    <Grid item xs={6}>
+                                    <Grid item md={6} xs={6}>
                                       <SelectValidator
                                         className={classes.field}
                                         onChange={handleValeursChange(idx)}
