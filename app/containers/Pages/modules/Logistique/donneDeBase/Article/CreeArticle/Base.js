@@ -66,7 +66,7 @@ class Base extends React.Component {
         <Grid item xs={12}>
           <FormGroup>
             <Grid container>
-              <Grid item xs={4}>
+              <Grid item xs={10} md={4}>
                 <TextValidator
                   className={classes.field}
                   InputProps={{
@@ -80,7 +80,7 @@ class Base extends React.Component {
                   id="#codearticle"
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={10} md={4}>
                 <TextValidator
                   // fullWidth={true}
                   className={classes.field}
@@ -94,7 +94,7 @@ class Base extends React.Component {
                 />
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item xs={10} md={4}>
                 <TextValidator
                   className={classes.field}
                   value={data.categorie}
@@ -119,7 +119,7 @@ class Base extends React.Component {
         <Grid item>
           <FormGroup>
             <Grid container direction="row">
-              <Grid item xs={6}>
+              <Grid item xs={10} md={4}>
                 <TextValidator
                   className={classes.field}
                   onChange={handleChange}
@@ -129,7 +129,7 @@ class Base extends React.Component {
                   id="#ancienCode"
                 />
               </Grid>
-              <Grid item xs={6} direction="column">
+              <Grid item xs={10} md={4} direction="column">
                 <TextValidator
                   className={classes.field}
                   onChange={handleChange}
@@ -145,7 +145,7 @@ class Base extends React.Component {
         <Grid item>
           <FormGroup>
             <Grid container direction="row">
-              <Grid item xs={6}>
+              <Grid item xs={10} md={4}>
                 <TextValidator
                   className={classes.field}
                   onChange={handleChange}
@@ -155,7 +155,7 @@ class Base extends React.Component {
                   id="#note"
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={10} md={4}>
                 <TextValidator
                   className={classes.field}
                   onChange={handleChange}

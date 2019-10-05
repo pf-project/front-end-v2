@@ -21,14 +21,14 @@ import Tooltip from "@material-ui/core/Tooltip";
 const styles = theme => ({
   elements: {
     position: "absolute",
-    right: theme.spacing(1),
+    right: theme.spacing(2),
     // top: theme.spacing(1),
     marginTop: theme.spacing(1),
     marginLeft: theme.spacing(30)
   },
   elementsLeft: {
     position: "absolute",
-    left: theme.spacing(1),
+    left: theme.spacing(2),
     // top: theme.spacing(1),
     marginTop: theme.spacing(1),
     marginRight: theme.spacing(30)
@@ -105,7 +105,7 @@ const PageTitle = ({
             <div className={classes.elementsLeft}>{precedent}</div>
           </Grid>
         )}
-        <Grid>
+        <Grid xs={5} md={7}>
           <Dialog
             fullScreen={fullScreen}
             open={open}
@@ -144,8 +144,8 @@ const PageTitle = ({
           </Box>
           <Box component="Typography" display={{ xs: "inline", md: "none" }}>
             <Typography
-              component="h6"
-              variant="h6"
+              component="subtitle1"
+              variant="subtitle1"
               className={classes.TypographyH6}
             >
               {title}
