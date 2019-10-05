@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Container, Card, Row, Col } from "@material-ui/core";
+import { Container, Card, Paper, Grid } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -43,8 +43,16 @@ const styles = theme => ({
     width: "100%",
     margin: "2em"
   },
+  paper: {
+    width: "100%",
+    marginTop: theme.spacing(3),
+    overflowX: "auto"
+  },
+  table: {
+    minWidth: 650
+  },
   field: {
-    width: "30%",
+    width: "90%",
     marginBottom: 20,
     marginRight: 20
   },
@@ -55,17 +63,16 @@ const styles = theme => ({
     marginLeft: theme.spacing(1)
   },
   done: {
-    backgroundColor: "#4db6ac",
+    color: "#4db6ac",
     "&:hover": {
-      backgroundColor: "#009688"
+      color: "#009688"
     }
   },
   cancel: {
     marginRight: "1em",
-    color: "white",
-    backgroundColor: "#e57373",
+    color: "#e57373",
     "&:hover": {
-      backgroundColor: "#f44336"
+      color: "#f44336"
     }
   },
   submitdiv: {
@@ -248,8 +255,9 @@ const CreerCategorie = ({
     <>
       {" "}
       <Tooltip title="Vider Les Champs">
-        <Button
+        <IconButton
           className={classes.cancel}
+          size="small"
           onClick={() => {
             setData({
               groupe: "",
@@ -262,11 +270,12 @@ const CreerCategorie = ({
           }}
         >
           <Undo />
-        </Button>
+        </IconButton>
       </Tooltip>
       <Tooltip title="Sauvegarder">
-        <Button
+        <IconButton
           disabled={loading}
+          size="small"
           color="primary"
           variant="contained"
           type="submit"
@@ -277,7 +286,7 @@ const CreerCategorie = ({
             <CircularProgress size={24} className={classes.buttonProgress} />
           )}{" "}
           <SaveIcon />
-        </Button>
+        </IconButton>
       </Tooltip>
     </>
   );
@@ -306,195 +315,208 @@ const CreerCategorie = ({
               message={notifMsg}
               branch=""
             />
-            <TextValidator
-              onChange={handleChange}
-              className={classes.field}
-              name="code"
-              validators={["required", "maxStringLength:5"]}
-              errorMessages={[
-                errors.required,
-                `${errors.size} ${5} characters `
-              ]}
-              value={data.code}
-              label="Code de categorie  *"
-            />
-
-            <TextValidator
-              className={classes.field}
-              onChange={handleChange}
-              name="designation"
-              validators={["required", "maxStringLength:25"]}
-              errorMessages={[
-                errors.required,
-                `${errors.size} ${25} characters `
-              ]}
-              value={data.designation}
-              label="Désignation *"
-            />
-
-            <SelectValidator
-              className={classes.field}
-              value={data.groupe}
-              onChange={handleChange}
-              name="groupe"
-              label="Groupe comptable  *"
-              validators={["required"]}
-              errorMessages={[errors.required]}
-            >
-              <MenuItem value="Marchandises ">Marchandises </MenuItem>
-              <MenuItem value="Matières premières">Matières premières</MenuItem>
-              <MenuItem value="Matières consommables">
-                Matières consommables
-              </MenuItem>
-              <MenuItem value="Combustibles">Combustibles</MenuItem>
-              <MenuItem value="Fournitures d'atelier et d'usine">
-                Fournitures d'atelier et d'usine
-              </MenuItem>
-              <MenuItem value="Fournitures de magasin ">
-                Fournitures de magasin{" "}
-              </MenuItem>
-              <MenuItem value="Fournitures de bureau ">
-                Fournitures de bureau{" "}
-              </MenuItem>
-              <MenuItem value="Emballages ">Emballages </MenuItem>
-              <MenuItem value="Emballages récupérables non identifiables ">
-                Emballages récupérables non identifiables{" "}
-              </MenuItem>
-              <MenuItem value="Emballages à usage mixte ">
-                Emballages à usage mixte{" "}
-              </MenuItem>
-              <MenuItem value="Matières et fournitures consommables en cours de route ">
-                Matières et fournitures consommables en cours de route{" "}
-              </MenuItem>
-              <MenuItem value="Autres matières et fournitures consommables">
-                Autres matières et fournitures consommables
-              </MenuItem>
-              <MenuItem value="Produits en cours">Produits en cours</MenuItem>
-              <MenuItem value="Biens en cours ">Biens en cours </MenuItem>
-              <MenuItem value=" Biens produits en cours">
-                {" "}
-                Biens produits en cours
-              </MenuItem>
-              <MenuItem value=" Biens intermédiaires en cours ">
-                {" "}
-                Biens intermédiaires en cours{" "}
-              </MenuItem>
-              <MenuItem value=" Biens résiduels en cours ">
-                {" "}
-                Biens résiduels en cours{" "}
-              </MenuItem>
-              <MenuItem value=" Services en cours ">
-                {" "}
-                Services en cours{" "}
-              </MenuItem>
-              <MenuItem value=" Travaux en cours "> Travaux en cours </MenuItem>
-              <MenuItem value="Etudes en cours ">Etudes en cours </MenuItem>
-              <MenuItem value="Prestations en cours ">
-                Prestations en cours{" "}
-              </MenuItem>
-              <MenuItem value="Autres produits en cours">
-                Autres produits en cours
-              </MenuItem>
-              <MenuItem value="Produits intermédiaires et produits résiduels ">
-                Produits intermédiaires et produits résiduels{" "}
-              </MenuItem>
-              <MenuItem value=" Produits intermédiaires">
-                {" "}
-                Produits intermédiaires
-              </MenuItem>
-              <MenuItem value=" Produits intermédiaires (groupe A) ">
-                {" "}
-                Produits intermédiaires (groupe A){" "}
-              </MenuItem>
-              <MenuItem value="Produits intermédiaires (groupe B)">
-                Produits intermédiaires (groupe B)
-              </MenuItem>
-              <MenuItem value=" Produits résiduels (ou matières de récupération)">
-                {" "}
-                Produits résiduels (ou matières de récupération)
-              </MenuItem>
-              <MenuItem value=" Déchets"> Déchets</MenuItem>
-              <MenuItem value=" Rebuts "> Rebuts </MenuItem>
-              <MenuItem value="Matières de récupération ">
-                Matières de récupération{" "}
-              </MenuItem>
-              <MenuItem value="Autres produits intermédiaires et produits résiduels">
-                Autres produits intermédiaires et produits résiduels
-              </MenuItem>
-              <MenuItem value="Produits finis ">Produits finis </MenuItem>
-              <MenuItem value="Produits finis (groupe A) ">
-                Produits finis (groupe A){" "}
-              </MenuItem>
-              <MenuItem value="Produits finis (groupe B) ">
-                Produits finis (groupe B){" "}
-              </MenuItem>
-              <MenuItem value="Produits finis en cours de route ">
-                Produits finis en cours de route{" "}
-              </MenuItem>
-              <MenuItem value="Autres produits finis">
-                Autres produits finis
-              </MenuItem>
-            </SelectValidator>
-
+            <Grid container>
+              <Grid item xs={12} md={4}>
+                <TextValidator
+                  onChange={handleChange}
+                  className={classes.field}
+                  name="code"
+                  validators={["required", "maxStringLength:5"]}
+                  errorMessages={[
+                    errors.required,
+                    `${errors.size} ${5} characters `
+                  ]}
+                  value={data.code}
+                  label="Code de categorie  *"
+                />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <TextValidator
+                  className={classes.field}
+                  onChange={handleChange}
+                  name="designation"
+                  validators={["required", "maxStringLength:25"]}
+                  errorMessages={[
+                    errors.required,
+                    `${errors.size} ${25} characters `
+                  ]}
+                  value={data.designation}
+                  label="Désignation *"
+                />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <SelectValidator
+                  className={classes.field}
+                  value={data.groupe}
+                  onChange={handleChange}
+                  name="groupe"
+                  label="Groupe comptable  *"
+                  validators={["required"]}
+                  errorMessages={[errors.required]}
+                >
+                  <MenuItem value="Marchandises ">Marchandises </MenuItem>
+                  <MenuItem value="Matières premières">
+                    Matières premières
+                  </MenuItem>
+                  <MenuItem value="Matières consommables">
+                    Matières consommables
+                  </MenuItem>
+                  <MenuItem value="Combustibles">Combustibles</MenuItem>
+                  <MenuItem value="Fournitures d'atelier et d'usine">
+                    Fournitures d'atelier et d'usine
+                  </MenuItem>
+                  <MenuItem value="Fournitures de magasin ">
+                    Fournitures de magasin{" "}
+                  </MenuItem>
+                  <MenuItem value="Fournitures de bureau ">
+                    Fournitures de bureau{" "}
+                  </MenuItem>
+                  <MenuItem value="Emballages ">Emballages </MenuItem>
+                  <MenuItem value="Emballages récupérables non identifiables ">
+                    Emballages récupérables non identifiables{" "}
+                  </MenuItem>
+                  <MenuItem value="Emballages à usage mixte ">
+                    Emballages à usage mixte{" "}
+                  </MenuItem>
+                  <MenuItem value="Matières et fournitures consommables en cours de route ">
+                    Matières et fournitures consommables en cours de route{" "}
+                  </MenuItem>
+                  <MenuItem value="Autres matières et fournitures consommables">
+                    Autres matières et fournitures consommables
+                  </MenuItem>
+                  <MenuItem value="Produits en cours">
+                    Produits en cours
+                  </MenuItem>
+                  <MenuItem value="Biens en cours ">Biens en cours </MenuItem>
+                  <MenuItem value=" Biens produits en cours">
+                    {" "}
+                    Biens produits en cours
+                  </MenuItem>
+                  <MenuItem value=" Biens intermédiaires en cours ">
+                    {" "}
+                    Biens intermédiaires en cours{" "}
+                  </MenuItem>
+                  <MenuItem value=" Biens résiduels en cours ">
+                    {" "}
+                    Biens résiduels en cours{" "}
+                  </MenuItem>
+                  <MenuItem value=" Services en cours ">
+                    {" "}
+                    Services en cours{" "}
+                  </MenuItem>
+                  <MenuItem value=" Travaux en cours ">
+                    {" "}
+                    Travaux en cours{" "}
+                  </MenuItem>
+                  <MenuItem value="Etudes en cours ">Etudes en cours </MenuItem>
+                  <MenuItem value="Prestations en cours ">
+                    Prestations en cours{" "}
+                  </MenuItem>
+                  <MenuItem value="Autres produits en cours">
+                    Autres produits en cours
+                  </MenuItem>
+                  <MenuItem value="Produits intermédiaires et produits résiduels ">
+                    Produits intermédiaires et produits résiduels{" "}
+                  </MenuItem>
+                  <MenuItem value=" Produits intermédiaires">
+                    {" "}
+                    Produits intermédiaires
+                  </MenuItem>
+                  <MenuItem value=" Produits intermédiaires (groupe A) ">
+                    {" "}
+                    Produits intermédiaires (groupe A){" "}
+                  </MenuItem>
+                  <MenuItem value="Produits intermédiaires (groupe B)">
+                    Produits intermédiaires (groupe B)
+                  </MenuItem>
+                  <MenuItem value=" Produits résiduels (ou matières de récupération)">
+                    {" "}
+                    Produits résiduels (ou matières de récupération)
+                  </MenuItem>
+                  <MenuItem value=" Déchets"> Déchets</MenuItem>
+                  <MenuItem value=" Rebuts "> Rebuts </MenuItem>
+                  <MenuItem value="Matières de récupération ">
+                    Matières de récupération{" "}
+                  </MenuItem>
+                  <MenuItem value="Autres produits intermédiaires et produits résiduels">
+                    Autres produits intermédiaires et produits résiduels
+                  </MenuItem>
+                  <MenuItem value="Produits finis ">Produits finis </MenuItem>
+                  <MenuItem value="Produits finis (groupe A) ">
+                    Produits finis (groupe A){" "}
+                  </MenuItem>
+                  <MenuItem value="Produits finis (groupe B) ">
+                    Produits finis (groupe B){" "}
+                  </MenuItem>
+                  <MenuItem value="Produits finis en cours de route ">
+                    Produits finis en cours de route{" "}
+                  </MenuItem>
+                  <MenuItem value="Autres produits finis">
+                    Autres produits finis
+                  </MenuItem>
+                </SelectValidator>
+              </Grid>
+            </Grid>
             {/* <Breadcrumb>
               <BreadcrumbItem active>
                 Ajouter Des attributs a votre nouvelle Categorie :
               </BreadcrumbItem>
             </Breadcrumb> */}
             <Divider />
-
-            <Table>
-              {nbrAttributes > 0 && (
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Nom d'attribut *</TableCell>
-                    <TableCell>Type d'attribut *</TableCell>
-                    <TableCell>Langueur max </TableCell>
-                    <TableCell>Obligatoire ?</TableCell>
-                    <TableCell>Valeurs </TableCell>
-                  </TableRow>
-                </TableHead>
-              )}
-              <TableBody>
-                {[...Array(nbrAttributes).keys()].map(key => (
-                  <AjoutAttribut
-                    item={
-                      typeof data.articlesMetaData[key] === "undefined"
-                        ? { valeurs: [] }
-                        : data.articlesMetaData[key]
-                    }
-                    classes={classes}
-                    errors={errors}
-                    handleChange={handleMetaDataChange}
-                    key={key}
-                    position={key}
-                    addValues={addValues}
-                    removeLastValue={removeLastValue}
-                    removeAllValues={removeAllValues}
-                  />
-                ))}
-                <Tooltip title="Ajouter">
-                  <IconButton
-                    color="primary"
-                    className={classes.button}
-                    // aria-label="Upload picture"
-                    // component="span"
-                    onClick={incrimentNbrAttributes}
-                  >
-                    +
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="Supprimer">
-                  <IconButton
-                    onClick={dicrimentNbrAttributes}
-                    color="primary"
-                    className={classes.button}
-                  >
-                    -
-                  </IconButton>
-                </Tooltip>
-              </TableBody>
-            </Table>
+            <Paper className={classes.paper}>
+              <Table className={classes.table}>
+                {nbrAttributes > 0 && (
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Nom d'attribut *</TableCell>
+                      <TableCell>Type d'attribut *</TableCell>
+                      <TableCell>Langueur max </TableCell>
+                      <TableCell>Obligatoire ?</TableCell>
+                      <TableCell>Valeurs </TableCell>
+                    </TableRow>
+                  </TableHead>
+                )}
+                <TableBody>
+                  {[...Array(nbrAttributes).keys()].map(key => (
+                    <AjoutAttribut
+                      item={
+                        typeof data.articlesMetaData[key] === "undefined"
+                          ? { valeurs: [] }
+                          : data.articlesMetaData[key]
+                      }
+                      classes={classes}
+                      errors={errors}
+                      handleChange={handleMetaDataChange}
+                      key={key}
+                      position={key}
+                      addValues={addValues}
+                      removeLastValue={removeLastValue}
+                      removeAllValues={removeAllValues}
+                    />
+                  ))}
+                  <Tooltip title="Ajouter">
+                    <IconButton
+                      color="primary"
+                      className={classes.button}
+                      // aria-label="Upload picture"
+                      // component="span"
+                      onClick={incrimentNbrAttributes}
+                    >
+                      +
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Supprimer">
+                    <IconButton
+                      onClick={dicrimentNbrAttributes}
+                      color="primary"
+                      className={classes.button}
+                    >
+                      -
+                    </IconButton>
+                  </Tooltip>
+                </TableBody>
+              </Table>
+            </Paper>{" "}
           </ValidatorForm>
         </div>
       </Card>
