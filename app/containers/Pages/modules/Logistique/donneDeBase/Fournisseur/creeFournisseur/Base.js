@@ -3,6 +3,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -86,7 +87,7 @@ export default function Base({
           <Grid item xs={12}>
             <FormGroup>
               <Grid container>
-                <Grid item xs={6}>
+                <Grid item md={6} xs={12}>
                   <TextValidator
                     className={classes.field}
                     InputProps={{
@@ -99,7 +100,7 @@ export default function Base({
                     label="Code fournisseur *"
                   />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item md={6} xs={12}>
                   <TextValidator
                     fullWidth={true}
                     className={classes.field}
@@ -142,7 +143,7 @@ export default function Base({
           <Grid item xs={12}>
             <FormGroup>
               <Grid container direction="row">
-                <Grid item xs={6}>
+                <Grid item md={6} xs={12}>
                   {/* <FormControl> */}
                   <SelectValidator
                     className={classes.field}
@@ -157,7 +158,7 @@ export default function Base({
                   </SelectValidator>
                   {/* </FormControl> */}
                 </Grid>
-                <Grid item xs={6} direction="column">
+                <Grid item md={6} xs={12} direction="column">
                   <SelectValidator
                     className={classes.field}
                     value={data.pays}
@@ -180,7 +181,7 @@ export default function Base({
           <Grid item xs={12}>
             <FormGroup>
               <Grid container>
-                <Grid item xs={6}>
+                <Grid item md={6} xs={12}>
                   <SelectValidator
                     className={classes.field}
                     value={data.civilite}
@@ -199,7 +200,7 @@ export default function Base({
                     </MenuItem>
                   </SelectValidator>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item md={6} xs={12}>
                   {/* <FormControl> */}
                   <SelectValidator
                     className={classes.field}
@@ -228,7 +229,7 @@ export default function Base({
           <Grid item xs={12}>
             <FormGroup>
               <Grid container direction="row">
-                <Grid item xs={6}>
+                <Grid item md={6} xs={12}>
                   <SelectValidator
                     className={classes.field}
                     value={data.langue}
@@ -245,7 +246,7 @@ export default function Base({
                       ))}
                   </SelectValidator>
                 </Grid>
-                <Grid item xs={6} direction="column">
+                <Grid item md={6} xs={12} direction="column">
                   <TextValidator
                     onChange={handleChange}
                     name="code_postal"
@@ -267,7 +268,7 @@ export default function Base({
               </Grid>
               <Grid item xs={12}>
                 <Grid container direction="row">
-                  <Grid item xs={6}>
+                  <Grid item md={6} xs={12}>
                     <TextValidator
                       onChange={handleChange}
                       name="libelle_additionnel"
@@ -276,7 +277,7 @@ export default function Base({
                       value={data.libelle_additionnel}
                     />
                   </Grid>
-                  <Grid item xs={6} direction="column">
+                  <Grid item md={6} xs={12} direction="column">
                     <TextValidator
                       onChange={handleChange}
                       name="adresse"
@@ -305,7 +306,7 @@ export default function Base({
           >
             <Grid item xs={12}>
               <Grid container direction="row">
-                <Grid item xs={6}>
+                <Grid item md={6} xs={12}>
                   <TextValidator
                     onChange={handleContactsChange}
                     name="nom"
@@ -316,7 +317,7 @@ export default function Base({
                     errorMessages={["champ obligatoire", "maximum 40 char"]}
                   />
                 </Grid>
-                <Grid item xs={6} direction="column">
+                <Grid item md={6} xs={12} direction="column">
                   <TextValidator
                     onChange={handleContactsChange}
                     name="email"
@@ -335,7 +336,7 @@ export default function Base({
             </Grid>
             <Grid item xs={12}>
               <Grid container direction="row">
-                <Grid item xs={6}>
+                <Grid item md={6} xs={12}>
                   <TextValidator
                     onChange={handleContactsChange}
                     name="fonction"
@@ -344,7 +345,7 @@ export default function Base({
                     value={contacts.fonction}
                   />
                 </Grid>
-                <Grid item xs={6} direction="column">
+                <Grid item md={6} xs={12} direction="column">
                   <TextValidator
                     onChange={handleContactsChange}
                     name="tel"
@@ -373,19 +374,19 @@ export default function Base({
           <Grid container direction="row">
             <Grid item xs={3} md={1}>
               <Tooltip title="Ajouter">
-                <Button
+                <IconButton
                   type="submit"
                   form="addContact"
                   variant="contained"
                   color="primary"
                 >
                   <AddIcon />
-                </Button>
+                </IconButton>
               </Tooltip>
             </Grid>
             <Grid item xs={3} md={1}>
               <Tooltip title="Supprimer">
-                <Button
+                <IconButton
                   variant="contained"
                   color="primary"
                   disabled={selectedRows.length == 0}
@@ -393,12 +394,12 @@ export default function Base({
                   className={classes.cancel}
                 >
                   <DeleteIcon />
-                </Button>
+                </IconButton>
               </Tooltip>
             </Grid>
             <Grid item xs={3} md={1}>
               <Tooltip title="Créer une copie">
-                <Button
+                <IconButton
                   variant="contained"
                   className={classes.copy}
                   color="primary"
@@ -406,7 +407,7 @@ export default function Base({
                   onClick={() => addCopyContact(selectedRows[0])}
                 >
                   <FilterNone />
-                </Button>
+                </IconButton>
               </Tooltip>
             </Grid>
             <Grid item>

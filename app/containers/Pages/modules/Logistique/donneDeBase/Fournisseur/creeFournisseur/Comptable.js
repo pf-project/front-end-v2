@@ -43,7 +43,7 @@ export default function Comptable({
         <Grid item xs={12}>
           <FormGroup>
             <Grid container>
-              <Grid item xs={6}>
+              <Grid item md={6} xs={12}>
                 <TextValidator
                   className={classes.field}
                   InputProps={{
@@ -56,7 +56,7 @@ export default function Comptable({
                   label="Code fournisseur *"
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item md={6} xs={12}>
                 <TextValidator
                   fullWidth={true}
                   className={classes.field}
@@ -79,7 +79,7 @@ export default function Comptable({
         </Toolbar>
         <Grid item xs={12}>
           <Grid container direction="row">
-            <Grid item xs={6}>
+            <Grid item md={6} xs={12}>
               <TextValidator
                 onChange={handleChange}
                 className={classes.field}
@@ -91,12 +91,13 @@ export default function Comptable({
                 label="Compte  fournisseur "
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item md={6} xs={12}>
               <SelectValidator
                 className={classes.field}
                 onChange={handleChange}
                 name="mode_paiement"
                 value={data.mode_paiement}
+                InputProps={{ fullWidth: true }}
                 label="Mode de paiement"
               >
                 <MenuItem value="chèque">Chèque</MenuItem>
@@ -109,7 +110,7 @@ export default function Comptable({
         </Grid>
         <Grid item xs={12}>
           <Grid container direction="row">
-            <Grid item xs={3}>
+            <Grid item md={3} xs={5}>
               <SelectValidator
                 className={classes.field}
                 onChange={handleChange}
@@ -122,7 +123,7 @@ export default function Comptable({
               </SelectValidator>
             </Grid>
 
-            <Grid item xs={3}>
+            <Grid item md={3} xs={5}>
               {data.condition_paiement === "Après N jours" && (
                 <TextValidator
                   onChange={handleChange}
@@ -142,7 +143,7 @@ export default function Comptable({
               )}
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item md={6} xs={12}>
               <SelectValidator
                 className={classes.field}
                 onChange={handleChange}
@@ -163,7 +164,7 @@ export default function Comptable({
         </Grid>
 
         <Grid container direction="row">
-          <Grid item xs={3}>
+          <Grid item md={3} xs={5}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -178,7 +179,7 @@ export default function Comptable({
           </Grid>
           {data.honoraire && (
             <>
-              <Grid item xs={5}>
+              <Grid item md={5} xs={12}>
                 <SelectValidator
                   className={classes.field}
                   onChange={handleChange}
@@ -195,7 +196,7 @@ export default function Comptable({
                     ))}
                 </SelectValidator>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item md={4} xs={12}>
                 <TextValidator
                   // onChange={handleChange}
                   InputProps={{ readOnly: true }}
@@ -214,7 +215,7 @@ export default function Comptable({
         {data.pays === "Maroc" && (
           <Grid item xs={12}>
             <Grid container direction="row">
-              <Grid item xs={3}>
+              <Grid item md={3} xs={12}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -238,7 +239,7 @@ export default function Comptable({
         </Toolbar>
         <Grid item xs={12}>
           <Grid container direction="row">
-            <Grid item xs={6}>
+            <Grid item md={6} xs={12}>
               <TextValidator
                 className={classes.field}
                 onChange={handleChange}
@@ -254,7 +255,7 @@ export default function Comptable({
                 ]}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item md={6} xs={12}>
               <TextValidator
                 className={classes.field}
                 onChange={handleChange}
@@ -275,7 +276,7 @@ export default function Comptable({
         </Grid>
         <Grid item xs={12}>
           <Grid container direction="row">
-            <Grid item xs={6}>
+            <Grid item md={6} xs={12}>
               <TextValidator
                 className={classes.field}
                 onChange={handleChange}
@@ -291,7 +292,7 @@ export default function Comptable({
                 ]}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item md={6} xs={12}>
               <TextValidator
                 className={classes.field}
                 onChange={handleChange}
@@ -311,7 +312,7 @@ export default function Comptable({
         </Grid>
         <Grid item xs={12}>
           <Grid container direction="row">
-            <Grid item xs={6}>
+            <Grid item md={6} xs={12}>
               <TextValidator
                 className={classes.field}
                 onChange={handleChange}

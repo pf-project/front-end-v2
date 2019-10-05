@@ -3,6 +3,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -98,7 +99,7 @@ export default function Bancaire({
           <Grid item xs={12}>
             <FormGroup>
               <Grid container>
-                <Grid item xs={6}>
+                <Grid item md={6} xs={12}>
                   <TextValidator
                     className={classes.field}
                     InputProps={{
@@ -111,7 +112,7 @@ export default function Bancaire({
                     label="Code fournisseur *"
                   />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item md={6} xs={12}>
                   <TextValidator
                     fullWidth={true}
                     className={classes.field}
@@ -141,7 +142,7 @@ export default function Bancaire({
         >
           <Grid item xs={12}>
             <Grid container direction="row">
-              <Grid item xs={6} direction="column">
+              <Grid item md={6} xs={12} direction="column">
                 <TextValidator
                   onChange={handleCoordonnesChange}
                   name="titulaire"
@@ -150,7 +151,7 @@ export default function Bancaire({
                   label="Titulaire"
                 />
               </Grid>
-              <Grid item xs={6} direction="column">
+              <Grid item md={6} xs={12} direction="column">
                 <SelectValidator
                   className={classes.field}
                   value={coordonnes.pays}
@@ -171,7 +172,7 @@ export default function Bancaire({
           </Grid>
           <Grid item xs={12}>
             <Grid container direction="row">
-              <Grid item xs={6}>
+              <Grid item md={6} xs={12}>
                 <SelectValidator
                   className={classes.field}
                   value={coordonnes.banque}
@@ -188,7 +189,7 @@ export default function Bancaire({
                     ))}
                 </SelectValidator>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item md={6} xs={12}>
                 <TextValidator
                   onChange={handleCoordonnesChange}
                   name="type_compte"
@@ -201,7 +202,7 @@ export default function Bancaire({
           </Grid>
           <Grid item xs={12}>
             <Grid container direction="row">
-              <Grid item xs={4}>
+              <Grid item md={4} xs={12}>
                 <SelectValidator
                   className={classes.field}
                   value={coordonnes.ville_agence}
@@ -222,7 +223,7 @@ export default function Bancaire({
                     })}
                 </SelectValidator>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item md={4} xs={12}>
                 <TextValidator
                   onChange={handleCoordonnesChange}
                   name="nom_agence"
@@ -231,7 +232,7 @@ export default function Bancaire({
                   value={coordonnes.nom_agence}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item md={4} xs={12}>
                 <SelectValidator
                   className={classes.field}
                   onChange={handleCoordonnesChange}
@@ -252,7 +253,7 @@ export default function Bancaire({
           </Grid>
           <Grid item xs={12}>
             <Grid container direction="row">
-              <Grid item xs={6}>
+              <Grid item md={6} xs={12}>
                 <TextValidator
                   onChange={handleCoordonnesChange}
                   name="IBAN"
@@ -274,7 +275,7 @@ export default function Bancaire({
                   value={coordonnes.IBAN}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item md={6} xs={12}>
                 <TextValidator
                   onChange={handleCoordonnesChange}
                   name="cle_RIB"
@@ -307,19 +308,19 @@ export default function Bancaire({
           <Grid container direction="row">
             <Grid item xs={3} md={1}>
               <Tooltip title="Ajouter">
-                <Button
+                <IconButton
                   variant="contained"
                   color="primary"
                   type="submit"
                   form="addCoordonne"
                 >
                   <AddIcon />
-                </Button>
+                </IconButton>
               </Tooltip>
             </Grid>
             <Grid item xs={3} md={1}>
               <Tooltip title="Supprimer">
-                <Button
+                <IconButton
                   variant="contained"
                   color="primary"
                   disabled={selectedRows.length == 0}
@@ -327,12 +328,12 @@ export default function Bancaire({
                   className={classes.cancel}
                 >
                   <DeleteIcon />
-                </Button>
+                </IconButton>
               </Tooltip>
             </Grid>
             <Grid item xs={3} md={1}>
               <Tooltip title="Créer une copie">
-                <Button
+                <IconButton
                   variant="contained"
                   color="primary"
                   className={classes.copy}
@@ -340,7 +341,7 @@ export default function Bancaire({
                   onClick={() => addCopyCoordonne(selectedRows[0])}
                 >
                   <FilterNone />
-                </Button>
+                </IconButton>
               </Tooltip>
             </Grid>
             <Grid item>
