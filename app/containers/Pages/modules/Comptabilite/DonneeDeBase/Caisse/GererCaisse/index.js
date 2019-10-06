@@ -6,6 +6,8 @@ import Initial from "../CreeCaisse/Initiale";
 import Base from "../CreeCaisse/Base";
 import ChoisirCaisse from "./ChoisirCaisse";
 import Button from "@material-ui/core/Button";
+
+import IconButton from "@material-ui/core/IconButton";
 import Card from "@material-ui/core/Card";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -73,16 +75,16 @@ const styles = theme => ({
     marginLeft: theme.spacing(1)
   },
   done: {
-    backgroundColor: "#4db6ac",
+    color: "#4db6ac",
     "&:hover": {
-      backgroundColor: "#009688"
+      color: "#009688"
     }
   },
   cancel: {
     marginRight: "1em",
-    backgroundColor: "#e57373",
+    color: "#e57373",
     "&:hover": {
-      backgroundColor: "#f44336"
+      color: "#f44336"
     }
   },
   btnArea: {
@@ -329,27 +331,29 @@ class GererArticle extends React.Component {
       <>
         {/* <Grid item sm={2} lg={2}> */}
         <Tooltip title="Annuler">
-          <Button
+          <IconButton
             className={classes.cancel}
             onClick={this.handleCancel}
             variant="contained"
             color="primary"
+            size="small"
           >
             <Undo />
-          </Button>
+          </IconButton>
         </Tooltip>
         {/* </Grid> */}
         {/* <Grid item sm={2} lg={2}> */}
         <Tooltip title="Sauvegarder">
-          <Button
+          <IconButton
             className={classes.done}
             variant="contained"
             color="primary"
             onClick={this.handleSubmit}
             form="updateCaisse"
+            size="small"
           >
             <SaveIcon />
-          </Button>
+          </IconButton>
         </Tooltip>
         {/* </Grid> */}
       </>

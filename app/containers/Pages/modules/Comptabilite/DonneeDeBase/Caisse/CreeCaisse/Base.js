@@ -45,7 +45,7 @@ const Base = ({
       <Grid item xs={12}>
         <FormGroup>
           <Grid container>
-            <Grid item xs={5}>
+            <Grid item xs={12} md={5}>
               <TextValidator
                 className={classes.field}
                 InputProps={{
@@ -59,7 +59,7 @@ const Base = ({
                 id="#codearticle"
               />
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={12} md={5}>
               <TextValidator
                 // fullWidth={true}
                 className={classes.field}
@@ -83,7 +83,7 @@ const Base = ({
       <Grid item>
         <FormGroup>
           <Grid container direction="row">
-            <Grid item xs={6}>
+            <Grid item xs={6} md={5}>
               <SelectValidator
                 className={classes.field}
                 onChange={handleChange}
@@ -102,7 +102,7 @@ const Base = ({
                   ))}
               </SelectValidator>
             </Grid>
-            <Grid item xs={6} direction="column">
+            <Grid item xs={6} md={5} direction="column">
               <FormControl component="fieldset" className={classes.formControl}>
                 <FormLabel component="legend">Statu</FormLabel>
                 <RadioGroup
@@ -126,7 +126,7 @@ const Base = ({
             </Grid>
           </Grid>
           <Grid container direction="row">
-            <Grid item xs={6}>
+            <Grid item xs={12} md={5}>
               <SelectValidator
                 className={classes.field}
                 onChange={handleChange}
@@ -147,7 +147,7 @@ const Base = ({
             </Grid>
           </Grid>
           <Grid container direction="row">
-            <Grid item xs={6}>
+            <Grid item xs={12} md={5}>
               <TextValidator
                 className={classes.field}
                 onBlur={handleBlur}
@@ -172,7 +172,7 @@ const Base = ({
             </Grid>
           </Grid>
           <Grid container direction="row">
-            <Grid item xs={6}>
+            <Grid item xs={12} md={5}>
               <SelectValidator
                 className={classes.field}
                 onChange={handleChange}

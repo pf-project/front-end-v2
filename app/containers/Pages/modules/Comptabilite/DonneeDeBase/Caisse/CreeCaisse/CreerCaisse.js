@@ -61,9 +61,9 @@ const styles = theme => ({
     marginTop: "20px"
   },
   done: {
-    backgroundColor: "#4db6ac",
+    color: "#4db6ac",
     "&:hover": {
-      backgroundColor: "#009688"
+      color: "#009688"
     }
   },
   toolbar: {
@@ -297,24 +297,26 @@ class CreerCaisse extends React.Component {
             title="
             Créer une nouvelle caisse"
           >
-            <Button
+            <IconButton
               variant="contained"
               className={classes.done}
               color="primary"
               onClick={this.handleReset}
+              size="small"
             >
               <FiberNew />
-            </Button>
+            </IconButton>
           </Tooltip>
           <Tooltip title="Gerer cette caisse">
-            <Button
+            <IconButton
               variant="contained"
               // className={classes.done}
               color="primary"
               onClick={this.handleOpen}
+              size="small"
             >
               <Edit />
-            </Button>
+            </IconButton>
           </Tooltip>
         </>
       ) : (
@@ -330,7 +332,7 @@ class CreerCaisse extends React.Component {
                 : "Suivant"
             }
           >
-            <Button
+            <IconButton
               className={
                 this.state.activeStep === this.state.steps.length - 1
                   ? classes.done
@@ -340,13 +342,14 @@ class CreerCaisse extends React.Component {
               color="primary"
               type="submit"
               form="addCaisse"
+              size="small"
             >
               {this.state.activeStep === this.state.steps.length - 1 ? (
                 <SaveIcon />
               ) : (
                 <ArrowForward />
               )}
-            </Button>
+            </IconButton>
           </Tooltip>
 
           {/* </Grid> */}
@@ -355,7 +358,7 @@ class CreerCaisse extends React.Component {
 
     const precedent = (
       <Tooltip title="Precedent">
-        <Button
+        <IconButton
           // onClick={submitter}
           // className={classes.button}
           variant="outlined"
@@ -363,9 +366,10 @@ class CreerCaisse extends React.Component {
           disabled={activeStep === 0}
           onClick={this.handleBack}
           className={classes.backButton}
+          size="small"
         >
           <ArrowBack />
-        </Button>
+        </IconButton>
       </Tooltip>
     );
     const { data } = this.state;
