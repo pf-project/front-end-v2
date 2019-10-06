@@ -11,7 +11,14 @@ import {
   TextValidator,
   SelectValidator
 } from "react-material-ui-form-validator";
-import { Chip, Grid, Card, MenuItem, Toolbar } from "@material-ui/core";
+import {
+  Chip,
+  Grid,
+  Card,
+  MenuItem,
+  Toolbar,
+  IconButton
+} from "@material-ui/core";
 import {
   closeNotifAction,
   fetchItem
@@ -26,6 +33,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Undo, Add, Close } from "@material-ui/icons";
 import { NavLink } from "react-router-dom";
+import { Paper } from "@material-ui/core";
 const styles = theme => ({
   root: {
     width: "90%",
@@ -37,6 +45,16 @@ const styles = theme => ({
   instructions: {
     marginTop: "1em",
     marginBottom: "1em"
+  },
+  paperCard: {
+    width: "100%",
+    marginTop: theme.spacing(3),
+    overflowX: "auto"
+  },
+  card: {
+    padding: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    minWidth: 1000
   },
   field: {
     width: "90%"
@@ -81,19 +99,10 @@ const styles = theme => ({
     width: "80%",
     display: "block"
   },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3)
-  },
   headerButton: {
     marginLeft: theme.spacing(1)
   },
   LivreElement: {
-    padding: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-
     "& h4": {
       fontWeight: 700,
       fontSize: 24,
@@ -273,15 +282,16 @@ class GrandLivre extends Component {
           title="
           Contre-passation"
         >
-          <Button
+          <IconButton
             disabled={index < 0}
             variant="contained"
             className={classes.headerButton}
             color="primary"
             onClick={this.handleOpen}
+            size="small"
           >
             <Undo />
-          </Button>
+          </IconButton>
         </Tooltip>
 
         <NavLink to="/app/Comptabilite/Comptabilité-générale/Ecriture-comptable/créer-écriture-comptable">
@@ -289,13 +299,14 @@ class GrandLivre extends Component {
             title="
           Ajouter une nouvelle écriture"
           >
-            <Button
+            <IconButton
               variant="contained"
               className={classes.headerButton}
               color="primary"
+              size="small"
             >
               <Add />
-            </Button>
+            </IconButton>
           </Tooltip>
         </NavLink>
       </>
@@ -329,14 +340,15 @@ class GrandLivre extends Component {
               {" "}
               <DialogActions>
                 <Tooltip title="Fermer">
-                  <Button
+                  <IconButton
                     onClick={this.handleClose}
                     className={classes.fermer}
                     color="primary"
                     autoFocus
+                    size="small"
                   >
                     <Close />
-                  </Button>
+                  </IconButton>
                 </Tooltip>
               </DialogActions>
               <DialogTitle id="alert-dialog-title">
@@ -356,7 +368,7 @@ class GrandLivre extends Component {
             <Card className={classes.LivreElement}>
               <ValidatorForm>
                 <Grid container direction="row">
-                  <Grid item sm={6}>
+                  <Grid item md={6} xs={12}>
                     <SelectValidator
                       onChange={this.handleChange}
                       className={classes.field}
@@ -377,7 +389,7 @@ class GrandLivre extends Component {
                       <MenuItem value="Trésorerie">Trésorerie</MenuItem>
                     </SelectValidator>
                   </Grid>
-                  <Grid item sm={6}>
+                  <Grid item md={6} xs={12}>
                     <TextValidator
                       InputLabelProps={{
                         shrink: true
@@ -391,7 +403,7 @@ class GrandLivre extends Component {
                   </Grid>
                 </Grid>
                 <Grid container direction="row">
-                  <Grid item sm={6}>
+                  <Grid item md={6} xs={12}>
                     <TextValidator
                       name="dateComptableDebut"
                       onBlur={this.handleChange}
@@ -404,7 +416,7 @@ class GrandLivre extends Component {
                       className={classes.field}
                     />
                   </Grid>
-                  <Grid item sm={6}>
+                  <Grid item md={6} xs={12}>
                     <TextValidator
                       name="dateComptableFin"
                       onBlur={this.handleChange}
@@ -420,7 +432,7 @@ class GrandLivre extends Component {
                 </Grid>
 
                 <Grid container direction="row">
-                  <Grid item sm={6}>
+                  <Grid item md={6} xs={12}>
                     <TextValidator
                       name="dateCreationDebut"
                       onBlur={this.handleChange}
@@ -433,7 +445,7 @@ class GrandLivre extends Component {
                       className={classes.field}
                     />
                   </Grid>
-                  <Grid item sm={6}>
+                  <Grid item md={6} xs={12}>
                     <TextValidator
                       name="dateCreationFin"
                       onBlur={this.handleChange}
@@ -448,7 +460,7 @@ class GrandLivre extends Component {
                   </Grid>
                 </Grid>
                 <Grid container direction="row">
-                  <Grid item sm={6}>
+                  <Grid item md={6} xs={12}>
                     <TextValidator
                       name="codeGenerale"
                       onBlur={this.handleChange}
@@ -477,14 +489,16 @@ class GrandLivre extends Component {
             dataTable.map((element, index) => (
               <>
                 {" "}
-                <LivreElement
-                  handleSelect={this.handleSelect}
-                  findSimilarLettrage={this.findSimilarLettrage}
-                  ecritureData={element}
-                  classes={classes}
-                  index={index}
-                  selectedIndex={this.state.index}
-                />{" "}
+                <Paper className={classes.paperCard}>
+                  <LivreElement
+                    handleSelect={this.handleSelect}
+                    findSimilarLettrage={this.findSimilarLettrage}
+                    ecritureData={element}
+                    classes={classes}
+                    index={index}
+                    selectedIndex={this.state.index}
+                  />{" "}
+                </Paper>
               </>
             ))}
         </div>

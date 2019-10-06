@@ -20,10 +20,10 @@ const LivreElement = ({
     ecriture_comptable
   } = ecritureData;
   return (
-    <Card small className={classes.LivreElement}>
+    <Card small className={classes.card}>
       <Grid container spacing={2} direction="column">
         <Grid container direction="row">
-          <Grid item sm={2}>
+          <Grid item xs={2}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -39,14 +39,14 @@ const LivreElement = ({
             />
           </Grid>
 
-          <Grid item sm={8}>
+          <Grid item xs={8}>
             <Typography component="div">
               <Box textAlign="center" m={1}>
                 {libelleOperation} / {dateComptable} / {reference}
               </Box>
             </Typography>
           </Grid>
-          <Grid item sm={2}>
+          <Grid item xs={2}>
             <Typography
               onClick={findSimilarLettrage(lettrageManuel)}
               component="div"
@@ -62,14 +62,14 @@ const LivreElement = ({
 
         <Divider />
         <Grid container direction="row">
-          <Grid item sm={10} />
-          <Grid item sm={1}>
+          <Grid item xs={10} />
+          <Grid item xs={1}>
             {" "}
             <Box fontWeight="fontWeightMedium" textAlign="left" m={1}>
               Débit
             </Box>
           </Grid>
-          <Grid item sm={1}>
+          <Grid item xs={1}>
             {" "}
             <Box fontWeight="fontWeightMedium" textAlign="right" m={1}>
               Crédit
@@ -88,22 +88,22 @@ const LivreElement = ({
             return (
               <>
                 <Grid container direction="row">
-                  <Grid item sm={2}>
+                  <Grid item xs={2}>
                     <Typography component="div">
                       <Box textAlign="left" m={1}>
                         {comptegeneral}
                       </Box>
                     </Typography>
                   </Grid>
-                  <Grid item sm={7}>
+                  <Grid item xs={7}>
                     <Typography component="div">
                       <Box textAlign={textAlign} m={1}>
                         {designation}
                       </Box>
                     </Typography>
                   </Grid>
-                  <Grid item sm={1} />
-                  <Grid item sm={2}>
+                  <Grid item xs={1} />
+                  <Grid item xs={2}>
                     <Typography component="div">
                       <Box textAlign={textAlign} m={1}>
                         {montant}
