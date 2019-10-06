@@ -138,14 +138,14 @@ export default function AjoutAttribut({
       </TableCell>
       <TableCell>
         <Tooltip title="Ajouter">
-          <Button
+          <IconButton
             variant="contained"
             color="primary"
             onClick={showPopover}
             aria-describedby={id}
           >
             <AddIcon />
-          </Button>
+          </IconButton>
         </Tooltip>
         <Popover
           id={id}
@@ -174,7 +174,7 @@ export default function AjoutAttribut({
               <Grid xs={3}>
                 {Elementexists && (
                   <Tooltip title="Valider">
-                    <Button
+                    <IconButton
                       color="primary"
                       variant="outlined"
                       size="small"
@@ -182,20 +182,20 @@ export default function AjoutAttribut({
                       onClick={valider}
                     >
                       <Done />
-                    </Button>
+                    </IconButton>
                   </Tooltip>
                 )}
               </Grid>
               <Grid xs={3}>
                 <Tooltip title="Annuler">
-                  <Button
+                  <IconButton
                     onClick={annuler}
                     variant="outlined"
                     size="small"
                     className={classes.margin}
                   >
                     <CancelIcon />
-                  </Button>
+                  </IconButton>
                 </Tooltip>
               </Grid>
             </Grid>

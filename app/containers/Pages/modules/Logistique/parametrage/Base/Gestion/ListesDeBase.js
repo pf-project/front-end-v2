@@ -2,6 +2,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 
@@ -54,17 +55,16 @@ const styles = theme => ({
     marginRight: "1em"
   },
   done: {
-    backgroundColor: "#4db6ac",
+    color: "#4db6ac",
     "&:hover": {
-      backgroundColor: "#009688"
+      color: "#009688"
     }
   },
   cancel: {
     marginRight: "1em",
-    color: "white",
-    backgroundColor: "#e57373",
+    color: "#e57373",
     "&:hover": {
-      backgroundColor: "#f44336"
+      color: "#f44336"
     }
   },
   instructions: {
@@ -437,15 +437,16 @@ class ListesDeBase extends React.Component {
 
     const elements = (
       <Tooltip title="Sauvegarder">
-        <Button
+        <IconButton
           className={classes.done}
           variant="contained"
           color="primary"
           onClick={this.updateListesDeBase}
           form="ListesDeBase"
+          size="small"
         >
           <SaveIcon />
-        </Button>
+        </IconButton>
       </Tooltip>
     );
     return (
@@ -477,7 +478,7 @@ class ListesDeBase extends React.Component {
           </Modal>
           <Grid container>
             <Grid item xs={12}>
-              <Grid item xs={4}>
+              <Grid item md={4} xs={12}>
                 <SelectValidator
                   label="Type unité"
                   value={type}
@@ -508,7 +509,7 @@ class ListesDeBase extends React.Component {
               </Toolbar>
             </Grid>
             <Grid container>
-              <Grid item xs={4}>
+              <Grid item md={4} xs={12}>
                 <TextValidator
                   onChange={this.handleChange}
                   name="code"
@@ -520,7 +521,7 @@ class ListesDeBase extends React.Component {
                   id="#codearticle"
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item md={4} xs={12}>
                 <TextValidator
                   style={{ width: "80%" }}
                   // className={classes.field}
@@ -533,7 +534,7 @@ class ListesDeBase extends React.Component {
                   id="#designation"
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item md={4} xs={12}>
                 {type === "Villes" && (
                   <SelectValidator
                     label="Pays"
@@ -575,14 +576,14 @@ class ListesDeBase extends React.Component {
             <Grid container style={{ marginTop: 15 }}>
               <Grid item xs={2} md={1}>
                 <Tooltip title="Ajouter">
-                  <Button type="submit" variant="contained" color="primary">
+                  <IconButton type="submit" variant="contained" color="primary">
                     <AddIcon />
-                  </Button>
+                  </IconButton>
                 </Tooltip>
               </Grid>
               <Grid item xs={2} md={1}>
                 <Tooltip title="Supprimer">
-                  <Button
+                  <IconButton
                     className={classes.cancel}
                     variant="contained"
                     color="primary"
@@ -590,7 +591,7 @@ class ListesDeBase extends React.Component {
                     onClick={this.handleDelete}
                   >
                     <DeleteIcon />
-                  </Button>
+                  </IconButton>
                 </Tooltip>
               </Grid>
             </Grid>

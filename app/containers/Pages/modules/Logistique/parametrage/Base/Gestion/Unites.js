@@ -2,6 +2,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 
@@ -56,17 +57,16 @@ const styles = theme => ({
     marginRight: "1em"
   },
   done: {
-    backgroundColor: "#4db6ac",
+    color: "#4db6ac",
     "&:hover": {
-      backgroundColor: "#009688"
+      color: "#009688"
     }
   },
   cancel: {
     marginRight: "1em",
-    color: "white",
-    backgroundColor: "#e57373",
+    color: "#e57373",
     "&:hover": {
-      backgroundColor: "#f44336"
+      color: "#f44336"
     }
   },
   instructions: {
@@ -486,15 +486,16 @@ class Unites extends React.Component {
 
     const elements = (
       <Tooltip title="Sauvegarder">
-        <Button
+        <IconButton
           className={classes.done}
           variant="contained"
           color="primary"
           onClick={this.updateListesDeBase}
           form="ListesDeBase"
+          size="small"
         >
           <SaveIcon />
-        </Button>
+        </IconButton>
       </Tooltip>
     );
     return (
@@ -525,8 +526,8 @@ class Unites extends React.Component {
             </center>
           </Modal>
           <Grid container>
-            <Grid item md={12}>
-              <Grid item md={4}>
+            <Grid item md={12} xs={12}>
+              <Grid item md={4} xs={12}>
                 <SelectValidator
                   label="Type unité"
                   value={type}
@@ -548,7 +549,7 @@ class Unites extends React.Component {
                 </SelectValidator>
               </Grid>
             </Grid>
-            <Grid item md={12}>
+            <Grid item md={12} xs={12}>
               <Toolbar className={classes.toolbar}>
                 <div className={classes.title}>
                   <Typography variant="h6" />
@@ -556,7 +557,7 @@ class Unites extends React.Component {
               </Toolbar>
             </Grid>
             <Grid container>
-              <Grid item md={3}>
+              <Grid item md={3} xs={12}>
                 <TextValidator
                   onChange={this.handleChange}
                   name="code"
@@ -568,7 +569,7 @@ class Unites extends React.Component {
                   id="#codearticle"
                 />
               </Grid>
-              <Grid item md={3}>
+              <Grid item md={3} xs={12}>
                 <TextValidator
                   style={{ width: "80%" }}
                   // className={classes.field}
@@ -581,7 +582,7 @@ class Unites extends React.Component {
                   id="#designation"
                 />
               </Grid>
-              <Grid item md={3}>
+              <Grid item md={3} xs={12}>
                 <TextValidator
                   onChange={this.handleChange}
                   name="facteur_conversion"
@@ -593,7 +594,7 @@ class Unites extends React.Component {
                   id="#facteur_conversion"
                 />
               </Grid>
-              <Grid item md={3}>
+              <Grid item md={3} xs={12}>
                 <SelectValidator
                   label="Unité de conversion"
                   value={unite_conversion}
@@ -613,14 +614,14 @@ class Unites extends React.Component {
             <Grid container style={{ marginTop: 15 }}>
               <Grid item xs={2} md={1}>
                 <Tooltip title="Ajouter">
-                  <Button type="submit" variant="contained" color="primary">
+                  <IconButton type="submit" variant="contained" color="primary">
                     <AddIcon />
-                  </Button>
+                  </IconButton>
                 </Tooltip>
               </Grid>
               <Grid item xs={2} md={1}>
                 <Tooltip title="Supprimer">
-                  <Button
+                  <IconButton
                     className={classes.cancel}
                     variant="contained"
                     color="primary"
@@ -628,7 +629,7 @@ class Unites extends React.Component {
                     onClick={this.handleDelete}
                   >
                     <DeleteIcon />
-                  </Button>
+                  </IconButton>
                 </Tooltip>
               </Grid>
             </Grid>
