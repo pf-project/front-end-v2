@@ -38,7 +38,7 @@ export default function Initiale({
       {!gerer && (
         <>
           <FormGroup>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <SelectValidator
                 className={classes.field}
                 onChange={handleChange}
@@ -60,7 +60,7 @@ export default function Initiale({
             </Grid>
           </FormGroup>
           <FormGroup>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <SelectValidator
                 className={classes.field}
                 onChange={handleChange}
@@ -82,7 +82,7 @@ export default function Initiale({
             </Grid>
           </FormGroup>
           <FormGroup>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <SelectValidator
                 className={classes.field}
                 onChange={handleChange}
@@ -104,7 +104,7 @@ export default function Initiale({
             </Grid>
           </FormGroup>
           <FormGroup>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <SelectValidator
                 className={classes.field}
                 onChange={handleChange}
@@ -128,7 +128,7 @@ export default function Initiale({
         </>
       )}
       <FormGroup>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <TextValidator
             className={classes.field}
             onBlur={handleBlur}
@@ -154,7 +154,7 @@ export default function Initiale({
         </Grid>
       </FormGroup>
       <FormGroup>
-        <Grid item xs={9}>
+        <Grid item xs={12} md={6}>
           <TextValidator
             onChange={handleChange}
             className={classes.initialeFields}

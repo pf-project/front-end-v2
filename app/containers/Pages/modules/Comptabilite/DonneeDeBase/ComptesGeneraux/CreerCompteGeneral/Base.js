@@ -53,7 +53,7 @@ class Base extends React.Component {
         <Grid item xs={12}>
           <FormGroup>
             <Grid container>
-              <Grid item xs={5}>
+              <Grid item xs={12} md={5}>
                 <TextValidator
                   className={classes.field}
                   InputProps={{
@@ -67,7 +67,7 @@ class Base extends React.Component {
                   id="#compte"
                 />
               </Grid>
-              <Grid item xs={5}>
+              <Grid item xs={12} md={5}>
                 <TextValidator
                   // fullWidth={true}
                   className={classes.field}
@@ -91,7 +91,7 @@ class Base extends React.Component {
         <Grid item>
           <FormGroup>
             <Grid container direction="row">
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <SelectValidator
                   className={classes.field}
                   InputProps={{
@@ -114,7 +114,7 @@ class Base extends React.Component {
                     ))}
                 </SelectValidator>
               </Grid>
-              <Grid item xs={6} direction="column">
+              <Grid item xs={12} md={6} direction="column">
                 <TextValidator
                   className={classes.field}
                   readOnly={true}
@@ -126,8 +126,8 @@ class Base extends React.Component {
             </Grid>
 
             <Grid container direction="row">
-              <Grid item xs={6} />
-              <Grid item xs={6} direction="column">
+              <Grid item xs={12} md={6} />
+              <Grid item xs={12} md={6} direction="column">
                 <TextValidator
                   className={classes.field}
                   name="compteancien"
@@ -140,7 +140,7 @@ class Base extends React.Component {
             </Grid>
 
             <Grid container direction="row">
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <FormControl
                   component="fieldset"
                   className={classes.formControl}

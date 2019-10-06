@@ -4,6 +4,8 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
+
+import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { Container, Card, Row } from "@material-ui/core/";
 import {
@@ -40,9 +42,9 @@ const styles = theme => ({
     margin: "2em"
   },
   done: {
-    backgroundColor: "#4db6ac",
+    color: "#4db6ac",
     "&:hover": {
-      backgroundColor: "#009688"
+      color: "#009688"
     }
   },
   backButton: {
@@ -56,7 +58,7 @@ const styles = theme => ({
     width: "90%"
   },
   initialeFields: {
-    width: "60%"
+    width: "90%"
   },
   grid: {
     flexGrow: 1
@@ -345,26 +347,28 @@ class CreerCompteGeneral extends React.Component {
         <>
           <Tooltip
             title="
-            Créer un nouveau compte générale"
+            Créer un nouveau compte comptable"
           >
-            <Button
+            <IconButton
               variant="contained"
               className={classes.done}
               color="primary"
               onClick={this.handleReset}
+              size="small"
             >
               <FiberNew />
-            </Button>
+            </IconButton>
           </Tooltip>
           <Tooltip title="Gerer ce compte">
-            <Button
+            <IconButton
               variant="contained"
               // className={classes.done}
               color="primary"
               onClick={this.handleOpen}
+              size="small"
             >
               <Edit />
-            </Button>
+            </IconButton>
           </Tooltip>
         </>
       ) : (
@@ -377,13 +381,14 @@ class CreerCompteGeneral extends React.Component {
                 : "Suivant"
             }
           >
-            <Button
+            <IconButton
               className={
                 this.state.activeStep === this.state.steps.length - 1
                   ? classes.done
                   : classes.button
               }
               variant="contained"
+              size="small"
               color="primary"
               type="submit"
               form="addCompteGeneral"
@@ -393,30 +398,31 @@ class CreerCompteGeneral extends React.Component {
               ) : (
                 <ArrowForward />
               )}
-            </Button>
+            </IconButton>
           </Tooltip>
         </>
       );
     const precedent = (
       <Tooltip title="Precedent">
-        <Button
+        <IconButton
           // onClick={submitter}
           // className={classes.button}
           variant="outlined"
           color="primary"
+          size="small"
           disabled={activeStep === 0}
           onClick={this.handleBack}
           className={classes.backButton}
         >
           <ArrowBack />
-        </Button>
+        </IconButton>
       </Tooltip>
     );
     return (
       <div>
         <PageTitle
-          title="Créer compte général"
-          pathname="/Comptabilité/Données de base/comptes généraux/Créer compte général"
+          title="Créer compte comptable"
+          pathname="/Comptabilité/Données de base/comptes généraux/Créer compte comptable"
           elements={elements}
           withBackOption={true}
           precedent={precedent}
@@ -427,7 +433,7 @@ class CreerCompteGeneral extends React.Component {
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
 
         <FloatingPanel
-          title={"Gerer compte général"}
+          title={"Gerer compte comptable"}
           openForm={this.state.openForm}
           closeForm={this.handleClose}
           branch=""
