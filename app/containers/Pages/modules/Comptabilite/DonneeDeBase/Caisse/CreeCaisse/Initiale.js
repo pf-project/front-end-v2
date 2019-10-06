@@ -30,7 +30,7 @@ export default function Initiale({
       {/* <ValidatorForm onSubmit={handleSubmitInitial} autoComplete="off"> */}{" "}
       <FormGroup>
         <TextValidator
-          onChange={handleChange}
+          onChange={handleChangeWithIntitialValue}
           className={classes.initialeFields}
           name="code"
           validators={["required", "maxStringLength:25"]}

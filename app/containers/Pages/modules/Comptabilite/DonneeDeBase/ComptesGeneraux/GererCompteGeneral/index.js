@@ -6,6 +6,7 @@ import Initial from "../CreerCompteGeneral/Initiale";
 import Base from "../CreerCompteGeneral/Base";
 import ChoisirCompteGeneral from "./ChoisirCompteGeneral";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import Card from "@material-ui/core/Card";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -34,9 +35,9 @@ const styles = theme => ({
     minHeight: 500
   },
   done: {
-    backgroundColor: "#4db6ac",
+    color: "#4db6ac",
     "&:hover": {
-      backgroundColor: "#009688"
+      color: "#009688"
     }
   },
   btnArea: {
@@ -44,9 +45,9 @@ const styles = theme => ({
   },
   cancel: {
     marginRight: "1em",
-    backgroundColor: "#e57373",
+    color: "#e57373",
     "&:hover": {
-      backgroundColor: "#f44336"
+      color: "#f44336"
     }
   },
   backButton: {
@@ -139,8 +140,8 @@ class GererArticle extends React.Component {
       errorMsg: "",
       steps: [
         { label: "Choisir le compte comptable", icon: "search" },
-        { label: "Données initiales", icon: "perm_identity" }
-        // { label: "Données de base", icon: "assignment" }
+        { label: "Données initiales", icon: "perm_identity" },
+        { label: "Données de base", icon: "assignment" }
       ],
       data: {
         classe: "1",
@@ -161,6 +162,12 @@ class GererArticle extends React.Component {
       "donneedebase/comptegeneral/getCodesAndDesignations"
     );
 
+    this.props.fetchUnites(
+      "donneedebase/comptegeneral/findClasses",
+      "lesclasses",
+      true
+    );
+
     const { panelEditing } = this.props;
     if (panelEditing)
       this.setState({
@@ -168,11 +175,7 @@ class GererArticle extends React.Component {
         compteGeneralChoisi: true,
         panelEditing
       });
-    // this.props.fetchUnites(
-    //   "donneedebase/comptegeneral/findClasses",
-    //   "lesclasses",
-    //   true
-    // );
+
     // this.props.fetchUnites(
     //   "donneedebase/comptegeneral/findRubriquesByClasse/1",
     //   "rubriques",
@@ -249,7 +252,7 @@ class GererArticle extends React.Component {
             handleChangeWithIntitialValue={this.handleChangeWithIntitialValue}
             handleBlur={this.handleBlur}
             classes={classes}
-            // lesclasses={this.props.lesclasses}
+            lesclasses={this.props.lesclasses}
             // rubriques={this.props.rubriques}
             // postes={this.props.postes}
             // comptes={this.props.comptes}
@@ -258,19 +261,19 @@ class GererArticle extends React.Component {
             gerer={true}
           />
         );
-      // case 2:
-      //   return (
-      //     <Base
-      //       handleBlur={this.handleBlur}
-      //       handleChangeWithIntitialValue={this.handleChangeWithIntitialValue}
-      //       handleChange={this.handleChange}
-      //       handleSubmitBase={this.handleSubmitBase}
-      //       handleBack={this.handleBack}
-      //       classes={classes}
-      //       lesclasses={this.props.lesclasses}
-      //       data={this.state.data}
-      //     />
-      //   );
+      case 2:
+        return (
+          <Base
+            handleBlur={this.handleBlur}
+            handleChangeWithIntitialValue={this.handleChangeWithIntitialValue}
+            handleChange={this.handleChange}
+            handleSubmitBase={this.handleSubmitBase}
+            handleBack={this.handleBack}
+            classes={classes}
+            lesclasses={this.props.lesclasses}
+            data={this.state.data}
+          />
+        );
     }
   };
 
@@ -279,7 +282,9 @@ class GererArticle extends React.Component {
 
     if (compteGeneralInfo) {
       this.setState({
-        data: { ...compteGeneralInfo }
+        data: {
+          ...compteGeneralInfo
+        }
       });
     }
   }
@@ -358,27 +363,29 @@ class GererArticle extends React.Component {
       <>
         {/* <Grid item sm={2} lg={2}> */}
         <Tooltip title="Annuler">
-          <Button
+          <IconButton
             className={classes.cancel}
             onClick={this.handleCancel}
             variant="contained"
             color="primary"
+            size="small"
           >
             <Undo />
-          </Button>
+          </IconButton>
         </Tooltip>
         {/* </Grid> */}
         {/* <Grid item sm={2} lg={2}> */}
         <Tooltip title="Sauvegarder">
-          <Button
+          <IconButton
             className={classes.done}
             variant="contained"
             color="primary"
             onClick={this.handleSubmit}
             form="addcompteGeneral"
+            size="small"
           >
             <SaveIcon />
-          </Button>
+          </IconButton>
         </Tooltip>
         {/* </Grid> */}
       </>
@@ -468,11 +475,11 @@ const mapStateToProps = state => {
     compteGeneralInfo: state.get("crudComptabiliteReducer").get("item"),
     compteGeneralForSuggestion: state
       .get("crudComptabiliteReducer")
-      .get("suggestions")
+      .get("suggestions"),
     // rubriques: state.get("crudComptabiliteReducer").get("rubriques"),
     // postes: state.get("crudComptabiliteReducer").get("postes"),
     // comptes: state.get("crudComptabiliteReducer").get("comptes"),
-    // lesclasses: state.get("crudComptabiliteReducer").get("lesclasses")
+    lesclasses: state.get("crudComptabiliteReducer").get("lesclasses")
   };
 };
 

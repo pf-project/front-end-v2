@@ -166,22 +166,22 @@ class CreerCaisse extends React.Component {
     });
   };
 
-  // handleChangeWithIntitialValue = event => {
-  //   const { value, name } = event.target;
-  //   switch (name) {
-  //     case "compte":
-  //       if (value.length > 3 && value.length < 9) {
-  //         this.setState({ data: { ...this.state.data, [name]: value } });
-  //       }
-  //       break;
+  handleChangeWithIntitialValue = event => {
+    const { value, name } = event.target;
+    switch (name) {
+      case "compte":
+        if (value.length > 3 && value.length < 9) {
+          this.setState({ data: { ...this.state.data, [name]: value } });
+        }
+        break;
 
-  //     case "code":
-  //       if (value.length > 2) {
-  //         this.setState({ data: { ...this.state.data, [name]: value } });
-  //       }
-  //       break;
-  //   }
-  // };
+      case "code":
+        if (value.length > 2) {
+          this.setState({ data: { ...this.state.data, [name]: value } });
+        }
+        break;
+    }
+  };
 
   handleBlur = event => {
     let { value, name } = event.target;
@@ -221,7 +221,7 @@ class CreerCaisse extends React.Component {
           <Initiale
             handleChange={this.handleChange}
             handleSubmitInitial={this.handleSubmitInitial}
-            // handleChangeWithIntitialValue={this.handleChangeWithIntitialValue}
+            handleChangeWithIntitialValue={this.handleChangeWithIntitialValue}
             classes={classes}
             data={this.state.data}
           />
@@ -230,7 +230,7 @@ class CreerCaisse extends React.Component {
         return (
           <Base
             handleBlur={this.handleBlur}
-            // handleChangeWithIntitialValue={this.handleChangeWithIntitialValue}
+            handleChangeWithIntitialValue={this.handleChangeWithIntitialValue}
             handleChange={this.handleChange}
             handleSubmitBase={this.handleSubmitBase}
             handleBack={this.handleBack}

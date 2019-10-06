@@ -102,10 +102,12 @@ const Base = ({
                   ))}
               </SelectValidator>
             </Grid>
+
             <Grid item xs={6} md={5} direction="column">
               <FormControl component="fieldset" className={classes.formControl}>
                 <FormLabel component="legend">Statu</FormLabel>
                 <RadioGroup
+                  style={{ display: "inline" }}
                   aria-label="statu"
                   name="statu"
                   value={data.statu}
@@ -151,7 +153,7 @@ const Base = ({
               <TextValidator
                 className={classes.field}
                 onBlur={handleBlur}
-                onChange={handleChange}
+                onChange={handleChangeWithIntitialValue}
                 name="compte"
                 value={data.compte}
                 validators={[

@@ -159,8 +159,8 @@ export default function Initiale({
             onChange={handleChange}
             className={classes.initialeFields}
             name="designation"
-            validators={["required", "maxStringLength:25"]}
-            errorMessages={["Ce champ est obligatoire", "maximum 25 char"]}
+            validators={["required", "maxStringLength:100"]}
+            errorMessages={["Ce champ est obligatoire", "maximum 100 char"]}
             value={data.designation}
             label="Designation *"
           />
