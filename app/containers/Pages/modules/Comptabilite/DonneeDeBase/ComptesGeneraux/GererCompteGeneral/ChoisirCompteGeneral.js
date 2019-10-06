@@ -160,7 +160,7 @@ function ChoisirFournisseur(props) {
                 fullWidth: true,
                 classes,
                 InputProps: getInputProps({
-                  placeholder: "Chercher le compte général à modifier",
+                  placeholder: "Chercher le compte comptable à modifier",
                   id: "integration-downshift-simple"
                 })
               })}

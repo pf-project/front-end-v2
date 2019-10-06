@@ -195,8 +195,8 @@ export default [
     }
   },
   {
-    name: "Compte général",
-    label: "Compte général",
+    name: "Compte comptable",
+    label: "Compte comptable",
     options: {
       filter: false,
       sort: true

@@ -422,7 +422,7 @@ class CreerCompteGeneral extends React.Component {
       <div>
         <PageTitle
           title="Créer compte comptable"
-          pathname="/Comptabilité/Données de base/comptes généraux/Créer compte comptable"
+          pathname="/Comptabilité/Données de base/comptes comptables/Créer compte comptable"
           elements={elements}
           withBackOption={true}
           precedent={precedent}

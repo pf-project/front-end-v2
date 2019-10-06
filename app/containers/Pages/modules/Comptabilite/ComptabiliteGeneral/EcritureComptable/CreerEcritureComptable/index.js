@@ -527,7 +527,7 @@ class CreerCaisse extends React.Component {
     } = this.state;
 
     const headers = [
-      "Compte général",
+      "Compte comptable",
       "Désignation de compte",
       "Débit/Crédit",
       "Montant",
@@ -692,7 +692,7 @@ class CreerCaisse extends React.Component {
                 {" "}
                 <DialogTitle id="alert-dialog-title">
                   {" "}
-                  Choisir un compte général
+                  Choisir un compte comptable
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
@@ -765,7 +765,7 @@ class CreerCaisse extends React.Component {
                           name="comptepere"
                           value={comptepere}
                           id="#comptepere"
-                          label="Compte général"
+                          label="Compte comptable"
                         >
                           {comptes &&
                             comptes.map(compte => (
@@ -832,7 +832,7 @@ class CreerCaisse extends React.Component {
                         "champ obligatoire",
                         "maximum 8 chiffres"
                       ]}
-                      label="Code général "
+                      label="Code comptable "
                       id="#comptegeneral"
                       InputProps={{
                         endAdornment: (

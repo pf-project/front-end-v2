@@ -148,7 +148,7 @@ export default function Initiale({
               "min 5 chiffres",
               "max 8 chiffres"
             ]}
-            label="Compte général "
+            label="Compte comptable "
             id="#comptegeneral"
           />
         </Grid>

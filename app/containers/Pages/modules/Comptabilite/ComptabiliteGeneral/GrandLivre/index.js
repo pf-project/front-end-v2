@@ -466,7 +466,7 @@ class GrandLivre extends Component {
                       onBlur={this.handleChange}
                       value={codeGenerale}
                       type="number"
-                      label="Compte général "
+                      label="Compte comptable "
                       className={classes.field}
                     />
                   </Grid>

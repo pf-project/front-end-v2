@@ -1,7 +1,7 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
-import Dashboard from '../Templates/Dashboard';
+import React from "react";
+import { PropTypes } from "prop-types";
+import { Switch, Route } from "react-router-dom";
+import Dashboard from "../Templates/Dashboard";
 import {
   GestionUtilisateur,
   CategorieArticle,
@@ -39,7 +39,7 @@ import {
   GererCaisse,
   GererCompteGeneral,
   GrandLivre
-} from '../pageListAsync';
+} from "../pageListAsync";
 
 class Application extends React.Component {
   render() {
@@ -181,23 +181,23 @@ class Application extends React.Component {
             component={CompteBancaire}
           />
 
-          {/* ****** Compte general */}
+          {/* ****** Compte comptable */}
           <Route
-            path="/app/Comptabilite/Données-de-base/comptes-généraux/lister-comptes-généraux"
+            path="/app/Comptabilite/Données-de-base/comptes-comptables/lister-comptes-comptables"
             component={ListerCompteGeneral}
           />
           <Route
-            path="/app/Comptabilite/Données-de-base/comptes-généraux/gerer-compte-général"
+            path="/app/Comptabilite/Données-de-base/comptes-comptables/gerer-compte-comptable"
             component={GererCompteGeneral}
           />
 
           <Route
-            path="/app/Comptabilite/Données-de-base/comptes-généraux/ajouter-compte-gérénal"
+            path="/app/Comptabilite/Données-de-base/comptes-comptables/ajouter-compte-comptable"
             component={CreerCompteGeneral}
           />
 
           <Route
-            path="/app/Comptabilite/Données-de-base/comptes-généraux"
+            path="/app/Comptabilite/Données-de-base/comptes-comptables"
             component={CompteGeneral}
           />
 

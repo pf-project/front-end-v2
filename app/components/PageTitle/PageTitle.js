@@ -37,7 +37,8 @@ const styles = theme => ({
     marginLeft: theme.spacing(1)
   },
   TypographyH6: {
-    color: theme.palette.primary.dark
+    color: theme.palette.primary.dark,
+    margin: 10
   },
   pageTitle: {
     padding: theme.spacing(),
@@ -144,8 +145,8 @@ const PageTitle = ({
           </Box>
           <Box component="Typography" display={{ xs: "inline", md: "none" }}>
             <Typography
-              component="subtitle1"
-              variant="subtitle1"
+              component="h6"
+              variant="h6"
               className={classes.TypographyH6}
             >
               {title}

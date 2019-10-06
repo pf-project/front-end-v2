@@ -5,19 +5,19 @@ const index = () => {
   const images = [
     {
       url:
-        "/app/Comptabilite/Données-de-base/comptes-généraux/ajouter-compte-gérénal",
+        "/app/Comptabilite/Données-de-base/comptes-comptables/ajouter-compte-comptable",
       title: "Ajouter",
       width: "33%"
     },
     {
       url:
-        "/app/Comptabilite/Données-de-base/comptes-généraux/lister-comptes-généraux",
+        "/app/Comptabilite/Données-de-base/comptes-comptables/lister-comptes-comptables",
       title: "Liste",
       width: "33%"
     },
     {
       url:
-        "/app/Comptabilite/Données-de-base/comptes-généraux/gerer-compte-général",
+        "/app/Comptabilite/Données-de-base/comptes-comptables/gerer-compte-comptable",
       title: "Gerer",
       width: "33%"
     }
@@ -25,8 +25,8 @@ const index = () => {
   return (
     <>
       <PageTitle
-        title="Comptes généraux"
-        pathname="/ Comptabilité/Données de base/Comptes généraux"
+        title="Comptes comptables"
+        pathname="/ Comptabilité/Données de base/Comptes comptables"
       />{" "}
       <MenuChooser images={images} />
     </>

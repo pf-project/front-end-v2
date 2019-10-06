@@ -166,7 +166,7 @@ const Base = ({
                   "min 5 chiffres",
                   "max 8 chiffres"
                 ]}
-                label="Compte général "
+                label="Compte comptable "
                 id="#compte"
               />
             </Grid>

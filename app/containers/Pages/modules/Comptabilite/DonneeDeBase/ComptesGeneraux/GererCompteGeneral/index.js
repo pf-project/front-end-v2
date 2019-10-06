@@ -138,7 +138,7 @@ class GererArticle extends React.Component {
       compteGeneralChoisi: false,
       errorMsg: "",
       steps: [
-        { label: "Choisir le compte général", icon: "search" },
+        { label: "Choisir le compte comptable", icon: "search" },
         { label: "Données initiales", icon: "perm_identity" }
         // { label: "Données de base", icon: "assignment" }
       ],
@@ -195,7 +195,7 @@ class GererArticle extends React.Component {
     if (this.state.compteGeneralChoisi) this.setState({ activeStep });
     else
       this.setState({
-        errorMsg: "Veuillez Choisir un compte général d'abord !"
+        errorMsg: "Veuillez Choisir un compte comptable d'abord !"
       });
   };
 
@@ -392,8 +392,8 @@ class GererArticle extends React.Component {
       >
         {!this.state.panelEditing && (
           <PageTitle
-            title="Gérer Compte général"
-            pathname="/Comptabilite/Données de base/comptes généraux/Gérer compte général"
+            title="Gérer Compte comptable"
+            pathname="/Comptabilite/Données de base/comptes comptables/Gérer compte comptable"
             elements={elements}
             withBackOption={true}
             formChanged={this.state.formChanged}

@@ -63,7 +63,7 @@ class Base extends React.Component {
                   onChange={handleChange}
                   name="compte"
                   value={data.compte}
-                  label="Code général "
+                  label="Code comptable "
                   id="#compte"
                 />
               </Grid>
@@ -85,7 +85,7 @@ class Base extends React.Component {
         </Grid>
         <Toolbar className={classes.toolbar}>
           <div className={classes.title}>
-            <Typography variant="h6">Information Compte général</Typography>
+            <Typography variant="h6">Information Compte comptable</Typography>
           </div>
         </Toolbar>
         <Grid item>
