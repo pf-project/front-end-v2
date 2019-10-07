@@ -1,6 +1,14 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Container, Card, Row, Col, Grid, Paper } from "@material-ui/core";
+import {
+  Container,
+  Card,
+  Row,
+  Col,
+  Grid,
+  Paper,
+  withWidth
+} from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -127,7 +135,8 @@ const CreerCategorie = ({
   notifMsg,
   classes,
   addItem,
-  error
+  error,
+  width
 }) => {
   // state :
   const [data, setData] = React.useState({ articlesMetaData: [] });
@@ -253,6 +262,12 @@ const CreerCategorie = ({
     number: "Veuiller entrer des nombres "
   };
   let form;
+  // change buttons props based on breakpoints xs/sm/lg ...
+  const isSmallScreen = /xs|sm/.test(width);
+
+  const buttonProps = {
+    size: isSmallScreen ? "small" : "medium"
+  };
   let elements = (
     <>
       <Tooltip title="Vider Les Champs">
@@ -268,7 +283,7 @@ const CreerCategorie = ({
             setNbrAttributes(0);
             form.resetValidations();
           }}
-          size="small"
+          {...buttonProps}
         >
           <Undo />
         </IconButton>
@@ -281,7 +296,7 @@ const CreerCategorie = ({
           type="submit"
           form="addCategorie"
           className={classes.done}
-          size="small"
+          {...buttonProps}
         >
           {loading && (
             <CircularProgress size={24} className={classes.buttonProgress} />
@@ -542,4 +557,4 @@ const CreerCategorieReduxed = connect(
   mapDispatchToProps
 )(CreerCategorie);
 
-export default withStyles(styles)(CreerCategorieReduxed);
+export default withStyles(styles)(withWidth()(CreerCategorieReduxed));

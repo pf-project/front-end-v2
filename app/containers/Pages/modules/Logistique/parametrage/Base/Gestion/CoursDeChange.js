@@ -38,6 +38,7 @@ import SaveIcon from "@material-ui/icons/Save";
 
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
+import withWidth from "@material-ui/core/withWidth";
 
 const styles = theme => ({
   root: {
@@ -421,7 +422,7 @@ class Unites extends React.Component {
   };
 
   render() {
-    const { classes, notifMsg, closeNotif } = this.props;
+    const { classes, notifMsg, closeNotif, width } = this.props;
     const {
       coursdechange,
       devise,
@@ -433,6 +434,12 @@ class Unites extends React.Component {
       selectedRows,
       type
     } = this.state;
+    // change buttons props based on breakpoints xs/sm/lg ...
+    const isSmallScreen = /xs|sm/.test(width);
+
+    const buttonProps = {
+      size: isSmallScreen ? "small" : "medium"
+    };
     const elements = (
       <Tooltip title="Sauvegarder">
         <IconButton
@@ -441,7 +448,7 @@ class Unites extends React.Component {
           color="primary"
           onClick={this.updateListesDeBase}
           form="ListesDeBase"
-          size="small"
+          {...buttonProps}
         >
           <SaveIcon />
         </IconButton>
@@ -612,4 +619,4 @@ const UnitesReduxed = connect(
   mapDispatchToProps
 )(Unites);
 
-export default withStyles(styles)(UnitesReduxed);
+export default withStyles(styles)(withWidth()(UnitesReduxed));

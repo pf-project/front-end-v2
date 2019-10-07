@@ -35,6 +35,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 import Edit from "@material-ui/icons/Edit";
 import GererCompteGeneral from "../GererCompteGeneral/index";
+import withWidth from "@material-ui/core/withWidth";
 
 const styles = theme => ({
   root: {
@@ -339,9 +340,15 @@ class CreerCompteGeneral extends React.Component {
   };
 
   render() {
-    const { classes, closeNotif, notifMsg } = this.props;
+    const { classes, closeNotif, notifMsg, width } = this.props;
     const { activeStep } = this.state;
     const submitter = this.getSubmitter();
+    // change buttons props based on breakpoints xs/sm/lg ...
+    const isSmallScreen = /xs|sm/.test(width);
+
+    const buttonProps = {
+      size: isSmallScreen ? "small" : "medium"
+    };
     const elements =
       this.state.activeStep === this.state.steps.length ? (
         <>
@@ -354,7 +361,7 @@ class CreerCompteGeneral extends React.Component {
               className={classes.done}
               color="primary"
               onClick={this.handleReset}
-              size="small"
+              {...buttonProps}
             >
               <FiberNew />
             </IconButton>
@@ -365,7 +372,7 @@ class CreerCompteGeneral extends React.Component {
               // className={classes.done}
               color="primary"
               onClick={this.handleOpen}
-              size="small"
+              {...buttonProps}
             >
               <Edit />
             </IconButton>
@@ -388,7 +395,7 @@ class CreerCompteGeneral extends React.Component {
                   : classes.button
               }
               variant="contained"
-              size="small"
+              {...buttonProps}
               color="primary"
               type="submit"
               form="addCompteGeneral"
@@ -409,7 +416,7 @@ class CreerCompteGeneral extends React.Component {
           // className={classes.button}
           variant="outlined"
           color="primary"
-          size="small"
+          {...buttonProps}
           disabled={activeStep === 0}
           onClick={this.handleBack}
           className={classes.backButton}
@@ -502,4 +509,4 @@ const CreerCompteGeneralReduxed = connect(
   mapDispatchToProps
 )(CreerCompteGeneral);
 
-export default withStyles(styles)(CreerCompteGeneralReduxed);
+export default withStyles(styles)(withWidth()(CreerCompteGeneralReduxed));

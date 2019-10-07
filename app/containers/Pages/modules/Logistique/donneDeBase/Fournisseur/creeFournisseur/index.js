@@ -36,6 +36,7 @@ import FiberNew from "@material-ui/icons/FiberNew";
 
 import Edit from "@material-ui/icons/Edit";
 import GererFournisseur from "../GererFournisseur/index";
+import withWidth from "@material-ui/core/withWidth";
 const styles = theme => ({
   root: {
     width: "90%",
@@ -349,8 +350,14 @@ class CreerFournisseur extends React.Component {
   };
 
   render() {
-    const { classes, closeNotif, notifMsg } = this.props;
+    const { classes, closeNotif, notifMsg, width } = this.props;
     const { activeStep } = this.state;
+    // change buttons props based on breakpoints xs/sm/lg ...
+    const isSmallScreen = /xs|sm/.test(width);
+
+    const buttonProps = {
+      size: isSmallScreen ? "small" : "medium"
+    };
     const elements =
       this.state.activeStep === this.state.steps.length ? (
         <>
@@ -363,7 +370,7 @@ class CreerFournisseur extends React.Component {
               className={classes.done}
               color="primary"
               onClick={this.handleReset}
-              size="small"
+              {...buttonProps}
             >
               <FiberNew />
             </IconButton>
@@ -375,7 +382,7 @@ class CreerFournisseur extends React.Component {
               // className={classes.done}
               color="primary"
               onClick={this.handleOpen}
-              size="small"
+              {...buttonProps}
             >
               <Edit />
             </IconButton>
@@ -399,7 +406,7 @@ class CreerFournisseur extends React.Component {
             color="primary"
             type="submit"
             form="addfourni"
-            size="small"
+            {...buttonProps}
           >
             {this.state.activeStep === this.state.steps.length - 1 ? (
               <SaveIcon />
@@ -420,7 +427,7 @@ class CreerFournisseur extends React.Component {
           disabled={activeStep === 0}
           onClick={this.handleBack}
           className={classes.backButton}
-          size="small"
+          {...buttonProps}
         >
           <ArrowBack />
         </IconButton>
@@ -509,4 +516,4 @@ const CreerFournisseurReduxed = connect(
   mapDispatchToProps
 )(CreerFournisseur);
 
-export default withStyles(styles)(CreerFournisseurReduxed);
+export default withStyles(styles)(withWidth()(CreerFournisseurReduxed));

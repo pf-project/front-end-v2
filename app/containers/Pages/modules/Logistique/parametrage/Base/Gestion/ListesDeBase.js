@@ -38,6 +38,7 @@ import {
   updateAction,
   closeNotifAction
 } from "../reducers/crudTbBaseActions";
+import withWidth from "@material-ui/core/withWidth";
 
 const styles = theme => ({
   root: {
@@ -424,7 +425,7 @@ class ListesDeBase extends React.Component {
   };
 
   render() {
-    const { classes, notifMsg, closeNotif } = this.props;
+    const { classes, notifMsg, closeNotif, width } = this.props;
     const {
       pays,
       selectedRows,
@@ -434,6 +435,12 @@ class ListesDeBase extends React.Component {
       pay,
       honoraire_tva
     } = this.state;
+    // change buttons props based on breakpoints xs/sm/lg ...
+    const isSmallScreen = /xs|sm/.test(width);
+
+    const buttonProps = {
+      size: isSmallScreen ? "small" : "medium"
+    };
 
     const elements = (
       <Tooltip title="Sauvegarder">
@@ -443,7 +450,7 @@ class ListesDeBase extends React.Component {
           color="primary"
           onClick={this.updateListesDeBase}
           form="ListesDeBase"
-          size="small"
+          {...buttonProps}
         >
           <SaveIcon />
         </IconButton>
@@ -627,4 +634,4 @@ const ListesDeBaseReduxed = connect(
   mapDispatchToProps
 )(ListesDeBase);
 
-export default withStyles(styles)(ListesDeBaseReduxed);
+export default withStyles(styles)(withWidth()(ListesDeBaseReduxed));

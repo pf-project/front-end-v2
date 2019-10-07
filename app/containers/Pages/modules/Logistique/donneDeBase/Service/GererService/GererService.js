@@ -28,6 +28,7 @@ import {
 import Tooltip from "@material-ui/core/Tooltip";
 import { Undo } from "@material-ui/icons";
 import SaveIcon from "@material-ui/icons/Save";
+import { withWidth } from "@material-ui/core";
 const styles = theme => ({
   root: {
     width: "90%",
@@ -623,7 +624,13 @@ class GererService extends React.Component {
 
   render() {
     const { activeStep, errorMsg } = this.state;
-    const { classes, closeNotif, notifMsg } = this.props;
+    const { classes, closeNotif, notifMsg, width } = this.props;
+    // change buttons props based on breakpoints xs/sm/lg ...
+    const isSmallScreen = /xs|sm/.test(width);
+
+    const buttonProps = {
+      size: isSmallScreen ? "small" : "medium"
+    };
 
     const elements = (
       <>
@@ -634,7 +641,7 @@ class GererService extends React.Component {
             variant="contained"
             color="primary"
             onClick={this.handleCancel}
-            size="small"
+            {...buttonProps}
           >
             <Undo />
           </IconButton>
@@ -648,7 +655,7 @@ class GererService extends React.Component {
             color="primary"
             type="submit"
             form="gererService"
-            size="small"
+            {...buttonProps}
           >
             <SaveIcon />
           </IconButton>
@@ -750,4 +757,4 @@ const GererServiceReduxed = connect(
   mapDispatchToProps
 )(GererService);
 
-export default withStyles(styles)(GererServiceReduxed);
+export default withStyles(styles)(withWidth()(GererServiceReduxed));

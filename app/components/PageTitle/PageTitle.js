@@ -18,20 +18,32 @@ import { useTheme } from "@material-ui/core/styles";
 import { BreadCrumb } from "enl-components";
 import ExitToApp from "@material-ui/icons/ExitToApp";
 import Tooltip from "@material-ui/core/Tooltip";
+
+import withWidth from "@material-ui/core/withWidth";
 const styles = theme => ({
   elements: {
     position: "absolute",
     right: theme.spacing(2),
-    // top: theme.spacing(1),
-    marginTop: 13,
-    marginLeft: theme.spacing(30)
+
+    marginLeft: theme.spacing(30),
+    [theme.breakpoints.down("sm")]: {
+      marginTop: 13
+    },
+    [theme.breakpoints.up("sm")]: {
+      marginTop: 4
+    }
   },
   elementsLeft: {
     position: "absolute",
     left: theme.spacing(2),
     // top: theme.spacing(1),
-    marginTop: 13,
-    marginRight: theme.spacing(30)
+    marginRight: theme.spacing(30),
+    [theme.breakpoints.down("sm")]: {
+      marginTop: 13
+    },
+    [theme.breakpoints.up("sm")]: {
+      marginTop: 4
+    }
   },
   button: {
     marginLeft: theme.spacing(1)
@@ -79,7 +91,8 @@ const PageTitle = ({
   precedent,
   leftElements,
   rightElements,
-  formChanged
+  formChanged,
+  width
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -96,6 +109,13 @@ const PageTitle = ({
 
   const handleLeave = () => {
     window.history.back();
+  };
+
+  // change buttons props based on breakpoints xs/sm/lg ...
+  const isSmallScreen = /xs|sm/.test(width);
+
+  const buttonProps = {
+    size: isSmallScreen ? "small" : "medium"
   };
 
   return (
@@ -159,7 +179,7 @@ const PageTitle = ({
             {withBackOption && (
               <Tooltip title="Quitter">
                 <IconButton
-                  size="small"
+                  {...buttonProps}
                   onClick={formChanged ? handleOpen : handleLeave}
                   className={classes.button}
                   variant="contained"
@@ -181,4 +201,4 @@ PageTitle.defaultProps = {
   pathname: ""
 };
 
-export default withStyles(styles)(PageTitle);
+export default withStyles(styles)(withWidth()(PageTitle));

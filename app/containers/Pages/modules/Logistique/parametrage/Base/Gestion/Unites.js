@@ -40,6 +40,7 @@ import {
   updateAction,
   closeNotifAction
 } from "../reducers/crudTbBaseActions";
+import { withWidth } from "@material-ui/core";
 
 const styles = theme => ({
   root: {
@@ -461,7 +462,7 @@ class Unites extends React.Component {
   };
 
   render() {
-    const { classes, notifMsg, closeNotif } = this.props;
+    const { classes, notifMsg, closeNotif, width } = this.props;
     const {
       devise,
       poids,
@@ -484,6 +485,13 @@ class Unites extends React.Component {
       }
     });
 
+    // change buttons props based on breakpoints xs/sm/lg ...
+    const isSmallScreen = /xs|sm/.test(width);
+
+    const buttonProps = {
+      size: isSmallScreen ? "small" : "medium"
+    };
+
     const elements = (
       <Tooltip title="Sauvegarder">
         <IconButton
@@ -492,7 +500,7 @@ class Unites extends React.Component {
           color="primary"
           onClick={this.updateListesDeBase}
           form="ListesDeBase"
-          size="small"
+          {...buttonProps}
         >
           <SaveIcon />
         </IconButton>
@@ -665,4 +673,4 @@ const UnitesReduxed = connect(
   mapDispatchToProps
 )(Unites);
 
-export default withStyles(styles)(UnitesReduxed);
+export default withStyles(styles)(withWidth()(UnitesReduxed));

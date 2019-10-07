@@ -35,6 +35,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import FiberNew from "@material-ui/icons/FiberNew";
 import Edit from "@material-ui/icons/Edit";
 import GeererFromNotif from "../GererCaisse/index";
+import withWidth from "@material-ui/core/withWidth";
 
 const styles = theme => ({
   root: {
@@ -286,9 +287,15 @@ class CreerCaisse extends React.Component {
   };
 
   render() {
-    const { classes, closeNotif, notifMsg } = this.props;
+    const { classes, closeNotif, notifMsg, width } = this.props;
     const { activeStep } = this.state;
     const submitter = this.getSubmitter();
+    // change buttons props based on breakpoints xs/sm/lg ...
+    const isSmallScreen = /xs|sm/.test(width);
+
+    const buttonProps = {
+      size: isSmallScreen ? "small" : "medium"
+    };
     const elements =
       this.state.activeStep === this.state.steps.length ? (
         <>
@@ -302,7 +309,7 @@ class CreerCaisse extends React.Component {
               className={classes.done}
               color="primary"
               onClick={this.handleReset}
-              size="small"
+              {...buttonProps}
             >
               <FiberNew />
             </IconButton>
@@ -313,7 +320,7 @@ class CreerCaisse extends React.Component {
               // className={classes.done}
               color="primary"
               onClick={this.handleOpen}
-              size="small"
+              {...buttonProps}
             >
               <Edit />
             </IconButton>
@@ -342,7 +349,7 @@ class CreerCaisse extends React.Component {
               color="primary"
               type="submit"
               form="addCaisse"
-              size="small"
+              {...buttonProps}
             >
               {this.state.activeStep === this.state.steps.length - 1 ? (
                 <SaveIcon />
@@ -366,7 +373,7 @@ class CreerCaisse extends React.Component {
           disabled={activeStep === 0}
           onClick={this.handleBack}
           className={classes.backButton}
-          size="small"
+          {...buttonProps}
         >
           <ArrowBack />
         </IconButton>
@@ -457,4 +464,4 @@ const CreerCaisseReduxed = connect(
   mapDispatchToProps
 )(CreerCaisse);
 
-export default withStyles(styles)(CreerCaisseReduxed);
+export default withStyles(styles)(withWidth()(CreerCaisseReduxed));

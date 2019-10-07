@@ -37,6 +37,7 @@ import FiberNew from "@material-ui/icons/FiberNew";
 
 import Edit from "@material-ui/icons/Edit";
 import GererService from "../GererService/GererService";
+import withWidth from "@material-ui/core/withWidth";
 
 const styles = theme => ({
   root: {
@@ -583,6 +584,14 @@ class CreerService extends React.Component {
     const { classes, closeNotif, notifMsg } = this.props;
     const { activeStep } = this.state;
     const submitter = this.getSubmitter();
+
+    // change buttons props based on breakpoints xs/sm/lg ...
+    const isSmallScreen = /xs|sm/.test(this.props.width);
+
+    const buttonProps = {
+      size: isSmallScreen ? "small" : "medium"
+    };
+
     const elements =
       this.state.activeStep === this.state.steps.length ? (
         <>
@@ -595,7 +604,7 @@ class CreerService extends React.Component {
               className={classes.done}
               color="primary"
               onClick={this.handleReset}
-              size="small"
+              {...buttonProps}
             >
               <FiberNew />
             </IconButton>
@@ -607,7 +616,7 @@ class CreerService extends React.Component {
               // className={classes.done}
               color="primary"
               onClick={this.handleOpen}
-              size="small"
+              {...buttonProps}
             >
               <Edit />
             </IconButton>
@@ -631,7 +640,7 @@ class CreerService extends React.Component {
             color="primary"
             type="submit"
             form="addService"
-            size="small"
+            {...buttonProps}
           >
             {this.state.activeStep === this.state.steps.length - 1 ? (
               <SaveIcon />
@@ -651,7 +660,7 @@ class CreerService extends React.Component {
           disabled={activeStep === 0}
           onClick={this.handleBack}
           className={classes.backButton}
-          size="small"
+          {...buttonProps}
         >
           <ArrowBack />
         </IconButton>
@@ -744,4 +753,4 @@ const CreerCategorieReduxed = connect(
   mapDispatchToProps
 )(CreerService);
 
-export default withStyles(styles)(CreerCategorieReduxed);
+export default withStyles(styles)(withWidth()(CreerCategorieReduxed));

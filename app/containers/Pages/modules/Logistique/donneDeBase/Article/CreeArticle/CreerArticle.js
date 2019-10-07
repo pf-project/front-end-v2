@@ -36,6 +36,7 @@ import ArrowBack from "@material-ui/icons/ArrowBack";
 import FiberNew from "@material-ui/icons/FiberNew";
 import Edit from "@material-ui/icons/Edit";
 import GererArticle from "../GererArticle/GererArticle";
+import withWidth from "@material-ui/core/withWidth";
 
 const styles = theme => ({
   root: {
@@ -624,9 +625,15 @@ class CreerArticle extends React.Component {
   };
 
   render() {
-    const { classes, closeNotif, notifMsg } = this.props;
+    const { classes, closeNotif, notifMsg, width } = this.props;
     const { activeStep } = this.state;
     const submitter = this.getSubmitter();
+    // change buttons props based on breakpoints xs/sm/lg ...
+    const isSmallScreen = /xs|sm/.test(width);
+
+    const buttonProps = {
+      size: isSmallScreen ? "small" : "medium"
+    };
     const elements =
       this.state.activeStep === this.state.steps.length ? (
         <>
@@ -639,7 +646,7 @@ class CreerArticle extends React.Component {
               className={classes.done}
               color="primary"
               onClick={this.handleReset}
-              size="small"
+              {...buttonProps}
             >
               <FiberNew />
             </IconButton>
@@ -649,7 +656,7 @@ class CreerArticle extends React.Component {
             <IconButton
               variant="contained"
               // className={classes.done}
-              size="small"
+              {...buttonProps}
               color="primary"
               onClick={this.handleOpen}
             >
@@ -675,7 +682,7 @@ class CreerArticle extends React.Component {
             color="primary"
             type="submit"
             form="addArticle"
-            size="small"
+            {...buttonProps}
           >
             {this.state.activeStep === this.state.steps.length - 1 ? (
               <SaveIcon />
@@ -693,7 +700,7 @@ class CreerArticle extends React.Component {
           disabled={activeStep === 0}
           onClick={this.handleBack}
           className={classes.backButton}
-          size="small"
+          {...buttonProps}
         >
           <ArrowBack />
         </IconButton>
@@ -789,4 +796,4 @@ const CreerCategorieReduxed = connect(
   mapDispatchToProps
 )(CreerArticle);
 
-export default withStyles(styles)(CreerCategorieReduxed);
+export default withStyles(styles)(withWidth()(CreerCategorieReduxed));

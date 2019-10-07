@@ -55,6 +55,7 @@ import {
   fetchUnites,
   fetchDesignation
 } from "../../../reducers/crudComptabiliteActions";
+import withWidth from "@material-ui/core/withWidth";
 
 const styles = theme => ({
   root: {
@@ -65,18 +66,16 @@ const styles = theme => ({
     marginRight: "1em"
   },
   done: {
-    color: "white",
-    backgroundColor: "#4db6ac",
+    color: "#4db6ac",
     "&:hover": {
-      color: "white",
-      backgroundColor: "#009688"
+      color: "#009688"
     }
   },
   cancel: {
     marginRight: "1em",
-    backgroundColor: "#e57373",
+    color: "#e57373",
     "&:hover": {
-      backgroundColor: "#f44336"
+      color: "#f44336"
     }
   },
   fermer: {
@@ -507,7 +506,8 @@ class CreerCaisse extends React.Component {
       rubriques,
       postes,
       comptes,
-      loading
+      loading,
+      width
     } = this.props;
     const {
       data,
@@ -535,16 +535,23 @@ class CreerCaisse extends React.Component {
       "Crédit"
     ];
 
+    // change buttons props based on breakpoints xs/sm/lg ...
+    const isSmallScreen = /xs|sm/.test(width);
+
+    const buttonProps = {
+      size: isSmallScreen ? "small" : "medium"
+    };
+
     const elements = (
       <>
         {/* <Grid item sm={2} lg={2}> */}
         <Tooltip title="Vider">
           <IconButton
-            // className={classes.cancel}
+            className={classes.cancel}
             onClick={this.handleReset}
             variant="contained"
             color="primary"
-            size="small"
+            {...buttonProps}
           >
             <Undo />
           </IconButton>
@@ -553,13 +560,13 @@ class CreerCaisse extends React.Component {
         {/* <Grid item sm={2} lg={2}> */}
         <Tooltip title="Comptabiliser">
           <IconButton
-            // className={classes.done}
+            className={classes.done}
             variant="contained"
             color="primary"
             type="submit"
             onClick={this.handleSubmit}
             form="comptabiliser"
-            size="small"
+            {...buttonProps}
           >
             <SaveIcon />
           </IconButton>
@@ -787,7 +794,7 @@ class CreerCaisse extends React.Component {
                       color="primary"
                       autoFocus
                       // className={classes.done}
-                      size="small"
+                      {...buttonProps}
                     >
                       <Done />
                     </IconButton>
@@ -798,7 +805,7 @@ class CreerCaisse extends React.Component {
                       // className={classes.fermer}
                       color="primary"
                       autoFocus
-                      size="small"
+                      {...buttonProps}
                     >
                       <Close />
                     </IconButton>
@@ -846,7 +853,7 @@ class CreerCaisse extends React.Component {
                               >
                                 <IconButton
                                   onClick={this.handleClickOpen}
-                                  size="small"
+                                  {...buttonProps}
                                 >
                                   <i className="material-icons">list_alt</i>
                                 </IconButton>
@@ -918,7 +925,7 @@ class CreerCaisse extends React.Component {
                       type="submit"
                       variant="contained"
                       color="primary"
-                      size="small"
+                      {...buttonProps}
                     >
                       <AddIcon />
                     </IconButton>
@@ -932,7 +939,7 @@ class CreerCaisse extends React.Component {
                       color="primary"
                       autoFocus
                       // className={classes.done}
-                      size="small"
+                      {...buttonProps}
                     >
                       <Done />
                     </IconButton>
@@ -946,7 +953,7 @@ class CreerCaisse extends React.Component {
                       color="primary"
                       disabled={selectedRows.length == 0}
                       onClick={this.handleDelete}
-                      size="small"
+                      {...buttonProps}
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -1001,4 +1008,4 @@ const CreerCaisseReduxed = connect(
   mapDispatchToProps
 )(CreerCaisse);
 
-export default withStyles(styles)(CreerCaisseReduxed);
+export default withStyles(styles)(withWidth()(CreerCaisseReduxed));

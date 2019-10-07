@@ -34,6 +34,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { Undo, Add, Close } from "@material-ui/icons";
 import { NavLink } from "react-router-dom";
 import { Paper } from "@material-ui/core";
+import withWidth from "@material-ui/core/withWidth";
 const styles = theme => ({
   root: {
     width: "90%",
@@ -258,7 +259,8 @@ class GrandLivre extends Component {
       notifMsg,
       ecritures_comptable,
       fetch_ecritures_comptable,
-      loading
+      loading,
+      width
     } = this.props;
     const { filters, index, open, element } = this.state;
     const {
@@ -276,6 +278,13 @@ class GrandLivre extends Component {
 
     const appliyedFilter = this.getAppliyedFilter(filters);
 
+    // change buttons props based on breakpoints xs/sm/lg ...
+    const isSmallScreen = /xs|sm/.test(width);
+
+    const buttonProps = {
+      size: isSmallScreen ? "small" : "medium"
+    };
+
     const elements = (
       <>
         <Tooltip
@@ -288,7 +297,7 @@ class GrandLivre extends Component {
             className={classes.headerButton}
             color="primary"
             onClick={this.handleOpen}
-            size="small"
+            {...buttonProps}
           >
             <Undo />
           </IconButton>
@@ -303,7 +312,7 @@ class GrandLivre extends Component {
               variant="contained"
               className={classes.headerButton}
               color="primary"
-              size="small"
+              {...buttonProps}
             >
               <Add />
             </IconButton>
@@ -345,7 +354,7 @@ class GrandLivre extends Component {
                     className={classes.fermer}
                     color="primary"
                     autoFocus
-                    size="small"
+                    {...buttonProps}
                   >
                     <Close />
                   </IconButton>
@@ -523,4 +532,4 @@ const GrandLivreReduxed = connect(
   mapDispatchToProps
 )(GrandLivre);
 
-export default withStyles(styles)(GrandLivreReduxed);
+export default withStyles(styles)(withWidth()(GrandLivreReduxed));

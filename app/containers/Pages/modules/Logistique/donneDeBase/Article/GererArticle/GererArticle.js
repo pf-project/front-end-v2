@@ -29,6 +29,7 @@ import {
 import Tooltip from "@material-ui/core/Tooltip";
 import { Undo } from "@material-ui/icons";
 import SaveIcon from "@material-ui/icons/Save";
+import { withWidth } from "@material-ui/core";
 const styles = theme => ({
   root: {
     width: "90%",
@@ -641,7 +642,14 @@ class GererArticle extends React.Component {
 
   render() {
     const { activeStep, errorMsg } = this.state;
-    const { classes, closeNotif, notifMsg } = this.props;
+    const { classes, closeNotif, notifMsg, width } = this.props;
+    // change buttons props based on breakpoints xs/sm/lg ...
+    const isSmallScreen = /xs|sm/.test(width);
+
+    const buttonProps = {
+      size: isSmallScreen ? "small" : "medium"
+    };
+
     const elements = (
       <>
         {/* <Grid item sm={2} lg={2}> */}
@@ -651,7 +659,7 @@ class GererArticle extends React.Component {
             variant="contained"
             color="primary"
             onClick={this.handleCancel}
-            size="small"
+            {...buttonProps}
           >
             <Undo />
           </IconButton>
@@ -665,7 +673,7 @@ class GererArticle extends React.Component {
             color="primary"
             type="submit"
             form="gererArticle"
-            size="small"
+            {...buttonProps}
           >
             <SaveIcon />
           </IconButton>
@@ -769,4 +777,4 @@ const GererArticleReduxed = connect(
   mapDispatchToProps
 )(GererArticle);
 
-export default withStyles(styles)(GererArticleReduxed);
+export default withStyles(styles)(withWidth()(GererArticleReduxed));

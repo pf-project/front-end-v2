@@ -20,6 +20,7 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import Done from "@material-ui/icons/Done";
 import AddIcon from "@material-ui/icons/Add";
 import Tooltip from "@material-ui/core/Tooltip";
+import { withWidth } from "@material-ui/core";
 
 // const useStyles = makeStyles(theme => ({
 //   typography: {
@@ -27,7 +28,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 //   }
 // }));
 
-export default function AjoutAttribut({
+function AjoutAttribut({
   classes,
   handleChange,
   errors,
@@ -35,7 +36,8 @@ export default function AjoutAttribut({
   position,
   addValues,
   removeLastValue,
-  removeAllValues
+  removeAllValues,
+  width
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   //   const classes = useStyles();
@@ -77,6 +79,13 @@ export default function AjoutAttribut({
     item.valeurs.length == 0
       ? false
       : item.valeurs.some(elmnt => elmnt !== null && elmnt !== "");
+
+  // change buttons props based on breakpoints xs/sm/lg ...
+  const isSmallScreen = /xs|sm/.test(width);
+
+  const buttonProps = {
+    size: isSmallScreen ? "small" : "medium"
+  };
   return (
     <TableRow>
       <TableCell component="td" scope="row">
@@ -143,7 +152,7 @@ export default function AjoutAttribut({
             color="primary"
             onClick={showPopover}
             aria-describedby={id}
-            size="small"
+            {...buttonProps}
           >
             <AddIcon />
           </IconButton>
@@ -175,7 +184,7 @@ export default function AjoutAttribut({
                     <IconButton
                       color="primary"
                       variant="outlined"
-                      size="small"
+                      {...buttonProps}
                       className={classes.margin}
                       onClick={valider}
                     >
@@ -189,9 +198,8 @@ export default function AjoutAttribut({
                   <IconButton
                     onClick={annuler}
                     variant="outlined"
-                    size="small"
+                    {...buttonProps}
                     className={classes.margin}
-                    size="small"
                   >
                     <CancelIcon />
                   </IconButton>
@@ -246,7 +254,7 @@ export default function AjoutAttribut({
                   onClick={dicrimentNbrValues}
                   color="primary"
                   className={classes.button}
-                  size="small"
+                  {...buttonProps}
                 >
                   -
                 </IconButton>
@@ -270,3 +278,5 @@ export default function AjoutAttribut({
     </TableRow>
   );
 }
+
+export default withWidth()(AjoutAttribut);
