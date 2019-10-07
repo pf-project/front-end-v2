@@ -730,7 +730,7 @@ class CreerArticle extends React.Component {
         </FloatingPanel>
 
         <Card small className="mb-4">
-          <div className={classes.root}>
+          <div>
             <Stepper activeStep={this.state.activeStep} alternativeLabel>
               {this.state.steps.map(label => (
                 <Step key={label}>
@@ -738,7 +738,7 @@ class CreerArticle extends React.Component {
                 </Step>
               ))}
             </Stepper>
-            <div>
+            <div className={classes.root}>
               {this.state.activeStep < this.state.steps.length && (
                 <div>
                   <Typography className={classes.instructions}>

@@ -23,14 +23,14 @@ const styles = theme => ({
     position: "absolute",
     right: theme.spacing(2),
     // top: theme.spacing(1),
-    marginTop: theme.spacing(1),
+    marginTop: 13,
     marginLeft: theme.spacing(30)
   },
   elementsLeft: {
     position: "absolute",
     left: theme.spacing(2),
     // top: theme.spacing(1),
-    marginTop: theme.spacing(1),
+    marginTop: 13,
     marginRight: theme.spacing(30)
   },
   button: {
@@ -106,7 +106,7 @@ const PageTitle = ({
             <div className={classes.elementsLeft}>{precedent}</div>
           </Grid>
         )}
-        <Grid xs={5} md={7}>
+        <Grid xs={8} md={7}>
           <Dialog
             fullScreen={fullScreen}
             open={open}

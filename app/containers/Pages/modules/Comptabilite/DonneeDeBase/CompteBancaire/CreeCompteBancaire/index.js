@@ -366,7 +366,7 @@ class CreerCompteBancaire extends React.Component {
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
 
         <Card small className="mb-4">
-          <div className={classes.root}>
+          <div>
             <Stepper activeStep={this.state.activeStep} alternativeLabel>
               {this.state.steps.map(label => (
                 <Step key={label}>
@@ -374,7 +374,7 @@ class CreerCompteBancaire extends React.Component {
                 </Step>
               ))}
             </Stepper>
-            <div>
+            <div className={classes.root}>
               {this.state.activeStep < this.state.steps.length && (
                 <div>
                   <Typography className={classes.instructions}>
