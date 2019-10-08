@@ -22,7 +22,8 @@ import {
   addItem,
   fetchItem,
   closeNotifAction,
-  fetchUnites
+  fetchUnites,
+  fetchSuggestions
 } from "../../../reducers/crudLogisticActions";
 import Initial from "./Initial";
 import Base from "./Base";
@@ -109,6 +110,7 @@ class CreerFournisseur extends React.Component {
     super(props);
     this.state = {
       activeStep: 0,
+      errorMsg: "",
       steps: [
         "Données initiales",
         "Données de base",
@@ -130,7 +132,7 @@ class CreerFournisseur extends React.Component {
   }
 
   componentWillMount() {
-    const { fetchUnites } = this.props;
+    const { fetchUnites, fetchCodesDeisgnations } = this.props;
 
     fetchUnites("configurationdebase/listesdebase/findPays", "pays", true);
     fetchUnites("configurationdebase/listesdebase/findVilles", "villes", true);
@@ -150,6 +152,7 @@ class CreerFournisseur extends React.Component {
       true
     );
     fetchUnites("configurationdebase/unites/findDevises", "devises", true);
+    fetchCodesDeisgnations("fournisseur/getCodesAndDesignations");
   }
 
   addContact = contact => {
@@ -344,6 +347,22 @@ class CreerFournisseur extends React.Component {
 
   handleSubmit = () => {
     const { data } = this.state;
+
+    if (this.state.activeStep == 0) {
+      if (this.props.codesDesignations) {
+        const codes = this.props.codesDesignations.codes;
+        const designations = this.props.codesDesignations.designations;
+        const { code, designation } = this.state.data;
+        if (codes.includes(code)) {
+          this.setState({ errorMsg: "code deja existe !!!!" });
+          return;
+        } else if (designations.includes(designation)) {
+          this.setState({ errorMsg: "designation deja existe !!!!" });
+          return;
+        }
+      }
+    }
+
     if (this.state.activeStep == 3)
       this.props.addFournisseur(data, "fournisseur");
     this.handleNext();
@@ -351,7 +370,7 @@ class CreerFournisseur extends React.Component {
 
   render() {
     const { classes, closeNotif, notifMsg, width } = this.props;
-    const { activeStep } = this.state;
+    const { activeStep, errorMsg } = this.state;
     // change buttons props based on breakpoints xs/sm/lg ...
     const isSmallScreen = /xs|sm/.test(width);
 
@@ -446,6 +465,14 @@ class CreerFournisseur extends React.Component {
           formChanged={this.state.formChanged}
         />
 
+        <Notification
+          close={() => {
+            this.setState({ errorMsg: "" });
+            closeNotif();
+          }}
+          message={errorMsg}
+          branch=""
+        />
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
 
         <FloatingPanel
@@ -494,7 +521,8 @@ const mapDispatchToProps = dispatch => ({
   closeNotif: () => dispatch(closeNotifAction()),
   addFournisseur: bindActionCreators(addItem, dispatch),
   fetchUnites: bindActionCreators(fetchUnites, dispatch),
-  fetchFournisseur: bindActionCreators(fetchItem, dispatch)
+  fetchFournisseur: bindActionCreators(fetchItem, dispatch),
+  fetchCodesDeisgnations: bindActionCreators(fetchSuggestions, dispatch)
 });
 
 const mapStateToProps = state => {
@@ -506,7 +534,8 @@ const mapStateToProps = state => {
     villes: state.get("crudLogisticReducer").get("villes"),
     langues: state.get("crudLogisticReducer").get("langues"),
     banques: state.get("crudLogisticReducer").get("banques"),
-    honoraires: state.get("crudLogisticReducer").get("honoraires")
+    honoraires: state.get("crudLogisticReducer").get("honoraires"),
+    codesDesignations: state.get("crudLogisticReducer").get("suggestions")
   };
 };
 

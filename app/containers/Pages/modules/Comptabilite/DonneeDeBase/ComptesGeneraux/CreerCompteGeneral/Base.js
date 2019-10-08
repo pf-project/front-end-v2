@@ -69,7 +69,10 @@ class Base extends React.Component {
               </Grid>
               <Grid item xs={12} md={5}>
                 <TextValidator
-                  // fullWidth={true}
+                  InputProps={{
+                    readOnly: true,
+                    fullWidth: true
+                  }}
                   className={classes.field}
                   onChange={handleChange}
                   name="designation"

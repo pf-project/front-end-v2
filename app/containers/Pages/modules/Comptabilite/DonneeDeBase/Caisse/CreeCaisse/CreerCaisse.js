@@ -22,7 +22,8 @@ import Grid from "@material-ui/core/Grid";
 import {
   addItem,
   closeNotifAction,
-  fetchItem
+  fetchItem,
+  fetchSuggestions
 } from "../../../reducers/crudComptabiliteActions";
 import { fetchUnites } from "../../../../Logistique/reducers/crudLogisticActions";
 import Base from "./Base";
@@ -131,6 +132,7 @@ class CreerCaisse extends React.Component {
     super(props);
     this.state = {
       activeStep: 0,
+      errorMsg: "",
       steps: ["Données initiales", "Données de base"],
       data: { code: "CS-", compte: "5161", statu: "Ouvert" }
     };
@@ -147,9 +149,24 @@ class CreerCaisse extends React.Component {
       "pays",
       true
     );
+
+    this.props.fetchCodesDesignations(
+      "donneedebase/caisse/getCodesAndDesignations"
+    );
   }
   handleSubmitInitial = () => {
-    this.handleNext();
+    if (this.props.codesDesignations) {
+      const codes = this.props.codesDesignations.codes;
+      const designations = this.props.codesDesignations.designations;
+      const { code, designation } = this.state.data;
+      if (codes.includes(code)) {
+        this.setState({ errorMsg: "code deja existe !!!!" });
+      } else if (designations.includes(designation)) {
+        this.setState({ errorMsg: "designation deja existe !!!!" });
+      } else {
+        this.handleNext();
+      }
+    }
   };
 
   handleSubmitBase = () => {
@@ -288,6 +305,7 @@ class CreerCaisse extends React.Component {
 
   render() {
     const { classes, closeNotif, notifMsg, width } = this.props;
+
     const { activeStep } = this.state;
     const submitter = this.getSubmitter();
     // change buttons props based on breakpoints xs/sm/lg ...
@@ -379,7 +397,7 @@ class CreerCaisse extends React.Component {
         </IconButton>
       </Tooltip>
     );
-    const { data } = this.state;
+    const { data, errorMsg } = this.state;
 
     return (
       <div>
@@ -395,6 +413,14 @@ class CreerCaisse extends React.Component {
         />
 
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
+        <Notification
+          close={() => {
+            this.setState({ errorMsg: "" });
+            closeNotif();
+          }}
+          message={errorMsg}
+          branch=""
+        />
 
         <FloatingPanel
           title={"Gerer caisse"}
@@ -449,14 +475,16 @@ const mapDispatchToProps = dispatch => ({
   closeNotif: () => dispatch(closeNotifAction()),
   addCaisse: bindActionCreators(addItem, dispatch),
   fetchUnites: bindActionCreators(fetchUnites, dispatch),
-  fetchCompteGeneral: bindActionCreators(fetchItem, dispatch)
+  fetchCompteGeneral: bindActionCreators(fetchItem, dispatch),
+  fetchCodesDesignations: bindActionCreators(fetchSuggestions, dispatch)
 });
 const reducer = "crudComptabiliteReducer";
 const mapStateToProps = state => ({
   notifMsg: state.get(reducer).get("notifMsg"),
   loading: state.get(reducer).get("loading"),
   devises: state.get("crudLogisticReducer").get("devises"),
-  pays: state.get("crudLogisticReducer").get("pays")
+  pays: state.get("crudLogisticReducer").get("pays"),
+  codesDesignations: state.get(reducer).get("suggestions")
 });
 
 const CreerCaisseReduxed = connect(

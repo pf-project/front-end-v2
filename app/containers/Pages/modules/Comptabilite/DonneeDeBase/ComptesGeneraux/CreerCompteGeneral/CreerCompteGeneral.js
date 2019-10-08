@@ -23,7 +23,8 @@ import {
   addItem,
   closeNotifAction,
   fetchUnites,
-  fetchItem
+  fetchItem,
+  fetchSuggestions
 } from "../../../reducers/crudComptabiliteActions";
 import Base from "./Base";
 import Initiale from "./Initiale";
@@ -131,6 +132,7 @@ class CreerCompteGeneral extends React.Component {
     super(props);
     this.state = {
       activeStep: 0,
+      errorMsg: "",
       steps: ["Données initiales", "Données de base"],
       data: {
         classe: "1",
@@ -144,7 +146,18 @@ class CreerCompteGeneral extends React.Component {
   }
 
   handleSubmitInitial = () => {
-    this.handleNext();
+    if (this.props.codesDesignations) {
+      const comptes = this.props.codesDesignations.comptes;
+      const designations = this.props.codesDesignations.designations;
+      const { compte, designation } = this.state.data;
+      if (comptes.includes(compte)) {
+        this.setState({ errorMsg: "compte deja existe !!!!" });
+      } else if (designations.includes(designation)) {
+        this.setState({ errorMsg: "designation deja existe !!!!" });
+      } else {
+        this.handleNext();
+      }
+    }
   };
 
   handleSubmitBase = () => {
@@ -176,6 +189,10 @@ class CreerCompteGeneral extends React.Component {
       "donneedebase/comptegeneral/findComptesByPoste/111",
       "comptes",
       true
+    );
+
+    this.props.fetchCompteGeneralForSuggestion(
+      "donneedebase/comptegeneral/getCodesAndDesignations"
     );
   }
 
@@ -341,7 +358,7 @@ class CreerCompteGeneral extends React.Component {
 
   render() {
     const { classes, closeNotif, notifMsg, width } = this.props;
-    const { activeStep } = this.state;
+    const { activeStep, errorMsg } = this.state;
     const submitter = this.getSubmitter();
     // change buttons props based on breakpoints xs/sm/lg ...
     const isSmallScreen = /xs|sm/.test(width);
@@ -439,6 +456,15 @@ class CreerCompteGeneral extends React.Component {
 
         <Notification close={() => closeNotif()} message={notifMsg} branch="" />
 
+        <Notification
+          close={() => {
+            this.setState({ errorMsg: "" });
+            closeNotif();
+          }}
+          message={errorMsg}
+          branch=""
+        />
+
         <FloatingPanel
           title={"Gerer compte comptable"}
           openForm={this.state.openForm}
@@ -492,7 +518,11 @@ const mapDispatchToProps = dispatch => ({
   closeNotif: () => dispatch(closeNotifAction()),
   addCompteGeneral: bindActionCreators(addItem, dispatch),
   fetchUnites: bindActionCreators(fetchUnites, dispatch),
-  fetchCompteGeneral: bindActionCreators(fetchItem, dispatch)
+  fetchCodesDesignations: bindActionCreators(fetchItem, dispatch),
+  fetchCompteGeneralForSuggestion: bindActionCreators(
+    fetchSuggestions,
+    dispatch
+  )
 });
 const reducer = "crudComptabiliteReducer";
 const mapStateToProps = state => ({
@@ -501,7 +531,8 @@ const mapStateToProps = state => ({
   rubriques: state.get(reducer).get("rubriques"),
   postes: state.get(reducer).get("postes"),
   comptes: state.get(reducer).get("comptes"),
-  lesclasses: state.get(reducer).get("lesclasses")
+  lesclasses: state.get(reducer).get("lesclasses"),
+  codesDesignations: state.get(reducer).get("suggestions")
 });
 
 const CreerCompteGeneralReduxed = connect(
